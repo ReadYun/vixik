@@ -1,0 +1,196 @@
+/*
+* Document    : search.index.css
+* Description : css for search.index.html
+*
+* Created on  : 2013-8-8, 14:18:34
+* Author      : ReadYun
+* Copyright   : VixiK
+*/
+
+#searchBarBox{
+    padding: 0;  
+    margin: 0  auto;
+    overflow: hidden;
+}
+#mainSearchBar{
+    width: 100%;
+    padding:0;  
+    margin: 0  auto;
+    overflow: hidden;
+    background: #EFEFEF;
+    border-bottom: 1px solid #CFCFCF;
+}
+#search{
+    width: 960px;
+    padding: 0;  
+    margin: 20px  auto 10px auto;
+}
+#search input{
+    width: 500px;
+    height: 20px;
+    font: 17px "宋体",Tahoma;  
+}
+#search input:focus{
+    border-color: #6BB130;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+#search button{
+    height: 30px;
+    font: 17px "宋体",Tahoma;  
+}
+#search button>i{
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+}
+
+#navSearchBar{
+    width: 100%;
+    height: 38px;
+    padding:0;  
+    margin: 0  auto;
+    border-bottom: 1px solid #E7E7E7;
+}
+#navSearchBar>div.nav-bar{
+    width: 960px;
+    height: 100%;
+    padding:0;  
+    margin: 0  auto;
+    overflow: hidden;
+    border: none;
+    }
+    #navSearchBar>div.nav-bar>ul{
+        width: 50%;
+        padding:0;  
+        margin: 0;
+        float: left;
+        border: none;        
+        }
+        div.nav-bar>ul>li>a{
+            font: 17px "宋体",Tahoma;  
+            color: #666666;
+        }
+        div.nav-bar>ul>li>a:hover{
+            color: #6BB130;
+            border-color: #FFFFFF;
+            background: none;
+        }
+        div.nav-bar>ul>li.active>a{
+            color: #6BB130;
+            border: none;
+            border-bottom: 5px solid #6BB130;
+        }
+        div.nav-bar>ul>li.active:hover>a{
+            color: #6BB130;
+            border: none;
+            border-bottom: 5px solid #6BB130;
+        }
+    #navSearchBar>div.nav-bar>div.ext-toggle{
+            height: 18px;
+            margin: 5px 0;
+            padding: 5px 0;
+            float: left;
+            border-left: 1px solid #6BB130;
+            opacity: 0.8;
+        }
+        div.nav-bar>div.ext-toggle>span{
+            float: left;
+            padding: 0 4px;
+        }
+        div.nav-bar>div.ext-toggle>div{
+            width: 220px;
+            float: left;
+            font: 17px "宋体",Tahoma;  
+            color: #333333;
+        }
+        #navSearchBar>div.nav-bar>div.ext-toggle:hover{
+            cursor: pointer;
+            opacity: 1;
+        }
+#extSearchBar{
+    width: 100%;
+    height: 30px;
+    border-bottom: 1px solid #6BB130;
+    background: #F9F9F9;
+}
+
+#searchBody{
+    width: 100%;
+    padding-bottom: 20px;
+    margin: 20px 0; 
+    border-bottom: 1px solid #6BB130;
+}
+#noSearch{
+    width: 960px;
+    height: 300px;
+    margin: 40px auto; 
+    font: 19px "宋体",Tahoma;
+    color: red;
+}
+#searchList{
+    width: 960px;
+    margin: 0 auto; 
+    overflow: hidden;
+    }
+    #searchList>div.list-body{
+        width: 100%;
+        min-height: 400px;
+        margin-bottom: 30px;
+        overflow: hidden;
+    }
+
+#searchList div.search-list{
+    width: 700px;
+    margin-bottom: 15px; 
+    overflow: hidden;
+    }
+    #searchList div.search-list>div{
+        margin-bottom: 2px; 
+        width: 100%;
+        }
+    #searchList div.search-list>div.content-title{
+        }
+        div.search-list>div.content-title>span{
+            position: relative;
+            top: -1px;
+            font: 12px "宋体",Tahoma;  
+        }
+        div.search-list>div.content-title>a{
+            font: 17px "宋体",Tahoma;  
+            text-decoration: underline;
+        }
+        div.search-list>div.content-title>a:hover{
+            color: red;
+        }
+    #searchList div.search-list>div.content-body{
+            margin-left: 37px;
+            font: 12px "宋体",Tahoma;  
+        }
+        div.search-list>div.content-body>div.content-desc{
+                color: #666666;  
+                margin: 3px 0; 
+                opacity: 0.8;
+            }
+        div.search-list>div.content-body>div.content-stats{
+                color: #666666;  
+            }
+            div.search-list>div.content-body>div.content-stats>div{
+                margin-right: 30px;
+                float: left;
+                font-size: 13px;
+                color: #777777;  
+            }
+            div.search-list>div.content-body>div.content-stats i{
+                margin-right: 2px;
+                position: relative;
+                top: -2px;
+                opacity: 0.8;
+            }
+
+#Main[data-search-type='null'] #searchBody{display:none}
+
+#searchBody #noSearch{display:none}
+#searchBody.no #noSearch{display:block}
+#searchBody.no #searchList{display:none}

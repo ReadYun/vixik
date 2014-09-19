@@ -1,0 +1,697 @@
+/*
+ * Document    : survey.analyse.css
+ * Description : css for survey/analyse.html
+ *
+ * Created on  : 2013-7-8, 14: 18: 34
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+
+#navBar{
+    height: 45px;
+    border-bottom: 1px solid #D4D4D4;
+    }
+    #navBar>div.nav-bar{
+        width: 960px;
+        margin: 10px auto;
+        color: #000000;
+        }
+        #navBar>div.nav-bar>div{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            line-height: auto;
+        }
+        #navBar div.nav-bar-left{
+            min-width: 750px;
+            padding-right: 10px;
+            float: left;
+            overflow: hidden;
+            line-height: auto;
+            }
+            #navBar div.nav-bar-photo{
+                width: 36px;
+                height: 36px;
+                margin-right: 10px;
+                float: left;
+                overflow: hidden;
+                }
+                #navBar  div.nav-bar-photo>div.user-photo>img{
+                    width: 100%;
+                    height: 100%;
+                }
+            #navBar div.nav-bar-info{
+                width: 700px;
+                float: left;
+                overflow: hidden;
+                line-height: auto;
+                }
+                #navBar div.nav-bar-info a{
+                    cursor: pointer;
+                }
+                #navBar div.nav-bar-title{
+                    width: 100%;
+                    float: left;
+                    font: 17px "宋体",Tahoma;
+                }
+                #navBar div.nav-bar-user>div{
+                    margin-left: 2px;
+                    float: left;
+                    font-size: 12px;
+                    }
+                    #navBar div.user-ext>div{
+                        margin-left: 15px;
+                        float: left;
+                        font-size: 12px;
+                        color: #999;
+                    }
+        #navBar div.nav-bar-right{
+            max-width: 200px;
+            float: right;
+            }
+            #navBar div.nav-bar-right>div{
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                float: right;
+            }
+            #navBar div.nav-bar-right>div.survey-switch{
+                margin-top: 2px;
+                float: right;
+                text-align: center;
+                color: #999;
+                }
+                #navBar div.survey-switch>button{
+                    width: 122px;
+                    height: 25px;
+                }
+                #navBar div.survey-switch>div.switch-content{
+                    width: 500px;
+                    height: 440px;
+                    padding: 0;
+                    margin-top: 5px;
+                    border-radius: 0;
+                    }
+                    #navBar div.switch-content>.sc-header{
+                        box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        width: 100%;
+                        padding: 10px 10px 0 10px;
+                        overflow: hidden;
+                        }
+                        #navBar div.switch-content>.sc-header>div.sc-header-nav{
+                            width: 420px;
+                            float: left;
+                            overflow: hidden;
+                            }
+                            #navBar div.sc-header-nav ul{
+                                margin-bottom: 10px;
+                            }
+                            #navBar div.sc-header-nav li>a{
+                                padding: 5px 10px;
+                                border-radius: 0;                                
+                            }
+                        #navBar div.switch-content>.sc-header>div.sc-header-close{
+                            width: 50px;
+                            float: right;
+                            overflow: hidden;
+                            font-size: 30px;
+                            color: #CCC;
+                            cursor: pointer;
+                        }
+                        #navBar div.switch-content>.sc-header>div.sc-header-close:hover{
+                            color: #999;
+                        }
+                    #navBar div.switch-content .tab-pane>.vkpaging-box{
+                        display: none; 
+                    }
+                    #navBar div.switch-content .vkpaging.active>.vkpaging-box{
+                        display: block; 
+                    }
+                    #navBar div.switch-content .vkpaging.active>.vkpaging-null{
+                        display: none; 
+                    }
+                    #navBar div.switch-content .vkpaging-null>.scn-desc{
+                        margin: 50px 0;
+                        padding: 0 25px;
+                        overflow: hidden;
+                        font: 23px "宋体",Tahoma;
+                        text-align: left;
+                    }
+                    #navBar div.switch-content .vkpaging-null>.scn-action>button{
+                        width: 280px;
+                    }
+                    #navBar div.switch-content .vkpaging-body{
+                        box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        width: 100%;
+                        height: 315px;
+                        padding: 0 25px;
+                        overflow: hidden;
+                        }
+                        #navBar .vkpaging-body>.sv-list{
+                            width: 100%;
+                            padding: 8px 0 4px 0;
+                            float: left;
+                            font: 14px "微软雅黑",Tahoma;
+                            color: #666;
+                            border-bottom: 1px dotted #CCC;
+                            }
+                            #navBar .vkpaging-body>.sv-list>div.sv-name{
+                                float: left;
+                            }
+                            #navBar .vkpaging-body>.sv-list>div.sv-name>a{
+                                color: #666;
+                                text-decoration: none;
+                            }
+                            #navBar .vkpaging-body>.sv-list>div.sv-name>a:hover{
+                                color: #3355FF;
+                            }
+                            #navBar .vkpaging-body>.sv-list>div.sv-state{
+                                float: right;
+                            }
+                        #navBar .vkpaging-body>.sv-list:hover{
+                            color: #333;
+                            cursor: pointer;
+                        }
+                        #navBar .vkpaging-body>.sv-list:hover>.sv-name>a{
+                            color: #333;
+                        }
+                    #navBar div.switch-content .vkpaging-nav{
+                        padding-right: 20px;
+                        margin-top: 30px;
+                    }
+#Main{
+    width: 960px;
+    min-height: 500px;
+    padding: 0;  
+    margin: 20px auto;
+    overflow: hidden;
+}    
+#sideBar{
+    width: 140px;
+    float: right;
+    overflow: hidden; 
+    }   
+    #sideBar ul.nav{
+        width: 95%;
+        font: 17px "宋体",Tahoma;
+        }
+        #sideBar ul.nav>li>a{
+            border-radius: 0;
+        }
+#statistContent{
+    width: 800px;
+    float: left;
+    overflow: hidden;
+    }    
+    #statistContent>div.tab-pane{
+        width: 100%;
+        margin-bottom: 30px;
+        float: left;
+        overflow: hidden;
+    }    
+#surveyStats>div{
+    margin-bottom: 20px;
+    overflow: hidden;
+}    
+#itemStats{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #E8E8E8;
+    }
+    #itemStats>div.stats-desc{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        padding: 5px 0;
+        float: left;
+        overflow: hidden;
+        font-family: "宋体",Tahoma;
+        }
+        #itemStats>div.stats-desc>div{
+            width: 25%; 
+            float: left;
+            line-height: normal;
+            text-align: center;
+            }
+            #itemStats>div.stats-desc div.item-num{
+                width: 100%;
+                font-size: 49px;
+                font-weight: 900;
+                color: #777;
+            }
+            #itemStats>div.stats-desc div.item-title{
+                width: 100%;
+                font-size: 19px;
+                color: #9F9F9F  ;
+            }
+    #itemStats>div.stats-graphs{
+        width: 100%;
+        height: 10px;
+        float: left;
+        }
+        #itemStats>div.stats-graphs>div{
+            height: 100%;
+            float: left;
+        }
+        #itemStats>div.stats-graphs>div.line-radio{
+            background: #FF7F50;
+        }
+        #itemStats>div.stats-graphs>div.line-checkbox{
+            background: #87CEFA;
+        }
+        #itemStats>div.stats-graphs>div.line-textarea{
+            background: #FFD700;
+        }
+    
+#actionStats{
+        width: 798px;
+        float: left;
+        overflow: hidden; 
+        border: 1px solid #E8E8E8;
+    }
+    #actionStats>div.stats-desc{
+        width: 100%;
+        overflow: hidden;
+        background: #EFEFEF;
+        border-bottom: 1px solid #E8E8E8;
+        }
+        #actionStats>div.stats-desc>div{
+            width: 230px;
+            height: 20px;
+            padding: 10px 0 10px 20px;
+            float: left;
+            font: 17px "宋体",Tahoma;
+        }
+        #actionStats>div.stats-desc>div>div{
+            margin-left: 10px;
+            float: left; 
+        }
+    #actionStats>div.stats-graphs{
+        width: 100%;
+        height: 230px;
+        float: right;
+    }
+    
+#areaStats{
+        width: 798px;
+        float: left;
+        overflow: hidden; 
+        border: 1px solid #E8E8E8;
+    }
+    #areaStats>div.stats-desc{
+        width: 100%;
+        overflow: hidden;
+        background: #EFEFEF;
+        border-bottom: 1px solid #E8E8E8;
+        }
+        #areaStats>div.stats-desc>div{
+            width: 230px;
+            height: 20px;
+            padding: 10px 0 10px 20px;
+            float: left;
+            font: 17px "宋体",Tahoma;
+        }
+        #areaStats>div.stats-desc>div>div{
+            margin-left: 10px;
+            float: left; 
+        }
+    #areaStats>div.stats-graphs{
+        width: 100%;
+        height: 250px;
+        float: right;
+    }
+    
+#questionStats{
+    width: 800px;
+    overflow: hidden;
+    }
+    #questionStats>div{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        float: left;
+        }
+        #qtStatsHeader>div.select-qt>select{
+            width: 100%;
+            margin: 0;
+            font: 19px "宋体",Tahoma;
+        }
+#questionStats>#qtStatsBody{
+    margin: 0;
+    padding-top: 20px;
+    }
+    #qtStatsBody>div.question{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        margin-bottom: 20px;
+        border: 1px solid #CFCFCF;
+        }
+        div.question>div.item-header{
+            margin-bottom: 0;
+            padding-left: 0;
+            border: 0;
+            border-bottom: 1px solid #CFCFCF;
+            min-height: 20px;
+            }
+            div.question>div.item-header>div.qt-name{
+                margin: 8px;
+                float: left;
+                font: 17px "宋体",Tahoma;  
+            }
+        div.question>div.qt-text{
+            width: 100%;
+            }
+            div.question>div.qt-text>div.text-init{
+                display: block ;
+                width: 100%;
+                height: 50px;
+                }
+                div.question>div.qt-text>div.text-init>button{
+                    font: 17px "宋体",Tahoma;  
+                }
+            div.question>div.qt-text>div.text-body{
+                display: none;
+                width: 100%;
+                overflow: hidden;
+                }
+                div.question div.text-body .text-list{
+                    box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    width: 100%;
+                    min-height: 50px;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    overflow: hidden;
+                    border-bottom: 1px dotted #E3E3E3;
+                    }
+                    div.question div.text-body .text-list>.photo-box{
+                        width: 50px;
+                        height: 50px;
+                        float: left;
+                        }
+                        div.question .text-list>.photo-box>img{
+                            width: 100%;
+                            height: 100%;
+                        }
+                    div.question div.text-body .text-list>.content-box{
+                        width: 720px;
+                        padding: 0 10px;
+                        float: left;
+                        }
+                        div.question .text-list>.content-box>.text-content{
+                            width: 100%;
+                            min-height: 45px;
+                            float: left;
+                            font: 12px "微软雅黑",Tahoma;
+                            color: #777;
+                        }
+                        div.question .text-list>.content-box>.user-area{
+                            width: 100%;
+                            height: 10px;
+                            padding: 5px 0;
+                            float: left;
+                            text-align: right;
+                            color: #999;
+                        }
+            div.question div.text-body .vkpaging-nav{
+                margin-top: 20px;
+                overflow: hidden;
+            }
+            div.question>div.qt-text.active>div.text-init{
+                display: none;
+                }
+            div.question>div.qt-text.active>div.text-body{
+                display: block;
+                }
+        div.question div.stats-opt{
+            width: 780px;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+        table.table-bordered.table-thin th{
+            padding: 5px;
+            background: #EFEFEF;
+            font: 14px "微软雅黑",Tahoma;  
+            text-align: center;
+            border-radius: 0;
+        }    
+        table.table-bordered.table-thin td{
+            padding: 3px;
+            font: 12px "微软雅黑",Tahoma;  
+        }    
+        table.table-bordered .option-seq{
+            width: 30px;
+            text-align: center;
+        }
+        table .option-name{
+            width: 370px;
+        }
+        table.table-bordered .choose-num{
+            width: 50px;
+            text-align: center;
+        }
+        table.table-bordered .option-stats{
+            width: 160px;
+            }    
+            table.table-bordered .option-stats div.stats-ratio{
+                padding: 0;
+                margin-left: 10px;
+                float: left;
+            }
+            table.table-bordered .option-stats div.stats-line{
+                width: 145px;
+                height: 12px;
+                margin-top: 3px;
+                float: left;
+                border: 0;
+                border-radius: 0;
+                background: #F5F5F5;
+                }
+                table.table-bordered .option-stats div.stats-line div.ui-progressbar-value{
+                    border-color: #6bb130;
+                    background: #6bb130;
+                }
+        div.question>div.stats-prop{
+            width: 780px;
+            margin: 0 auto;
+            }
+            div.question>div.stats-prop>div.action-box{
+                width: 100%;
+                height: 40px;
+                }
+                div.stats-prop>div.action-box>div{
+                    width: 50%;
+                    float: left;
+                }
+                div.stats-prop>div.action-box>div.action-prop>select{
+                    width: 180px;
+                    float: left;
+                    font: 17px "宋体",Tahoma;  
+                }
+                div.stats-prop>div.action-box>div.action-option>select{
+                    width: 400px;
+                    float: right;
+                    font: 17px "宋体",Tahoma;  
+                }
+            div.question>div.stats-prop>div.graphs-box{
+                width: 720px;
+                margin: 20px 10px;
+                overflow: hidden;
+                }
+                div.stats-prop>div.graphs-box>div.nochart{
+                    margin: 30px auto;
+                    font: 21px "宋体",Tahoma;  
+                    color: #999999;
+                }
+#questionStats.single #qtStatsBody{
+    padding-top: 0;
+    }
+
+#questionStats.single div.select-qt>select{
+    border-bottom: 0;
+    }
+    #questionStats.single div.question>.item-header{
+        display: none;
+    }
+
+/********* 调查内容模块样式 *********/
+
+#surveyContent{
+    width: 100%;
+    min-height: 400px;
+    overflow: hidden;
+    }
+    #surveyContent>div.sv-desc{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        padding: 5px 10px;
+        margin-bottom: 20px;
+        font-size: 12px;
+        color: #666;
+        border: 1px solid #CCC;
+        border-top: 0;
+    }
+    #surveyContent>div.sv-item{
+       padding: 10px 0;
+       border: 1px solid #CCC;
+    }
+    div.question-item{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        margin-bottom: 5px;
+        padding: 0 0 10px 0;
+        overflow: hidden;
+        }
+        div.question-item>div.qt-title{
+            width: 100%;
+            margin: 10px 0;
+            overflow: hidden;
+            font: 19px "宋体",Tahoma;  
+            color: #000;
+            opacity: 0.8;
+            }
+            div.question-item>div.qt-title>div.qt-seq{
+                width: 28px;
+                height: 21px;
+                margin-right: 5px;
+                padding-right: 10px;
+                float: left;
+                text-align: right;
+                color: #333 ;
+                border-right: 1px solid #FFF;
+                border-bottom: 1px solid #CCC;
+            }
+            div.question-item>div.qt-title>div.qt-name{
+                width: 650px;
+                float: left;
+            }
+            div.question-item>div.qt-title>div.qt-type{
+                width: 100px;
+                height: 18px;
+                padding: 2px;
+                font: 17px "宋体",Tahoma;  
+                color: #999;
+                float: right;
+                border-bottom: 1px solid #CCC;
+            }
+        div.question-item:hover>div.qt-title{
+            opacity: 1;
+            }
+            div.question-item:hover>div.qt-title>div.qt-seq{
+                border-color: #CCC;
+            }
+        div.question-item>div.qt-option{
+            width: 650px;
+            margin-left: 45px;
+            }
+            div.question-item .vf-elem-option{
+                font: 17px "宋体",Tahoma;
+                color: #999;
+                overflow: hidden;
+            } 
+            div.qt-option textarea{
+                width: 500px;
+                height: 150px;
+                font: 12px "宋体",Tahoma;
+                box-shadow: none;
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+            }
+            div.qt-option textarea:hover{
+                border-color: #AFAFAF;
+            }
+            div.qt-option textarea:focus{
+                border-color: #999;
+            }
+
+/********* 调查设置模块样式 *********/
+
+#surveySetting>div.sv-setting{
+    width: 100%;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    }
+    #surveySetting div.sv-prop-elem{
+        width: 100%;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        font: 17px "宋体",Tahoma;
+        overflow: hidden;
+        border-bottom: 1px dotted #CCC;
+        }
+        #surveySetting div.sv-prop-elem>div.sp-elem-header{
+            width: 15%;
+            min-width: 80px;
+            padding: 5px 0;
+            float: left;
+            color: #333;
+            }
+        #surveySetting div.sv-prop-elem>div.sp-elem-content{
+            width: 85%;
+            min-width: 100px;
+            float: left;
+            color: #555;
+            }
+            #surveySetting div.sv-prop-elem>div.sp-elem-content>div.spe-item{
+                width: 100%;
+                padding: 5px 0;
+                float: left;
+                overflow: hidden;
+                }
+                #surveySetting div.sp-elem-content>div.spe-item>div{
+                    min-width: 150px;
+                    margin-left: 10px;
+                    float: left;
+                }
+                #surveySetting div.sp-elem-content>div.spe-item>div.spe-item-value{
+                    min-width: 200px;
+                    color: #777;
+                }
+                #surveySetting div.sp-elem-content>div.spe-item:hover{
+                    background: #F6F6F6;
+                    }
+                    #surveySetting div.sp-elem-content>div.spe-item:hover>div{
+                        color: #333;
+                    }
+                    #surveySetting div.sp-elem-content .spe-item-action{
+                        padding-left: 20px;
+                    }
+                    #surveySetting div.sp-elem-content>div.spe-item button.btn-link{
+                        padding: 0;
+                    }
+                #surveySetting div.sp-elem-content>div.spe-item>div.spe-item-content{
+                    width: 500px;
+                    }
+                    #surveySetting div.spe-item-content>div.recommend-rule{
+                        width: 100%;
+                        margin-bottom: 5px;
+                        float: left;
+                        }
+                        #surveySetting div.spe-item-content>div.recommend-rule>div.recommend-rule-desc{
+                            width: 50px;
+                            margin-right: 10px;
+                            float: left;
+                        }
+                        #surveySetting div.spe-item-content>div.recommend-rule>div.recommend-rule-value{
+                            width: 440px;
+                            float: left;
+                        }
+
+#Footer{
+    border-top: 1px solid #CCC;
+}

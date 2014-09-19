@@ -1,0 +1,60 @@
+/*
+ * Document    : vkbutton.css
+ * Description : CSS for vkbutton.html
+ *
+ * Created on  : 2012-9-25
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+#Main{
+    width: 960px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+.vk-button{
+    width: 100%;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    overflow: hidden;
+    border-bottom: 1px solid #CCC;
+    }
+    .vk-btn-head{
+        padding-left: 10px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        border-left: 10px solid #666;
+        }
+        .vk-btn-head>label{
+            font-size: 19px;
+            color: #666;
+        }
+    .vk-btn-body{
+        margin-left: 20px;
+    }
+    .vk-button button{    
+        margin-right: 50px;
+        margin-bottom: 10px;
+    }
+    .vk-btn-body.default button, .vk-btn-body.border button{
+        width: 140px;    
+    }
+    .vk-button table{
+        margin-right: 100px;
+        float: left;
+        border:1px solid black;
+        border-collapse:collapse;
+    }
+    .vk-button td{
+        height: 100px;
+        width: 150px;
+        padding: 0px;
+        border:1px solid black;
+    }
+    .vk-btn-body.size>div{
+        margin-right: 10px;
+        float: left;
+        overflow: hidden;
+    }
+
+

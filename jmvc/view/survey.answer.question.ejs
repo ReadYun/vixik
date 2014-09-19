@@ -1,0 +1,64 @@
+<div class="question-item vf-elem" data-question_code="<%=data['question_code']%>" data-question_type="<%=data['question_type']%>" data-question_seq="<%=data['question_seq']%>" data-custom-option="<%=data['custom_option']%>" 
+<%if(data['question_type'] == 'textarea'){%>
+	data-elem-type="optional">
+<%}else{%>
+	data-elem-type="required">
+<%}%>
+	<%if(data['question_type'] !== 'textarea'){%>
+    <div class="qt-title seq-<%=data['question_seq']%>">
+	    <div class="qt-seq"><%=data['question_seq']%></div>
+	    <div class="qt-name"><%=data['question_name']%></div>
+		<%if(data['question_type'] == 'radio'){%>
+        	<div class="qt-type" data-required="1">单选题|必选</div>
+		<%}else{%>
+        	<div class="qt-type" data-required="1">多选题|必选</div>
+		<%}%>
+    </div>
+    <div class="qt-option">
+        <%for(var i = 0; i < data['option'].length; i++){%>
+			<%if(data['option'][i]['option_name']){%>
+	    	<label class="vf-elem-option">
+		        <input type="<%=data['question_type']%>" name="<%=data['question_code']%>" value="<%=data['option'][i]['option_code']%>" data-required="1">
+		    	<%=data['option'][i]['option_name']%>
+	    	</label>
+			<%}%>
+		<%}%>
+		<div class="custom-option" data-state='-1' style="display:none">
+			<div class="custom-opt-header"><button class="vkbutton vbtn-border vbtn-default co-init">加入我的选项</button></div>
+			<div class="custom-opt-content">
+				<div class="coc-body">
+					<div class="custom-opt-name">
+                        <label>请输入自定义选项名称</label>
+                        <input type="text" placeholder="自定义选项名称">
+					</div>
+					<div class="custom-opt-spare elem-form">
+                        <label>如果该自定义选项被下线，该选项下的所有选择将被合并到下列哪个选项中？</label>
+                        <select type="select" class="input-xlarge">
+                        </select>
+					</div>
+					<div class="co-button">
+						<button class="vkbutton vbtn-border vbtn-default co-submit">确定</button>
+						<button class="vkbutton vbtn-border vbtn-default co-cancel">取消</button>
+					</div>
+				</div>
+			</div>
+			<div class="custom-opt-result">
+		    	<div class="cor-option vf-elem-option">
+			        <input type="<%=data['question_type']%>" name="<%=data['question_code']%>" class="custom-opt" data-required="1">
+			        <div class="co-input-name"></div>
+		    	</div>
+		    	<div class="cor-alter"><i class="icon-pencil" title="编辑"></i><i class="icon-remove" title="删除"></i></div>
+			</div>
+		</div>
+    </div>
+	<%}else{%>
+    <div class="qt-title seq-<%=data['question_seq']%>">
+	    <div class="qt-seq"><%=data['question_seq']%></div>
+	    <div class="qt-name"><%=data['question_name']%></div>
+        <div class="qt-type" data-required="0">主观题|可选</div>
+    </div>
+    <div class="qt-option">
+		<textarea type="textarea" name="<%=data['question_code']%>" data-required="0"></textarea>
+    </div>
+	<%}%>
+</div>

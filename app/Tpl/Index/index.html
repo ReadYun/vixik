@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="维新调研 · 倾听观点，发现价值"/>
+    <link rel="stylesheet" href="__JMVC__/style/index.index.css#!watch" type="text/css" />
+</head>
+<body>
+    <div id="Header">
+        <include file="Public:topBar" home="current" nav-type="main" need-login="0" min-search="hide"/>
+    </div>
+    <div id="Main">
+        <div id="viewBox" class="block">
+            <img href="{:U('survey/index')}" src="__JMVC__/public/image/background/view1.jpg">
+        </div>
+        <div id="searchBox" class="fixed">
+            <div class="search-main-desc">来发现更多有趣的</div>
+            <div class="search-sub-desc">方便、快速的帮助您搜索个性化的调查内容</div>
+            <div class="search-body">
+                <input id="mainSearch" class="search-input" type="text" placeholder="搜索您感兴趣的: 调查/问题/用户...">
+                <i class="icon-search icon-large"></i>
+            </div>
+        </div>
+        <div id="actionBox" class="fixed">
+            <div class="action-publish">
+                <div class="stats-chart">
+                    <div class="chart-title"></div>
+                    <div class="chart-body highchart" data-model="publish$"></div>
+                </div>
+                <div class="start-action">
+                    <div class="action-desc">每天，各种有趣的调查活动在这里进行</div>
+                    <div class="action-button">
+                        <button type="button" class="vkbutton vbtn-vixik xlarge block" href="{:U('survey/create')}">发布调查，倾听观点</button>
+                    </div>
+                </div>
+            </div>
+            <div class="action-partake">
+                <div class="stats-chart">
+                    <div class="chart-title"></div>
+                    <div class="chart-body highchart" data-model="partake$"></div>
+                </div>
+                <div class="start-action">
+                    <div class="action-desc">每天，无数的朋友在这里参与调查活动</div>
+                    <div class="action-button">
+                        <button type="button" class="vkbutton vbtn-vixik xlarge block" href="{:U('survey/answer')}">参与调查，赢得奖励</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="descBox">
+            <div>
+                <div class="desc-elem">发布调查</div>
+                <div class="desc-elem">参与调查</div>
+                <div class="desc-elem">查看分析</div>
+                <div class="desc-elem">各种奖励</div>
+            </div>
+        </div>
+        <div id="surveyType">
+            <div class="sv-type-chart"></div>
+            <div class="sv-type-body">
+                <div>
+                    <div class="survey-type">民意调查</div>
+                    <div class="survey-type">商业调查</div>
+                    <div class="survey-type">品牌调查</div>
+                    <div class="survey-type">个性调查</div>
+                </div>
+            </div>
+        </div>
+        <div id="customBox">
+            <div class="box-header">我们都在用</div>
+            <div class="box-content">
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">xxx</div>
+                <div class="cb-elem">虚位以待</div>
+            </div>
+        </div>
+
+        <div id="mainBox" style="display:none">
+            <div class="main-box">
+                <div id="surveyBox">
+                    <div id="newSurvey">
+                        <div class="box-title">最新问卷</div>
+                        <div class="box-body">
+                            <div class="list-elem">
+                                <div class="sv-title">标题xxxx</div>
+                                <div class="sv-date">2小时前</div>
+                            </div>
+                            <div class="list-elem">
+                                <div class="sv-title">标题xxxx的发发呆</div>
+                                <div class="sv-date">2小时前</div>
+                            </div>
+                            <div class="list-elem">
+                                <div class="sv-title">阿德法撒旦法第三方标题xxxx</div>
+                                <div class="sv-date">5小时前</div>
+                            </div>
+                            <div class="list-elem">
+                                <div class="sv-title">标题xxxx</div>
+                                <div class="sv-date">13-9-21</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="hotSurvey">
+                        <div class="box-title">最热问卷</div>
+                        <div class="box-body">
+                            <div class="list-elem">
+                                <div class="sv-title">标题xxxx</div>
+                                <div class="sv-date">2小时前</div>
+                            </div>
+                            <div class="list-elem">
+                                <div class="sv-title">标题xxxx的发发呆</div>
+                                <div class="sv-date">2小时前</div>
+                            </div>
+                            <div class="list-elem">
+                                <div class="sv-title">阿德法撒旦法第三方标题xxxx</div>
+                                <div class="sv-date">5小时前</div>
+                            </div>
+                            <div class="list-elem">
+                                <div class="sv-title">标题xxxx</div>
+                                <div class="sv-date">13-9-21</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Footer">
+        <include file="Public:footer" type="main"/>
+    </div>
+</body>
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/index.index.js"></script>
+</html>

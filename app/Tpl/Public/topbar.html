@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <link rel="stylesheet" href="__JMVC__/style/public.topbar.css" type="text/css"/>
+</head>
+<body>
+    <div id="topNavWrapper">
+        <div id="topNav" data-logged-in="0" style="display:none">
+            <div class="nav-left">
+                <div class="nav-box [nav-type]">
+                    <div class="home [home]" title="首页"><a href="__COM__"><i class="icon-home"></i></a></div>
+                    <div class="[survey] main"><a href="__COM__/survey">调查中心</a></div>
+                    <div class="[brand] main"><a href="__COM__/brand">品牌专区</a></div>
+                    <div class="[shop] main"><a href="__COM__/shop">积分商城</a></div>
+                    <div class="[page] sub current"><a>[nav-name]</a></div>
+                </div>
+            </div>
+            <div class="nav-mid">
+                <div class="search-box [min-search]">
+                    <div class="min-search">
+                        <input id="minSearch" class="search-input" type="text" placeholder="搜索: 调查/问题/用户">
+                        <div class="search-btn"><i class="icon-search"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-user">
+                <div class="login-box">
+                    <ul>
+                        <li class="login" data-toggle="modal"><a class="login">登录</a></li>
+                        <li class="signup"><a class="regist" href="{:U('user/regist')}" target="_blank">注册</a></li>
+                    </ul>
+                </div>
+                <div class="user-box" data-href="{:U('/user')}">
+                    <div class="user-photo">
+                        <a class="img" data-toggle="dropdown">
+                            <i class="icon-user"></i>
+                            <img src="__JMVC__/public/image/user/user.jpg" style="display:none"/>
+                        </a>
+                        <ul class="user-menu dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+                            <div class="nick"></div>
+                            <div class="accout card-box">
+                                <div class="accout-level">
+                                    <div class="value"></div>
+                                    <div class="title">等级</div>
+                                </div>
+                                <div class="accout-coins">
+                                    <div class="value"></div>
+                                    <div class="title">金币</div>
+                                </div>
+                            </div>
+                            <div class="stats card-box">
+                                <div class="sv-public">
+                                    <div class="value"></div>
+                                    <div class="title">已发布调查</div>
+                                </div>
+                                <div class="sv-answer">
+                                    <div class="value"></div>
+                                    <div class="title">已参与调查</div>
+                                </div>
+                            </div>
+                            <div class="action">
+                                <div class="visit" href="{:U('/user')}">访问</div>
+                                <div class="setting" href="{:U('/user')}">设置</div>
+                                <div class="exit">退出</div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <div class="action-box dropdown">
+                    <a class="start dropdown-toggle" data-toggle="dropdown">开始</a>
+                    <ul class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
+                        <li><a tabindex="-1" href="{:U('survey/answer')}">参与调查</a></li>
+                        <li><a tabindex="-1" href="{:U('survey/create')}">创建调查</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------用户登录窗口---------->
+    <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" style="display:none">
+        <div class="modal-header">
+            <i class="close icon-remove" data-dismiss="modal" aria-hidden="true"></i>
+            <h3 id="myModalLabel">用户登录</h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-box">
+                <div class="form-elem user-nick">
+                    <label>用户名</label><input class="login-user" type="text">
+                </div>
+                <div class="form-elem user-password">
+                    <label>密码</label><input class="login-pswd" type="password">
+                </div>
+                <button type="button" class="vkbutton vbtn-vixik vbtn-pure btn-block">登 录</button>
+            </div>
+            <div class="warning-box">
+                <div class="warning alert" style="display:block">用户名或密码错误，请重新输入</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a>忘记密码</a><span>|</span><a>注册新用户</a>
+        </div>
+    </div>
+</body>
+</html>

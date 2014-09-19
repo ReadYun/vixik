@@ -1,0 +1,17 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <div class="fu-elem">
+        <div class="f-list-photo"><img src="/vixik/jmvc/style/image/man.png"></div>
+        <div class="f-list-main">
+            <div class="user-nick"><a href="<%= data[i].url_user %>"><%= data[i].user_nick %></a></div>
+            <div class="user-acc">
+                <div title="用户级别"><i class="icon-trophy"></i><%= data[i].user_level_desc %></div>
+                <div title="发布调查"><i class="icon-bullhorn"></i><%= data[i].publish_times %></div>
+                <div title="参与调查"><i class="icon-pencil"></i><%= data[i].answer_times %></div>
+            </div>
+            <div class="user-action" data-code="<%= data[i].user_code %>" data-type='user'>
+                <a class="vkbutton vbtn-border vbtn-default cancel">取消关注</a>
+                <a class="vkbutton vbtn-border vbtn-default" href="<%= data[i].url_user %>" target="_blank">访问用户</a>
+            </div>
+        </div>
+    </div>
+<%}%>

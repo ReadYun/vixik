@@ -1,0 +1,58 @@
+/*
+ * Document    : vkPagingcss
+ * Description : vkPaging分页插件的默认样式
+ *
+ * Created on  : 2013-6-13, 4:18:34
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+
+ul.pag-nav-main{
+    float: right;
+    list-style:none;
+    background: #F9F9F9;
+    }
+    ul.pag-nav-main>li{
+        min-width: 16px;
+        height: 20px;
+        padding: 0 2.5px;
+        margin: 0 0.5px;
+        float: left;
+        font-size: 14px;
+        text-align: center;
+        cursor: pointer;
+        opacity: 0.8;
+        background: #E3FFE3;
+        }
+        ul.pag-nav-main>li>a{
+        	font-family: "Helvetica Neue",​Helvetica,​Arial,​sans-serif;
+            color: #6BB130;
+        }
+        ul.pag-nav-main>li.prev>a, ul.pag-nav-main>li.next>a{
+            position: relative;
+            top: -1.5px;
+        }
+    ul.pag-nav-main>li.active{
+        background: #6BB130;
+        opacity: 1;
+        cursor: auto;
+	    }
+	    ul.pag-nav-main>li.active>a{
+	        color: #FFF;
+	    }
+    ul.pag-nav-main>li:hover{
+        background: #6BB130;
+    }
+    ul.pag-nav-main>li:hover>a{
+        color: #FFF;
+        text-decoration: none;
+    }
+    ul.pag-nav-main>li.disabled{
+        background: #FFF;
+    }
+    ul.pag-nav-main>li.disabled:hover{
+        background: none;
+        }
+        ul.pag-nav-main>li.disabled>a{
+            color: #CCC;
+        }

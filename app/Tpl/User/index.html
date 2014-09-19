@@ -1,0 +1,814 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="个人中心 · {$user['user_nick']} | 维新调研 · 倾听观点，发现价值"/>
+    <link rel="stylesheet" href="__JMVC__/style/user.index.css" type="text/css" />
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/user.index.js"></script>
+</head>
+<body>
+    <div id="Header" data-verify="1">
+        <include file="Public:topBar" nav-type="sub" nav-name="个人中心" need-login="1"/>
+    </div>
+    <div id="Main">
+        <div id="mainLeft">
+            <div id="leftBox">
+                <div id="mainMenu" class="tabbable tabs-left">
+                    <ul class="nav nav-list nav-main">
+                        <li class="nav-main my-info">
+                            <a class="nav-main" href="#myInfo" data-toggle="tab">我的资料</a>
+                            <ul class="nav nav-list nav-sub">
+                                <li class="nav-sub active"><a href="#base-info" data-toggle="tab">基本资料</a></li>
+                                <li class="nav-sub"><a href="#extend-info" data-toggle="tab">个性资料</a></li>
+                                <li class="nav-sub"><a href="#user-photo" data-toggle="tab">个性头像</a></li>
+                                <li class="nav-sub"><a href="#user-contact" data-toggle="tab">联系方式</a></li>
+                                <li class="nav-sub"><a href="#safe-setting" data-toggle="tab">安全设置</a></li>
+                                <li class="nav-sub"><a href="#accout-bind" data-toggle="tab">帐号绑定</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-main">
+                            <a class="nav-main" href="#myAction" data-toggle="tab">我的调查</a>
+                            <ul class="nav nav-list nav-sub">
+                                <li class="nav-sub active"><a href="#created-sv" data-toggle="tab">创建的调查</a></li>
+                                <li class="nav-sub"><a href="#answered-sv" data-toggle="tab">参与的调查</a></li>
+                                <li class="nav-sub"><a href="#user-task" data-toggle="tab">我的任务</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-main">
+                            <a class="nav-main" href="#myAccout" data-toggle="tab">我的账户</a>
+                            <ul class="nav nav-list nav-sub">
+                                <li class="nav-sub active"><a href="#accout-desc" data-toggle="tab">等级规则</a></li>
+                                <li class="nav-sub"><a href="#score-log" data-toggle="tab">积分日志</a></li>
+                                <li class="nav-sub"><a href="#coins-log" data-toggle="tab">金币日志</a></li>
+                                <li class="nav-sub"><a href="#coins-charge" data-toggle="tab">金币充值</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-main">
+                            <a class="nav-main" href="#myCollect" data-toggle="tab">我的关注</a>
+                            <ul class="nav nav-list nav-sub">
+                                <li class="nav-sub active"><a href="#follow-user" data-toggle="tab">关注的用户</a></li>
+                                <li class="nav-sub"><a href="#follow-survey" data-toggle="tab">关注的调查</a></li>
+                                <li class="nav-sub"><a href="#follow-svtype" data-toggle="tab">关注的分类</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-main my-right">
+                            <a class="nav-main" href="#myRight" data-toggle="tab">我的权限</a>
+                            <ul class="nav nav-list nav-sub">
+                                <li class="nav-sub active"><a href="#right-curr" data-toggle="tab">当前权限</a></li>
+                                <li class="nav-sub"><a href="#right-desc" data-toggle="tab">权限说明</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="mainRight">
+            <div id="rightBox" class="tab-content">
+                <div id="myInfo" class="tab-pane pane-main">
+                    <div class="pane-body tab-content">
+                        <div id="base-info" class="tab-pane pane-sub vk-form active">
+                            <div class="pane-title">基本资料</div>
+                            <div class="pane-content">
+                                <div id="nick" class="pane-elem" title="我的昵称 · 必填">
+                                    <label>我的昵称 *</label>
+                                    <div class="pane-elem-form vf-elem" data-elem-type="required">
+                                        <input type="text" name="user_nick" class="input-xxlarge base-info" placeholder="输入昵称">
+                                    </div>
+                                </div>
+                                <div id="sex" class="pane-elem" title="我的性别 · 选填">
+                                    <label>我的性别</label>
+                                    <div class="pane-elem-form vf-elem" data-vf-fix="1">
+                                        <label class="vf-elem-option inline"><input type="radio" name="user_sex" class="sex base-info" value="1">男</label>
+                                        <label class="vf-elem-option inline"><input type="radio" name="user_sex" class="sex base-info" value="2">女</label>
+                                    </div>
+                                </div>
+                                <div id="birthday" class="pane-elem" title="我的生日 · 选填">
+                                    <label>我的生日</label>
+                                    <div class="pane-elem-form">
+                                        <div class="vf-elem">
+                                            <input type="text" name="birth_year" class="base-info" placeholder="输入年份" data-input-suffix="年">
+                                        </div>
+                                        <div class="vf-elem" data-fix="vkform" data-vf-fix="1" data-vf-sub="birth_day">
+                                            <select type="select" name="birth_month" class="base-info">
+                                                <option class="init" style="display:none">出生月份</option>
+                                                <option value="1">1月</option><option value="2">2月</option>
+                                                <option value="3">3月</option><option value="4">4月</option>
+                                                <option value="5">5月</option><option value="6">6月</option>
+                                                <option value="7">7月</option><option value="9">8月</option>
+                                                <option value="9">9月</option><option value="10">10月</option>
+                                                <option value="11">11月</option><option value="12">12月</option>
+                                            </select>
+                                        </div>
+                                        <div class="vf-elem" data-vf-replace="func" data-vf-name="birth_day">
+                                            <select type="select" name="birth_day" class="base-info" data-vf-opt-init="hide">
+                                                <option class="vf-elem-option-tpl init" style="display:none">出生日期</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="area" class="pane-elem" title="所在地区 · 选填">
+                                    <label>所在地区</label>
+                                    <div class="pane-elem-form">
+                                        <div class="vf-elem"  data-vf-name="area_province" data-vf-sub="area_city">
+                                            <select type="select" name="area_province" class="input-xlarge base-info" data-sub-name="area_city">
+                                                <option class="init" style="display:none">请选择省份</option>
+                                                <volist name="province" id="pv">
+                                                    <option class="provice-elem" value="{$pv.area_province_code}">{$pv.area_province_name}</option>
+                                                </volist>
+                                            </select>
+                                        </div>
+                                        <div class="vf-elem" data-vf-name="area_city" data-vf-replace="ajax" data-rep-table="area_city" data-rep-key="area_province_code" data-rep-val="area_city_code" data-rep-tag="area_city_name">
+                                            <select type="select" name="area_city" class="input-xlarge base-info city">
+                                                <option class="vf-elem-option-tpl init" value="" style="display:none">请选择市县</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="edu" class="pane-elem" title="最高学历 · 选填">
+                                    <label>最高学历</label>
+                                    <div class="user-edu pane-elem-form vf-elem">
+                                        <select type="select" name="user_edu" class="input-xlarge base-info edu">
+                                            <option class="init" style="display:none">请选择学历</option>
+                                            <volist name="edu" id="edu">
+                                                <option class="edu-elem" value="{$edu.user_edu_code}">{$edu.user_edu_desc}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="career" class="pane-elem" title="目前职业 · 选填">
+                                    <label>目前职业</label>
+                                    <div class="user-career pane-elem-form vf-elem">
+                                        <select type="select" name="user_career" class="input-xlarge base-info career">
+                                            <option class="init" style="display:none">请选择职业</option>
+                                            <volist name="career" id="ca">
+                                                <option class="career-elem" value="{$ca.user_career_code}">{$ca.user_career_desc}</option>
+                                            </volist>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="industry" class="pane-elem" title="从事行业 · 选填">
+                                    <label>从事行业</label>
+                                    <div class="pane-elem-form">
+                                        <div class="vf-elem" data-vf-sub="industry_sub">
+                                            <select type="select" name="industry_class" class="input-xlarge base-info" data-sub-name="industry_sub">
+                                                <option class="init" style="display:none">请选择行业大类</option>
+                                                <volist name="industry" id="ds">
+                                                    <option class="industry-elem" value="{$ds.industry_class_code}">{$ds.industry_class_desc}</option>
+                                                </volist>
+                                            </select>
+                                        </div>
+                                        <div class="vf-elem" data-vf-name="industry_sub" data-vf-replace="ajax" data-rep-table="industry_class_sub" data-rep-key="industry_class_code" data-rep-val="industry_class_sub_code" data-rep-tag="industry_class_sub_desc">
+                                            <select type="select" name="industry_sub" class="input-xlarge base-info">
+                                                <option class="vf-elem-option-tpl init" style="display:none">请选择行业小类</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="income" class="pane-elem" title="目前收入 · 选填">
+                                    <label>目前收入</label>
+                                    <div class="pane-elem-form">
+                                        <div class="vf-elem" data-vf-sub="income_section">
+                                            <select type="select" name="income_class" class="input-xlarge base-info" data-sub-name="income_section">
+                                                <option class="init" style="display:none">请选择收入范围</option>
+                                                <volist name="income" id="ic">
+                                                    <option class="income-elem" value="{$ic.user_income_code}">{$ic.user_income_desc}</option>
+                                                </volist>
+                                            </select>
+                                        </div>
+                                        <div class="vf-elem" data-vf-name="income_section" data-vf-replace="ajax" data-rep-table="user_income_section" data-rep-key="section_class_code" data-rep-val="income_section_code" data-rep-tag="income_section_desc">
+                                            <select type="select" name="income_section" class="input-xlarge base-info">
+                                                <option class="vf-elem-option-tpl init" style="display:none">请选择收入详细区间</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pane-footer">
+                                <button type="button" class="vkbutton vbtn-success block large submit">保存修改</button>
+                            </div>
+                        </div>
+                        <div id="extend-info" class="tab-pane pane-sub vk-form">
+                            <div class="pane-title">个性资料</div>
+                            <div class="pane-content">
+                                <div id="character" class="pane-elem" title="我的性格 · 选填">
+                                    <label>我的性格</label>
+                                    <div class="pane-elem-form vf-elem">
+                                    <volist name="character" id="cha">
+                                        <label class="vf-elem-option inline">
+                                            <input type="checkbox" name="user_character" class="character" value="{$cha.user_character_code}">
+                                            {$cha.user_character_desc}
+                                        </label>
+                                    </volist>
+                                    </div>
+                                </div>
+                                <div id="affection" class="pane-elem" title="感情状态 · 选填">
+                                    <label>感情状态</label>
+                                    <div class="pand-elem-form vf-elem">
+                                    <volist name="affection" id="aff">
+                                        <label class="vf-elem-option inline">
+                                            <input type="radio" name="user_affection" class="affection" value="{$aff.user_affection_code}">
+                                            {$aff.user_affection_desc}
+                                        </label>
+                                    </volist>
+                                    </div>
+                                </div>
+                                <div id="stature" class="pane-elem" title="最近身材 · 选填">
+                                    <label>最近身材</label>
+                                    <div class="pane-elem-form vf-elem">
+                                    <volist name="stature" id="sta">
+                                        <label class="vf-elem-option inline">
+                                            <input type="radio" name="user_stature" class="statrue" value="{$sta.user_stature_code}">
+                                            {$sta.user_stature_desc}
+                                        </label>
+                                    </volist>
+                                    </div>
+                                </div>
+                                <div id="hobby" class="pane-elem" title="个人爱好 · 选填">
+                                    <label>个人爱好</label>
+                                    <div class="pane-elem-form vf-elem">
+                                    <volist name="hobby" id="hob">
+                                        <label class="vf-elem-option inline">
+                                            <input type="checkbox" name="user_hobby" class="hobby" value="{$hob.user_hobby_code}">
+                                            {$hob.user_hobby_desc}
+                                        </label>
+                                    </volist>
+                                    </div>
+                                </div>
+                                <div class="pane-elem" title="个人简介 · 选填">
+                                    <label>个人简介</label>
+                                    <div class="pane-elem-form vf-elem">
+                                        <textarea name="user_desc"/></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pane-footer">
+                                <button type="button" class="vkbutton vbtn-success block large submit">保存修改</button>
+                            </div>
+                        </div>
+                        <div id="user-photo" class="tab-pane" data-photo-state="0">
+                            <div class="pane-title">个性头像</div>
+                            <div class="pane-content">
+                                <div class="photo-box">
+                                    <i class="icon-user"></i>
+                                    <img src="__JMVC__/public/image/user/{$user['user_code']}.jpg" style="display:none">
+                                </div>
+                                <div class="upload-tips">
+                                    <ul>
+                                        <li class="ele">支持JPG,PNG,GIF格式，图片小于1MB，尺寸不小于100*100</li>
+                                        <li class="ele">企业用户使用真实LOGO，个人用户使用高清真实头像更受欢迎</li>
+                                        <li class="ele">严禁使用很黄很暴力的图片，违者处罚关小黑屋天天上你家查水表</li>
+                                    </ul>
+                                </div>
+                                <div class="picture-box">
+                                    <div class="crop-box">
+                                        <div class="crop-title">裁剪图片</div>
+                                        <div class="crop-img">
+                                            <img src="__PUBLIC__/image/user/user.png" style="display:none">
+                                        </div>
+                                    </div>
+                                    <div class="crop-preview">
+                                        <div class="preview-title">预览头像</div>
+                                        <div class="preview-body preview-30">
+                                            <div class="preview-img" data-wh="30">
+                                                <img src="__PUBLIC__/image/user/user.png" alt="">
+                                            </div>
+                                            <a>· 小</a>
+                                        </div>
+                                        <div class="preview-body preview-60">
+                                            <div class="preview-img" data-wh="60">
+                                                <img src="__PUBLIC__/image/user/user.png" alt="">
+                                            </div>
+                                            <a>· 中</a>
+                                        </div>
+                                        <div class="preview-body preview-120">
+                                            <div class="preview-img" data-wh="120">
+                                                <img src="__PUBLIC__/image/user/user.png" alt="">
+                                            </div>
+                                            <a>· 大</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button-box">
+                                    <div class="btn-cancel">取消</div>
+                                    <div class="btn-upload">
+                                        <form action="{:U('Api/crop_img')}" method="post" id="pic" class="update-pic">
+                                            <input type="file" id="pic-upload">
+                                            <input type="hidden" id="crop-x" name="x"/>
+                                            <input type="hidden" id="crop-y" name="y"/>
+                                            <input type="hidden" id="crop-w" name="w"/>
+                                            <input type="hidden" id="crop-h" name="h"/>
+                                            <input type="hidden" id='img_src' name='src'/>
+                                            <input type="hidden" id='img_code' name='code'/>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="save-box">
+                                    <button type="button" id="savePhoto" class="vkbutton vbtn-success block large submit">裁剪完成，保存头像</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="user-contact" class="tab-pane pane-sub vk-form">
+                            <div class="pane-title">联系方式</div>
+                            <div class="pane-content">
+                                <div class="pane-elem">
+                                    <label>真实姓名</label>
+                                    <div class="pane-elem-form vf-elem">
+                                        <input type="text" name="sure_name" class="input-xlarge">
+                                    </div>
+                                </div>
+                                <div class="pane-elem">
+                                    <label>真实住址</label>
+                                    <div class="pane-elem-form vf-elem">
+                                        <input type="text" name="user_address" class="input-xlarge">
+                                    </div>
+                                </div>
+                                <div class="pane-elem">
+                                    <label>固定电话</label>
+                                    <div class="pane-elem-form vf-elem">
+                                        <input type="text" name="mobile_phone" class="input-xlarge">
+                                    </div>
+                                </div>
+                                <div class="pane-elem">
+                                    <label>移动电话</label>
+                                    <div class="pane-elem-form vf-elem">
+                                        <input type="text" name="fix_phone" class="input-xlarge">
+                                    </div>
+                                </div>
+                                <div class="pane-elem">
+                                    <label>QQ</label>
+                                    <div class="pane-elem-form vf-elem">
+                                        <input type="text" name="user_qq" class="input-xlarge">
+                                    </div>
+                                </div>
+                                <div class="pane-elem">
+                                    <label>旺旺</label>
+                                    <div class="pane-elem-form vf-elem">
+                                        <input type="text" name="user_ww" class="input-xlarge">
+                                    </div>
+                                </div>
+                                <div class="pane-elem">
+                                    <label>MSN</label>
+                                    <div class="pane-elem-form vf-elem">
+                                        <input type="text" name="user_msn" class="input-xlarge">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pane-footer">
+                                <button type="button" class="vkbutton vbtn-success block large submit">保存修改</button>
+                            </div>
+                        </div>
+                        <div id="safe-setting" class="tab-pane pane-sub">
+                            <div class="pane-title">安全设置</div>
+                            <div class="pane-content">
+                                <div id="email" class="pane-elem">
+                                    <label>安全邮箱</label>
+                                    <div class="pane-elem-form vf-elem">
+                                        <div class="init-box">
+                                            <label class="user-email">{$user['user_email']}</label>
+                                            <button type="button" class="btn btn-link">修改邮箱</button>
+                                        </div>
+                                        <div class="alter-box">
+                                            <div class="alter-elem">
+                                                <label>请输入新电子邮件</label>
+                                                <div class="alter-form">
+                                                    <input type="text" name="user_mail" class="input-xlarge">
+                                                    <div class="elem-hint">
+                                                        <div class="hint-guide">请输入您最常用的电子邮箱</div>
+                                                        <div class="hint-warn">邮箱格式不符合要求</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" id="emailSubmit" class="vkbutton vbtn-success large">确认更新</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="password" class="pane-elem">
+                                    <label>登录密码</label>
+                                    <div class="pane-elem-form vf-elem">
+                                        <div class="init-box">
+                                            <button type="button" class="btn btn-link">更改密码</button>
+                                        </div>
+                                        <div class="alter-box">
+                                            <div class="alter-elem">
+                                                <label>请输入当前密码</label>
+                                                <div class="alter-form">
+                                                    <input type="password" name="old-pwd" class="input-xlarge old-pwd">
+                                                    <div class="elem-hint">
+                                                        <div class="hint-warn">原始密码不正确</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="alter-elem">
+                                                <label>请输入新密码</label>
+                                                <div class="alter-form">
+                                                    <input type="password" name="new-pwd" class="input-xlarge new-pwd">
+                                                    <div class="elem-hint">
+                                                        <div class="hint-guide">要求6位以上字母和数字组合</div>
+                                                        <div class="hint-warn">新密码设置不符合要求</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="alter-elem">
+                                                <label>再次确认新密码</label>
+                                                <div class="alter-form">
+                                                    <input type="password" name="new-pwdd" class="input-xlarge new-pwdd">
+                                                    <div class="elem-hint">
+                                                        <div class="hint-warn">两次新密码输入不一致</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="button" id="pwdSubmit" class="vkbutton vbtn-success large">确认更新</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="accout-bind" class="tab-pane pane-sub">
+                            <div class="pane-title">帐号绑定</div>
+                            <div class="pane-content">功能即将开放</div>
+                        </div>
+                    </div>
+                    <div class="pane-side">
+                        <div class="pane-side-elem info-complete">
+                            <div class="side-elem-header">
+                                <div class="side-title">资料完整度</div>
+                                <div class="progress-value"></div>
+                            </div>
+                            <div class="side-elem-content">
+                                <div class="complete-progress" title=""></div>
+                                <div class="cpl-elem base-info" data-key="base" data-prefect="1">
+                                    <div class="cpl-elem-header">
+                                        <div class="cpl-elem-name">基本资料</div>
+                                        <div class="cpl-elem-value"></div>
+                                    </div>
+                                    <div class="cpl-elem-action"><a data-target="#base-info">修改</a></div>
+                                </div>
+                                <div class="cpl-elem extend-info" data-key="extend" data-prefect="0">
+                                    <div class="cpl-elem-header">
+                                        <div class="cpl-elem-name">个性资料</div>
+                                        <div class="cpl-elem-value"></div>
+                                    </div>
+                                    <div class="cpl-elem-action"><a data-target="#extend-info">修改</a></div>
+                                </div>
+                                <div class="cpl-elem user-photo" data-key="photo" data-prefect="0">
+                                    <div class="cpl-elem-header">
+                                        <div class="cpl-elem-name">个性头像</div>
+                                        <div class="cpl-elem-value"></div>
+                                    </div>
+                                    <div class="cpl-elem-action"><a data-target="#user-photo">修改</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pane-side-elem accordion" id="info-accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#info-accordion" href="#info-accordion1">
+                                        为什么要完善资料
+                                    </a>
+                                </div>
+                                <div id="info-accordion1" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        为什么要完善资料....
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#info-accordion" href="#info-accordion2">
+                                        关于用户隐私
+                                    </a>
+                                </div>
+                                <div id="info-accordion2" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        Anim pariatur cliche...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="myAction" class="tab-pane pane-main">
+                    <div class="pane-body tab-content">
+                        <div id="created-sv" class="tab-pane pane-sub active">
+                            <div class="pane-title">创建的调查</div>
+                            <div class="pane-content">
+                                <div class="survey-null">
+                                    <div class="box-explain">您还未创建过任何调查...</div>
+                                    <div class="box-button">
+                                        <button class="vkbutton vbtn-border vbtn-primary xlarge">现在去创建调查</button>
+                                    </div>
+                                </div>
+                                <div class="survey-box" style="display:none">
+                                    <div class="content-header">
+                                        <div class="sv-filter">
+                                            <ul class="nav nav-tabs">
+                                                <li class="elem active" sv-state="1,2,3,4"><a>所有调查<i class="sv-stats">0</i></a></li>
+                                                <li class="elem" sv-state="1"><a>未发布调查<i class="sv-stats">0</i></a></li>
+                                                <li class="elem" sv-state="2"><a>已发布调查<i class="sv-stats">0</i></a></li>
+                                                <li class="elem" sv-state="3"><a>进行中调查<i class="sv-stats">0</i></a></li>
+                                                <li class="elem" sv-state="4"><a>已结束调查<i class="sv-stats">0</i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="content-box vkpaging">
+                                        <div class="vkpaging-null">
+                                            <div class="box-explain">无此状态调查活动...</div>
+                                        </div>
+                                        <div class="vkpaging-box">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="survey-title">调查名称</th>
+                                                        <th class="create-date">创建时间</th>
+                                                        <th class="survey-state">状态</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="vkpaging-body">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="vkpaging-footer">
+                                            <div class="vkpaging-nav"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="answered-sv" class="tab-pane pane-sub">
+                            <div class="pane-title">参与的调查</div>
+                            <div class="pane-content vkpaging">
+                                <div class="vkpaging-null">
+                                    <div class="box-explain">您还未参与过任何调查...</div>
+                                    <div class="box-button"><button class="vkbutton vbtn-border vbtn-primary xlarge">现在去参与调查</button></div>
+                                </div>
+                                <div class="vkpaging-box">
+                                    <div class="vkpaging-body survey-list"></div>
+                                    <div class="vkpaging-footer">
+                                        <div class="vkpaging-nav"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="user-task" class="tab-pane pane-sub">
+                            <div class="pane-title">我的任务</div>
+                            <div class="pane-content">
+                                功能即将开放
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pane-side">
+                        <div class="pane-side-elem side-card-box">
+                            <div class="publish-sv-num card-elem">
+                                <div class="card-value">{$user['publish_times']}</div>
+                                <div class="card-title">发布的调查</div>
+                            </div>
+                            <div class="answered-sv-num card-elem">
+                                <div class="card-value answer-sv-num">0</div>
+                                <div class="card-title">参与的调查</div>
+                            </div>
+                        </div>
+                        <div class="pane-side-elem accordion" id="action-accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#action-accordion" href="#action-accordion1">
+                                        任务说明
+                                    </a>
+                                </div>
+                                <div id="action-accordion1" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        Anim pariatur cliche...
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#info-accordion" href="#info-accordion2">
+                                        关于调查状态
+                                    </a>
+                                </div>
+                                <div id="info-accordion2" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        Anim pariatur cliche...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="myAccout" class="tab-pane pane-main">
+                    <div class="pane-body tab-content">
+                        <div id="accout-desc" class="tab-pane pane-sub active">
+                            <div class="pane-title">等级规则</div>
+                            <div class="pane-content">
+                                积分等级规则
+                            </div>
+                        </div>
+                        <div id="score-log" class="tab-pane pane-sub">
+                            <div class="pane-title">积分日志</div>
+                            <div class="pane-content vkpaging">
+                                <div class="no-content-box" style="display:none">
+                                    <div class="box-explain">暂无积分日志...</div>
+                                </div>
+                                <div class="vkpaging-box">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="action-time">时间</th>
+                                                <th class="action-main">行为</th>
+                                                <th class="change-type">类型</th>
+                                                <th class="change-value">积分</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="vkpaging-body">
+                                        </tbody>
+                                    </table>
+                                    <div class="vkpaging-footer">
+                                        <div class="vkpaging-nav"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="coins-log" class="tab-pane pane-sub">
+                            <div class="pane-title">金币日志</div>
+                            <div class="pane-content vkpaging">
+                                <div class="vkpaging-null">
+                                    <div class="box-explain">暂无金币日志...</div>
+                                </div>
+                                <div class="vkpaging-box">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th class="action-time">时间</th>
+                                                <th class="action-main">行为</th>
+                                                <th class="change-type">类型</th>
+                                                <th class="change-value">金币</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="vkpaging-body">
+                                        </tbody>
+                                    </table>
+                                    <div class="vkpaging-footer">
+                                        <div class="vkpaging-nav"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="coins-charge" class="tab-pane pane-sub">
+                            <div class="pane-title">金币充值</div>
+                            <div class="pane-content">即将开放。。</div>
+                        </div>
+                    </div>
+                    <div class="pane-side">
+                        <div class="pane-side-elem side-card-box">
+                            <div class="user-type card-elem">
+                                <div class="card-value">{$user['user_type']}</div>
+                                <div class="card-title">用户类型</div>
+                            </div>
+                            <div class="user-level card-elem">
+                                <div class="card-value">{$user['user_level_desc']}</div>
+                                <div class="card-title">当前等级</div>
+                            </div>
+                            <div class="user-score card-elem">
+                                <div class="card-value">{$user['user_score']}</div>
+                                <div class="card-title">当前经验</div>
+                            </div>
+                            <div class="user-coins card-elem">
+                                <div class="card-value">{$user['user_coins']}</div>
+                                <div class="card-title">当前金币</div>
+                            </div>
+                        </div>
+                        <div class="pane-side-elem accordion" id="account-accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#account-accordion" href="#account-accordion1">
+                                        账户说明
+                                    </a>
+                                </div>
+                                <div id="account-accordion1" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        Anim pariatur cliche...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="myCollect" class="tab-pane pane-main">
+                    <div class="pane-body tab-content">
+                        <div id="follow-user" class="tab-pane pane-sub">
+                            <div class="pane-title">关注的用户</div>
+                            <div class="pane-content vkpaging user">
+                                <div class="vkpaging-null">
+                                    <div class="box-explain">您未关注过任何用户...</div>
+                                </div>
+                                <div class="vkpaging-box">
+                                    <div class="vkpaging-body survey-list"></div>
+                                    <div class="vkpaging-footer">
+                                        <div class="vkpaging-nav"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="follow-survey" class="tab-pane pane-sub active">
+                            <div class="pane-title">关注的调查</div>
+                            <div class="pane-content vkpaging survey">
+                                <div class="vkpaging-null">
+                                    <div class="box-explain">您还未关注过任何调查...</div>
+                                </div>
+                                <div class="vkpaging-box">
+                                    <div class="vkpaging-body survey-list"></div>
+                                    <div class="vkpaging-footer">
+                                        <div class="vkpaging-nav"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="follow-svtype" class="tab-pane pane-sub">
+                            <div class="pane-title">关注的分类</div>
+                            <div class="pane-content vk-form">
+                                <div class="svtype-box vf-elem">
+                                    <volist name="svtype" id="st">
+                                    <div class="svtype-elem">
+                                        <label class="svtype-main" data-code="{$st.survey_type_code}">
+                                            <div class="sm-check"><i class=""></i></div>
+                                            <div class="sm-title">{$st.survey_type_name}</div>
+                                        </label>
+                                        <div class="svtype-sub">
+                                            <volist name="svtype_sub" id="sts">
+                                                <eq name="st.survey_type_code" value="$sts.survey_type_code">
+                                                <label class="ss-elem">
+                                                    <input type="checkbox" name="sv_type_sub" value="{$sts.survey_type_sub_code}">
+                                                    {$sts.survey_type_sub_name}
+                                                </label>
+                                                </eq>
+                                            </volist>
+                                        </div>
+                                    </div>
+                                    </volist>
+                                </div>
+                                <div class="svtype-footer">
+                                    <button type="button" class="vkbutton vbtn-success block large svtype">保存修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pane-side">
+                        <div class="pane-side-elem side-card-box">
+                            <div class="vcard">
+                                <div class="card-value follow-survey">0</div>
+                                <div class="card-title">关注调查</div>
+                            </div>
+                            <div class="vcard">
+                                <div class="card-value follow-user">0</div>
+                                <div class="card-title">关注用户</div>
+                            </div>
+                        </div>
+                        <div class="pane-side-elem accordion" id="collect-accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#collect-accordion" href="#collect-accordion1">
+                                        关注说明
+                                    </a>
+                                </div>
+                                <div id="collect-accordion1" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        Anim pariatur cliche...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="myRight" class="tab-pane pane-main">
+                    <div class="pane-body tab-content">
+                        <div id="right-curr" class="tab-pane pane-sub active">
+                            <div class="pane-title">当前权限</div>
+                            <div class="pane-content"></div>
+                        </div>
+                        <div id="right-desc" class="tab-pane pane-sub">
+                            <div class="pane-title">权限说明</div>
+                            <div class="pane-content"></div>
+                        </div>
+                    </div>
+                    <div class="pane-side">
+                        <div class="pane-side-elem accordion" id="right-accordion">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#right-accordion" href="#right-accordion1">
+                                        权限说明
+                                    </a>
+                                </div>
+                                <div id="right-accordion1" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        Anim pariatur cliche...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer" style="display:none"></div>
+</body>
+</html>

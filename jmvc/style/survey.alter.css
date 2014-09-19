@@ -1,0 +1,43 @@
+/*
+ * Document    : answer.css
+ * Created on  : 2012-8-11, 13:55:35
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ * Description : 文件描述
+ */
+
+body{
+    margin:0px auto;
+    background:#FFFFFF;
+    background-position:center;
+    text-align:left;
+    font:15px "Microsoft Yahei",Tahoma;  color:#000000;
+    }
+a:link,a:visited{font-size:14px;color:#OOOOCC;text-decoration:none}
+a:hover{}
+
+#Header{
+    width:1000px;  height:30px;
+    padding:10px;  margin:0 auto;
+    text-align:center;
+    border-bottom:1px solid #0055FF ;
+    }
+#Main{
+    width:1000px;
+    padding:10px 0;  margin:0 auto;
+    border-bottom:1px solid #666666 ;
+    }
+div.question-item{
+    margin:10px auto;
+    }
+    div.qt-title{
+        font:14px "Microsoft Yahei",Tahoma;  color:#000000;
+        }
+        div.qt-title a{
+            margin:0 3px;
+            }
+    div.qt-option{
+        width:800px;
+        margin:5px 15px;
+        font:12px "宋体",Tahoma;  color:#444444;
+        }

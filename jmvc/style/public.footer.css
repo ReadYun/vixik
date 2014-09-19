@@ -1,0 +1,131 @@
+/*
+ * Document    :  public.footer.css
+ * Description :  CSS for Public/footer.html
+ *
+ * Created on  :  2012-8-24 14: 51: 14
+ * Author      :  ReadYun
+ * Copyright   :  VixiK
+ */
+
+#footerBox{
+    padding: 20px 0;
+    overflow: hidden;
+    font: 12px "微软雅黑",Tahoma;
+    }
+    #footerBox li>a{
+        color: #6F6F6F;
+    }
+    #footerBox li>a:hover{
+        color: red;
+        cursor: pointer;
+    }
+    #footerBox>div{
+        width: 960px;
+        padding: 0;  
+        margin: 0 auto;
+        overflow: hidden;
+        }
+        #mainFooter>div.manual{
+            float: left;
+            margin-right: 60px;
+        }
+        #mainFooter>div.cooperation{
+            float: left;
+        }
+        #mainFooter>div.declare{
+            float: right;
+        }
+        #mainFooter>div{
+            width: 270px;  
+            height: 130px;
+            padding: 0;
+            text-align: left;
+            border-top: 1px dashed #999999;
+            border-left: 1px dashed #999999;
+            }
+            #mainFooter div ul{
+                padding: 0;  
+                text-align: left;
+                list-style: none;
+                }
+                #mainFooter div li.title{
+                    padding: 0;  
+                    margin: 10px 0;
+                    text-align: left;
+                    font: 17px "宋体",Tahoma;  
+                    color: #000000;
+                }
+                #mainFooter div li.ele{
+                    padding: 0;  
+                    margin: 5px 0 5px 2px;
+                    text-align: left;
+                    color: #6F6F6F;
+                }
+        #simpleFooter div.foot-left{
+            width: 50%;  
+            float: left;
+            color: #6F6F6F;
+            text-align: left;
+            }
+            #simpleFooter div.foot-left>ul{
+                padding: 0;
+                margin: 0;
+                float: left;
+                }
+                #simpleFooter div.foot-left>ul>li{
+                    margin-bottom: 5px;
+                    list-style-type: none;
+                }
+        #simpleFooter div.foot-right{
+            width: 50%;  
+            float: right;
+            color: #6F6F6F;
+            text-align: right;
+            }
+            #simpleFooter div.foot-right>ul{
+                padding: 0;
+                float: right;
+                }
+                #simpleFooter div.foot-right>ul>li{
+                    width: 100%;
+                    margin-bottom: 5px;
+                    float: right;
+                    list-style-type: none;
+                }
+                #simpleFooter .fr-elem>ul>li{
+                    margin-left: 10px;
+                    float: right;
+                    list-style-type: none;
+                }
+        #minFooter>div{
+            margin-top: 5px;
+            text-align: center;
+            font: 14px arial,Tahoma;  
+            color: #666666;        
+        }
+        #minFooter>div.backhome>a{
+            text-align: center;
+            font: 12px "宋体",Tahoma;  
+        }
+        #minFooter>div.backhome>a:hover{
+            color: red;
+        }
+    #footerBox>div.span{
+        margin: 20px auto 15px auto;
+        border-top: 1px solid #FFFFFF;
+    }
+
+
+/************************
+ * 
+ * 页面元素显示控制
+ *
+ ************************/
+
+/*默认设置*/
+#footerBox>div{display:none}
+
+#footerBox.main #mainFooter{display: block;}
+#footerBox.simple #simpleFooter{display: block;}
+#footerBox.min #minFooter{display: block;}
+#footerBox.all>div{display:block}

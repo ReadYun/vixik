@@ -1,0 +1,15 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <tr>
+        <td class="survey-title" data-survey="<%= data[i].survey_code %>" data-state="<%= data[i].survey_state %>">
+            <div class="name"><a href="<%= data[i].url_visit %>" target="_blank"><%= data[i].survey_name %></a></div>
+            <div class="action">
+                <a class="edit" href="<%= data[i].url_create %>" target="_blank">编辑</a>
+                <a class="del">删除</a>
+                <a class="share">分享</a>
+                <a class="analyse" href="<%= data[i].url_analyse %>" target="_blank">分析</a>
+            </div>
+        </td>
+        <td class="create-date"><%= data[i].create_date %></td>
+        <td class="survey-state"><%= data[i].survey_state_desc %></td>
+    </tr>
+<%}%>

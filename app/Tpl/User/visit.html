@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="{$user['user_nick']} | 维新调研 · 倾听观点，发现价值"/>
+    <link rel="stylesheet" href="__JMVC__/style/user.visit.css" type="text/css"/>
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/user.visit.js"></script>
+</head>
+<body>
+    <div id="Header">
+        <include file="Public:topBar" nav-type="sub" nav-name="用户访问" need-login="0"/>
+    </div>
+    <div id="Main" data-user="{$user['user_code']}">
+        <div id="infoSider">
+            <div id="userPhoto" data-photo="{$user['user_photo']}">
+                <img src="__PUBLIC__/image/user/user.jpg">
+            </div>
+            <div id="userAction">
+                <a class="vkbutton vbtn-border vbtn-default large">关注他</a>
+            </div>
+            <div id="userAccout">
+                <div class="user-score accout-elem">
+                    <div class="accout-elem-value">{$user['user_level_desc']}</div>
+                    <div class="accout-elem-title">等级</div>
+                </div>
+                <div class="user-level accout-elem">
+                    <div class="accout-elem-value">{$user['user_score']}</div>
+                    <div class="accout-elem-title">积分</div>
+                </div>
+                <div class="public-num accout-elem">
+                    <div class="accout-elem-value">{$user['publish_times']}</div>
+                    <div class="accout-elem-title">发布调查</div>
+                </div>
+                <div class="answer-num accout-elem">
+                    <div class="accout-elem-value">{$user['answer_times']}</div>
+                    <div class="accout-elem-title">参与调查</div>
+                </div>
+                <div class="follow-num accout-elem">
+                    <div class="accout-elem-value">{$user['follow_survey_cnt']}</div>
+                    <div class="accout-elem-title">关注调查</div>
+                </div>
+                <div class="follow-num accout-elem">
+                    <div class="accout-elem-value">{$user['follow_user_cnt']}</div>
+                    <div class="accout-elem-title">关注用户</div>
+                </div>
+            </div>
+        </div>
+        <div id="infoBody">
+            <div class="info-header">{$user['user_nick']}</div>
+            <div id="actionInfo">
+                <ul class="nav nav-tabs">
+                    <li class="survey-public active"><a href="#publish-survey" data-toggle="tab">发布的调查</a></li>
+                    <li class="survey-answer"><a href="#answer-survey" data-toggle="tab">参与的调查</a></li>
+                    <li class="survey-follow"><a href="#follow-survey" data-toggle="tab">关注的调查</a></li>
+                    <li class="user-follow"><a href="#follow-user" data-toggle="tab">关注的用户</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="publish-survey" class="tab-pane active">
+                        <div class="vkpaging">
+                            <div class="vkpaging-null">未发布过任何调查...</div>
+                            <div class="vkpaging-box">
+                                <div class="vkpaging-body"></div>
+                                <div class="vkpaging-footer">
+                                    <div class="vkpaging-nav"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="answer-survey" class="tab-pane">
+                        <div class="vkpaging">
+                            <div class="vkpaging-null">未参与过任何调查...</div>
+                            <div class="vkpaging-box">
+                                <div class="vkpaging-body"></div>
+                                <div class="vkpaging-footer">
+                                    <div class="vkpaging-nav"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="follow-survey" class="tab-pane">
+                        <div class="vkpaging">
+                            <div class="vkpaging-null">未收藏过任何调查...</div>
+                            <div class="vkpaging-box">
+                                <div class="vkpaging-body"></div>
+                                <div class="vkpaging-footer">
+                                    <div class="vkpaging-nav"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="follow-user" class="tab-pane">
+                        <div class="vkpaging">
+                            <div class="vkpaging-null">未关注过任何用户...</div>
+                            <div class="vkpaging-box">
+                                <div class="vkpaging-body"></div>
+                                <div class="vkpaging-footer">
+                                    <div class="vkpaging-nav"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+</body>
+</html>

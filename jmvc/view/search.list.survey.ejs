@@ -1,0 +1,19 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <div class="search-list">
+        <div class="content-title">
+            <span class="label label-success">问卷</span>
+            <a class="survey-name" href="<%= data[i].url_survey_visit %>"><%= data[i].survey_name %></a>
+        </div>
+        <div class="content-body survey">
+            <div title="问卷描述" class="content-desc"><%= data[i].survey_desc %></div>
+            <div class="content-stats">
+                <div title="发布用户" class="publish-user"><i class="icon-user"></i>
+                	<a href="<%= data[i].url_user_visit %>"><%= data[i].user_nick %></a>
+                </div>
+                <div title="问题数量" class="question-num"><i class="icon-list"></i><%= data[i].question_num %></div>
+                <div title="开始日期" class="start-date"><i class="icon-time"></i><%= data[i].start_date %></div>
+                <div title="问卷状态" class="survey-state"><i class="icon-bookmark"></i><%= data[i].survey_state %></div>
+            </div>
+        </div>
+    </div>
+<%}%>

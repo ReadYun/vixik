@@ -1,0 +1,299 @@
+/*
+ * Document    : user.visit.css
+ * Description : css for user/visit.html
+ *
+ * Created on  : 2012-8-13, 4: 18: 34
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+
+#Main{
+    width: 960px;
+    margin: 30px auto;
+    overflow: hidden;
+}
+#infoSider{
+    width: 200px;
+    height: 100%;
+    float: left;
+    overflow: hidden;
+    }
+    #userPhoto{
+        width: 200px;
+        height: 200px;
+        background: #F9F9F9;
+        }
+        #userPhoto>img{
+            width: 100%;
+            height: 100%;
+        }
+    #userAction{
+        width: 100%;
+        padding-top: 10px;
+    }
+    #userAction a{
+        display: block;
+        padding: 5px;
+    }
+    #userAccout{
+        width: 100%;
+        padding: 10px 0; 
+        float: left;
+        }
+        #userAccout>div.accout-elem{
+            width: 50%;
+            height: 50px;
+            padding: 10px 0;
+            float: left;
+            overflow: hidden;
+            border-bottom: 1px solid #EEE;
+            }
+            #userAccout>div>div{
+                width: 100%;
+                float: left;
+                text-align: center;
+            }
+            #userAccout>div>div.accout-elem-value{
+                color: #6BB130;
+                font: 23px "宋体",Tahoma;
+                font-weight: 900;
+            }
+            #userAccout>div>div.accout-elem-title{
+                margin-top: 5px;
+                font: 12px "微软雅黑",Tahoma;  
+                color: #999;
+            }
+#infoBody{
+    width: 720px;
+    overflow: hidden;
+    float: right;
+    }
+    #infoBody .info-header{
+        width: 100%;
+        height: 40px;
+        margin-bottom: 5px;
+        border-bottom: 1px solid #CCC;
+        float: left;
+        font: 29px "宋体",Tahoma;  
+        color: #666;
+        font-weight: 900;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        }
+#actionInfo{
+    width: 100%;
+    overflow: hidden;
+    }
+    #actionInfo ul.nav>li{
+        font: 12px "微软雅黑",Tahoma;
+        margin-right: 10px;
+        }
+        #actionInfo ul.nav>li a{
+            border: none;
+            color: #333;    
+            padding: 5px;
+        }
+        #actionInfo ul.nav>li.active a{
+            border: none;    
+            padding: 5px;
+            border-bottom: 5px solid #6BB130;
+        }
+        #actionInfo ul.nav>li a:hover, #actionInfo ul.nav>li.active a:hover{
+            background: #FFF;
+            color: #6BB130;   
+        }
+    #actionInfo div.tab-content>div.tab-pane{
+        overflow: hidden;
+        }
+        div.tab-pane>div.vkpaging{
+            width: 100%;
+            }
+        div.tab-pane .vkpaging-body{
+            width: 100%;
+            min-height: 350px;
+            }
+            div.pane-content-box div.sv-list{
+                width: 100%;
+                padding: 7px 0;
+                margin-bottom: 5px;  
+                float: left;
+                border-bottom: 1px dashed #CCC;
+                font: 12px "宋体",Tahoma;  
+                color: #666;
+                }
+                div.pane-content-box div.sv-list>div{
+                    margin-left: 10px;
+                    float: right;
+                }
+                div.pane-content-box div.sv-list>div.sv-title{
+                    margin: 0;
+                    float: left;
+                }
+                div.pane-content-box div.sv-list>div.sv-title>a{
+                    padding: 3px;
+                    font: 12px "宋体",Tahoma;  
+                    color: #333;
+                }
+                div.pane-content-box div.sv-list>div.sv-title>a:hover{
+                    color: #FFF;
+                    background: #6BB130;
+                }
+        div.tab-pane>div.pane-footer-box{
+            width: 100%;  
+            height: 60px;
+        }
+
+/* 调查列表 */
+.sv-list-elem{
+    width: 100%;
+    margin-bottom: 10px;
+    overflow: hidden;
+    font-family: "微软雅黑",Tahoma;
+    color: #777;
+    border-bottom: 1px dotted #CCC;
+    }
+    .sv-list-elem>div{
+        width: 100%;
+        float: left;
+        overflow: hidden;
+        }
+        .sv-list-elem .sv-list-main>div.survey-title{
+            width: 100%;
+            float: left;
+            font: 17px "宋体",Tahoma;
+            color: #999;
+            }
+            .sv-list-elem div.survey-title>a{
+                max-width: 560px;
+                float: left;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                text-decoration: none;
+            }
+        .sv-list-elem .sv-list-main>div.survey-desc{
+            width: 100%;
+            margin-bottom: 5px;
+            float: left;
+            font-size: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-decoration: none;
+            color: #999;
+        }
+
+    .sv-list-elem .sv-list-sub{
+        height: 28px;
+        }
+        .sv-list-elem .sv-list-sub>div.ss-prop{
+            float: left;
+            font-size: 12px;
+            }
+            .sv-list-elem .ss-prop>div{
+                float: left;
+                margin-right: 18px;
+            }
+            .sv-list-elem .ss-prop>div.user-nick{
+                max-width: 280px;
+                }
+                .sv-list-elem .ss-prop>div.user-nick>a{
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            .sv-list-elem .ss-prop i{
+                margin-right: 3px;
+            }
+            .sv-list-elem .ss-prop a{
+                color: #666;
+                text-decoration: none;
+            }
+            .sv-list-elem .ss-prop a:hover{
+                color: #0088CC;
+            }
+        .sv-list-elem .sv-list-sub>div.ss-action{
+            display: none;
+            padding: 2px 0;
+            float: right;
+            }
+            .sv-list-elem .sv-list-sub>div.ss-action>a{
+                margin-left: 3px;
+            }
+            .sv-list-elem .ss-action>a.followed{
+                display: none;
+            }
+            .sv-list-elem.follow .ss-action>a.followed{
+                display: inline;
+            }
+            .sv-list-elem.follow .ss-action>a.follow{
+                display: none;
+            }
+        .sv-list-elem:hover .sv-list-sub>div.ss-action{
+            display: block;
+        }
+
+/* 关注的用户 */
+.fu-elem{
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    font-family: "微软雅黑",Tahoma;
+    color: #777;
+    }
+    .fu-elem .f-list-photo{
+        width: 65px;
+        float: left;
+        }
+        .fu-elem .f-list-photo>img{
+            width: 100%;
+            height: 65px;
+        }
+    .fu-elem .f-list-main{
+        width: 650px;
+        float: right;
+        }
+        .fu-elem .f-list-main>div{
+            width: 100%;
+            margin-bottom: 1px;
+            float: right;
+            overflow: hidden;
+        }
+        .fu-elem .user-nick{
+            width: 100%;
+            float: right;
+            overflow: hidden;
+            font: 17px "宋体",Tahoma;
+            }
+            .fu-elem .user-nick>a{
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                text-decoration: none;
+            }
+        .fu-elem .user-acc>div{
+            margin-right: 30px;
+            float: left;
+            font-size: 14px;
+            }
+            .fu-elem .user-acc>div>i{
+                margin-right: 3px;
+            }
+        .fu-elem .user-action{
+            display: none;
+            padding: 1px 0;
+            overflow: hidden;
+            }
+    .fu-elem:hover{
+        background: #F6F6F6;
+        }
+        .fu-elem:hover .user-action{
+            display: block;
+            }
+
+/* vkPaging */
+.vkpaging .vkpaging-box       {display: none;}
+.vkpaging.active .vkpaging-box{display: block;}
+.vkpaging.active .vkpaging-null{display: none;}
+.vkpaging-footer{margin-top: 30px;}

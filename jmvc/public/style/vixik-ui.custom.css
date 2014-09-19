@@ -1,0 +1,160 @@
+/*
+ * Document    : vixik-ui.custom.css
+ * Description : 统一基础样式表
+ *
+ * Created on  : 2012-12-15
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+
+/*
+ * BootStrap样式本地化设置
+ *
+ */
+
+/* Modal插件
+----------------------------------*/
+div.modal{
+    position:fixed;
+    top:100px;
+}
+
+select{
+    height: 31px;
+}
+select>option{
+    padding: 3px 10px;
+}
+/*
+ * jQueryUI样式本地化设置
+ *
+ */
+
+/* Dialog
+----------------------------------*/
+.ui-dialog { position: absolute; padding: .2em; width: 300px; overflow: hidden; }
+.ui-dialog .ui-dialog-titlebar { padding: .5em 1em .3em; position: relative;  }
+.ui-dialog .ui-dialog-title { float: left; margin: .1em 16px .2em 0; }
+.ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
+.ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
+.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
+.ui-dialog .ui-dialog-content { border: 0; padding: .5em 1em; background: none; overflow: auto; zoom: 1; }
+.ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
+.ui-dialog .ui-dialog-buttonpane button { float: right; margin: .5em .4em .5em 0; cursor: pointer; padding: .2em .6em .3em .6em; line-height: 1.4em; width:auto; overflow:visible; }
+.ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
+.ui-draggable .ui-dialog-titlebar { cursor: move; }
+
+
+
+/*-------------------------------------------------- vkButton CSS --------------------------------------------------*/
+
+/* 默认基本样式 */
+.vkbutton{
+    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    padding: 2px 5px;
+    font-size: 12px;
+    text-align: center;
+    background: #E3E3E3;
+    border: 1px solid #E3E3E3;
+}
+.vkbutton:hover{
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.vkbutton.vbtn{
+    background: #E3E3E3;
+    border-color: #E3E3E3;
+}
+
+/******** 各种颜色样式 ********/
+.vkbutton.vbtn-primary{background: #3355FF; border-color: #3366FF; color: #FFF;}
+.vkbutton.vbtn-success{background: #009933; border-color: #00AA33; color: #FFF;}
+.vkbutton.vbtn-warning{background: #CC6600; border-color: #DD6600; color: #FFF;}
+.vkbutton.vbtn-danger {background: #DD3300; border-color: #FF3300; color: #FFF;}
+.vkbutton.vbtn-royal  {background: #7700FF; border-color: #9900FF; color: #FFF;}
+.vkbutton.vbtn-inverse{background: #222222; border-color: #333333; color: #FFF;}
+.vkbutton.vbtn-vixik  {background: #6BB130; border-color: #6BB130; color: #FFF;}
+
+.vkbutton.vbtn-primary:hover{background: #3366FF; border-color: #3366FF; color: #FFF;}
+.vkbutton.vbtn-success:hover{background: #00AA33; border-color: #00AA33; color: #FFF;}
+.vkbutton.vbtn-warning:hover{background: #DD6600; border-color: #DD6600; color: #FFF;}
+.vkbutton.vbtn-danger:hover {background: #FF3300; border-color: #FF3300; color: #FFF;}
+.vkbutton.vbtn-royal:hover  {background: #9900FF; border-color: #9900FF; color: #FFF;}
+.vkbutton.vbtn-inverse:hover{background: #333333; border-color: #333333; color: #FFF;}
+.vkbutton.vbtn-vixik:hover  {background: #3BB130; border-color: #3BB130; color: #FFF;}
+
+
+/******** vbtn-border ********/
+.vkbutton.vbtn-border.vbtn-primary{color: #3355FF;}
+.vkbutton.vbtn-border.vbtn-success{color: #009933;}
+.vkbutton.vbtn-border.vbtn-warning{color: #CC6600;}
+.vkbutton.vbtn-border.vbtn-danger {color: #DD3300;}
+.vkbutton.vbtn-border.vbtn-royal  {color: #7700FF;}
+.vkbutton.vbtn-border.vbtn-inverse{color: #222222;}
+.vkbutton.vbtn-border.vbtn-vixik  {color: #6BB130;}
+
+.vkbutton.vbtn-border{background: #FFF;}
+.vkbutton.vbtn-border:hover{color: #FFF;}
+.vkbutton.vbtn-border.active{color: #FFF;}
+
+/******** vbtn .active ********/
+.vkbutton.vbtn-primary.active{background: #3366FF; border-color: #3366FF;}
+.vkbutton.vbtn-success.active{background: #00AA33; border-color: #00AA33;}
+.vkbutton.vbtn-warning.active{background: #DD6600; border-color: #DD6600;}
+.vkbutton.vbtn-danger.active {background: #FF3300; border-color: #FF3300;}
+.vkbutton.vbtn-royal.active  {background: #9900FF; border-color: #9900FF;}
+.vkbutton.vbtn-inverse.active{background: #333333; border-color: #333333;}
+.vkbutton.vbtn-vixik.active  {background: #3BB130; border-color: #3BB130;}
+
+/******** vbtn-block ********/
+.vkbutton.vbtn-block{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border: 0;
+    color: #333;
+    background: none;
+}
+.vkbutton.vbtn-block:hover{color: #FFF;}
+.vkbutton.vbtn-block.vbtn-inverse{color: #333;}
+.vkbutton.vbtn-block.vbtn-inverse:hover{color: #FFF;}
+.vkbutton.vbtn-block.vbtn-inverse.active{color: #FFF;}
+
+/******** vbtn-default ********/
+.vkbutton.vbtn-default{color: #666; border-color: #CCC;}
+.vkbutton.vbtn-default:hover{background: #CCC; border-color: #CCC;}
+.vkbutton.vbtn-default.active{background: #CCC; border-color: #CCC;}
+.vkbutton.vbtn-inverse{color: #FFF;}
+
+/******** vbtn-block ********/
+.vkbutton.block{
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+/******** vbtn-default ********/
+.vkbutton.small {padding: 1px 5px; font-size:10px}
+.vkbutton.large {padding: 8px; font: 19px "宋体",Tahoma;}
+.vkbutton.xlarge{padding: 8px; font: 23px "宋体",Tahoma;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

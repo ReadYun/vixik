@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="{$target} | 维新调研 · 倾听观点，发现价值"/>
+    <link rel="stylesheet" href="__JMVC__/style/survey.type.css" type="text/css"/>
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.type.js"></script>
+</head>
+<body>
+    <div id="Header">
+        <include file="Public:topBar" survey="current" nav-type="main" need-login="0"/>
+    </div>
+    <div id="Main" data-type="{$type}" data-mode="{$mode}">
+        <div id="mainLeft">
+            <div id="surveyHeader">
+                <div class="sh-main">{$name}</div>
+                <div class="sh-sub">
+                    <div class="sv-type-sub">
+                        <div class="st-sub all" data-type="{$type_code}">全部调查</div>
+                        <volist name="stype" id="st">
+                            <div class="st-sub" data-type="{$st.survey_type_sub_code}">{$st.survey_type_sub_name}</div>
+                        </volist>
+                    </div>
+                    <div class="sv-list-nav">
+                        <ul class="nav nav-tabs">
+                            <li class="sv-mode" data-mode="new"><a data-toggle="tab">最新调查</a></li>
+                            <li class="sv-mode" data-mode="hot"><a data-toggle="tab">热点调查</a></li>
+                            <li class="sv-mode" data-mode="rec"><a data-toggle="tab">推荐调查</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="surveyList">
+                <div class="sv-list-body">
+                </div>
+                <div class="sv-list-footer">
+                    <button class="vkbutton vbtn-default block large survey-more" title="更多调查">更多调查</button>
+                </div>
+            </div>
+        </div>
+        <div id="mainRight">
+            <div id="typeBox">
+                <div class="switch-type dropdown">
+                    <button class="vkbutton vbtn-border vbtn-default dropdown-toggle large" data-toggle="dropdown">查看其他类型调查</button>
+                    <div class="switch-content dropdown-menu pull-right tabbable" role="menu" aria-labelledby="dLabel">
+                        <volist name="survey_type" id="st">
+                        <div class="switch-type-elem">
+                            <div class="switch-type-main switch-type-ele" data-type="{$st.survey_type_code}">{$st.survey_type_name}</div>
+                            <div class="switch-type-sub">
+                                <volist name="survey_type_sub" id="sts">
+                                    <eq name="st.survey_type_code" value="$sts.survey_type_code">
+                                    <div class="sts-elem switch-type-ele" data-type="{$sts.survey_type_sub_code}">{$sts.survey_type_sub_name}</div>
+                                    </eq>
+                                </volist>
+                            </div>
+                        </div>
+                        </volist>
+                    </div>
+                </div>
+                <div class="type-follow">
+                    <div class="follow-desc"><span>892839</span>人关注此类调查</div>
+                    <button class="vkbutton vbtn-default">关注</button>
+                </div>
+            </div>
+            <div id="actionBox">
+                <div class="action-box">
+                    <div class="action-desc">
+                        <div class="action-title">已发布调查数量</div>
+                        <div class="action-value">1232345</div>
+                    </div>
+                    <div class="action-now"><button class="vkbutton vbtn-primary block" data-action="create">发布此类调查</button></div>
+                </div>
+                <span></span>
+                <div class="action-box">
+                    <div class="action-desc">
+                        <div class="action-title">已参与调查人数</div>
+                        <div class="action-value">887878797</div>
+                    </div>
+                    <div class="action-now"><button class="vkbutton vbtn-primary block" data-action="answer">参与此类调查</button></div>
+                </div>
+            </div>
+            <div id="typeSearch">
+                <div class="search-label">精确搜索</div>
+                <div class="search-body"><input type="text" placeholder="在{$target}中搜索..."></div>
+            </div>
+            <div id="tagBox" style="display:none"></div>
+            <div id="rankBox">
+                <div class="rank-header">活跃用户</div>
+                <div class="rank-body">
+                    <volist name="user" id="user">
+                    <div class="rank-elem" data-code="{$user.user_code}" data-photo="{$user.user_photo}" data-sex="{$user.user_sex}">
+                        <div class="user-photo"><img src=""></div>
+                        <div class="user-info">
+                            <div class="user-nick"><a href="{$user.user_visit}">{$user.user_nick}</a></div>
+                            <div class="user-action">
+                                <div class="user-publish">发布了<span>{$user.cnt}</span>个调查</div>
+                                <button class="vkbutton vbtn-default user-follow">关注</button>
+                            </div>
+                        </div>
+                    </div>
+                    </volist>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Footer">
+        <include file="Public:footer" type="main"/>
+    </div>
+</body>
+</html>

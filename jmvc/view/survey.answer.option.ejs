@@ -1,0 +1,8 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <div class="qt-ele vf-elem">
+    	<label class="vf-elem-option">
+	        <input type="<%=data[i]['question_type']%>" name="<%=data[i]['question_code']%>" value="<%=data[i]['option_name']%>">
+	    	<%=data[i]['option_name']%>
+    	</label>
+    </div>
+<%}%>

@@ -1,0 +1,94 @@
+
+insert tb_api_param_check_config values(	 'api_user_create'	,	 'create_ip'	,	 'string'	,	1	) ;
+
+
+/********DATA_ADD函数type参数列表********/
+delete from tb_sys_date_add_type ;
+insert tb_sys_date_add_type values(1,'MICROSECOND') ;
+insert tb_sys_date_add_type values(2,'SECOND') ;
+insert tb_sys_date_add_type values(3,'MINUTE') ;
+insert tb_sys_date_add_type values(4,'HOUR') ;
+insert tb_sys_date_add_type values(5,'DAY') ;
+insert tb_sys_date_add_type values(6,'WEEK') ;
+insert tb_sys_date_add_type values(7,'MONTH') ;
+insert tb_sys_date_add_type values(8,'QUARTER') ;
+insert tb_sys_date_add_type values(9,'YEAR') ;
+
+/********接口参数校验规则********/
+delete from tb_api_param_check_config ;
+insert tb_api_param_check_config values('api_user_create','user_name','string',1) ;
+insert tb_api_param_check_config values('api_user_create','user_pwd','md5',1) ;
+insert tb_api_param_check_config values('api_user_create','user_email','string',1) ;
+insert tb_api_param_check_config values('api_user_create','create_ip','string',1) ;
+insert tb_api_param_check_config values('api_user_count','condition_key','json',0) ;
+insert tb_api_param_check_config values('api_user_count','condition_sql','json',0) ;
+insert tb_api_param_check_config values('api_user_info_find','user_code','number',1) ;
+insert tb_api_param_check_config values('api_user_info_find','user_md5','string',0) ;
+insert tb_api_param_check_config values('api_user_info_update','user_code','number',1) ;
+insert tb_api_param_check_config values('api_user_info_update','user_md5','string',1) ;
+insert tb_api_param_check_config values('api_user_info_update','data','json',1) ;
+insert tb_api_param_check_config values('api_user_action_cfg_select','action','json',1) ;
+insert tb_api_param_check_config values('api_user_follow_update','user_code','number',1) ;
+insert tb_api_param_check_config values('api_user_follow_update','follow_type','string',1) ;
+insert tb_api_param_check_config values('api_user_follow_update','follow_code','number',1) ;
+insert tb_api_param_check_config values('api_user_follow_update','update_type','string',1) ;
+insert tb_api_param_check_config values('api_user_follow_query','follow_type','string',1) ;
+insert tb_api_param_check_config values('api_user_follow_query','query_type','string',0) ;
+insert tb_api_param_check_config values('api_user_follow_query','user_code','number',0) ;
+insert tb_api_param_check_config values('api_user_follow_query','follow_code','number',0) ;
+insert tb_api_param_check_config values('api_user_follow_svtype_update','update_type','string',1) ;
+insert tb_api_param_check_config values('api_user_follow_svtype_update','user_code','number',1) ;
+insert tb_api_param_check_config values('api_user_follow_svtype_update','svtype','string',1) ;
+insert tb_api_param_check_config values('api_user_follow_svtype_query','user_code','number',0) ;
+insert tb_api_param_check_config values('api_user_follow_svtype_query','query_type','string',0) ;
+insert tb_api_param_check_config values('api_user_follow_svtype_query','condition','json',0) ;
+insert tb_api_param_check_config values('api_user_action_verify','user_code','number',1) ;
+insert tb_api_param_check_config values('api_user_action_verify','target','number',1) ;
+insert tb_api_param_check_config values('api_user_action_verify','action','string',1) ;
+insert tb_api_param_check_config values('api_survey_info_update','user_code','number',1) ;
+insert tb_api_param_check_config values('api_survey_info_update','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_survey_info_update','sv_info','json',0) ;
+insert tb_api_param_check_config values('api_survey_info_update','sv_item','json',0) ;
+insert tb_api_param_check_config values('api_survey_info_find','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_survey_info_find','user_code','number',0) ;
+insert tb_api_param_check_config values('api_survey_type_list_select','type','string',0) ;
+insert tb_api_param_check_config values('api_survey_type_list_select','mode','string',0) ;
+insert tb_api_param_check_config values('api_survey_type_list_select','page','number',0) ;
+insert tb_api_param_check_config values('api_survey_type_list_select','pnum','number',0) ;
+insert tb_api_param_check_config values('api_survey_action_list_select','user_code','number',1) ;
+insert tb_api_param_check_config values('api_survey_action_list_select','type','string',0) ;
+insert tb_api_param_check_config values('api_survey_create','user_code','number',1) ;
+insert tb_api_param_check_config values('api_survey_create','survey_code','number',0) ;
+insert tb_api_param_check_config values('api_survey_create','info','json',1) ;
+insert tb_api_param_check_config values('api_survey_create','question','json',1) ;
+insert tb_api_param_check_config values('api_survey_answer_submit','survey','json',1) ;
+insert tb_api_param_check_config values('api_survey_answer_submit','question','json',1) ;
+insert tb_api_param_check_config values('api_survey_create_select','user_code','number',1) ;
+insert tb_api_param_check_config values('api_survey_create_select','survey_state','number',1) ;
+insert tb_api_param_check_config values('api_survey_action_select','type','string',1) ;
+insert tb_api_param_check_config values('api_survey_action_select','user_code','number',0) ;
+insert tb_api_param_check_config values('api_survey_action_select','survey_code','number',0) ;
+insert tb_api_param_check_config values('api_survey_custom_option_add','user_code','number',1) ;
+insert tb_api_param_check_config values('api_survey_custom_option_add','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_survey_custom_option_add','custom_option','json',1) ;
+insert tb_api_param_check_config values('api_survey_recomm_create','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_survey_recomm_create','rule','json',1) ;
+insert tb_api_param_check_config values('api_follow_list_select','type','string',1) ;
+insert tb_api_param_check_config values('api_follow_list_select','target','number',1) ;
+insert tb_api_param_check_config values('api_stats_survey_type_cnt','type','number',0) ;
+insert tb_api_param_check_config values('api_stats_survey_type_cnt','action','string',0) ;
+insert tb_api_param_check_config values('api_stats_sv_action_cnt','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_stats_sv_group_cnt','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_stats_sv_group_cnt','condition','json',1) ;
+insert tb_api_param_check_config values('api_stats_qt_group_cnt','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_stats_qt_group_cnt','question_code','number',0) ;
+insert tb_api_param_check_config values('api_stats_qt_group_cnt','condition','json',1) ;
+insert tb_api_param_check_config values('api_text_content','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_text_content','question_code','number',1) ;
+insert tb_api_param_check_config values('api_det_data_select','table','string',1) ;
+insert tb_api_param_check_config values('api_det_data_select','condition','string',1) ;
+insert tb_api_param_check_config values('api_search_go','type','string',1) ;
+insert tb_api_param_check_config values('api_search_go','words','string',1) ;
+insert tb_api_param_check_config values('api_get_server_url','name','string',1) ;
+
+

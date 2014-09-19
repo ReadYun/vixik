@@ -1,0 +1,123 @@
+/*
+ * Document    : index.css
+ * Description : CSS for Survey/index.html
+ *
+ * Created on  : 2012-11-7
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+
+body{
+    margin:0px;
+    text-align:center;
+    background-color:#FFFFFF;
+    background-position:center;
+    }
+a:link,a:visited{text-decoration:none}
+a:hover{}
+
+#Header{
+    padding:0; margin:0;
+    }
+#Main{
+    width:1000px;
+    margin:0px auto;
+    overflow:hidden;
+    font:15px '宋体';
+    }
+#xxx{
+    height:200px;
+    margin:0px auto;
+    opacity:0.4;
+    }
+#SurveyBox{
+    margin:0 auto;
+    }
+    #SurveyBox>div{
+        height:250px;
+        margin:10px 0 0 0;
+        float:left;
+        border-top:1px solid #339933;
+        }
+        div.sv_menu{
+            width:170px;  height:240px;
+            float:left;
+            background-color:#339933;
+            border-top:1px solid #339933;
+            }
+            div.sv_class{
+                height:25px;
+                padding:2px;
+                background-color:#339933;
+                font:19px  "Microsoft Yahei",Tahoma;  color:#FFFFFF;
+                letter-spacing:1px;
+                border-bottom:1px solid #FFFFFF;
+                }
+            div.sv_menu>div.sub_class{
+                padding:2px;  margin:5px 0 0 0;
+                }
+                div.sv_menu>div.sub_class div{
+                    width:63px;  height:18px;
+                    padding:4px 0;  margin:2px 10px;
+                    float:left;
+                    font:13px  "Microsoft Yahei",Tahoma;  color:#333333;
+                    border-bottom:1px solid #006600;
+                    }
+                div.sv_menu>div.sub_class div:hover{
+                    background-color:#006600;
+                    opacity:0.9;
+                    color:#FFFFFF;
+                    border-radius:5px;
+                    cursor:pointer;
+                    }
+        div.sv_content{
+            width:817px;  height:240px;
+            float:left;
+            border-top:1px solid #339933;
+            border-right:1px solid #CCCCCC;
+            border-bottom:1px solid #CCCCCC;
+            }
+            div.sv_type{
+                height:30px;
+                margin:0;
+                font:16px "Microsoft Yahei",Tahoma;  color:#000000;
+                letter-spacing:1px;
+                }
+                div.sv_type>div{
+                    width:120px;  height:24px;
+                    padding:3px;
+                    float:left;
+                    border-right:1px solid #CCCCCC;
+                    }
+                div.sv_type>div.more{
+                    width:60px;  height:18px;
+                    padding:6px;
+                    float:right;
+                    font:15px "宋体",Tahoma;  color:#000000;
+                    background-color:#DDDDDD;
+                    border-left:1px solid #CCCCCC;
+                    border-right:0px;
+                    }
+            div.sv_list{
+                float:left;
+                }
+            div.sv_list>div{
+                width:817px;  height:25px;
+                float:left;
+                border-top:1px solid #CFCFCF;
+                }
+                div.sv_list>div>div{
+                    height:15px;
+                    padding:5px;
+                    float:left;
+                    }
+                div.sv_list>div div.sub_class{
+                    width:80px;
+                    float:left;
+                    border-right:1px solid #CFCFCF;
+                    }
+                div.sv_list>div div.publish_date{
+                    width:80px;
+                    float:right;
+                    font:13px "Microsoft Yahei",Tahoma;  color:#333333;
+                    }

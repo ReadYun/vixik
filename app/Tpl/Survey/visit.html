@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="{$survey['survey_name']} | 维新调研 · 倾听观点，发现价值"/>
+    <link rel="stylesheet" href="__JMVC__/style/survey.visit.css" type="text/css"/>
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.visit.js"></script>
+</head>
+<body>
+    <div id="Header">
+        <include file="Public:topBar" nav-type="sub" nav-name="调查访问"/>
+    </div>
+    <div id="Main" data-survey="{$survey['survey_code']}">
+        <div id="surveyHeader">
+            <div class="left-box">
+                <div class="survey-title">{$survey['survey_name']}</div>
+                <div class="user-box">
+                    <div class="user-photo"><img src="/vixik/jmvc/public/image/user/{$survey['user_code']}_60.jpg"></div>
+                    <div class="user-main">
+                        <div class="user-nick"><a href="{$survey['url_user']}" target="_blank">{$survey['user_nick']}</a></div>
+                        <div class="user-action"><span>创建于</span>{$survey['create_time']}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="right-box sv-item">
+                <div class="item-cnt">
+                    <div class="ic-value">{$survey['radio_num']}</div>
+                    <div class="ic-title">单选题</div>
+                </div>
+                <div class="item-cnt">
+                    <div class="ic-value">{$survey['checkbox_num']}</div>
+                    <div class="ic-title">多选题</div>
+                </div>
+                <div class="item-cnt">
+                    <div class="ic-value">{$survey['textarea_num']}</div>
+                    <div class="ic-title">主观题</div>
+                </div>
+            </div>
+        </div>
+        <div id="surveyTime">
+            <div class="left-box st-state" data-state="{$survey['survey_state']}">
+                <div class="st-count">
+                    <div class="cd-desc"></div>
+                    <div class="cd-action"></div>
+                </div>
+                <div class="st-other">活动已结束</div>
+            </div>
+            <div class="right-box st-info">
+                <div class="start-date">
+                    <div class="si-title">开始时间</div>
+                    <div class="si-value">{$survey['start_time']}</div>
+                </div>
+                <div class="end-date">
+                    <div class="si-title">结束时间</div>
+                    <div class="si-value">{$survey['end_time']}</div>
+                </div>
+            </div>
+        </div>
+        <div id="surveyMain">
+            <div class="left-box sm-desc">{$survey['survey_desc']}</div>
+            <div class="right-box sm-action">
+                <div class="action-cnt">
+                    <div class="sa-elem">
+                        <div class="ac-title">奖励金币</div>
+                        <div class="ac-value">{$survey['answer_coins']}</div>
+                    </div>
+                    <div class="sa-elem">
+                        <div class="ac-title">参与人数</div>
+                        <div class="ac-value">{$survey['answer_count']}</div>
+                    </div>
+                </div>
+                <div class="action-hint">
+                    <div class="sa-elem">
+                        <div class="ac-value">{$survey['follow_count']}</div>
+                        <div class="ac-title"><button class="vkbutton vbtn-border vbtn-primary large block">收藏</button></div>
+                    </div>
+                    <div class="sa-elem">
+                        <div class="ac-value">{$survey['share_count']}</div>
+                        <div class="ac-title"><button class="vkbutton vbtn-border vbtn-primary large block">分享</button></div>
+                    </div>
+                    <div class="sa-elem">
+                        <div class="ac-value">0</div>
+                        <div class="ac-title"><button class="vkbutton vbtn-border vbtn-primary large block">评论</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="surveyButton">
+            <button class="vkbutton vbtn-vixik xlarge block answer" href="{$survey['url_answer']}">立即开始参与调查</button>
+            <button class="vkbutton vbtn-primary xlarge block analyse" href="{$survey['url_analyse']}">去查看调查分析</button>
+        </div>
+    </div>
+    <div id="Footer"></div>
+</body>
+</html>

@@ -1,0 +1,235 @@
+/*
+ * Document    : survey.index.css
+ * Description : CSS for Survey/type.html
+ *
+ * Created on  : 2012-11-7
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+
+#Main{
+    width: 960px;
+    margin: 20px auto;
+    overflow: hidden;
+    font-family: "微软雅黑",Tahoma;
+}
+
+#mainHeader{
+    width: 100%;
+    height: 60px;
+    margin-bottom: 10px;
+    background: #EEE;
+    overflow: hidden;
+}
+
+#surveyBox{
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 1px solid #CCC;
+    }
+    #surveyBox>div{
+        width: 100%;
+        height: 300px;
+        margin: 15px 0;
+        overflow: hidden;
+    }
+    #surveyBox .survey-list{
+        width: 600px;
+        float: left;
+        overflow: hidden;
+        }
+        #surveyBox .survey-list-header{
+            width: 100%;
+            float: left;
+            border-bottom: 1px solid #6BB130;
+            }
+            #surveyBox .sh-main{
+                width: 400px;
+                float: left;
+                }
+                #surveyBox .sv-type-main{
+                    width: 90px;
+                    height: 100%;
+                    padding: 8px 4px 7px 4px;
+                    float: left;
+                    font: 19px "宋体",Tahoma;
+                    color: #FFF;
+                    text-align: center;
+                    background: #6BB130;
+                }
+                #surveyBox .sv-type-sub{
+                    height: 100%;
+                    float: left;
+                    }
+                    #surveyBox .sv-type-sub>div{
+                        float: left;
+                        padding-top: 7px;
+                        padding-bottom: 1px;
+                        margin-left: 15px;
+                        color: #666;
+                        border-top: 2px solid #FFF;
+                    }
+                    #surveyBox .sv-type-sub>div:hover{
+                        cursor: pointer;
+                        color: #000;
+                        border-color: #6BB130;
+                    }
+                    #surveyBox .sv-type-sub>div.active{
+                        cursor: pointer;
+                        color: #6BB130;
+                        border-color: #6BB130;
+                    }
+            #surveyBox .sh-sub{
+                width: 150px;
+                margin-top: 6px;
+                float: right;
+                }
+                #surveyBox .sh-sub>button{
+                    float: right;
+                    margin-left: 10px;
+                   }
+        #surveyBox .sv-list-body{
+            width: 100%;
+            overflow: hidden;
+            }
+            #surveyBox .sv-list-body>div{
+                width: 100%;
+                margin-bottom: 3px;
+                float: left;
+                overflow: hidden;
+                }
+                #surveyBox .sv-list-elem>div{
+                    float: left;
+                    overflow: hidden;
+                    color: #666;
+                }
+                #surveyBox .sv-list-elem .sv-name{
+                    width: 430px;
+                    margin-right: 5px;
+                }
+                #surveyBox .sv-list-elem .sv-item{
+                    width: 50px;
+                }
+                #surveyBox .sv-list-elem .sv-coin{
+                    width: 50px;
+                }
+                #surveyBox .sv-list-elem .sv-time{
+                    float: right;
+                    background: red;
+                }
+                #surveyBox .sv-list-elem>div>i{
+                    margin-right: 3px;
+                }
+
+    #surveyBox .survey-type{
+        width: 300px;
+        height: 100%;
+        float: right;
+        overflow: hidden;
+        }
+        #surveyBox .stats-nav{
+            margin: 0;
+            border-color: #6BB130;
+            }
+            #surveyBox .stats-nav>li{
+                margin: 0;
+                padding: 4px 5px;
+            }
+            #surveyBox .stats-nav>li.active{
+            }
+            #surveyBox .stats-nav>li>a{
+                padding: 3.5px;
+                border: none;
+                margin: 0;
+                border-top: 2px solid #FFF;
+                border-radius: 0;
+                color: #666;
+            }
+            #surveyBox .stats-nav>li.active>a{
+                color: #6BB130;
+                border-color: #6BB130;
+            }
+            #surveyBox .stats-nav>li:hover>a{
+                color: #000;
+                background: #FFF;
+                border-color: #6BB130;
+            }
+
+#midBox{
+    width: 100%;
+    height: 80px;
+    margin: 10px 0;
+    background: yellow;
+}
+#rankBox{
+    width: 100%;
+    margin: 10px 0;
+    overflow: hidden;
+    }
+    #rankBox>div{
+        width: 100%;
+        margin: 15px 0;
+        overflow: hidden;
+        }
+        #rankBox .rank-box{
+            width: 400px;
+            float: left;
+        }
+        #rankBox .rank-header{
+            width: 100%;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            font: 21px "宋体",Tahoma;
+            border-bottom: 1px solid #CCC;
+            color: #888;
+            }
+            #rankBox .rank-header>i{
+                margin-right: 10px;
+            }
+        #rankBox .rank-body{
+            width: 100%;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+            }
+            #rankBox .rank-list-elem{
+                width: 100%;
+                height: 20px;
+                margin-bottom: 5px;
+                float: left;
+                
+                }
+                #rankBox .rank-list-elem>div{
+                    float: left;
+                    }
+                    #rankBox .rank-list-elem .list-rank{
+                        width: 20px;
+                        text-align: center;
+                        color: #FFF;
+                        background: #CCC;
+                    }
+                    #rankBox .rank-list-elem .list-rank.rank1{background: red;}
+                    #rankBox .rank-list-elem .list-rank.rank2{background: orange;}
+                    #rankBox .rank-list-elem .list-rank.rank3{background: blue;}
+                    #rankBox .rank-list-elem .user-nick{
+                        max-width: 300px;
+                        margin-left: 10px;
+                    }
+                    #rankBox .rank-list-elem .rank-value{
+                        width: 70px;
+                        margin-right: 2px;
+                        float: right;
+                        text-align: right;
+                        color: #666;
+                        font-style: italic;
+                    }
+    #rankBox .rank-box.right{
+        float: right;
+    }
+
+#footBox{
+    width: 100%;
+    height: 100px;
+    background: orange;
+}
+
+

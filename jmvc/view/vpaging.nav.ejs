@@ -1,0 +1,8 @@
+
+<ul class="paging-nav">
+    <li class="prev" data-action="prev"><a>&laquo;</a></li>
+    <%for(var i = 0; i < data.length; i++){%>
+    <li class="elem" data-action="list"><a><%= data[i] %></a></li>
+    <%}%>
+    <li class="next" data-action="next"><a>&raquo;</a></li>
+</ul>

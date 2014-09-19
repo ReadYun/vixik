@@ -1,0 +1,17 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <div class="sv-list-elem">
+        <div class="sv-list-main">
+            <div class="survey-header">
+                <div class="survey-title"><a href="<%= data[i].url_visit %>" target="_blank"><%= data[i].survey_name %></a></div>
+                <div class="publish-time"><span><%= data[i].start_date %></span>发布</div>
+                <button class="vkbutton vbtn-default">关注</button>
+            </div>
+            <div class="survey-desc"><%= data[i].survey_desc %></div>
+        </div>
+        <div class="sv-list-sub">
+            <div class="user-nick" title="用户昵称"><i class="icon-user"></i><a href="<%= data[i].url_visit %>" target="_blank"><%= data[i].user_nick %></a></div>
+            <div class="survey-type-sub" title="调查类型"><i class="icon-bookmark"></i><%= data[i].survey_type_sub_name %></div>
+            <div class="item-num" title="题目数量"><i class="icon-book"></i><%= data[i].question_num %></div>
+        </div>
+    </div>
+<%}%>

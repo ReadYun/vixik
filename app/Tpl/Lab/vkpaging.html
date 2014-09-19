@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="TEST·VIXIK"/>
+    <link rel="stylesheet" href="__JMVC__/style/test.index.css" type="text/css"/>
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/test.index.js"></script>
+</head>
+<body>
+    <div id="Main">
+        <form action="" class="form-horizontal">
+            <fieldset>
+                <legend>Test</legend>
+                <div class="control-group">
+                    <label class="control-label">DateTime Picking</label>
+                    <div class="controls input-append date form_datetime" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy MM dd- HH:ii p" data-link-field="dtp_input1">
+                        <input size="16" type="text" value="" readonly id="hello">
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+                    <input type="hidden" id="dtp_input1" value="" /><br/>
+                </div>
+            </fieldset>
+        </form>
+
+        <textarea id="text1"></textarea>
+        <textarea id="text2"></textarea>
+        <div id="Paging" data-vkpaging="survey">
+            <div id="pagBody"></div>
+            <div id="pagNav"></div>
+        </div>
+        <div id="ctrl1" style="height:50px; background:red">ctrl1</div>
+        <div id="ctrl2" style="height:50px; background:blue">ctrl2</div>
+        <button id="add">test</button>
+        <button id="txt">text</button>
+        <button id="pop">POPOVER</button>
+        <a class="button button-flat button-small" id="xxx">增加选项</a>
+        <!-- <button id="xxx">xxxx</button> -->
+    </div>
+    <div id="tpl" style="display:none">
+        <div id="textt">
+            <textarea></textarea>
+            <button id="submit">提交</button>
+        </div>
+    </div>
+</body>
+</html>

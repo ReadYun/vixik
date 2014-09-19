@@ -1,0 +1,39 @@
+
+#Main{
+    width: 960px;
+    margin: 0 auto;
+}
+
+#Header{
+    overflow: hidden;
+    text-align: center;
+    }
+    #Header label{
+        margin: 10px 0;
+        font: 25px "宋体",Tahoma;
+        font-weight: 900;
+        border-bottom: 1px solid #6BB130;
+    }
+#Content{
+    margin: 10px auto;
+    overflow: hidden;
+    }
+    #Content div.vk-lab-elem{
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 10px;
+        float: left;
+        overflow: hidden;
+        border-left: 5px #CCC solid ;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box; /* Firefox */
+        -webkit-box-sizing: border-box; /* Safari */
+        }
+        #Content div.vk-lab-elem>label{
+            font: 19px "宋体",Tahoma;
+        }
+    #Content div.vk-lab-elem:hover{
+        border-left: 5px #6BB130 solid ;
+        cursor: pointer;
+        background: #F5F5F5;
+    }

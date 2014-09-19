@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="创建调查 | 维新调研 · 倾听观点，发现价值"/>
+    <link rel="stylesheet" href="__JMVC__/style/survey.create.css" type="text/css" />
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.create.js"></script>
+</head>
+<body>
+    <div id="Header" data-verify="1">
+        <include file="Public:topBar" nav-type="sub" nav-name="创建调查" need-login="1"/>
+    </div>
+    <div id="Main" data-sv-code="{$survey_code}" data-sv-type="{$sv_type}" data-sv-type-sub="{$sv_type_sub}">
+        <div id="mainSider">
+            <div id="coinsBox">
+                <div class="remain-coins">
+                    <div class="coins-value">0</div>
+                    <div class="coins-desc">可用金币</div>
+                </div>
+                <div class="used-coins">
+                    <div class="coins-value">0</div>
+                    <div class="coins-desc">所需金币</div>
+                </div>
+            </div>
+            <div id="stepBox">
+                <ul>
+                    <li class="step1" data-section="surveyContent">调查内容 >></li>
+                    <li class="step2" data-section="surveySetting">调查属性 >></li>
+                    <li class="step3" data-section="surveyRecommend" >调查推荐 >></li>
+                </ul>
+            </div>
+            <div id="syncBox" data-state="-1">
+                <div class="sync-auto">
+                    <div class="last">
+                        <div class="time"></div>
+                        <div class="desc">已保存最新草稿</div>
+                    </div>
+                    <div class="next">
+                        <div class="time"></div>
+                        <div class="desc">将自动保存草稿</div>
+                    </div>
+                    <div class="doing">
+                        <i class="icon-refresh icon-spin"></i>
+                        <div class="desc">保存草稿中.....</div>
+                    </div>
+                </div>
+                <div class="sync-manu">立即保存为草稿</div>
+            </div>
+            <div id="siderFoot">
+                <div id="helpBox">
+                    <div>如何创建调查</div>
+                    <div>金币使用规则</div>
+                    <div>其他常见问题</div>
+                </div>
+                <div id="stateBox">
+                    底部说明
+                    <include file="Public:footer" type="min"/>
+                </div>
+            </div>
+        </div>
+        <div id="mainBody">
+            <div id="surveyBox">
+                <div id="surveyContent" class="sv-elem sv-content" data-step="step1">
+                    <div class="svc-header"><strong>调查内容</strong></div>
+                    <div class="svc-body vk-form">
+                        <div id="surveyTitle" class="cs-item " data-title="调查主标题">
+                            <div class="cs-label"><i class="icon-bookmark-empty"></i>调查主标题</div>
+                            <div class="cs-content base-info vf-elem" data-name="survey_name" data-elem-type="required">
+                                <input type="text" name="survey_name"/>
+                            </div>
+                        </div>
+                        <div id="surveyExplain" class="cs-item " data-title="调查说明">
+                            <div class="cs-label"><i class="icon-bookmark-empty"></i>调查说明</div>
+                            <div class="cs-content base-info vf-elem" data-name="survey_desc">
+                                <textarea name="survey_desc"/></textarea>
+                            </div>
+                        </div>
+                        <div id="surveyItem" class="cs-item" data-title="调查题目">
+                            <div class="cs-label"><i class="icon-bookmark-empty"></i>调查题目</div>
+                            <div class="cs-content-item">
+                                <div id="itemBody"></div>
+                                <div id="itemButton">
+                                    <div class="add-item">
+                                        <button class="vkbutton vbtn-default" data-type="radio">新增单选题</button>
+                                        <button class="vkbutton vbtn-default" data-type="checkbox">新增多选题</button>
+                                        <button class="vkbutton vbtn-default" data-type="textarea">新增主观题</button>
+                                        <button class="vkbutton vbtn-default" data-type="bank">从题库选择题目</button>
+                                    </div>
+                                    <div class="preview-item">
+                                        <button class="vkbutton vbtn-default" data-type="textarea">预览调查题目</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="surveySetting" class="sv-elem sv-content" data-step="step2">
+                    <div class="svc-header"><strong>调查属性</strong></div>
+                    <div class="svc-body vk-form">
+                        <div class="cs-item vf-elem block" data-vf-name="survey_type" data-vf-sub="survey_type_sub">
+                            <div class="cs-label"><i class="icon-bookmark-empty"></i>调查归属大类<i class="icon-angle-down"></i></div>
+                            <div class="cs-content">
+                                <volist name="survey_type" id="st">
+                                <label class="vf-elem-option inline">
+                                    <input type="radio" name="survey_type" value="{$st.survey_type_code}" data-desc="{$st.survey_type_name}">
+                                    {$st.survey_type_name}
+                                </label>
+                                </volist>
+                            </div>
+                        </div>
+                        <div class="cs-item vf-elem block" data-vf-name="survey_type_sub" data-vf-replace="ajax" data-rep-table="survey_type_sub" data-rep-key="survey_type_code" data-rep-val="survey_type_sub_code" data-rep-tag="survey_type_sub_name" style="display:none">
+                            <div class="cs-label"><i class="icon-bookmark-empty"></i>调查归属小类</div>
+                            <div class="cs-content vf-elem-body">
+                                <div class="vf-elem-option-tpl inline" style="display:none">
+                                    <input type="radio" name="survey_type_sub" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="surveyClass" class="cs-item">
+                            <div class="cs-label"><i class="icon-bookmark-empty"></i>调查所属行业</div>
+                            <div class="cs-content base-info vf-elem" data-vf-name="survey_class">
+                            <volist name="survey_class" id="sc">
+                                <div class="vf-elem-option">
+                                    <input type="radio" name="survey_class" value="{$sc.survey_class_code}">{$sc.survey_class_desc}
+                                </div>
+                            </volist>
+                            </div>
+                        </div>
+                        <div id="targetRange" class="cs-item">
+                            <div class="cs-label"><i class="icon-bookmark-empty"></i>参与用户范围</div>
+                            <div class="cs-content base-info vf-elem" data-vf-name="target_range">
+                                <select type="select" name="target_range">
+                                    <option value="999">允许所有用户参与</option>
+                                    <volist name="level" id="lvl">
+                                    <option value="{$lvl.user_level_value}">允许{$lvl.user_level_desc}等级以上用户参与</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="surveyDate" class="cs-item">
+                            <div class="cs-label"><i class="icon-bookmark-empty"></i>活动开展时长</div>
+                            <div class="cs-content">
+                                <table>
+                                    <tr>
+                                        <td><button class="vkbutton vbtn-border vbtn-vixik block sv-date" data-length-day="5">5天后结束活动</button></td>
+                                        <td><button class="vkbutton vbtn-border vbtn-vixik block sv-date" data-length-day="10">10天后结束活动</button></td>
+                                        <td><button class="vkbutton vbtn-border vbtn-vixik block sv-date" data-length-day="15">15天后结束活动</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button class="vkbutton vbtn-border vbtn-vixik block sv-date" data-length-day="20">20天后结束活动</button></td>
+                                        <td><button class="vkbutton vbtn-border vbtn-vixik block sv-date" data-length-day="25">25天后结束活动</button></td>
+                                        <td><button class="vkbutton vbtn-border vbtn-vixik block sv-date" data-length-day="30">30天后结束活动</button></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="surveyRecommend" class="sv-elem sv-content" data-step="step3">
+                    <div class="svc-header">
+                        <strong>调查推荐</strong>
+                    </div>
+                    <div class="svc-body">
+                        <div id="recommBox" data-recomm-type="-1">
+                            <div id="recommChoose">
+                                <div class="choose-elem recomm-self" data-recomm="2">
+                                    <div class="type-desc-before">
+                                        <div class="choose-desc">
+                                            <div class="choose-title">自定义推荐</div>
+                                            <div class="choose-detail">设置适合自己的详细推荐规则，精准定位目标人群</div>
+                                        </div>
+                                        <div class="choose-coins">
+                                            <div class="coins-desc">需要消耗金币</div>
+                                            <div class="coins-value">30</div>
+                                        </div>
+                                    </div>
+                                    <div class="type-desc-after">自定义推荐规则已设定，再点此可重新设定</div>
+                                </div>
+                                <div class="choose-elem recomm-auto" data-recomm="1">
+                                    <div class="type-desc-before">
+                                        <div class="choose-desc">
+                                            <div class="choose-title">系统自动推荐</div>
+                                            <div class="choose-detail">由系统按照统一的最有效率的方法推荐您的调查</div>
+                                        </div>
+                                        <div class="choose-coins">
+                                            <div class="coins-desc">需要消耗金币</div>
+                                            <div class="coins-value">30</div>
+                                        </div>
+                                    </div>
+                                    <div class="type-desc-after">由系统按照最优规则推荐本次调查活动</div>
+                                </div>
+                                <div class="choose-elem recomm-none" data-recomm="0">
+                                    <div class="type-desc-before">
+                                        <div class="choose-desc">
+                                            <div class="choose-title">不推荐调查</div>
+                                            <div class="choose-detail">本次调查不会主动推荐给参与者，但可以被用户搜索到</div>
+                                        </div>
+                                        <div class="choose-coins">
+                                            <div class="coins-desc">需要消耗金币</div>
+                                            <div class="coins-value">0</div>
+                                        </div>
+                                    </div>
+                                    <div class="type-desc-after">不推荐本次调查活动</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="surveyButton">
+                    <button type="button" class="vkbutton vbtn-success vbtn-pure btn-block" title="发布调查">发布调查</button>
+                </div>
+            </div>
+        </div>
+
+        <!----------创建调查成功弹出框---------->
+        <div id="recommendRule" class="modal hide fade" style="display:none">
+            <div class="modal-header">
+                <div class="name">请设置你的推荐规则</div>
+                <button class="vkbutton vbtn-border vbtn-default rule-cancel">取消/关闭</button>
+            </div>
+            <div class="modal-body">
+                <div id="recommSetting" class="recomm-rule-body tab-content vk-form">
+                    <div id="explain" class="tab-pane rule-item active">规则说明</div>
+                    <div id="sex" class="tab-pane vf-elem rule-item" data-rule-key="user_sex" data-rule-logic="in">
+                        <label class="vf-elem-option"><input type="checkbox" value="1">男性</label>
+                        <label class="vf-elem-option"><input type="checkbox" value="2">女性</label>
+                    </div>
+                    <div id="age" class="tab-pane vf-elem rule-item" data-rule-key="user_age" data-rule-logic="between">
+                        <div class="minage">
+                            <label class="control-label">用户最小年龄范围</label>
+                            <input type="text" class="min" placeholder="最小年龄">
+                        </div>
+                        <div class="maxage">
+                            <label class="control-label">用户最大年龄范围</label>
+                            <input type="text" class="max" placeholder="最大年龄">
+                        </div>
+                    </div>
+                    <div id="area" class="tab-pane rule-item vf-elem" data-rule-key="area_province" data-rule-logic="in">
+                        <volist name="province" id="pv">
+                        <label class="vf-elem-option inline">
+                            <input type="checkbox" name="area_province" value="{$pv.area_province_code}">{$pv.area_province_name}
+                        </label>
+                        </volist>
+                    </div>
+                    <div id="edu" class="tab-pane vf-elem rule-item" data-rule-key="user_edu" data-rule-logic="in">
+                        <volist name="edu" id="edu">
+                        <label class="vf-elem-option inline">
+                            <input type="checkbox" name="user_edu" value="{$edu.user_edu_code}">{$edu.user_edu_desc}
+                        </label>
+                        </volist>
+                    </div>
+                    <div id="career" class="tab-pane vf-elem rule-item" data-rule-key="user_career" data-rule-logic="in">
+                        <volist name="career" id="ca">
+                        <label class="vf-elem-option large inline">
+                            <input type="checkbox" name="user_career" value="{$ca.user_career_code}">{$ca.user_career_desc}
+                        </label>
+                        </volist>
+                    </div>
+                    <div id="income" class="tab-pane rule-item" data-rule-key="user_income" data-rule-logic="in">
+                    </div>
+                </div>
+                <div class="recomm-rule-side">
+                    <div class="recomm-rule-option">
+                        <ul class="nav nav-pills nav-stacked">
+                            <li class="sex" data-rule-key="user_sex">
+                                <a href="#sex" data-toggle="tab">
+                                    <i class="icon-ok"></i><i class="icon-remove" title="清除此项规则"></i>用户性别
+                                </a>
+                            </li>
+                            <li class="age" data-rule-key="user_age">
+                                <a href="#age" data-toggle="tab">
+                                    <i class="icon-ok"></i><i class="icon-remove" title="清除此项规则"></i>用户年龄
+                                </a>
+                            </li>
+                            <li class="area" data-rule-key="area_province">
+                                <a href="#area" data-toggle="tab">
+                                    <i class="icon-ok"></i><i class="icon-remove" title="清除此项规则"></i>用户地域
+                                </a>
+                            </li>
+                            <li class="edu" data-rule-key="user_edu">
+                                <a href="#edu" data-toggle="tab">
+                                    <i class="icon-ok"></i><i class="icon-remove" title="清除此项规则"></i>用户学历
+                                </a>
+                            </li>
+                            <li class="career" data-rule-key="user_career">
+                                <a href="#career" data-toggle="tab">
+                                    <i class="icon-ok"></i><i class="icon-remove" title="清除此项规则"></i>用户职业
+                                </a>
+                            </li>
+                            <li class="income" data-rule-key="user_income">
+                                <a href="#income" data-toggle="tab">
+                                    <i class="icon-ok"></i><i class="icon-remove" title="清除此项规则"></i>用户收入
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="btn btn-link recomm-rule-help" href="#explain" data-toggle="tab">如何设置规则？</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="recomm-rule-stats">
+                    <div class="value">0</div>
+                    <div class="desc">可推荐用户数</div>
+                </div>
+                <div class="recomm-rule-submit">
+                    <button class="vkbutton vbtn-pure vbtn-primary rule-finish">所有推荐规则设置完成</button>
+                </div>
+            </div>
+        </div>
+
+        <!----------创建调查成功弹出框---------->
+        <div id="successModal" class="modal hide fade" style="display:none">
+            <div class="modal-header">创建调查成功，请选择下一步</div>
+            <div class="modal-body">
+                <div class="next-action" href="{:U('survey/create')}">继续创建调查</div>
+                <div class="next-action analyse" href="{:U('survey/analyse')}">查看本次调查</div>
+                <div class="next-action manager" href="{:U('user/index')}">管理我的调查</div>
+                <div class="next-action" href="{:U('/')}">返回首页</div>
+            </div>
+        </div>
+    </div>
+    <div id="tpl" style="display:none">
+        <div class="item-setting">
+            <div class="type-change"><a class="button">切换为多选题</a></div>
+        </div>
+        <div class="add-more-option">
+            <textarea class="more-option"></textarea>
+            <div class="button-box">
+                <button type="button" class="vkbutton vbtn-border vbtn-default amo-submit">确定</button>
+                <button type="button" class="vkbutton vbtn-border vbtn-default amo-cancel">取消</button>
+            </div>
+        </div>
+        <div class="custom-option">
+            <div class="custom-auth">
+                <div class="auth-no auth-elem" data-type="999" data-title="不允许任何用户自定选项">
+                    <div class="auth-title">不允许任何用户自定选项</div>
+                </div>
+                <div class="auth-all auth-elem" data-type="-1" data-title="允许所有用户自定义选项">
+                    <div class="auth-title">允许所有用户自定义选项</div>
+                </div>
+                <div class="auth-some auth-elem" data-type="x">
+                    <div class="auth-title">允许部分用户自定义选项</div>
+                    <div class="auth-some-setting">
+                        <label>选择最低用户等级:</label>
+                        <select type="select" name="user_level" class="auths-setting">
+                        <volist name="level" id="lvl">
+                            <option class="user-level" value="{$lvl.user_level_value}">{$lvl.user_level_desc}</option>
+                        </volist>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

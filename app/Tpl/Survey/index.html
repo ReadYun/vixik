@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="调查中心 | 维新调研 · 倾听观点，发现价值"/>
+    <link rel="stylesheet" href="__JMVC__/style/survey.index.css" type="text/css"/>
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.index.js"></script>
+</head>
+<body>
+    <div id="Header">
+        <include file="Public:topBar" survey="current" nav-type="main" need-login="0"/>
+    </div>
+    <div id="Main">
+        <div id="mainHeader">
+            设计头部内容。。
+        </div>
+        <div id="surveyBox">
+            <volist name="survey_type" id="st">
+            <div class="survey-elem">
+                <div class="survey-list">
+                    <div class="survey-list-header">
+                        <div class="sh-main">
+                            <div class="sv-type-main" data-sv-type="{$st.survey_type_code}">{$st.survey_type_name}</div>
+                            <div class="sv-type-sub">
+                                <volist name="survey_type_sub" id="sts">
+                                <eq name="st.survey_type_code" value="$sts.survey_type_code"> 
+                                <div class="st-sub" data-sv-type="{$sts.survey_type_sub_code}">{$sts.survey_type_sub_name}</div>
+                                </eq>
+                                </volist>
+                            </div>
+                        </div>
+                        <div class="sh-sub">
+                            <button class="vkbutton vbtn-border vbtn-default" data-mode="new">最新</button>
+                            <button class="vkbutton vbtn-border vbtn-default" data-mode="hot">热点</button>
+                            <button class="vkbutton vbtn-border vbtn-default" data-mode="rec">推荐</button>
+                        </div>
+                    </div>
+                    <div class="sv-list-body">
+                        隧道发生的方法
+                        <div class="sv-list-elem">
+                            <div class="sv-name"><i class="icon-list-alt"></i><a href="xx">sdfsdfsdafsdf</a></div>
+                            <div class="sv-item" title="题目数量"><i class="icon-list"></i>23</div>
+                            <div class="sv-coin" title="奖励金币"><i class="icon-asterisk"></i>8</div>
+                            <div class="sv-time" title="发布时间"><i class="icon-time"></i>19分钟前</div>
+                        </div>
+                        <div class="sv-list-elem">
+                            <div class="sv-name"><i class="icon-list-alt"></i><a href="xx">sdfsdfsdafsdf</a></div>
+                            <div class="sv-item" title="题目数量"><i class="icon-list"></i>23</div>
+                            <div class="sv-coin" title="奖励金币"><i class="icon-asterisk"></i>8</div>
+                            <div class="sv-time" title="发布时间"><i class="icon-time"></i>19分钟前</div>
+                        </div>
+                        <div class="sv-list-elem">
+                            <div class="sv-name"><i class="icon-list-alt"></i><a href="xx">sdfsdfsdafsdf</a></div>
+                            <div class="sv-item" title="题目数量"><i class="icon-list"></i>23</div>
+                            <div class="sv-coin" title="奖励金币"><i class="icon-asterisk"></i>8</div>
+                            <div class="sv-time" title="发布时间"><i class="icon-time"></i>19分钟前</div>
+                        </div>
+                        <div class="sv-list-elem">
+                            <div class="sv-name"><i class="icon-list-alt"></i><a href="xx">sdfsdfsdafsdf</a></div>
+                            <div class="sv-item" title="题目数量"><i class="icon-list"></i>23</div>
+                            <div class="sv-coin" title="奖励金币"><i class="icon-asterisk"></i>8</div>
+                            <div class="sv-time" title="发布时间"><i class="icon-time"></i>19分钟前</div>
+                        </div>
+                        <div class="sv-list-elem">
+                            <div class="sv-name"><i class="icon-list-alt"></i><a href="xx">sdfsdfsdafsdf</a></div>
+                            <div class="sv-item" title="题目数量"><i class="icon-list"></i>23</div>
+                            <div class="sv-coin" title="奖励金币"><i class="icon-asterisk"></i>8</div>
+                            <div class="sv-time" title="发布时间"><i class="icon-time"></i>19分钟前</div>
+                        </div>
+                        <div class="sv-list-elem">
+                            <div class="sv-name"><i class="icon-list-alt"></i><a href="xx">sdfsdfsdafsdf</a></div>
+                            <div class="sv-item" title="题目数量"><i class="icon-list"></i>23</div>
+                            <div class="sv-coin" title="奖励金币"><i class="icon-asterisk"></i>8</div>
+                            <div class="sv-time" title="发布时间"><i class="icon-time"></i>19分钟前</div>
+                        </div>
+                        <div class="sv-list-elem">
+                            <div class="sv-name"><i class="icon-list-alt"></i><a href="xx">sdfsdfsdafsdf</a></div>
+                            <div class="sv-item" title="题目数量"><i class="icon-list"></i>23</div>
+                            <div class="sv-coin" title="奖励金币"><i class="icon-asterisk"></i>8</div>
+                            <div class="sv-time" title="发布时间"><i class="icon-time"></i>19分钟前</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="survey-type">
+                    <ul class="stats-nav nav nav-tabs">
+                        <li class="active"><a href="#sv-new" data-toggle="tab">本年</a></li>
+                        <li class=""><a href="#sv-hot" data-toggle="tab">本月</a></li>
+                        <li class=""><a href="#sv-rec" data-toggle="tab">本周</a></li>
+                    </ul>
+                    <div class="stats-body" data-model="partake$"></div>
+                </div>
+            </div>
+            </volist>
+        </div>
+        <div id="midBox">
+            想想这里插入点什么。。
+        </div>
+        <div id="rankBox">
+            <div class="rankbox">
+                <div class="user_coins rank-box left">
+                    <div class="rank-header"><i class="icon-trophy"></i>积分排行</div>
+                    <div class="rank-body">
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank1">1</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank2">2</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank3">3</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">4</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">5</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">6</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">7</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">8</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="user-soins rank-box right">
+                    <div class="rank-header"><i class="icon-money"></i>金币排行</div>
+                    <div class="rank-body">
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank1">1</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank2">2</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank3">3</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">4</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">5</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">6</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">7</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">8</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rankbox">
+                <div class="survey-answer rank-box left">
+                    <div class="rank-header"><i class="icon-edit"></i>参与调查数量排行</div>
+                    <div class="rank-body">
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank1">1</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank2">2</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank3">3</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">4</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">5</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">6</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">7</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">8</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="survey-publish rank-box right">
+                    <div class="rank-header"><i class="icon-bullhorn"></i>发布调查数量排行</div>
+                    <div class="rank-body">
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank1">1</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank2">2</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank rank3">3</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">4</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">5</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">6</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">7</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                        <div class="rank-list-elem">
+                            <div class="list-rank">8</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footBox">
+            底部内容完善。。
+        </div>
+    </div>
+    <div id="Footer">
+        <include file="Public:footer" type="main"/>
+    </div>
+</body>
+</html>

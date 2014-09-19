@@ -1,0 +1,22 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <div class="sv-list-elem <%= data[i].follow %>" data-survey-code="<%= data[i].survey_code %>">
+        <div class="sv-list-main">
+            <div class="survey-title"><a href="<%= data[i].url_visit %>"><%= data[i].survey_name %></a></div>
+            <div class="survey-desc"><%= data[i].survey_desc %></div>
+        </div>
+        <div class="sv-list-sub">
+            <div class="ss-prop">
+                <div class="user-nick" title="用户昵称"><i class="icon-user"></i><a href="<%= data[i].url_user %>" target="_blank"><%= data[i].user_nick %></a></div>
+                <div class="survey-type" title="调查类型"><i class="icon-bookmark"></i><a href="<%= data[i].url_type %>" target="_blank"><%= data[i].survey_type_name %></a></div>
+                <div class="item-num" title="题目数量"><i class="icon-book"></i><%= data[i].question_num %></div>
+                <div class="survey-state" title="调查状态"><i class="icon-leaf"></i><%= data[i].survey_state_desc %></div>
+            </div>
+            <div class="ss-action">
+                <a class="vkbutton vbtn-border vbtn-default followed active">已关注</a>
+                <a class="vkbutton vbtn-border vbtn-default follow">关注调查</a>
+                <a class="vkbutton vbtn-border vbtn-default share">分享调查</a>
+                <a class="vkbutton vbtn-border vbtn-default" href="<%= data[i].url_analyse %>" target="_blank">查看分析</a>
+            </div>
+        </div>
+    </div>
+<%}%>

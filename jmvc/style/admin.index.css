@@ -1,0 +1,274 @@
+/*
+ * Document    : index.css
+ * Description : css for admin/index.html
+ *
+ * Created on  : 2012-8-13, 4:18:34
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+
+body{
+    margin:0px auto;
+    background:#FFFFFF;
+    background-position:center;
+    text-align:center;
+    font:15px "Microsoft Yahei",Tahoma;  color:#000000;
+    }
+a:link,a:visited{font-size:14px;color:#OOOOCC;text-decoration:none}
+a:hover{}
+
+#Header{
+    width:1000px;  height:100px;
+    margin:0 auto;
+    }
+#topNav{
+    width:900px;  height:35px;
+    margin:0 auto;
+    background-color:#333333;
+    opacity:0.7;
+    border-radius:0 0 8px 8px;
+    }
+#logoBar{
+    width:180px;
+    padding:5px; margin:0 auto;
+    float:left;
+    font:20px 'Tahoma';  color:#00FF33;
+    }
+#navBar{
+    width:350px;
+    margin:0 auto;
+    float:left;
+    }
+#home,#survey,#reward,#help{
+    width:80px;  height:25px;
+    padding:5px 0; margin:0 auto;
+    float:left;
+    color:#CCDDCC;
+    }
+#navBar div:hover{
+    color:#FFFFFF;
+    background-color:#000000;
+    cursor:pointer;
+    }
+#markBar{
+    width:350px;
+    padding:5px; margin:0 auto;
+    float:right;
+    }
+#blog,#qqWeibo,#sinaWeibo{
+    width:70px;  height:15px;
+    margin:0 auto;
+    float:right;
+    color:#888888;
+    }
+#searchNav{
+    width:400px;  height:40px;
+    margin:10px 50px;
+    float:right;
+    border:2px solid #999999;
+    border-radius:5px;
+    }
+#Main{
+    width:1000px;  height:500px;
+    margin:0 auto;
+    border:5px solid #00CC00;
+    border-radius:5px;
+    }
+#userBox{
+    height:90px;
+    border-bottom:3px solid #00CC00;
+    }
+#userHeader{
+    width:139px;  height:90px;
+    float:left;
+    border-right:1px solid #00CC00;
+    }
+#userLogo{
+    width:80px;  height:80px;
+    margin:5px;
+    float:left;
+    border-radius:3px;
+    background-color:red;
+    }
+#userLink{
+    width:44px;
+    margin:5px 5px 5px 0;
+    float:right;
+    }
+    #userLink a{
+        width:44px;
+        padding:0;  margin:0;
+        }
+    #userLink a:hover{
+        background-color:blue;
+        }
+#userInfo{
+    width:860px;
+    margin:0;
+    float:left;
+    text-align:left;
+    }
+#baseInfo{
+    width:850px;  height:20px;
+    padding:5px;  margin:0;
+    }
+#userNick{
+    width:400px;
+    float:left;
+    }
+#userType{
+    width:120px;
+    float:left;
+    }
+#userLevel{
+    width:200px;
+    float:left;
+    }
+#explainInfo{
+    width:850px;  height:20px;
+    padding:5px;  margin:0;
+    background-color:#EEFFEE;
+    }
+#dataPlan{
+    width:300px;
+    float:left;
+    }
+#dataAlter{
+    width:100px;
+    float:left;
+    }
+#perSetting{
+    width:100px;
+    float:left;
+    }
+#safeSetting{
+    width:100px;
+    float:left;
+    }
+#actionInfo{
+    width:850px;  height:20px;
+    padding:5px;  margin:0;
+    margin:0;
+    }
+#publishCnt{
+    width:250px;
+    margin:0 auto;
+    float:left;
+    }
+#answerCnt{
+    width:250px;
+    margin:0 auto;
+    float:left;
+    }
+#rewardCnt{
+    width:250px;
+    margin:0 auto;
+    float:left;
+    }
+#boxMenu{
+    width:139px; height:410px;
+    float:left;
+    border-right:1px solid #00CC00;
+    }
+    #boxMenu div{
+        width:119px; height:30px;
+        padding:10px;
+        float:left;
+        font-size:17px;  color:#333333;  letter-spacing:3px;
+        }
+    #boxMenu div:hover{
+        background-color:#66CCCC;
+        cursor:pointer;
+        }
+#boxMain{
+    width:860px;  height:410px;
+    float:left;
+    }
+div.sv-created{
+    height:325px;
+    }
+div.sv-list{
+    width:800px;  height:55px;
+    margin:0 0 7px 0;
+    float:left;
+    border:1px solid #CCCCCC;
+    }
+    div.sv-list div.sv-operate{
+        width:50px;  height:55px;
+        margin:0px;
+        float:right;
+        font-size:14px;
+        border-left:1px solid #DDDDDD;
+        }
+        div.sv-list div div{
+            width:44px;  height:22px;
+            padding:3px;
+            }
+        div.sv-list div.sv-operate div:hover{
+            background-color:#EDEDED;
+            cursor:pointer;
+            }
+    div.sv-list div.sv-date{
+        width:130px;  height:55px;
+        margin:0px;
+        float:right;
+        font-size:14px;
+        border-left:1px solid #DDDDDD;
+        }
+        div.sv-list div.sv-date div.sv-date-start{
+            width:120px;
+            margin:0 auto;
+            text-align:left;
+            }
+        div.sv-list div.sv-date div.sv-date-start{
+            width:120px;
+            margin:0 auto;
+            text-align:right;
+            }
+    div.sv-list div.sv-info{
+        width:560px;  height:55px;
+        float:right;
+        border-left:1px solid #CCCCCC;
+        }
+        div.sv-list div.sv-info div.sv-info-state{
+            width:60px;  height:20px;
+            padding:0px 1px 1px 1px;  margin:5px;
+            float:left;
+            background-color:blue;
+            border-radius:6px;
+            opacity:0.9;
+            }
+            div.sv-list div.sv-info div.sv-info-state a{
+                height:16px;
+                color:#FFFFFF;
+                font-size:12px;
+                }
+        div.sv-list div.sv-info div.sv-info-title{
+            width:470px;  height:20px;
+            padding:5px;  margin:0;
+            float:left;
+            text-align:left;
+            }
+            div.sv-list div.sv-info div.sv-info-title a{
+                height:16px;
+                padding:2px;
+                font-size:14px;
+                }
+            div.sv-list div.sv-info div.sv-info-title a:hover{
+                color:#0000CC;
+                cursor:pointer;
+                }
+        div.sv-list div.sv-info div.sv-info-item{
+            width:480px;  height:20px;
+            padding:2px 0;  margin:0;
+            float:left;
+            text-align:left;
+            }
+        div.sv-list div.sv-info div.sv-info-item a{
+            width:100px;  height:16px;
+            padding:2px;  margin:0 5px;
+            float:left;
+            font-size:12px;  color:#666666;
+            }
+
+

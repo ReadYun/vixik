@@ -1,0 +1,66 @@
+/*
+ * Document    : public.header.css
+ * Description : CSS for header.html
+ *
+ * Created on  : 2012-9-25
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+#headerMain{
+    height:140px;
+    padding:0; margin:0;
+    display:none;
+    position:relative;
+    border-bottom:5px solid #6BB130;
+    }
+#headerMain.home,#headerMain.survey,#headerMain.brand,#headerMain.shop{
+    display:block;
+    }
+#midBox{
+    height:90px;
+    padding:10px 0 0 0;  margin:0;
+    background-color:#333333;
+    }
+    #midBox>div.logo{
+        width:250px;  height:80px;
+        padding:0;  margin:0 40px;
+        float:left;
+        }
+        #midBox>div.logo img{
+            width:280px;  height:80px;
+            }
+    #midBox>div.contact{
+        width:200px;  height:85px;
+        padding:0;  margin:0 100px 0 0;
+        float:right;
+        }
+        #midBox>div.contact div.con{
+            width:200px;  height:25px;
+            padding:0;  margin:0;
+            float:right;
+            opacity:0.9;
+            }
+            #midBox>div.contact div.con a{
+                padding:0;  margin:0 5px;
+                float:right;
+                color:#CCCCCC;
+                }
+            #midBox>div.contact div.con a.icon{
+                width:25px;  height:25px;
+                padding:0;  margin:0 5px;
+                float:right;
+                background-color:yellow;
+                }
+        #midBox>div.contact div.span{
+            width:200px;  height:5px;
+            padding:0;  margin:0;
+            float:right;
+            }
+    #midBox div.ad.index{background-color:green;}
+    #midBox div.ad.survey{background-color:red;}
+    #midBox div.ad.brand{background-color:blue;}
+    #midBox div.ad.shop{background-color:blueviolet;}
+#deputyNav{
+    padding:0; margin:0;
+    background-color:#333333;
+    }

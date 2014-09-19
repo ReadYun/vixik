@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN"
+"http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <title>用户管理 | VixiK</title>
+    <meta name="author" content="zhiyun218@gmail.com" />
+    <meta name="Copyright" content="版权自由，任意转载" />
+    <meta name="description" content="维新科创" />
+    <meta name="keywords" content="大数据,数据分析,问卷调查,网络营销" />
+    <meta name="robots" content="all" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="favicon.ico" />
+    <link rel="bookmark" href="favicon.ico" />
+    <!--导入样式表-->
+    <link rel="stylesheet" href="__PUBLIC__/style/vixik-ui-1.0.custom.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/themes/cupertino/jquery-ui-1.8.custom.css">
+    <link rel="stylesheet" href="__APPTPL__/admin/style/index.css" type="text/css" />
+    <!--jQuery库-->
+    <script type="text/javascript" src="__PUBLIC__/script/jquery-1.4.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/script/jquery-ui-1.8.custom.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/script/jquery.json-1.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/script/jquery.cookie.js"></script>
+    <!--自定义JS脚本-->
+    <script type="text/javascript" src="__APPTPL__/admin/script/index.js"></script>
+</head>
+<body>
+    <div id="Header">
+        <div id="topNav" >
+            <div id="logoBar">
+                <a>VixiK</a>
+            </div>
+            <div id="navBar">
+                <div id="home">
+                    <a>首页</a>
+                </div>
+                <div id="survey">
+                    <a>问卷中心</a>
+                </div>
+                <div id="reward">
+                    <a>各种奖励</a>
+                </div>
+                <div id="help">
+                    <a>帮助</a>
+                </div>
+            </div>
+            <div id="markBar">
+                <div id="blog">
+                    <a>博客</a>
+                </div>
+                <div id="qqWeibo">
+                    <a>腾讯微博</a>
+                </div>
+                <div id="sinaWeibo">
+                    <a>新浪微博</a>
+                </div>
+            </div>
+        </div>
+        <div id="searchNav">
+            <a>搜索栏</a>
+        </div>
+    </div>
+    <div id="Main">
+        <div id="userBox">
+            <div id="userHeader">
+                <div id="userLogo">
+                    <a>用户头像</a>
+                </div>
+                <div id="userLink">
+                    <a>link1</a>
+                    <a>link2</a>
+                    <a>link3</a>
+                    <a>link4</a>
+                </div>
+            </div>
+            <div id="userInfo">
+                <div id="baseInfo">
+                    <div id="userNick">
+                        <a>昵称</a>
+                    </div>
+                    <div id="userType">
+                        <a>用户类型</a>
+                    </div>
+                    <div id="userLevel">
+                        <a>认证级别</a>
+                    </div>
+                </div>
+                <div id="explainInfo">
+                    <div id="dataPlan">
+                        <a>资料完整度</a>
+                    </div>
+                    <div id="dataAlter">
+                        <a>修改资料</a>
+                    </div>
+                    <div id="perSetting">
+                        <a>个性设置</a>
+                    </div>
+                    <div id="safeSetting">
+                        <a>安全设置</a>
+                    </div>
+                </div>
+                <div id="actionInfo">
+                    <div id="publishCnt">
+                        <a>发布问卷数量</a>
+                    </div>
+                    <div id="answerCnt">
+                        <a>参与问卷数量</a>
+                    </div>
+                    <div id="rewardCnt">
+                        <a>获得奖励次数</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="boxMenu">
+            <div id="surveyMenu">我的问卷</div>
+            <div id="rewardMenu">我的奖励</div>
+            <div id="collectMenu">我的收藏</div>
+        </div>
+        <div id="boxMain">
+            <div id="surveyBox" style="display:block">
+                <div id="created" style="display:none">
+                    <ul>
+                        <li><a href="#all">所有</a></li>
+                        <li><a href="#unfinish">未完成</a></li>
+                        <li><a href="#finished">已完成</a></li>
+                        <li><a href="#overed">已结束</a></li>
+                    </ul>
+                    <div id="all" class="sv-created">
+                        <div class="sv-list">
+                            <div class="sv-operate">
+                                <div class="sv-see-detail">[查]</div>
+                                <span></span>
+                                <div class="sv-see-analyse">[析]</div>
+                            </div>
+                            <div class="sv-operate">
+                                <div class="sv-operate-edit">[改]</div>
+                                <div class="sv-operate-delete">[删]</div>
+                            </div>
+                            <div class="sv-date">
+                                <div class="sv-date-start">
+                                    <a>2012-03-29</a>
+                                </div>
+                                <div class="sv-date-end">
+                                    <a>2012-06-25</a>
+                                </div>
+                            </div>
+                            <div class="sv-info">
+                                <div class="sv-info-state"><a>状态状态</a></div>
+                                <div class="sv-info-title"><a>问卷调查标题问卷调查标题问卷调查标题</a></div>
+                                <div class="sv-info-item">
+                                    <a>问题总数量：</a>
+                                    <a>单选题数量：</a>
+                                    <a>多选题数量：</a>
+                                    <a>主观题数量：</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sv-list"></div>
+                        <div class="sv-list"></div>
+                        <div class="sv-list"></div>
+                        <div class="sv-list"></div>
+                    </div>
+                    <div id="unfinish" class="sv-created">unfinish</div>
+                    <div id="finished" class="sv-created">finished</div>
+                    <div id="overed" class="sv-created">overed</div>
+                </div>
+                <div id="attend" style="display:none">
+                    <a>已参与的问卷</a>
+                </div>
+                <div id="interest" style="display:none">
+                    <a>感兴趣的问卷</a>
+                </div>
+            </div>
+            <div id="rewardBox" style="display:none">
+                <a>奖励信息</a>
+            </div>
+            <div id="collectBox" style="display:none">
+                <a>收藏信息</a>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>vkData · VixiK</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="vkData.js"></script>
+</head>
+<body>
+    <div id="Main">
+        <h1>vkData Demo</h1>
+    </div>
+    <script>
+        (function($){
+            console.log('--------------------判断一个值是否在一维数组中：vkData.check_array_value_in') ;
+            console.log($.vkData('check_array_value_in', {array$:['a', 'b', 'x'], value:'x'})) ;
+            console.log($.vkData('check_array_value_in', {array$:['a', 'b', 'x'], value:'y'})) ;
+
+            console.log('--------------------快速生成一个连续序列数组：vkData.check_array_value_in') ;
+            console.log($.vkData('create_array_seq', {start:12, length:10})) ;
+
+            console.log('--------------------一维数组去重：vkData.filter_array_duplicate') ;
+            console.log($.vkData('filter_array_duplicate', {data$: new Array(1, 12, 8, 99, 1, 1, 121, 99)})) ;
+            
+        })(jQuery) ;
+    </script>
+</body>
+</html>

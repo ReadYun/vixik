@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN"
+"http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <title>维新科创|VixiK..We Think!</title>
+    <meta name="author" content="zhiyun218@gmail.com,czy" />
+    <meta name="Copyright" content="版权所有" />
+    <meta name="description" content="维新科创|VixiK" />
+    <meta name="keywords" content="vixik.com,大数据,vixik" />
+    <meta name="robots" content="all" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="favicon.ico" />
+    <link rel="bookmark" href="favicon.ico" />
+    <!--导入样式表-->
+    <link rel="stylesheet" href="__APPTPL__/Index/style/index.css" type="text/css" />
+    <!--jQuery库-->
+    <script type="text/javascript" src="__PUBLIC__/script/jquery-1.4.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/script/jquery.json-1.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/script/jquery-ui-1.8.custom.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/script/jquery.cookie.js"></script>
+    <!--自定义JS-->
+    <script type="text/javascript">
+        $(function(){
+            $.cookie('ck1',null,{path:'/'}) ;
+            if($.cookie('ck1')){
+                $('#ck1').html($.cookie('ck1')) ;
+            }
+            else{
+                $('#ck1').html('ck1 not find..') ;
+            }
+            if($.cookie('ck2')){
+                $('#ck2').html($.cookie('ck2')) ;
+            }
+            else{
+                $('#ck2').html('ck2 not find..') ;
+            }
+        }) ;
+    </script>
+</head>
+<body>
+    <div id="ck1">aa</div>
+    <p>=========================================================================</p>
+    <div id="ck2"></div>
+</body>
+</html>

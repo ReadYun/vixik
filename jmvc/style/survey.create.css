@@ -1,0 +1,863 @@
+/*
+ * Document    :  survey.create.css
+ * Description :  css for survey/create.html
+ *
+ * Created on  :  2012-8-13, 4: 18: 34
+ * Author      :  ReadYun
+ * Copyright   :  VixiK
+ */
+#Main{
+    min-width: 960px;
+    padding-bottom: 50px;  
+    margin: 0 auto;
+    overflow: hidden;
+}
+#mainSider{
+    width: 20%;
+    min-width: 200px;
+    height: 100%;
+    padding-top: 10px;
+    float: right;
+    position: fixed;
+    left: 0;
+    border-right: 1px solid #CCC; 
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    }
+    #mainSider>div{
+        box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        width: 100%;
+        margin-bottom: 10px;
+        float: right;
+        overflow: hidden;
+        font: 12px "宋体",Tahoma;
+    }
+    #coinsBox{
+        width: 100%;
+        padding: 0 10px;
+        overflow: hidden;
+        text-align: center;
+        color: #FFF;
+        }
+        #coinsBox>div{
+            width: 50%;
+            height: 100%;
+            padding: 5px 0;
+            float: left;
+            background: #6BB130;
+            }
+            #coinsBox div.coins-value{
+                width: 100%;
+                height: 50px;
+                font-size: 40px;
+                font-weight: 900;
+            }
+            #coinsBox>div.remain-coins>div.coins-value{
+                padding-top: 10px;
+                font-size: 30px;
+                box-sizing:border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+            }
+            #coinsBox>div>div.coins-desc{
+                width: 100%;
+                height: 25px;
+                font: 13px "微软雅黑",Tahoma;
+            }
+    #stepBox{
+        width: 100%;
+        height: 180px;
+        font-family: "宋体",Tahoma;  
+        text-align: center;  
+        color: #FFF;
+        }
+        #stepBox ul{
+            position: absolute;
+            width: 100%;
+            list-style-type: none; 
+            margin: 0;
+            padding: 10px 0;
+            }
+            #stepBox ul>li{
+                width: 100%;
+                padding: 10px 0;
+                float: left;
+                font: 23px "宋体",Tahoma;
+                text-align: center;
+                color: #000;
+                cursor: pointer;
+                border-top: 1px solid #FFF;
+                border-bottom: 1px solid #FFF;
+            }
+            #stepBox ul>li:hover{
+                background: #EEE;
+                }
+                #stepBox ul>li.action{
+                    cursor: auto;
+                    background: #FFF;
+                    border-top: 1px solid #CCC;
+                    border-bottom: 1px solid #CCC;
+                    border-right: 1px solid #FFF;
+                    color: #6BB130;
+                }
+        #syncBox{
+            display: block;
+            padding: 0 10px;
+            float: left;
+            overflow: hidden;
+            }
+            #syncBox>div.sync-auto{
+                width: 100%;
+                float: left;
+                font: 14px "微软雅黑",Tahoma;
+                }
+                #syncBox>div.sync-auto>div{
+                    width: 100%;
+                    float: left;
+                    padding: 5px 0;
+                    box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                }
+                #syncBox div.time{
+                    float: left;
+                    text-align: left;
+                }
+                #syncBox div.desc{
+                    float: right;
+                    text-align: right;
+                }
+                #syncBox div.last{
+                    display: none;
+                }
+                #syncBox div.next{
+                    border-top: 1px dotted #CCC;
+                }
+                #syncBox div.doing{
+                    display: none;
+                }
+            #syncBox:hover>div.sync-auto{
+                display: none;
+                }
+        #syncBox[data-state='-1']{
+            display: none;
+            }
+            #syncBox[data-state='1'] div.last{
+                display: block;
+            }
+            #syncBox[data-state='2'] div.doing{
+                display: block;
+            }
+            #syncBox[data-state='2'] div.last, #syncBox[data-state='2'] div.next, #syncBox[data-state='2']:hover div.now{
+                display: none;
+            }
+            #syncBox>div.sync-manu{
+                display: none;
+                height: 20px;
+                padding: 15px 0;
+                font: 19px "宋体",Tahoma; 
+                text-align: center;
+                background: #CCC;
+                cursor: pointer;
+                }
+            #syncBox>div.sync-manu:hover{
+                color: #FFF;
+                background: #BBB;
+            }
+            #syncBox:hover>div.sync-manu{
+                display: block;
+            }
+    #siderFoot{
+        padding-top: 10px;
+        position:absolute;
+        bottom: 0;
+        text-align: center;
+        }
+        #helpBox{
+            width: 100%;
+            float: left;
+            }
+            #helpBox>div{
+                width: 100%;
+                padding: 5px 0;
+                font: 17px "宋体",Tahoma; 
+                border-top: 1px solid #CCC;
+            }
+            #helpBox>div:hover{
+                background: #CCC;
+                cursor: pointer;
+            }
+        #stateBox{
+            height: 100px;
+            width: 100%;
+            padding-top: 10px;
+            float: left;
+            border-top: 1px solid #CCC;
+        }
+#mainBody{
+    width: 80%;
+    min-width: 760px;
+    float: right;
+    overflow: hidden;
+    }
+    #surveyBox{
+        width: 740px;
+        margin-left: 20px;
+        float: left;
+        overflow: hidden;
+        }
+        #surveyBox>div.sv-content{
+            width: 100%;
+            margin: 10px 0;
+            float: left;
+            overflow: hidden;
+            background: #FFF;
+            border: 1px solid #CCC;
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+        }
+        div.sv-content>div{
+            width: 100%;
+            float: left;
+            overflow: hidden;
+        }
+        div.sv-content>div.svc-header{
+            width: 100%;
+            padding: 5px 10px;
+            float: left;
+            font: 22px "宋体",Tahoma;  
+            color: #FFF;
+            background: #6BB130;
+        }
+        div.sv-content>div.svc-body{
+            width: 730px;
+            padding: 0;  
+            margin: 5px;
+            float: left;
+            overflow: hidden;
+            font: 14px "宋体",Tahoma;  
+            color: #000;
+            }
+            div.svc-body>div.cs-item{
+                width: 710px;
+                padding: 5px 0 10px 0;  
+                margin: 5px 10px;
+                float: left;
+                overflow: hidden;
+                border-bottom: 1px dotted #CFCFCF;
+                }
+                div.svc-body div.cs-item div.cs-label{
+                    width: 95%;
+                    padding-bottom: 5px;  
+                    float: left;
+                    overflow: hidden;
+                    font: 19px "宋体",Tahoma;  
+                    color: #333;
+                    }
+                    div.cs-item div.cs-label>i{
+                        padding-right: 3px;
+                        font-size: 17px;
+                        color: #777;
+                    }
+                    div.cs-item div.cs-label>i.icon-angle-down{
+                        padding-left: 5px;
+                        color: #999;
+                    }
+                div.svc-body>div.cs-item:hover{
+                    color: #000;
+                    border-color: #6BB130;
+                    }
+                div.svc-body div.cs-item div.cs-content{
+                    width: 95%;
+                    padding: 3px  0 3px 18px;  
+                    margin: 0;
+                    float: left;
+                    overflow: hidden;
+                    color: #555555;
+                    }
+                    div.svc-body div.cs-item div.cs-content>label{
+                        font: 17px "宋体",Tahoma;  
+                    }
+                div.svc-body div.cs-item div.cs-content-item{
+                    width: 100%;
+                    padding: 3px  0;  
+                    margin: 0;
+                    float: left;
+                    overflow: hidden;
+                }
+
+#surveyTitle input[type=text]{
+    width: 660px;  
+    height: 25px;
+    padding: 0 5px;  
+    margin: 0;
+    font: 17px "宋体",Tahoma;  
+    color: #555;
+}
+#surveyExplain textarea{
+    width: 660px;  
+    height: 140px;
+    padding: 5px;  
+    margin: 0;
+    font: 12px "宋体",Tahoma;  
+}
+#surveyItem{
+    border: 0;
+    margin-bottom: 0;
+}
+
+#itemBody>div.item{
+    width: 730px;
+    padding: 0;   
+    margin: 5px 0 15px 0;
+    overflow: hidden;
+    }
+    #itemBody>div.item>div{
+        width: 100%;
+        padding: 0;   
+        margin-bottom: 5px;
+        float: left;
+        overflow: hidden;
+    }
+    #itemBody>div.item>div.item-side{
+        width: 25px;
+        padding: 0;   
+        float: left;
+        overflow: hidden;
+        }
+        div.item>div.item-side>div.item-seq{
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            width: 100%;
+            height: 30px;
+            padding-top: 1px;
+            margin-bottom: 10px;
+            float: left;
+            overflow: hidden;
+            font-size: 21px; 
+            color: #666666;
+            text-align: center;
+            font-weight: 900;
+            border-right: 1px solid #CFCFCF;
+            border-bottom: 1px solid #CFCFCF;
+        }
+        div.item>div.item-side>div.item-alter{
+            width: 100%;
+            height: 88px;
+        }
+        div.item>div.item-side>div.item-setting{
+            width: 100%;
+            height: 25px;
+            overflow: hidden;
+            text-align: center;
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+        }
+        div.item>div.item-side>div.item-setting:hover>i{
+            font-size: 23px;
+        }
+    #itemBody>div.item>div.item-body{
+        width: 700px;
+        float: right;
+        overflow: hidden;
+        }
+        div.item>div.item-body>div{
+            float: left;
+            }
+        div.item>div.item-body>div.item-title{
+            float: left;
+            }
+            div.item>div.item-body>div.item-title>div.item-type{
+                height: 12px;
+                width: 30px;
+                padding: 9px 0;
+                float: left;
+                font: 12px "宋体",Tahoma;
+                text-align: center;
+                color: #999;
+            }
+            div.item-body>div.item-title input[type="text"]{
+                width: 615px;
+                float: left;
+                font: 17px "宋体",Tahoma;
+            }
+        #itemBody>div.item div.item-option{
+            width: 550px;
+            margin: 5px 0;
+            float: left;
+            overflow: hidden;
+            }
+            div.item div.item-option>div.option{
+                width: 100;
+                margin: 5px 0;
+                float: left;
+                overflow: hidden;
+                }
+                div.item-option>div.option>div{
+                    padding: 0;   
+                    margin-right: 10px;
+                    float: left;
+                }
+                div.item-option div.option-content>div.option-seq{
+                    width: 20px;
+                    padding: 3px 5px;
+                    float: left;
+                    font-size: 17px;
+                    text-align: right;
+                    color: #999;            
+                    text-decoration: underline;
+                }
+                div.item-option>div.option>div>input[type="text"]{
+                    width: 400px;
+                    padding: 2px;
+                    margin: 0;
+                    font: 12px "宋体",Tahoma;  
+                }
+                div.item-option>div.textarea>textarea{
+                    width: 390px;
+                    height: 80px;
+                    margin-bottom: 10px;
+                    margin-left: 30px;
+                    background-color: #FCFCFC;
+                }
+        #itemBody>div.item div.option-button{
+            width: 630px;
+            padding-left: 30px;
+            margin-top: 5px;
+            float: left;
+        }
+        #itemBody>div.item[data-item-type='textarea']:hover div.option-button{
+            display: none;
+        }
+        #itemBody div.option-button>div.add-option{
+            float: left;
+        }
+        #itemBody>div.item .custom-option{
+            float: right;
+        }
+        #itemBody>div.item div.custom-option>div.custom-auth{
+            margin-bottom: 5px;
+            overflow: hidden;
+            background: #EFEFEF;
+            }
+            #itemBody>div.item div.custom-option div.auth-elem{
+                width: 100%;
+                padding: 10px 0;
+                float: left;
+                overflow: hidden;
+                font-size: 17px;
+                text-align: center;
+                cursor: pointer;
+                border-left: 5px solid #EFEFEF;
+            }
+            #itemBody>div.item div.custom-auth div.auth-elem:hover{
+                color: #333;
+                border-left-color: #6BB130;
+                }
+                #itemBody>div.item div.auth-some-setting{
+                    display: none;
+                    width: 100%;
+                    margin-top: 10px;
+                    overflow: hidden;
+                    font-size: 12px;
+                    float: left;
+                    }
+                    #itemBody>div.item div.auth-some-setting>label{
+                        position: relative;
+                        top: 2px;
+                        margin-left: 15px;
+                        font-size: 12px;
+                        float: left;
+                        color: #333;
+                    }
+                    #itemBody>div.item div.auth-some-setting>select{
+                        width: 130px;
+                        height: 20px;
+                        padding: 2px;
+                        margin-right: 15px;
+                        float: right;
+                        font: 12px "宋体",Tahoma;
+                    }
+                #itemBody>div.item div.custom-option div.auth-elem.active>div.auth-some-setting{
+                    display: block;
+                }
+    #itemBody div.alter{
+        overflow: hidden;
+        float: left;
+        }
+        #itemBody div.alter>div{
+            width: 14px;
+            height: 18px;
+            padding: 2px 2px 1px 4px;
+            float: left;
+            overflow: hidden;
+            border: 1px solid #CCC;
+            color: #333;
+            opacity: 0.7;
+        }
+        #itemBody div.option-alter>div{
+            margin-left: 5px;
+        }
+        #itemBody div.item-alter>div{
+            margin-bottom: 5px;
+        }
+        #itemBody div.alter>div:hover{
+            cursor: pointer;
+            background: #CCC;
+            opacity: 1;
+        }
+        #itemBody div.alter>div[data-disabled='true']{
+            opacity: 0.2;
+        }
+        #itemBody div.alter>div[data-disabled='true']:hover{
+            cursor: auto;
+            background: none;
+            opacity: 0.2;
+        }
+    div.item div.popover>.popover-title{
+        font-size: 12px;
+        padding: 5px;
+    }
+    div.item div.popover>.popover-content{
+        font-size: 12px;
+        padding: 5px;
+        }
+        div.item div.popover .add-more-option>textarea{
+            height: 80px;
+        }
+    div.item div.setting{
+        display: none;
+    }
+    div.item:hover div.setting{
+        display: block;
+    }
+#itemButton{
+    width: 100%;
+    padding-top: 15px;
+    border-top: 1px dotted #CFCFCF;
+    }
+    #itemButton>div.add-item{
+        float: left;
+    }
+    #itemButton>div.preview-item{
+        float: right;
+    }
+#surveySetting .cs-item{
+    min-height: 60px;
+}
+
+#surveySetting .vf-elem-option{
+    margin-right: 22px;
+    margin-bottom: 3px;
+    float: left;
+}
+#surveySetting div.sure input{
+    display: block;
+}
+#targetRange select{
+    width: 250px;
+    font-size: 17px;
+}
+
+#surveyButton{
+    width: 100%;
+    padding-top: 20px;
+    overflow: hidden;
+    }
+    #surveyButton>button{
+        padding: 8px 0;
+        font: 25px "宋体",Tahoma;
+        font-weight: 900;
+    }
+
+#surveyDate{
+    border: 0;
+    }
+    #surveyDate table{
+        border-collapse:collapse;
+    }
+    #surveyDate td{ 
+        width: 200px;
+        height: 40px;
+        padding: 0px;
+        border-collapse:collapse;
+    }
+
+#recommChoose{
+    width: 660px;
+    margin: 20px 0 20px 30px;
+    overflow: hidden;
+    float: left;
+    }
+    #recommChoose>div.choose-elem{
+        width: 220px;
+        height: 180px;
+        float: left;
+        border-left: 1px solid #EEE;
+        border-right: 1px solid #EEE;
+        box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+    }
+    #recommChoose>div.choose-elem[data-recomm='1']{
+            border: 0;
+        }
+        #recommChoose>div.choose-elem>div.type-desc-before{
+            width: 100%;
+            height: 100%;
+            padding: 0 5px;
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+        }
+        #recommChoose>div.choose-elem>div.type-desc-after{
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            display: none;
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+        }
+        #recommChoose>div.choose-elem.active>div.type-desc-before{
+            display: none;
+        }
+        #recommChoose>div.choose-elem.active>div.type-desc-after{
+            display: block;
+            font-size: 25px;
+        }
+        #recommChoose>div.choose-elem div.choose-desc{
+            width: 100%;
+            height: 50%;
+            font-size: 17px;
+            text-align: center;
+            }
+            #recommChoose>div.choose-elem div.choose-desc>div.choose-title{
+                width: 100%;
+                float: left;
+                margin-top: 10px;
+                font-size: 29px;
+                color: #666;
+            }
+            #recommChoose>div.choose-elem div.choose-desc>div.choose-detail{
+                display: none;
+                width: 100%;
+                margin-top: 20px;
+                float: left;
+            }
+            #recommChoose>div.choose-elem:hover div.choose-desc>div.choose-title{
+                display: none;
+            }
+            #recommChoose>div.choose-elem:hover div.choose-desc>div.choose-detail{
+                display: block;
+            }
+        #recommChoose>div.choose-elem div.choose-coins{
+            width: 100%;
+            height: 50%;
+            text-align: center;
+            }
+            #recommChoose>div.choose-elem div.choose-coins>div.coins-desc{
+                height: 15px;
+                margin-top: 20px;
+                font: 12px "宋体",Tahoma;
+                color: #888;
+            }
+            #recommChoose>div.choose-elem div.choose-coins>div.coins-value{
+                height: 45px;
+                font: 49px "宋体",Tahoma;
+                color: #666;
+                font-weight: 900;  
+            }
+    #recommChoose>div.choose-elem:hover{
+        background: #EEE;
+        cursor: pointer;
+        }
+    #recommChoose>div.choose-elem.active{
+        cursor: pointer;
+        background: #6BB130;
+        color: #FFF
+    }
+#recommendRule{
+    width: 800px;
+    height: auto;
+    margin-left: -400px;
+    overflow: hidden;
+    border-radius: 0;
+    border-top: 5px solid #6BB130;
+    }
+    #recommendRule>div.modal-header{
+        padding: 5px;
+        overflow: hidden;
+        }
+        #recommendRule div.name{
+            height: 100%;
+            float: left;
+            font-weight: 900;
+            text-align: center;
+            font: 21px "宋体",Tahoma;
+            color: #333;
+        }
+        #recommendRule button.rule-cancel{
+            float: right;
+            font-weight: 100;
+            opacity: 1;
+        }
+    #recommendRule>div.modal-body{
+        padding: 0;
+        color: #000;
+    }
+    #recommendRule div.recomm-rule-body{
+        width: 675px;
+        height: 100%;
+        min-height: 300px;
+        padding: 20px;
+        float: left;
+        box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        border-right: 1px solid #CCC;
+        }
+        #recommendRule div.recomm-rule-body>div.tab-pane{
+            width: 100%;
+            }
+            #recommendRule div.recomm-rule-body .vf-elem-option{
+                min-width: 150px;
+                margin: 4px;
+            }
+            #recommendRule div.recomm-rule-body .vf-elem-option.large{
+                min-width: 300px;
+            }
+    #recommendRule div.recomm-rule-side{
+        width: 125px;
+        height: 100%;
+        min-height: 300px;
+        float: right;
+        overflow: hidden;
+        }
+        #recommendRule div.recomm-rule-side div.recomm-rule-option{
+            width: 100%;
+            margin: 10px 0;
+            overflow: hidden;
+            border-bottom: 1px solid #CCC;
+            }
+            #recommendRule div.recomm-rule-option ul{
+                width: 100%;
+                margin: 0;
+                padding: 10px 0;
+                }
+                #recommendRule div.recomm-rule-option ul>li{
+                    width: 100%;
+                    }
+                    #recommendRule div.recomm-rule-option ul>li>a{
+                        margin: 0;
+                        color: #333;
+                        font: 17px "宋体",Tahoma;
+                        border-radius: 0;
+                        border-top: 1px solid #FFF;
+                        border-bottom: 1px solid #FFF;
+                    }
+                    #recommendRule div.recomm-rule-option ul>li.active>a{
+                        margin: 0;
+                        background: #EEE;
+                        border-top: 1px solid #CCC;
+                        border-bottom: 1px solid #CCC;
+                    }
+                    #recommendRule div.recomm-rule-option ul>li:hover>a{
+                        cursor: pointer;
+                        opacity: 0.9;
+                        }
+                        #recommendRule div.recomm-rule-option ul>li i{
+                            margin-right: 8px;
+                            float: right;
+                            position: relative;
+                            top: 4px;
+                            opacity: 0;
+                        }
+                        #recommendRule div.recomm-rule-option ul>li.valid i{
+                            opacity: 0.7;
+                        }
+                        div.recomm-rule-option ul>li i.icon-remove{
+                            display:none;
+                        }
+                        div.recomm-rule-option ul>li.valid i{
+                            opacity: 1;
+                        }
+                        div.recomm-rule-option ul>li.valid:hover i.icon-ok{
+                            display:none;
+                        }
+                        div.recomm-rule-option ul>li.valid:hover i.icon-remove{
+                            display:block;
+                        }
+
+    #recommendRule>div.modal-footer{
+        width: 100%;
+        padding: 10px;
+        float: left;
+        box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        }
+        #recommendRule div.recomm-rule-stats{
+            width: 220px;
+            padding: 10px 0;
+            float: left;
+            overflow: hidden;
+            font: 19px "宋体",Tahoma; 
+            text-align: center;
+            border-right: 1px solid #CCC;
+            }
+            #recommendRule div.recomm-rule-stats>div.desc{ 
+                width: 130px;
+                float: left;
+            }
+            #recommendRule div.recomm-rule-stats>div.value{ 
+                width: 90px;
+                float: right;
+            }
+        #recommendRule div.recomm-rule-submit{
+            width: 500px;
+            height: 40px;
+            float: right;
+            }
+            #recommendRule div.recomm-rule-submit>button{
+                width: 100%;
+                height: 100%;
+                font: 17px "宋体",Tahoma; 
+            }
+
+#successModal{
+    top: 200px;
+    border-radius: 0;
+    font-family: "宋体",Tahoma;
+    }
+    #successModal>div.modal-header{
+        padding: 20px 0;
+        font-size: 27px;
+        font-weight: 900;
+        text-align: center;
+        color: #6BB130;
+    }
+    #successModal>div.modal-body{
+        padding: 0;
+        background: #000;
+        }
+        #successModal>div.modal-body>div.next-action{
+            width: 50%;
+            padding: 30px 0;
+            font-size: 21px;
+            float: left;
+            text-align: center;
+            background: #6BB130;
+        }
+        #successModal>div.modal-body>div.next-action:hover{
+            cursor: pointer;;
+            font-size: 31px;
+            color: #FFF;
+            opacity: 0.9;
+        } 

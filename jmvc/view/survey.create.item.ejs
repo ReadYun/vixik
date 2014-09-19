@@ -1,0 +1,32 @@
+<div class="item" data-item-seq="0" data-item-type="radio" data-custom-option="999">
+    <div class="item-side">
+        <div class="item-seq"></div>
+        <div class="item-alter alter setting">
+            <div class="up" title="上移题目" data-type="up"><i class="icon-arrow-up"></i></div>
+            <div class="del" title="删除题目" data-type="delete"><i class="icon-remove"></i></div>
+            <div class="down" title="下移题目" data-type="down"><i class="icon-arrow-down"></i></div>
+        </div>
+        <div class="item-setting setting"><i class="icon-cog"></i></div>
+    </div>
+    <div class="item-body">
+        <div class="item-title">
+            <div class="item-type">单选</div>
+            <input type="text" placeholder="请输入问题标题" value="<%= name %>">
+            <div class="toggle-type" data-toggle="checkbox" style="display:none">
+                <div class="active" data-type="radio" data-title="单选题" data-toggle="切换为单选题">单选题</div>
+                <div class="ready" data-type="checkbox" data-title="多选题" data-toggle="切换为多选题">切换为多选题</div>
+                <div data-type="textarea" data-title="主观题" data-toggle="主观题">主观题</div>
+            </div>
+        </div>
+        <div class="item-option">
+            <div class="textarea" style="display:none"><textarea rows="3" cols="30" disabled="disabled"></textarea></div>
+        </div>
+        <div class="option-button setting">
+            <div class="add-option">
+                <button type="button" class="vkbutton vbtn-border vbtn-default add-one" data-add-type="1">增加一个选项</button>
+                <button type="button" class="vkbutton vbtn-border vbtn-default add-more" data-add-type="2">增加多个选项</button>
+            </div>
+            <button type="button" class="vkbutton vbtn-border vbtn-default custom-option">是否允许自定义选项（默认不允许）</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+/*
+ * Document    : vkForm.css
+ * Description : CSS for vkForm.js
+ *
+ * Created on  : 2012-9-25
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+.vk-form{
+    width: 100%;
+    overflow: hidden;
+    }
+    .vk-form .vf-elem .vf-elem-head{
+        margin-bottom: 10px;
+        font: 17px "宋体",Tahoma;
+    }
+    .vf-elem .icheck{
+        padding: 1px;
+        position: relative;
+        top: 1px;
+        margin-right: 2px;
+        float: left;
+    }
+    .vf-elem .vf-elem-option{
+        font: 17px "宋体",Tahoma;
+        margin-right: 20px;
+    }
+    .vf-elem .vf-elem-option.inline{
+        float: left;
+    }
+    .vf-elem input, .vf-elem select, .vf-elem textarea{
+        font: 12px "宋体",Tahoma;
+    }
+            
+            
+            

@@ -1,0 +1,30 @@
+/*
+ * Document    : vkform.css
+ * Description : CSS for vkForm.js
+ *
+ * Created on  : 2012-9-25
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+#Main{
+    width: 960px;
+    margin: 50px auto;
+    overflow: hidden;
+    }
+    .vkform{
+        width: 100%;
+        padding-left: 10px;
+        margin: 10px 0;
+        float: left;
+        overflow: hidden;
+        border-left: 5px solid #6BB130;
+    }
+    .vf-elem{
+        margin-right: 20px;
+        float: left;
+        overflow: hidden;
+    }
+    .vf-elem.block{
+        width: 100%;
+        margin-bottom: 20px;
+    }

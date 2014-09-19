@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN"
+"http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <link rel="stylesheet" href="__JMVC__/style/survey.recommself.css" type="text/css"/>
+    <!-- <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.recommself.js"></script> -->
+</head>
+<body>
+    <div id="recommSelf" class="modal fide modal-body" role="dialog" style="display:none">
+        <div id="recommTitle" class="modal-header">
+            自定义推荐设置
+            <i class="close icon-remove icon-white" data-dismiss="modal" aria-hidden="true"></i>
+        </div>
+        <div id="recommBody" class="modal-body">
+            <div id="recommOptions">
+                <div class="content">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="option sex" data-recommend-condition="user_sex">
+                            <a href="#sex" data-toggle="tab"><i class="icon-flag" title="此规则生效"></i>用户性别</a>
+                        </li>
+                        <li class="option age" data-recommend-condition="user_age">
+                            <a href="#age" data-toggle="tab"><i class="icon-flag" title="此规则生效"></i>用户年龄</a>
+                        </li>
+                        <li class="option area" data-recommend-condition="area_province">
+                            <a href="#area" data-toggle="tab"><i class="icon-flag" title="此规则生效"></i>用户地域</a>
+                        </li>
+                        <li class="option edu" data-recommend-condition="user_edu">
+                            <a href="#edu" data-toggle="tab"><i class="icon-flag" title="此规则生效"></i>用户学历</a>
+                        </li>
+                        <li class="option career" data-recommend-condition="user_career">
+                            <a href="#career" data-toggle="tab"><i class="icon-flag" title="此规则生效"></i>用户职业</a>
+                        </li>
+                        <li class="option income" data-recommend-condition="user_income">
+                            <a href="#income" data-toggle="tab"><i class="icon-flag" title="此规则生效"></i>用户收入</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="statist">
+                    <div class="desc">可推荐用户数</div>
+                    <div class="num">0</div>
+                </div>
+                <div class="btn btn-link explain" href="#explain" data-toggle="tab">推荐规则设置说明</div>
+            </div>
+            <div id="recommContent" class="tab-content">
+                <div id="explain" class="item tab-pane active">规则说明</div>
+                <div id="sex" class="item tab-pane" data-recomm-condition="user_sex" data-recomm-logic="in">
+                    <div class="pane-body">
+                        <label class="checkbox"><input type="checkbox" value="1">男性</label>
+                        <label class="checkbox"><input type="checkbox" value="2">女性</label>
+                        <label class="checkbox"><input type="checkbox" value="0">不明</label>
+                    </div>
+                    <div class="pane-footer">
+                        <button class="btn" data-action="cancel">取消设置</button>
+                        <button class="btn" data-action="finish">设置完成</button>
+                    </div>
+                </div>
+                <div id="age" class="item tab-pane" data-recomm-condition="user_age" data-recomm-logic="between">
+                    <div class="pane-body">
+                        <div class="minage">
+                            <label class="control-label">用户最小年龄</label>
+                            <input type="text" class="min" placeholder="最小年龄">
+                        </div>
+                        <div class="maxage">
+                            <label class="control-label">用户最大年龄</label>
+                            <input type="text" class="max" placeholder="最大年龄">
+                        </div>
+                    </div>
+                    <div class="pane-footer">
+                        <button class="btn" data-action="cancel">取消设置</button>
+                        <button class="btn" data-action="finish">设置完成</button>
+                    </div>
+                </div>
+                <div id="area" class="item tab-pane" data-recomm-condition="area_province" data-recomm-logic="in">
+                    <div class="pane-body">
+                        <volist name="province" id="pv">
+                        <label class="checkbox inline">
+                            <input type="checkbox" name="area_province" value="{$pv.area_province_code}">{$pv.area_province_name}
+                        </label>
+                        </volist>
+                    </div>
+                    <div class="pane-footer">
+                        <button class="btn" data-action="cancel">取消设置</button>
+                        <button class="btn" data-action="finish">设置完成</button>
+                    </div>
+                </div>
+                <div id="edu" class="item tab-pane" data-recomm-condition="user_edu" data-recomm-logic="in">
+                    <div class="pane-body">
+                        <volist name="edu" id="edu">
+                        <label class="checkbox inline">
+                            <input type="checkbox" name="user_edu" value="{$edu.user_edu_code}">{$edu.user_edu_desc}
+                        </label>
+                        </volist>
+                    </div>
+                    <div class="pane-footer">
+                        <button class="btn" data-action="cancel">取消设置</button>
+                        <button class="btn" data-action="finish">设置完成</button>
+                    </div>
+                </div>
+                <div id="career" class="item tab-pane" data-recomm-condition="user_career" data-recomm-logic="in">
+                    <div class="pane-body">
+                        <volist name="career" id="ca">
+                        <label class="checkbox inline">
+                            <input type="checkbox" name="user_career" value="{$ca.user_career_code}">{$ca.user_career_desc}
+                        </label>
+                        </volist>
+                    </div>
+                    <div class="pane-footer">
+                        <button class="btn" data-action="cancel">取消设置</button>
+                        <button class="btn" data-action="finish">设置完成</button>
+                    </div>
+                </div>
+                <div id="income" class="item tab-pane" data-recomm-condition="user_income" data-recomm-logic="in">
+                </div>
+            </div>
+        </div>
+        <div id="recommAction" class="modal-footer">
+            <button id="submitBtn" class="btn btn-success btn-large btn-block">所有推荐规则设置完成</button>
+        </div>
+    </div>
+</body>
+</html>

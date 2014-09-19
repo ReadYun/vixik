@@ -1,0 +1,11 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <tr>
+        <td class="action-time"><%= data[i].action_time %></td>
+        <td class="action-main">
+        	<div class="action-desc"><%= data[i].action_desc %></div>
+        	<a class="action-name" href="<%= data[i].url_visit %>" target="_blank"><%= data[i].action_name %></a>
+        </td>
+        <td class="change-type"><%= data[i].change_type %></td>
+        <td class="change-value"><%= data[i].change_value %></td>
+    </tr>
+<%}%>

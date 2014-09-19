@@ -1,0 +1,10 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <div class="sv-list-elem">
+        <div class="survey-title"><a href=""><%= data[i].survey_name %></a></div>
+        <div class="survey-prop">
+            <div class="type" title="调查类型"><i class="icon-bookmark"></i><%= data[i].survey_type_sub_name %></div>
+            <div class="item" title="题目数量"><i class="icon-book"></i><%= data[i].question_num %></div>
+            <div class="coins" title="奖励金币"><i class="icon-gift"></i>10</div>
+        </div>
+    </div>
+<%}%>

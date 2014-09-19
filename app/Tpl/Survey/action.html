@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="{$survey['info']['survey_name']} | 维新调研 · 倾听观点，发现价值"/>
+    <link rel="stylesheet" href="__JMVC__/style/survey.action.css" type="text/css" />
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.action.js"></script>
+</head>
+<body>
+    <div id="Header">
+        <include file="Public:topBar" nav-type="sub" nav-name="{$page}" need-login="0"/>
+    </div>
+    <div id="Main" main-state="0" data-survey="{$survey_code}">
+        <div id="visitBox">
+            <div class="visit-box-left">
+                <div id="surveyHeader">
+                    <div class="header-main"><a>{$survey['info']['survey_name']}</a></div>
+                    <div class="header-sub"><a href="">{$survey['info']['user_nick']}</a></div>
+                </div>
+                <div id="surveyDesc">{$survey['info']['survey_desc']}</div>
+                <div id="actionCnt">
+                    <div class="sv-button">
+                        <div class="button-box"><button class="vkbutton vbtn-pure vbtn-vixik">分享</button></div>
+                        <div class="stats-box">0</div>
+                    </div>
+                    <div class="sv-button">
+                        <div class="button-box"><button class="vkbutton vbtn-pure vbtn-vixik">收藏</button></div>
+                        <div class="stats-box">0</div>
+                    </div>
+                    <div class="sv-button">
+                        <div class="button-box"><button class="vkbutton vbtn-pure vbtn-vixik">评论</button></div>
+                        <div class="stats-box">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="visit-box-right">
+                <div id="surveyCnt">
+                    <div class="survey-cnt radio-num">
+                        <div class="value">{$survey['info']['radio_num']}</div>
+                        <div class="title">单选题</div>
+                    </div>
+                    <div class="survey-cnt checkbox-num">
+                        <div class="value">{$survey['info']['checkbox_num']}</div>
+                        <div class="title">多选题</div>
+                    </div>
+                    <div class="survey-cnt textarea-num">
+                        <div class="value">{$survey['info']['textarea_num']}</div>
+                        <div class="title">主观题</div>
+                    </div>
+                </div>
+                <div id="actionInfo">
+                    <div id="rewardScore" class="element">
+                        <div class="value">{$survey['info']['answer_coins']}</div>
+                        <div class="title">奖励金币</div>
+                    </div>
+                    <div id="answerCnt" class="element">
+                        <div class="value">{$survey['info']['answer_num']}</div>
+                        <div class="title">参与人数</div>
+                    </div>
+                </div>
+                <div id="actionHint" data-survey-state="0">
+                    <div class="end">活动已结束</div>
+                    <div class="ing">
+                        <div class="count-down">
+                            <div class="time"></div>
+                            <div class="spin">后</div>
+                        </div>
+                        <div class="cd-desc"></div>
+                    </div>
+                </div>
+                <div id="actionButton">
+                    <button type="button" class="vkbutton vbtn-vixik vbtn-pure btn-block" data-type="answer">开始参与调查 >></button>
+                </div>
+            </div>
+        </div>
+        <div id="answerBox">
+            <div id="mainLeft">
+                <div id="sideBox">
+                    <div id="hintBar">
+                        <div id="itemFlag"></div>
+                        <div id="aswProgress">0%</div>
+                    </div>
+                </div>
+            </div>
+            <div id="mainRight">
+                <div id="navBar">
+                    <div class="nav-bar">
+                        <div class="sv-title">{$survey['info']['survey_name']}</div>
+                        <div class="sv-desc"><i class="icon-eye-open"></i></div>
+                    </div>
+                </div>
+                <div id="surveyContent">
+                    <div id="questionBox" class="vk-form">
+                    </div>
+                    <div id="submit">
+                        <button type="button" class="vkbutton vbtn-success vbtn-pure btn-block" title="发布调查">提交结果</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="afterBox">
+            <div id="thanks">
+                <label><i class="icon-thumbs-up"></i>感谢您参与本次调查</label>
+            </div>
+            <div id="reward">
+                <label>您已获得奖励</label>
+                <div class="after-elem-content">
+                    <div class="after-elem-content-left">
+                        <div class="reward-elem reward-score">
+                            <div class="reward-value">+2</div>
+                            <div class="reward-title">积分</div>
+                        </div>
+                    </div>
+                    <div class="after-elem-content-right">
+                        <div class="reward-elem reward-coins">
+                            <div class="reward-value">+12</div>
+                            <div class="reward-title">金币</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="next">
+                <label>您还可以继续</label>
+                <div class="after-elem-content">
+                    <div class="after-elem-content-left">
+                        <div class="next-elem">
+                            <div class="next-action" data-func="show_answer">
+                                <i class="icon-plane"></i>
+                                <div class="desc">查看我的参与内容</div>
+                            </div>
+                            <div class="next-action" data-func="see_analyse">
+                                <i class="icon-headphones"></i>
+                                <div class="desc">查看调查分析报告</div>
+                            </div>
+                            <div class="next-action" data-func="answer_again">
+                                <i class="icon-home"></i>
+                                <div class="desc">重新参与本次调查</div>
+                            </div>
+                            <div class="next-action" data-func="answer_other">
+                                <i class="icon-coffee"></i>
+                                <div class="desc">继续参与其他调查</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="after-elem-content-right">
+                        <div class="next-elem">
+                            <div class="next-action" data-func="collect_survey">
+                                <i class="icon-bullhorn"></i>
+                                <div class="desc">收藏本次调查</div>
+                            </div>
+                            <div class="next-action" data-func="share_survey">
+                                <i class="icon-legal"></i>
+                                <div class="desc">分享本次调查</div>
+                            </div>
+                            <div class="next-action" data-func="recomm_survey">
+                                <i class="icon-group"></i>
+                                <div class="desc">推荐给其他朋友</div>
+                            </div>
+                            <div class="next-action" data-func="follow_survey">
+                                <i class="icon-tablet"></i>
+                                <div class="desc">关注调查发布者</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="recommBox">
+                <label>您会感兴趣的调查</label>
+                <div class="after-elem-content">
+                    <div class="recomm-sv-type">
+                        <div class="same-type active">同类型</div>
+                        <div class="same-user">同作者</div>
+                    </div>
+                    <div class="recomm-sv-list">
+                        <div class="list-item">xxxxxx</div>
+                        <div class="list-item">xxxxxx</div>
+                        <div class="list-item">xxxxxx</div>
+                        <div class="list-item">xxxxxx</div>
+                        <div class="list-item">xxxxxx</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html

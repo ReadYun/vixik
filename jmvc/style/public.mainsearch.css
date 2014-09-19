@@ -1,0 +1,31 @@
+/*
+ * Document    :mainsearch.css
+ * Description :CSS for mainsearch.html
+ *
+ * Created on  :2012-9-24 14:51:14
+ * Author      :ReadYun
+ * Copyright   :VixiK
+ */
+
+#mainSearch{
+    padding:5px 0;  margin:0 auto;
+    float:right;
+    }
+    #mainSearch input.search{
+        height:18px;
+        margin:1px;
+        background:#393939;
+        border-color:#666666;
+        border-radius:5px 0 0 5px;
+        font:14px "宋体",Tahoma;  color:#FFFFFF;
+        }
+        i.icon-search{
+            margin-right:5px;
+            }
+#searchBtn>button.submit{
+    border-radius:0;
+    padding-left:5px;
+    }
+#searchBtn>button.submit a{
+    color:#FFFFFF;
+    }

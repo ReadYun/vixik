@@ -1,0 +1,51 @@
+/*
+ * Document    :  navbar.css
+ * Description :  CSS for navbar.html
+ *
+ * Created on  :  2012-12-15
+ * Author      :  ReadYun
+ * Copyright   :  VixiK
+ */
+
+#navBar{
+    width: 960px;  height: 40px;
+    padding: 0px;  margin: 0 auto;
+    background: #333333;
+    }
+#pubBox{
+    width: 500px;  height: 40px;
+    padding: 0;  margin: 0;
+    float: left;
+    }
+    #pubBox div{
+        padding: 10px 0;  margin: 0 3px;
+        overflow:hidden;
+        float: left;
+        color: #333333;
+        text-align: center;
+        }
+    #pubBox div:hover{
+        cursor: pointer;
+        }
+        #pubBox div a{
+            width: 80px;  height: 30px;
+            padding: 10px;
+            font: 17px  "宋体",Tahoma;  color: #999999;
+        }
+        #pubBox div a:hover{
+            color: #FFFFFF;
+        }
+    #pubBox div.current{
+        background-color: #FFFFFF;
+        border-radius: 5px 5px 0 0 ;
+        background: #6BB130;
+        }
+    #pubBox div.current:hover{
+        background-color: #FFFFFF;
+        background: #6BB130;
+        }
+        #pubBox div.current a{
+            color: #FFFFFF;
+            font-size: 19px;
+            font-weight: 900;
+            }

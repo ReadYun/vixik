@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN"
+"http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <title>Finish</title>
+    <meta name="author" content="zhiyun218@gmail.com" />
+    <meta name="Copyright" content="版权自由，任意转载" />
+    <meta name="description" content="维新科创" />
+    <meta name="keywords" content="大数据,数据分析,问卷调查,网络营销" />
+    <meta name="robots" content="all" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="favicon.ico" />
+    <link rel="bookmark" href="favicon.ico" />
+    <!--导入样式表-->
+    <link rel="stylesheet" href="__PUBLIC__/style/vixik-ui-1.0.custom.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/themes/cupertino/jquery-ui-1.8.custom.css">
+    <link rel="stylesheet" type="text/css" href="__APPTPL__/Survey/style/finish.css">
+    <!--jQuery库-->
+    <script type="text/javascript" src="__PUBLIC__/script/jquery-1.4.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/script/jquery.json-1.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/script/jquery.cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/script/jquery-ui-1.8.custom.min.js"></script>
+    <!--自定义JS脚本-->
+    <script type="text/javascript" src="__PUBLIC__/script/vixik.custom.js"></script>
+    <script type="text/javascript" src="__APPTPL__/Survey/script/finish.js"></script>
+</head>
+<body>
+    <div id="answerFlow">
+        <fieldset>
+            <legend>默认答题流程设置</legend>
+            <div>
+                <input type="radio" class="answer-flow" name="answer_flow" value="1">
+                <a>清单展示所有问题</a>
+            </div>
+            <div>
+                <input type="radio" class="answer-flow" name="answer_flow" value="2">
+                <a>按回答进度展示问题</a>
+            </div>
+        </fieldset>
+    </div>
+    <div id="issueSetting">
+        <fieldset>
+            <legend>答题奖励设置</legend>
+            <div id="reward">
+                <div>
+                    <input type="radio" class="reward-type" name="reward" value="10">
+                    <a>无奖励</a>
+                </div>
+                <div>
+                    <input type="radio" class="reward-type" name="reward" value="11">
+                    <a>减免邮费</a>
+                </div>
+                <div>
+                    <input type="radio" class="reward-type has-ref" name="reward" value="12">
+                    <a>赠送优惠券</a>
+                </div>
+                <div>
+                    <input type="radio" class="reward-type has-ref" name="reward" value="13">
+                    <a>赠送礼品</a>
+                </div>
+                <div>
+                    <input type="radio" class="reward-type has-ref" name="reward" value="14">
+                    <a>积分抽奖</a>
+                </div>
+            </div>
+            <div id="rewardRef" style="display:none">
+                <input type="text" class="reward-type" name="reward_ref" value="">
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>答题用户类型</legend>
+            <div>
+                <input type="radio" class="issue-Setting" name="limit" value="1">
+                <a>只允许登录用户参与</a>
+            </div>
+            <div>
+                <input type="radio" class="issue-Setting" name="limit" value="2">
+                <a>允许所有用户参与</a>
+            </div>
+        </fieldset>
+        <div id="startDate" class="dateBox">
+            <p>开始时间</p>
+            <select name="start_date_opt" title="开始时间">
+                <option class="hint" value="0">--点击选择--</option>
+                <option value="1">几天后开始</option>
+                <option value="2">确定日期</option>
+                <option value="3">发布即开始</option>
+            </select>
+            <input type="text" class="inputDate dateChoose" value="" style="display:none">
+            <input type="text" class="inputDate dateText" value="" style="display:none">
+        </div>
+        <div id="endDate" class="dateBox">
+            <p>结束时间</p>
+            <select name="end_date_opt" title="结束时间">
+                <option class="hint" value="0">--点击选择--</option>
+                <option value="1">多少天后结束</option>
+                <option value="2">确定日期</option>
+            </select>
+            <input type="text" class="inputDate dateChoose" value="" style="display:none">
+            <input type="text" class="inputDate dateText" value="" style="display:none">
+        </div>
+        <div id="surveyClass">
+            <p>问卷分类</p>
+            <a data-code="100000">【未分类】</a>
+            <button id="chooseClass" type="button" title="问卷分类">选择问卷分类</button>
+        </div>
+        <div id="isTemplate">
+            <p>是否设为模板</p>
+            <div>
+                <input type="radio" class="is-template" name="is_template" value="1">
+                <a>是</a>
+            </div>
+            <div>
+                <input type="radio" class="is-template" name="is_template" value="0">
+                <a>否</a>
+            </div>
+        </div>
+    </div>
+    <div id="buttonBar">
+        <button id="back" type="button" title="上一步">返回上一步</button>
+        <button id="preview" type="button" title="预览">预览</button>
+        <button id="save" class="saveBtn save" type="button" title="保存">保存</button>
+        <button id="publish" class="saveBtn publish" type="button" title="保存并发布">保存并发布</button>
+    </div>
+        <button id="test" type="button">测试</button>
+    <div id="dialogSurveyClass">
+        <div id="optSurveyClass">
+            <volist name="survey_class" id="sc">
+                <a class="opt_sc" data-code={$sc.survey_class_code} data-desc={$sc.survey_class_desc}>{$sc.survey_class_desc}</a>
+            </volist>
+        </div>
+    </div>
+</body>
+</html>

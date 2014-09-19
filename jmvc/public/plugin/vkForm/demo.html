@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>vkForm表单插件. vixik</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="vkForm.js"></script>    
+    <script type="text/javascript" src="demo.js"></script>    
+</head>
+<body>
+    <div id="Main" class="vk-form">
+        <div class="vf-elem vf-text">
+            <label>填空：</label>
+            <input type="text" name="nick">
+        </div>
+        <div class="vf-elem vf-radio">
+            <label>单选：</label>
+            <input type="radio" name="sex" class="sex" value="1">男
+            <input type="radio" name="sex" class="sex" value="2">女
+        </div>
+        <div class="vf-elem vf-checkbox">
+            <label>多选：</label>
+            <div class="tpl" style="display:none"><input type="checkbox" name="hobby"><div class="vf-option-tag"></div></div>
+            <div class="vf-option"><input type="checkbox" name="hobby" class="hobby" value="唱歌">唱歌</div>
+            <div class="vf-option"><input type="checkbox" name="hobby" class="hobby" value="跳舞">跳舞</div>
+            <div class="vf-option"><input type="checkbox" name="hobby" class="hobby" value="游戏">游戏</div>
+            <div class="vf-option"><input type="checkbox" name="hobby" class="hobby" value="运动">运动</div>
+        </div>
+        <div class="vf-elem vf-select">
+            <label>下拉选项：</label>
+            <select type="select" name="birth" class="input-mini base-info birthmonth">
+                <option class="init tpl" value="">选项列表</option>
+                <option value="1">1月</option><option value="2">2月</option>
+                <option value="3">3月</option><option value="4">4月</option>
+                <option value="5">5月</option><option value="6">6月</option>
+                <option value="7">7月</option><option value="9">8月</option>
+                <option value="9">9月</option><option value="10">10月</option>
+                <option value="11">11月</option><option value="12">12月</option>
+            </select>
+        </div>
+
+        <button id="reset" type="button" class="btn btn-block btn-success">reset</button>
+        <button id="replace" type="button" class="btn btn-block btn-success">replace</button>
+        <button id="test3" type="button" class="btn btn-block btn-success">TEST3</button>
+    </div>
+</body>
+</html>

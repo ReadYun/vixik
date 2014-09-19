@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>用户登录</title>
+    <!--导入样式表-->
+    <link rel="stylesheet" href="__PUBLIC__/style/vixik-ui-1.0.custom.css" type="text/css" />
+    <link rel="stylesheet" href="__APPTPL__/Index/style/index.css" type="text/css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <div id="userDialog" class="ui-dialog">
+        <div id="loginDialog" class="ui-dialog-titlebar" title="登录">
+            <span class="ui-dialog-title">登录</span>
+            <form id="loginform" autocomplete="off" target="_self">
+                <ul id="web_login" class="login_list">
+                    <li class="login_input">
+                        <label>帐号</label>
+                        <input id="u" class="input_txt" type="text" name="u" value="">
+                    <li class="login_input">
+                        <label>密码</label>
+                        <input id="p" class="input_txt" type="password" value="" onfocus="check()" name="p">
+                    </li>
+                </ul>
+                <button id="subbtn" class="login_btn" type="submit">登录</button>
+                <a>忘记密码</a><span class="sep">|</span><a>注册用户</a>
+            </form>
+        </div>
+    <div id="signinDialog" title="注册" style="display:none">
+    </div>
+
+    </div>
+  </body>
+</html>

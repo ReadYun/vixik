@@ -1,0 +1,159 @@
+/*
+ * Document    :  survey.recommself.css
+ * Created on  :  2012-8-10, 18: 11: 41
+ * Author      :  ReadYun
+ * Copyright   :  VixiK
+ * Description :  css for document survey/recommself.html
+ */
+#recommSelf{
+    width: 650px;
+    min-height: none;
+    max-height: none;
+    padding: 0;
+    overflow: hidden;
+    background: #999999;
+    border: 0;
+    }
+    #recommTitle{
+        width: 630px;  
+        height: 20px;
+        padding: 8px 10px;
+        font: 19px "宋体",Tahoma;
+        color: #FFFFFF;  
+        text-align: left;    
+        font-weight: 900;
+        background: #333333;
+        border: 0;
+    }
+    #recommBody{
+        max-height: 600px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+    }
+    #recommOptions{
+        width: 130px;  
+        height: 300px;
+        float: left;
+        background: #999999;
+        }
+        #recommOptions>div{
+            float: left;
+            }
+        #recommOptions>div.content{
+            width: 100%;
+            overflow: hidden;
+            }
+        #recommOptions ul{
+            width: 100%;
+            }
+        #recommOptions li{
+            width: 100%;
+            border-bottom: 1px dashed #333333;
+            }
+            #recommOptions li>a{
+                padding: 10px 5px;  
+                margin: 0;
+                color: #000000;
+                font: 15px "宋体",Tahoma;
+            }
+            #recommOptions li.active>a{
+                margin: 0;
+                border-radius: 0;
+                background: #F3F3F3;
+                opacity: 1;
+            }
+            #recommOptions li>a:hover{
+                margin: 0;
+                border-radius: 0;
+            }
+            #recommOptions li.option:hover>a{
+                cursor: pointer;
+                opacity: 0.8;
+            }
+            #recommOptions li i.icon-flag{
+                display: none ;
+                margin-right: 7px;
+                float: left;
+            }
+            #recommOptions li.valid i.icon-flag{
+                display: block ;
+                float: left;
+            }
+        #recommOptions li>a{
+            padding: 10px 5px 10px 26px;  margin: 0;
+        }
+        #recommOptions li.valid>a{
+            padding: 10px 5px;  margin: 0;
+        }
+        #recommOptions div.statist{
+            height: 20px;
+            padding-left: 5px;
+            overflow: hidden;
+            background: #0066CC;
+            border-radius: 0 10px 10px 0;
+            font: 14px "宋体",Tahoma; 
+            }
+            #recommOptions div.statist>div{
+                padding: 3px 0;
+                float: left;
+                overflow: hidden;
+                font-size: 12px;
+                color: #FFFFFF;
+            }
+            #recommOptions div.statist>div.num{
+                padding: 3px 8px;  
+                margin-left: 5px;
+                float: right;
+                border-radius: 10px;
+                background: #333333;
+                color: #EEEEEE;
+            }
+        #recommOptions div.explain{
+            margin: 0 auto;
+            padding-top: 20px;
+            font: 12px "宋体",Tahoma;
+            color: #333333;
+        }
+        #recommContent{
+            width: 480px; 
+            min-height: 300px;
+            padding: 10px 20px;
+            float: left;
+            overflow: hidden;
+            background: #F3F3F3;
+        }
+        #recommContent>div{
+            width: 100%;
+        }
+        #recommContent label.checkbox{ 
+            min-width: 120px;
+            padding-top: 10px;
+            margin-left: 0px;
+            margin-right: 20px;
+        }
+        #recommContent>div>div.pane-footer{
+            width: 100%;
+            padding: 10px 0;
+            margin-top: 10px;
+            overflow: hidden;
+            border-top: 1px solid #CFCFCF;
+        }
+        #recommContent>div>div.pane-footer>button[data-action='cancel']{
+            width: 180px;
+            float: left;
+        }
+        #recommContent>div>div.pane-footer>button[data-action='finish']{
+            width: 280px;
+            float: right;
+        }
+        #recommAction{
+            width: 650px;  
+            padding: 0;
+            border: 0;
+            }
+            #recommAction>button{
+                padding: 10px 0;
+                font: 21px "宋体",Tahoma;
+                border-radius: 0;
+            }

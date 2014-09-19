@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN"
+"http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <title>维新科创|VixiK..We Think!</title>
+    <meta name="author" content="zhiyun218@gmail.com,czy" />
+    <meta name="Copyright" content="版权所有" />
+    <meta name="description" content="维新科创|VixiK" />
+    <meta name="keywords" content="vixik.com,大数据,vixik" />
+    <meta name="robots" content="all" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="favicon.ico" />
+    <link rel="bookmark" href="favicon.ico" />
+    <!--导入样式表-->
+    <link rel="stylesheet" href="__APPTPL__/Index/style/index.css" type="text/css" />
+    <!--jQuery库-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+    <!--自定义JS脚本-->
+    <script type="text/javascript" src="__APPTPL__/Index/script/jsyun.js"></script>
+    <!--首页JS脚本-->
+    <script type="text/javascript" src="__APPTPL__/Index/script/index.js"></script>
+</head>
+<body>
+    <div id="Container">
+        <div id="Header">
+            <p>{$survey[0]["survey_name"]}</p>
+            <p>------------------------------------------------------------------------------------------------</p>
+        </div>
+        <div id="Main">
+            <from>
+                <volist name="survey" id="sv">
+                    <fieldset>
+                    <legend>{$sv.question_serial}.{$sv.question_name}</legend>
+                    <volist name="question" id="qt">
+                        <eq name="qt.question_name" value="$sv.question_name">
+                            <switch name="qt.question_prop">
+                                <case value="1"><input type="radio" name="{$qt.question_name}" value="{$qt.option_name}" />{$qt.option_name}<br /></case>
+                                <case value="2"><input type="checkbox" name="{$qt.question_name}" value="{$qt.option_name}" />{$qt.option_name}<br /></case>
+                                <case value="3"><input type="text" name="{$qt.question_name}" value="{$qt.option_name}" /><br /></case>
+                            </switch>
+                        </eq>
+                    </volist>
+                    </fieldset><br />
+                 </volist><!--
+                <fieldset>
+                    <legend>问题1</legend>
+                    选项1：<input type="radio"/>
+                    选项2：<input type="radio"/>
+                    选项3：<input type="radio"/>
+                    选项4：<input type="radio"/>
+                </fieldset><br />
+                <fieldset>
+                    <legend>问题2</legend>
+                    选项1：<input type="checkbox" name="vehicle" value="Car" /><br />
+                    选项2：<input type="checkbox" name="vehicle" value="Car" /><br />
+                    选项3：<input type="checkbox" name="vehicle" value="Car" /><br />
+                    选项4：<input type="checkbox" name="vehicle" value="Car" /><br />
+                </fieldset>-->
+            </from>
+        </div>
+    </div>
+</body>
+    <script charset="gbk" src="http://www.baidu.com/js/opensug.js"></script>
+</html>

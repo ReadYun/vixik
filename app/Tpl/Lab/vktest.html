@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="{$survey['info']['survey_name']} | 维新调研 · 倾听观点，发现价值"/>
+    <meta http-equiv="pragma" content="no-cache" /> 
+    <meta http-equiv="Cache-Control" content="no-cache,must-revalidate" />
+    <link rel="stylesheet" href="__JMVC__/style/lab.vktest.css" type="text/css" />
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/lab.vktest.js"></script>
+</head>
+<body>
+    <div id="Header">
+        <include file="Public:topBar" nav-type="sub" nav-name="调查分析" need-login="1"/>
+    </div>
+    <div id="navBar">
+        <div class="nav-right">
+            <div class="action-box dropdown">
+                <button class="start dropdown-toggle" data-toggle="dropdown">快速开始</button>
+                <div class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
+                    <li><a tabindex="-1" href="{:U('survey/action')}">参与调查</a></li>
+                    <li><a tabindex="-1" href="{:U('survey/create')}">创建调查</a></li>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="vktest1">vkTest1</button>
+    <button id="vktest2">vkTest2</button>
+    <div id="Footer">
+        <include file="Public:footer" type="simple"/>
+    </div>
+</body>
+</html>

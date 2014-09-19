@@ -1,0 +1,973 @@
+/*
+ * Document    : user.index.css
+ * Description : css for user/index.html
+ *
+ * Created on  : 2013-6-13, 4:18:34
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+
+#Main{
+    width: 100%;
+    min-width: 950px;
+    overflow: hidden;
+}
+#mainLeft{
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    width: 15%;
+    min-width: 150px;
+    height: 100%;
+    float: left;
+    position: fixed;
+    left: 0;
+    border-right: 1px solid #CCC;
+}
+#leftBox{
+    width: 100%;
+    }
+    #mainMenu{
+        width: 100%;
+        padding: 0;
+        margin: 10px 0;
+        float: left;
+        }
+        #mainMenu ul>li>a{
+            font-family: "宋体",Tahoma;
+            color: #666;
+            text-align: right;
+            text-shadow: none;
+        }
+        #mainMenu ul.nav-main{
+            width: 100%;
+            padding: 0;
+            }
+            #mainMenu ul.nav-main>li{                
+                width: 100%;
+                padding: 0;
+                margin: 0;
+                float: right;
+                overflow: hidden;
+                }
+                #mainMenu ul.nav-main>li.active{
+                    width: 100%;
+                    padding: 10px 0;
+                    border-top: 1px solid #CCC;
+                    border-bottom: 1px solid #CCC;
+                    }
+                    #mainMenu ul.nav-main>li>a{
+                        box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        padding: 10px 50px 10px 0;
+                        margin: 0;
+                        font-size: 19px;
+                    }
+                    #mainMenu ul.nav-main>li.active>a{
+                        color: #6BB130;
+                        background: #FFF;
+                    }
+                    #mainMenu ul.nav-main>li>a:hover{
+                        background: #EEE;
+                    }
+                    #mainMenu ul.nav-main>li.active>a:hover{
+                        background: #FFF;
+                    }
+                    #mainMenu ul.nav-main>li.active ul.nav-sub{
+                        display: block;
+                    }
+                #mainMenu ul.nav-main>li.my-info.active{
+                    border-top: 1px solid #FFF;
+                }
+                #mainMenu ul.nav-main>li.my-right.active{
+                    border-bottom: 1px solid #FFF;
+                }
+        #mainMenu ul.nav-sub{
+            display: none;
+            width: 125px;
+            padding: 0;
+            margin: 0;
+            float: right;
+            overflow: hidden;
+            border: 0;
+            }
+            #mainMenu ul.nav-sub>li{
+                box-sizing: content-box;
+                -moz-box-sizing: content-box;
+                -webkit-box-sizing: content-box;
+                overflow: hidden;
+                }
+                #mainMenu ul.nav-sub>li>a{
+                    box-sizing: content-box;
+                    -moz-box-sizing: content-box;
+                    -webkit-box-sizing: content-box;
+                    width: 100%;
+                    padding-top: 7px;
+                    padding-bottom: 7px;
+                    padding-right: 65px;
+                    float: right;
+                    text-align: right;
+                    font: 12px "微软雅黑",Tahoma;
+                }
+            #mainMenu ul.nav-sub>li.active{
+                color: #666;
+                border-right: 5px solid #6BB130;
+                }
+                #mainMenu ul.nav-sub>li.active>a{
+                    padding-right: 60px;
+                    color: #6BB130;
+                    background: none;
+                }
+                #mainMenu ul.nav-sub>li:hover>a{
+                    color: #FFF;
+                    background: #6BB130;
+                }
+#mainRight{
+    width: 85%;
+    min-width: 800px;
+    height: 100%;
+    float: right;
+}
+#rightBox{
+    width: 100%;  
+    height: 100%;
+    float: right;
+    }
+    #rightBox div.tab-pane{
+        width: 100%;  
+        float: left;
+        }
+        #rightBox div.tab-pane>div.pane-side{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 20%;
+            min-width: 160px;
+            height: 100%;
+            padding: 10px 10px;
+            margin-top: 45px;
+            float: left;
+            font-family: "微软雅黑",Tahoma;
+            border-top: 1px solid #CCC;
+            border-left: 1px solid #CCC;
+            }
+            #rightBox div.pane-side>div.pane-side-elem{
+                width: 100%;
+                margin-bottom: 20px;
+                float: left;
+                }
+                #rightBox div.pane-side-elem>div.side-elem-header{
+                    width: 100%;
+                    overflow: hidden;
+                    font-size: 14px;
+                    }
+                    #rightBox div.pane-side-elem>div.side-elem-header>div.side-title{
+                        float: left;
+                    }
+                #rightBox div.pane-side-elem>div.side-elem-content{
+                    width: 100%;
+                }
+            #rightBox div.pane-side-elem.accordion .accordion-heading>a{
+                padding: 5px;
+                color: #999;
+                font:17px "宋体",Tahoma;
+                text-decoration: none;
+            }
+            #rightBox div.pane-side-elem.accordion .accordion-heading>a:hover{
+                color: #6bb130;
+            }
+            #rightBox div.pane-side-elem.accordion .accordion-inner{
+                padding: 5px;
+            }
+        #rightBox div.tab-pane>div.pane-body{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 75%;
+            min-width: 650px;
+            height: 100%;
+            padding: 0 30px 0 40px;
+            float: left;
+            overflow: hidden;
+            font-family: "宋体",Tahoma;
+            }
+            #rightBox div.tab-pane>div.pane-body div.pane-title{
+                width: 100%;
+                height: 25px;
+                padding: 10px 0;
+                float: left;
+                font: 23px "宋体",Tahoma;
+                color: #6BB130;
+            }
+            #rightBox div.pane-content{
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                width: 100%;
+                padding: 20px 0;
+                margin: 0;
+                overflow: hidden;
+                border-top: 1px solid #CCC;
+                }
+                #rightBox div.pane-content div.pane-elem{
+                    width: 100%;
+                    padding: 10px 0;  
+                    margin-bottom: 10px;
+                    overflow: hidden;
+                    color: #666666;
+                    border-bottom: 1px dotted #EFEFEF;
+                }
+                #rightBox div.pane-content div.pane-elem:hover{
+                    color: #000000;
+                    border-color: #6BB130;
+                    }
+                    #rightBox div.tab-pane>div.pane-body div.pane-elem>label{
+                        width: 30%;
+                        float: left;
+                        overflow: hidden;
+                        text-align: left;
+                        font-size: 17px;
+                    }
+                    #rightBox div.tab-pane>div.pane-body div.pane-elem>div{
+                        width: 70%;
+                        float: left;
+                        overflow: hidden;
+                    }
+                    div.pane-body div.pane-elem input{
+                        font: 17px "宋体",Tahoma;
+                    }
+                    div.pane-body div.pane-elem select{
+                        font: 17px "宋体",Tahoma;
+                    }
+                    div.pane-body div.pane-elem textarea{
+                        width: 360px;
+                        height: 100px;
+                        float: left;
+                        font: 12px "微软雅黑",Tahoma;
+                    }
+            #rightBox div.tab-pane>div.pane-body div.pane-footer{
+                width: 100%;
+                height: 40px;
+                margin-bottom: 70px;
+            }
+
+#myInfo>div.pane-side div.info-complete{
+    width: 100%;
+    margin-top: 5px;
+    float: right;
+    }
+    #myInfo>div.pane-side div.info-complete div.progress-value{
+        float: right;
+        font-size: 14px;
+    }
+    #myInfo>div.pane-side div.info-complete div.complete-progress{
+        width: 100%;
+        height: 10px;
+        margin-bottom: 5px;
+        float: left ;
+        border: none;
+        border-radius: 0;
+        }
+        #myInfo>div.pane-side div.info-complete div.complete-progress>div{
+            background: #6BB130;
+            border-radius: 0;
+        }
+    #myInfo div.info-complete div.cpl-elem{
+        width: 100%;
+        height: 15px;
+        margin-bottom: 3px;
+        float: left ;   
+        }
+        #myInfo div.info-complete div.cpl-elem>div.cpl-elem-header{
+            float: left;
+            }
+            #myInfo div.info-complete div.cpl-elem>div.cpl-elem-header>div{
+                margin-right: 10px;
+                float: left;
+            }
+        #myInfo div.info-complete div.cpl-elem>div.cpl-elem-action{
+            float: right;
+            cursor: pointer;
+            }
+            #myInfo div.cpl-elem>div.cpl-elem-action{
+                color: blue;
+                text-decoration: underline;
+            }
+            #myInfo div.cpl-elem[data-prefect='1']>div.cpl-elem-header>div.cpl-elem-value{
+                color: green;
+            }
+            #myInfo div.cpl-elem[data-prefect='0']>div.cpl-elem-header>div.cpl-elem-value{
+                color: red;
+            }
+    
+#myInfo input.input-xxlarge{
+    width: 454px;
+}
+#myInfo input.input-xlarge{
+    width: 390px;
+}   
+#myInfo select.input-xlarge{
+    width: 320px;
+}
+
+#sex .vf-elem-option{
+    width: 150px;
+    margin-left: 1px;
+    float: left;
+}
+
+#myInfo input, #myInfo select{
+    margin-right: 7px;
+    float: left;
+}
+#myInfo input[name=birth_year]{
+    width: 70px;
+}
+#myInfo select[name=birth_month]{
+    width: 110px;
+}
+#myInfo select[name=birth_day]{
+    width: 110px;
+}
+
+select>option{
+    width: 100%;
+}
+
+#extend-info .vf-elem-option{
+    width: 86px;
+}
+
+#safe-setting-setting div.alter-box>div.alter-elem{
+    width: 100%;
+    overflow: hidden;
+}
+#safe-setting div.alter-elem>label{
+    width: 100%;
+    float: left;
+    font: 17px "宋体",Tahoma;
+}
+#safe-setting div.alter-elem>div.alter-form{
+    display: block;
+    width: 100%;
+}
+#safe-setting div.vf-elem>div.alter-box{
+    display: none;
+    width: 100%;
+    overflow: hidden;
+    }
+#safe-setting div.vf-elem.active>div.alter-box{
+    display: block;
+    }
+#safe-setting div.vf-elem.active>div.init-box{
+    display: none;
+    }
+    #safe-setting div.alter-box input{
+        width: 280px;
+        float: left;
+        margin-right: 10px;
+        margin-bottom: 15px;
+    }
+    #safe-setting div.alter-box div.elem-hint{
+        margin-top: 5px;
+        float: left;
+        overflow: hidden;
+        }
+        #safe-setting div.alter-form>div.elem-hint>div{
+            display: none;
+        }
+        #safe-setting div.alter-form.focus>div.elem-hint>div.hint-guide{
+            display: block;
+            color: blue;
+        }
+        #safe-setting div.alter-form.warn>div.elem-hint>div.hint-warn{
+            display: block;
+            color: red;
+        }
+#safe-setting div.alter-box button{
+    width: 294px;
+    padding: 5px 0;
+    margin: 10px 0;
+    }
+    
+    
+#safe-setting button.btn-link{
+    padding: 0;
+    position: relative;
+    top: -1px;
+}
+#safe-setting button.btn-success{
+    margin: 10px 0;
+}
+
+#email div.user-email{
+    margin-right: 30px;
+    float: left;
+    font-size: 14px;
+}
+
+    
+#user-photo{
+    overflow: hidden;
+    }
+    #user-photo>div{
+        width: 100%;
+        float: left;
+        overflow: hidden;
+        font: 12px "微软雅黑",Tahoma;
+    }
+    #user-photo img{
+        max-width: none;
+    }
+#user-photo div.photo-box{
+    width: 128px;
+    height: 128px;
+    margin: 20px auto;
+    float: none;
+    border: 1px solid #666;
+    }
+    #user-photo div.photo-box>i{
+        margin: 0 14px;
+        font-size: 118px;
+        color: #666;
+    }
+    #user-photo div.photo-box>img{
+        width: 100%;
+        height: 100%;
+    }
+    #user-photo div.upload-tips{
+        width: 100%;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #CCC;
+        font-size: 14px;
+        color: #666;
+        }
+    #user-photo div.picture-box{
+        width: 100%;
+        overflow: hidden;
+        }
+        #user-photo div.crop-box{
+            position: relative;
+            float: right;
+            overflow: hidden;
+            }
+            #user-photo div.crop-box>div.crop-title{
+                width: 90%;
+                padding-right: 5px;
+                margin-bottom: 20px;
+                float: right;
+                font: 17px "SimSun" ;
+                color: #666666;
+                text-align: right;
+                border-right: 10px solid #6BB130;
+            }
+            #user-photo div.crop-box>div.crop-img{
+                width: 250px;
+                height: 250px;
+                overflow: hidden;
+                border: 1px solid #6BB130;
+            }
+        #user-photo div.crop-preview{
+            float: left;
+            overflow: hidden;
+            }
+            #user-photo div.crop-preview>div{
+                float: right;
+                overflow: hidden;
+            }
+            #user-photo div.crop-preview>div.preview-title{
+                width: 100%;
+                padding-left: 5px;
+                margin-bottom: 20px;
+                float: left;
+                font: 17px "SimSun" ;
+                color: #666;
+                text-align: left;
+                background: #FFF;
+                border-left: 10px solid #6BB130;
+            }
+            #user-photo div.crop-preview div.preview-body{
+                margin-right: 40px;
+                overflow: hidden;
+                float: left;
+                }
+                #user-photo div.crop-preview div.preview-body>div.preview-img{
+                    overflow: hidden;
+                    width: 100px;
+                    height: 100px;
+                }
+                #user-photo div.crop-preview div.preview-body>a{
+                    padding-top: 10px;
+                    font-weight: 900;
+                    float: left;
+                    color: #777;
+                }
+            #user-photo div.crop-preview div.preview-120{
+                width: 120px;
+                }
+                #user-photo div.crop-preview div.preview-120>div.preview-img{
+                    width: 120px;
+                    height: 120px;                    
+                }
+            #user-photo div.crop-preview div.preview-60{
+                width: 60px;
+                }
+                #user-photo div.crop-preview div.preview-60>div.preview-img{
+                    width: 60px;
+                    height: 60px;
+                }
+            #user-photo div.crop-preview div.preview-30{
+                width: 30px;
+                }
+                #user-photo div.crop-preview div.preview-30>div.preview-img{
+                    width: 30px;
+                    height: 30px;
+                }
+            #user-photo div.crop-preview div.preview-img>img{
+                width: 100%;
+                height: 100%;
+            }
+        #user-photo.crop div.button-box{
+            width: 280px;
+            float: right;
+            margin-bottom: 30px;
+            }
+            #user-photo div.button-box>div.btn-cancel{
+                width: 80px;
+                height: 20px;
+                padding: 5px 0;
+                float: right;
+                font: 17px "simsun",Tahoma;
+                text-align: center;
+                color: #FFF;
+                background: #CFCFCF;
+                margin-left: 40px;
+            }
+            #user-photo div.button-box>div.btn-cancel:hover{
+                color: #333;
+                cursor: pointer;
+            }
+            #user-photo div.button-box>div.btn-upload{
+                width: 130px;
+                height: 30px;
+                margin: 0 auto;
+                float: none;
+                overflow: hidden;
+                color: #FFF;
+                }
+                #user-photo div.button-box>div.btn-upload form{
+                    height: 100%;
+                    float: right;
+                    margin: 0;
+                    }
+                    #user-photo div.button-box>div.btn-upload div.uploadify-button{
+                        font: 17px "simsun",Tahoma;
+                        text-align: center;
+                        background: #3399FF;
+                    }
+                    #user-photo div.button-box>div.btn-upload object{
+                        position: relative;
+                        z-index: 999;
+                    }
+                #user-photo div.button-box>div.btn-upload div:hover{
+                    color: #333;
+                    cursor: pointer;
+                }
+            #user-photo div.save-box{
+                width: 100%;
+                float: left;
+                }
+                #user-photo div.button-box button{
+                    font: 19px "simsun",Tahoma;
+                }
+
+#user-photo div.upload-tips, #user-photo div.picture-box{display: none}
+#user-photo div.save-box, #user-photo div.btn-cancel{display: none}
+
+#user-photo.crop div.photo-box{display: none}
+#user-photo.crop div.upload-tips, #user-photo.crop div.picture-box{display: block}
+#user-photo.crop div.save-box, #user-photo.crop div.btn-cancel{display: inline}
+
+#user-photo div.button-box{
+    width: 100%;
+    margin: 20px auto 0 auto;
+    float: none;
+    overflow: hidden;
+    }
+    #user-photo.crop div.button-box>div.btn-upload{
+        float: right;
+    }
+
+#created-sv div.sv-filter ul{
+    margin: 0;
+}
+
+.pane-content .nav-tabs>li>a{
+    height: 18px;
+    margin-right: 10px;
+    border-radius: 0;
+    font: 12px "微软雅黑",Tahoma;
+    overflow: hidden;
+}
+#created-sv .sv-filter li.elem>a>i{
+    padding-left: 5px;
+    margin-left: 5px;
+    text-align: center;
+}
+
+div.survey-box{
+    width: 100%;
+    min-height: 400px;
+    float: left;
+    overflow: hidden;
+    }
+    div.survey-box thead{
+        box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        width: 100%;
+        margin-top: 15px;
+        color: #666;
+        }
+    div.survey-box tbody{
+        width: 100%;
+        font: 12px "微软雅黑",Tahoma;
+        }
+        div.survey-box .survey-title{
+            width: 600px;
+            }
+            div.survey-box .survey-title>div.name{
+                width: 430px;
+                float: left;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            div.survey-box .survey-title>div.action{
+                display: none;
+                float: right;
+                cursor: pointer;
+                }
+                div.survey-box .survey-title>div.action>a{
+                    margin-left: 5px;
+                }
+            div.survey-box .survey-title:hover>div.action{
+                display: block;
+            }
+        div.survey-box .create-date{
+            width: 100px;
+        }
+        div.survey-box .survey-state{
+            width: 70px;
+        }
+
+        div.survey-box .action-time{
+            width: 140px;
+        }
+        div.survey-box .action-desc{
+            width: 400px;
+        }
+        div.survey-box .action-type{
+            width: 100px;
+            text-align: center;
+        }
+        div.survey-box .action-value{
+            width: 60px;
+            text-align: center;
+        }
+        div.survey-box [data-state='1'] a.share{display: none;}
+        div.survey-box [data-state='1'] a.analyse{display: none;}
+        div.survey-box [data-state='2'] a.edit{display: none;}
+        div.survey-box [data-state='2'] a.share{display: none;}
+        div.survey-box [data-state='2'] a.analyse{display: none;}
+        div.survey-box [data-state='3'] a.edit{display: none;}
+        div.survey-box [data-state='3'] a.del{display: none;}
+        div.survey-box [data-state='4'] a.edit{display: none;}
+        div.survey-box [data-state='4'] a.del{display: none;}
+div.content-footer{
+    width: 100%;
+    float: left;
+    overflow: hidden;
+}
+div.pane-side-elem.side-card-box{
+    width: 100%;
+    }
+    div.side-card-box>div{
+        width: 50%;
+        float: left;
+    }
+    div.side-card-box>div>div{
+        width: 100%;
+        float: left;   
+        text-align: center;
+    }
+    div.side-card-box>div>div.card-value{
+        width: 100%;
+        margin-bottom: 10px;
+        float: left;
+        font-size: 29px;
+        font-weight: 900;
+    }
+
+/* 我的账户 */
+thead{    
+    font-size: 19px;
+    font-weight: 400;
+}
+#myAccout td{
+    color: #666;
+    font-family: "微软雅黑",Tahoma;
+}
+#myAccout .vkpaging-box .action-time{
+    width: 130px;
+    padding-left: 0;
+}
+#myAccout .vkpaging-box .action-main{
+    width: 400px;
+    padding-left: 0;
+    }
+    #myAccout .vkpaging-box .action-desc{
+        float: left;
+    }
+    #myAccout .vkpaging-box .action-name{
+        width: 330px;
+        float: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+#myAccout .vkpaging-box .change-type{
+    width: 40px;
+    text-align: center;
+}
+#myAccout .vkpaging-box .change-value{
+    width: 40px;
+    text-align: center;
+}
+
+
+.sv-list-elem{
+    width: 100%;
+    margin-bottom: 10px;
+    overflow: hidden;
+    font-family: "微软雅黑",Tahoma;
+    color: #777;
+    border-bottom: 1px dotted #CCC;
+    }
+    .sv-list-elem>div{
+        width: 100%;
+        float: left;
+        overflow: hidden;
+        }
+        .sv-list-elem .sv-list-main>div.survey-title{
+            width: 100%;
+            float: left;
+            font: 17px "宋体",Tahoma;
+            color: #999;
+            }
+            .sv-list-elem div.survey-title>a{
+                max-width: 560px;
+                float: left;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                text-decoration: none;
+            }
+        .sv-list-elem .sv-list-main>div.survey-desc{
+            width: 100%;
+            margin-bottom: 5px;
+            float: left;
+            font-size: 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-decoration: none;
+            color: #999;
+        }
+
+    .sv-list-elem .sv-list-sub{
+        height: 28px;
+        }
+        .sv-list-elem .sv-list-sub>div.ss-prop{
+            float: left;
+            font-size: 12px;
+            }
+            .sv-list-elem .ss-prop>div{
+                float: left;
+                margin-right: 18px;
+            }
+            .sv-list-elem .ss-prop>div.user-nick{
+                max-width: 280px;
+                }
+                .sv-list-elem .ss-prop>div.user-nick>a{
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            .sv-list-elem .ss-prop i{
+                margin-right: 3px;
+            }
+            .sv-list-elem .ss-prop a{
+                color: #666;
+                text-decoration: none;
+            }
+            .sv-list-elem .ss-prop a:hover{
+                color: #0088CC;
+            }
+        .sv-list-elem .sv-list-sub>div.ss-action{
+            display: none;
+            padding: 2px 0;
+            float: right;
+            }
+            .sv-list-elem .sv-list-sub>div.ss-action>a{
+                margin-left: 3px;
+            }
+            .sv-list-elem .ss-action>a.followed{
+                display: none;
+            }
+            .sv-list-elem.follow .ss-action>a.followed{
+                display: inline;
+            }
+            .sv-list-elem.follow .ss-action>a.follow{
+                display: none;
+            }
+        .sv-list-elem:hover .sv-list-sub>div.ss-action{
+            display: block;
+        }
+
+/* 关注的用户 */
+.fu-elem{
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    font-family: "微软雅黑",Tahoma;
+    color: #777;
+    }
+    .fu-elem .f-list-photo{
+        width: 65px;
+        float: left;
+        }
+        .fu-elem .f-list-photo>img{
+            width: 100%;
+            height: 65px;
+        }
+    .fu-elem .f-list-main{
+        width: 560px;
+        float: right;
+        }
+        .fu-elem .f-list-main>div{
+            width: 100%;
+            margin-bottom: 1px;
+            float: right;
+            overflow: hidden;
+        }
+        .fu-elem .user-nick{
+            width: 100%;
+            float: right;
+            overflow: hidden;
+            font: 17px "宋体",Tahoma;
+            }
+            .fu-elem .user-nick>a{
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                text-decoration: none;
+            }
+        .fu-elem .user-acc>div{
+            margin-right: 30px;
+            float: left;
+            font-size: 14px;
+            }
+            .fu-elem .user-acc>div>i{
+                margin-right: 3px;
+            }
+        .fu-elem .user-action{
+            display: none;
+            padding: 1px 0;
+            overflow: hidden;
+            }
+    .fu-elem:hover{
+        background: #F6F6F6;
+        }
+        .fu-elem:hover .user-action{
+            display: block;
+            }
+
+#follow-svtype .svtype-box{
+    width: 100%;
+    margin-top: 20px;
+    overflow: hidden;
+    }
+    #follow-svtype .svtype-elem{
+        width: 100%;
+        margin-bottom: 20px;
+        overflow: hidden;
+        float: left;
+        border-bottom: 1px dotted #FFF;
+        }
+        #follow-svtype .svtype-main{
+            width: 160px;
+            margin-top: 5px;
+            float: left;
+            }
+            #follow-svtype .svtype-main>div.sm-check{
+                box-sizing: content-box;
+                -moz-box-sizing: content-box;
+                -webkit-box-sizing: content-box;
+                padding: 1px;
+                width: 15px;
+                height: 15px;
+                margin-top: 2px;
+                margin-right: 5px;
+                line-height: 0;
+                float: left;
+                font-size: 15px;
+                color: #666;
+                border: 2px solid #888;
+            }
+            #follow-svtype .svtype-main>div.sm-title{
+                float: left;
+                font: 21px "宋体",Tahoma;
+            }
+        #follow-svtype .svtype-sub{
+            box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            -webkit-box-sizing: content-box;
+            width: 440px;
+            padding-left: 50px;
+            float: left;
+            overflow: hidden;
+            border-left: 1px dotted #CCC;
+            }
+            #follow-svtype .ss-elem{
+                width: 50%;
+                margin: 5px 0;
+                float: left;
+                overflow: hidden;
+                font: 19px "宋体",Tahoma;
+                }
+                #follow-svtype .ss-elem>div{
+                    margin-top: 1px;
+                    margin-right: 5px;
+                    float: left;
+                }
+
+#follow-svtype .svtype-footer{
+    width: 100%;
+    margin-top: 30px;
+    overflow: hidden;
+}
+
+
+
+/* vkPaging */
+.vkpaging .vkpaging-box       {display: none;}
+.vkpaging.active .vkpaging-box{display: block;}
+.vkpaging.active .vkpaging-null{display: none;}
+.vkpaging-footer{margin-top: 30px;}
+
+.box-explain{
+    margin: 30px 0;
+    font: 21px "宋体",Tahoma;
+}

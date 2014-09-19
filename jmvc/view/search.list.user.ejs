@@ -1,0 +1,16 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <div class="search-list">
+        <div class="content-title">
+            <span class="label label-success">用户</span>
+            <a class="user-nick" href="<%= data[i].url_user_visit %>"><%= data[i].user_nick %></a>
+        </div>
+        <div class="content-body user">
+            <div title="用户介绍" class="content-desc"><%= data[i].user_desc %></div>
+            <div class="content-stats">
+                <div title="用户等级" class="user-level"><i class="icon-star"></i><%= data[i].user_level %></div>
+                <div title="发布问卷" class="publish-survey"><i class="icon-share"></i><%= data[i].publish_times %></div>
+                <div title="参与问卷" class="answer-survey"><i class="icon-check"></i><%= data[i].answer_times %></div>
+            </div>
+        </div>
+    </div>
+<%}%>

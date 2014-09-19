@@ -1,0 +1,366 @@
+/*
+ * Document    : public.topbar.css
+ * Description : CSS for Public/topbar.html
+ *
+ * Created on  : 2012-11-1
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+
+#topNavWrapper {
+    width: 100%;
+    height: 35px;
+    position: relative ;
+    background: #333;
+}
+#topNav{
+    width: 100%;
+    height: 35px;
+    padding: 0;  
+    margin: 0;
+    background: #333;
+    text-align: center;
+    font: 19px "宋体",Tahoma;   
+    color: #CCC;
+    z-index: 100;
+    overflow: visible;
+    position: fixed;
+    top: 0;
+    }
+    #topNav>div{
+        width: 33.33%;
+        min-width: 310px;
+        height: 100%;
+        float: left;
+    }
+    #topNav ul.dropdown-menu{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        min-width: 0;
+        padding: 0;
+        margin-top: 2.5px;
+        border-radius: 0;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+    }
+    
+#topNav div.nav-box{
+    height: 100%;
+    float: left;
+    overflow: hidden;
+    }
+    #topNav div.nav-box>div{
+        height: 23px;
+        padding: 6px;
+        margin-right: 1px;
+        float: left;
+        cursor: pointer;
+        }
+        #topNav div.nav-box>div a{
+            color: #FFF;
+            text-decoration:none;
+        }
+        #topNav div.nav-box>div:hover{
+            background: #6BB130;
+        }
+        #topNav div.nav-box>div:hover>a{
+            color: #FFF;
+        }
+    #topNav div.nav-box>div.current{
+        background: #6BB130;
+        }
+    #topNav div.nav-box>div.home{
+        width: 24px;
+        height: 100%;
+        background: #6BB130;
+        }
+        #topNav div.nav-box>div.home i{
+            color: #FFF;
+        }
+        #topNav div.nav-box>div.home:hover i{
+            color: #666;
+        }
+    #topNav div.nav-box>div.home.current{
+        background: #6BB130;
+        }
+        #topNav div.nav-box>div.home.current:hover i{
+            color: #FFF;
+        }
+
+#topNav div.search-box{
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    }    
+    #topNav div.search-box>div{
+        width: 300px;
+        height: 25px;
+        margin: 4px auto;
+        border: 1px solid #999;
+        border-radius: 15px;
+        overflow: hidden;
+        position: relative;
+        }
+        #topNav div.search-box input{
+            width: 260px;
+            height: 100%;
+            padding: 0 30px 0 10px;
+            float: left;
+            font: 17px "宋体",Tahoma;  
+            color: #999999;
+            background: none;
+            border: none;
+            border-radius: 15px 0 0 15px;
+        }
+        #topNav div.search-box input:focus{
+            color: #333333;
+            background: #FFF;
+            box-shadow: none;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+        }
+        #topNav div.search-box div.search-btn{
+            width: 30px;
+            height: 100%;
+            position: absolute;
+            top: 2px;
+            right: 1px;
+        }
+         
+#topNav div.action-box{
+    height: 29px;
+    margin: 3px 40px 2px 0;
+    padding: 0;  
+    float: right;
+    background: #3399FF;
+    }
+    #topNav div.action-box>a{
+        width: 70px;
+        padding: 3px 0;
+        float: left;
+        font: 19px "宋体",Tahoma;
+        color: #FFF;
+        text-decoration: none;
+        text-align: center;
+    }
+    #topNav div.action-box>ul.dropdown-menu{
+        width: 70px;
+        background: #333;
+        border: 0;
+        margin-top: 3px;
+        }
+        #topNav div.action-box li>a{
+            padding: 10px 1px;  
+            font: 12px "微软雅黑",Tahoma;
+            color: #FFF;
+            background: #3399FF;
+        }
+        #topNav div.action-box li>a:hover{
+            color: #333;
+        }
+#topNav div.action-box:hover{
+    cursor: pointer;
+}
+       
+#topNav div.login-box{
+    float: right;
+    overflow: hidden;
+    border-left: 1px solid #00CC66;
+    border-right: 1px solid #00CC66;
+    }
+    #topNav div.login-box ul{
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+    #topNav div.login-box ul li{
+        height: 35px;
+        padding: 0;
+        float: left;
+        display: inline;
+        cursor: pointer;
+        }
+        #topNav div.login-box ul li>a{
+            height: 19px;
+            padding: 8px;
+            float: left;
+            text-decoration: none;
+            font: 17px '宋体';
+            color: #00CC66;
+        }
+    #topNav div.login-box ul li:hover{
+        background-color: #00CC66;
+        }
+        #topNav div.login-box ul li:hover>a{
+            color: #000;
+        }
+            
+#topNav div.user-box{
+    display: none;
+    height: 100%;
+    padding: 0;  
+    margin: 0;
+    float: right;
+    }
+    #topNav div.user-box>div.user-photo{
+        width: 30px;
+        height: 30px;
+        float: right;
+        margin: 2.5px;
+        }
+        #topNav div.user-box>div.user-photo>a.img{
+            width: 100;
+            height: 100%;
+            float: right;
+            }
+            #topNav div.user-box>div.user-photo img{
+                width: 100%;
+                height: 100%;
+            }
+            #topNav div.user-box>div.user-photo i{
+                font-size: 30px;
+                color: #999;
+            }
+        #topNav div.user-box ul.dropdown-menu{
+            width: 200px;
+            background: #FFF;
+            margin: 0;
+            }
+            #topNav div.user-box ul.dropdown-menu>div.nick{
+                width: 100%;
+                padding: 5px 0;
+                margin-bottom: 10px;
+                float: left;
+                overflow: hidden;
+                font-size: 17px;
+                color: #333;
+                border-bottom: 1px solid #CCC;
+            }
+            #topNav div.user-box div.card-box{
+                width: 100%;
+                margin-bottom: 10px;
+                float: left;
+                color: #666;
+                }
+                #topNav div.user-box div.card-box>div{
+                    width: 50%;
+                    padding: 2px 0;
+                    margin: 0;
+                    float: left;
+                    text-align: center;
+                    }
+                    #topNav div.user-box div.value{
+                        margin-bottom: 2px;
+                        font-size: 23px;
+                        font-weight: 900;
+                        color: #666;
+                    }
+                    #topNav div.user-box div.title{
+                        font: 12px "微软雅黑",Tahoma;
+                        color: #BBB;
+                    }
+            #topNav div.user-box div.action{
+                width: 100%;
+                float: left;
+                background: #3399FF;
+                }
+                #topNav div.user-box div.action>div{
+                    width: 33.33%;
+                    padding: 7px 0;
+                    float: left;
+                    color: #FFF;
+                    font: 19px  "宋体",Tahoma;
+                }
+                #topNav div.user-box div.action>div:hover{
+                    cursor: pointer;
+                    color: #333;
+                }
+#topNav .nav-user.logged div.user-box{display: block;}
+#topNav .nav-user.logged div.login-box{display: none;}
+
+#loginModal{
+    width: 400px;
+    margin-left: -180px;
+    border-radius: 0;
+    }
+    #loginModal div.modal-header{
+        font: 25px  "宋体",Tahoma;  
+        color: white;
+        background: #6BB130;
+        }
+        #loginModal div.modal-header button{
+            overflow: hidden;
+            color: white;
+        }
+    #loginModal div.modal-body{
+        min-width: 0;
+        padding: 0;
+        }
+        #loginModal div.modal-body div.form-box{
+            width: 300px;
+            margin: 20px auto 0 auto;
+            overflow: hidden;
+            }
+            #loginModal div.modal-body div.form-box>div.form-elem{
+                width: 100%;
+                height: 30px;
+                margin: 15px 0;
+                }
+                #loginModal div.modal-body div.form-elem label{
+                    width: 60px;
+                    padding: 5px 0;  
+                    margin-right: 10px;
+                    float: left;
+                    text-align: left;
+                    font: 19px  "宋体",Tahoma;  
+                    color: #666666;
+                }
+                #loginModal div.modal-body div.form-elem input{
+                    width: 210px;
+                    float: right;
+                }
+                #loginModal div.modal-body div.form-elem.user-nick input{
+                    font: 17px  "宋体",Tahoma;  
+                }
+            #loginModal div.modal-body div.form-box>button{
+                margin: 30px 0;
+                font: 21px  "宋体",Tahoma;
+            }
+        #loginModal div.modal-body div.warning-box{
+            padding: 0;
+            margin: 0;
+            }
+            #loginModal div.modal-body div.warning-box>div.warning{
+                padding: 5px 10px;
+                margin: 0;
+                font: 17px  "宋体",Tahoma;  
+                text-align: center;
+                border-radius: 0;
+            }
+    #loginModal div.modal-footer{
+        padding: 10px;
+        opacity: 0.7;
+        }
+        #loginModal div.modal-footer a{
+            padding: 5px;
+            font: 12px "微软雅黑",Tahoma;
+            color: #666;
+            cursor: pointer;
+        }
+        
+        
+        
+/************************
+ * 
+ * 页面元素显示控制
+ *
+ ************************/
+
+div.hide{display: none}
+#topNav div.nav-box{display:block;}
+#topNav div.nav-box>div{display:none;}
+#topNav div.nav-box>div.home{display:block;}
+#topNav div.nav-box.main>div.main{display:block;}
+#topNav div.nav-box.sub>div.sub{display:block;}

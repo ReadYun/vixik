@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN"
+"http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <title>问卷推荐|维新调研</title>
+    <link rel="stylesheet" href="__JMVC__/style/survey.recommend.css" type="text/css"/>
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.recommend.js"></script>
+</head>
+<body>
+    <div id="Header">
+        <include file="Public:topBar"/>
+    </div>
+    <div id="Main">
+        <div id="list">
+            <volist name="survey" id="sv">
+            <div class="list">
+                <div class="survey">
+                    <div class="sv-title" data-survey-sode="{$sv.survey_code}">
+                        <a href="{:U('survey/desc')}/s/{$sv.survey_code}">{$sv.survey_name}</a>
+                    </div>
+                    <div class="sv-desc">
+                        <a>{$sv.survey_desc}</a>
+                    </div>
+                    <div class="sv-info">
+                        <div class="si-right">
+                            <div class="pbc-time"><a>{$sv.start_time}</a></div>
+                            <div class="span"><i class="icon-user"></i><span>|</span><i class="icon-time"></i></div>
+                            <div class="pbc-user" data-user-code="{$sv.user_code}">
+                                <a href="{:U('user/visit')}/u/{$sv.user_code}">{$sv.user_nick}</a>
+                            </div>
+                        </div>
+                        <div class="si-left">
+                            <div class="sv-number" title="题目数量"><a>{$sv.question_num}</a></div>
+                            <div class="span"><i class="icon-th-list"></i><span>|</span><i class="icon-pencil"></i></div>
+                            <div class="sv-anwers" title="参与人数"><a>993432393</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="action" style="display:none">
+                    <div class="visit">
+                        <div class="btn btn-info"><a href="{:U('survey/desc')}/s/{$sv.survey_code}">查看详情</a></div>
+                    </div>
+                    <div class="answer">
+                        <div class="btn btn-success"><a href="{:U('survey/answer')}/s/{$sv.survey_code}">立即参与</a></div>
+                    </div>
+                </div>
+            </div>
+            </volist>
+
+
+        </div>
+    </div>
+</body>
+</html>

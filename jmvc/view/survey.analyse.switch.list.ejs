@@ -1,0 +1,6 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <div class="sv-list" data-survey-code="<%= data[i].survey_code %>">
+        <div class="sv-name"><a href="<%= data[i].url_analyse %>"><%= data[i].survey_name %></a></div>
+        <div class="sv-state"><%= data[i].survey_state_desc %></div>
+    </div>
+<%}%>

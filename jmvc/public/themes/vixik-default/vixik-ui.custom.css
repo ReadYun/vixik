@@ -1,0 +1,23 @@
+/*
+ * Document    : vixik-ui.custom.css
+ * Description : 文件描述
+ *
+ * Created on  : 2012-8-24 22:41:29
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ */
+
+
+/* CSS for Plugins vTabs()
+ * vTabs选项卡插件样式
+-------------------------------------------- */
+.box{width:400px;margin:10px auto 0;background:#fff;border:1px solid #d3d3d3;}
+.tab_menu{overflow:hidden;}
+.tab_menu li{width:100px;float:left;height:30px;line-height:30px;color:#fff;background:#33AA33;text-align:center;cursor:pointer;}
+.tab_menu li.current{color:#333;background:#fff;}
+.tab_menu li a{color:#fff;text-decoration:none;}
+.tab_menu li.current a{color:#333;}
+.tab_box{padding:0px;}
+.tab_box li{height:24px;line-height:24px;overflow:hidden;}
+.tab_box li span{margin:0 5px 0 0;font-family:"宋体";font-size:12px;font-weight:400;color:#ddd;}
+.tab_box .hide{display:none;}

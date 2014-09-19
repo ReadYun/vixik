@@ -1,0 +1,13 @@
+<%for(var i = 0; i < data.length; i++){%>
+    <div class="text-list">
+		<%if(data['user_sex'] == 1){%>
+    		<div class="photo-box"><img src="/vixik/jmvc/style/image/man.png"></div>
+		<%}else{%>
+    		<div class="photo-box"><img src="/vixik/jmvc/style/image/woman.png"></div>
+		<%}%>
+    	<div class="content-box">
+	    	<div class="text-content"><%= data[i].option_name %></div>
+	    	<div class="user-area">来自<%= data[i].user_city %></div>
+    	</div>
+    </div>
+<%}%>

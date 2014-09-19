@@ -1,0 +1,115 @@
+    /*
+ * Document    : survey.recommend.css
+ * Created on  : 2013-5-19, 11:11:41
+ * Author      : ReadYun
+ * Copyright   : VixiK
+ * Description : css for document survey/survey.recommend.html
+ */
+a{font:14px "SimSun",Tahoma;   color:#000000;}
+a:hover{text-decoration:none}
+
+#list{
+    overflow:hidden;
+    padding:20px;
+    }
+    #list div.list{
+        height:90px;
+        overflow:hidden;
+        padding-top:5px;  padding-left:5px;
+        margin:10px 50px;
+        float:left;
+        border-top:1px solid #006600;
+        border:1px solid #006600;
+        }
+        #list div.list>div.survey{
+            width:550px;
+            padding:0;    margin-right:5px;
+            float:left;
+            }
+            #list div.list>div.survey div.sv-title{
+                width:550px;    height:20px;
+                margin-bottom:5px;
+                overflow:hidden;
+                float:left;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+                }
+            #list div.list>div.survey div.sv-title a{
+                font:18px "SimSun",Tahoma;
+                font-weight:900;
+                cursor:pointer;
+                text-decoration:underline;
+                }
+            #list div.list>div.survey div.sv-desc{
+                width:550px;    height:45px;
+                float:left;
+                }
+            #list div.list>div.survey div.sv-desc a{
+                font:12px "SimSun",Tahoma;   color:#333333;
+                }
+            #list div.list>div.survey div.sv-desc a:hover{
+                text-decoration:none
+                }
+            #list div.list>div.survey div.sv-info{
+                width:550px;
+                float:left;
+                }
+            #list div.list>div.survey div.sv-info a{
+                font:12px "SimSun",Tahoma;   color:#666666;
+                position:relative;
+                top:-2px;
+                }
+            #list div.list>div.survey div.sv-info a:hover{
+                text-decoration:none
+                }
+            #list div.list>div.survey div.sv-info div.pbc-user a{
+                color:#3399FF;
+                text-decoration: underline;
+                cursor:pointer;
+                }
+
+            #list div.list>div.survey div.sv-info div{
+                margin:0;
+                float:right;
+                }
+                #list div.list>div.survey div.sv-info div span{
+                    margin:0;
+                    position:relative;
+                    top:-2px;
+                    }
+                #list div.list>div.survey div.sv-info div>i{
+                    margin:0 5px;
+                    }
+                #list div.list>div.survey div.sv-info>div.si-left{
+                    width:130px;
+                    float:left;
+                    }
+                    #list div.list>div.survey div.sv-info>div.si-left div{
+                        float:left;
+                        }
+                #list div.list>div.survey div.sv-info>div.si-right{
+                    width:420px;
+                    }
+                    #list div.list>div.survey div.sv-info>div.si-right div{
+                        float:right;
+                        }
+                    #list div.list>div.survey div.sv-info>div.si-right>div.pbc-user{
+                        width:295px;
+                        overflow:hidden;
+                        text-align:right;
+                        white-space:nowrap;
+                        text-overflow:ellipsis;
+                        }
+                    #list div.list>div.survey div.sv-info>div.si-right>div.pbc-time{
+                        width:65px;
+                        }
+        #list div.list>div.action{
+            overflow:hidden;
+            float:right;
+            }
+        #list div.list>div.action div{
+            margin:4px;
+            }
+        #list div.list>div.action div a{
+            color:#FFFFFF;
+            }
