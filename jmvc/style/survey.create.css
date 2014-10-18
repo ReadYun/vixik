@@ -298,6 +298,19 @@
     font: 17px "宋体",Tahoma;  
     color: #555;
 }
+#surveyTag ul{
+    width: 660px;
+    padding: 0 5px;  
+    margin: 0;
+    font: 17px "宋体",Tahoma;
+    }
+    #surveyTag ul li{
+        margin-top: 4px;
+    }
+    #surveyTag ul input{
+        width: 320px;
+        font: 17px "宋体",Tahoma;
+    }
 #surveyExplain textarea{
     width: 660px;  
     height: 140px;

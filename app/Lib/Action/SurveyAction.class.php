@@ -44,6 +44,7 @@ class surveyAction extends Action{
     /* 调查类型页面
      * ---------------------------------------- */
     public function type(){
+        // 入参值初始化
         $_GET['type'] ? $type = $_GET['type'] : $type = 1001  ;// 调查类型
         $_GET['mode'] ? $mode = $_GET['mode'] : $mode = 'new' ;// 调查模式（new/hot/rec）
         
@@ -113,9 +114,10 @@ class surveyAction extends Action{
      * ---------------------------------------- */
     public function create(){
         $survey_code = $_GET['code'] ;
-        $sv_type     = $_GET['type'] ;
-        $sv_type_sub = $_GET['typesub'] ;
         $user_code   = cookie('user_code') ;
+
+        $_GET['type']    ? $sv_type     = $_GET['type']    : $sv_type     = 0  ;// 调查大类
+        $_GET['typesub'] ? $sv_type_sub = $_GET['typesub'] : $sv_type_sub = 0  ;// 调查小类
 
         // 先判断是否有调查编码参数
         if($survey_code){

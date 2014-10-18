@@ -84,6 +84,8 @@ steal('init.js')
             
             // 如果已经有调查基本信息数据存在。。匹配数据
             if(!$.isEmptyObject(this.options.models$.info$)){
+                console.log('aaaaa') ;
+                console.log(this.options.models$.info$) ;
                 this.element.find('.vk-form').vkForm('fix', {data$:this.options.models$.info$}) ;
 
                 // start = moment(this.options.models$.info$.start_time).format('YYYY-MM-DD') ;

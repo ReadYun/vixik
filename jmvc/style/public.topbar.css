@@ -131,7 +131,7 @@
          
 #topNav div.action-box{
     height: 29px;
-    margin: 3px 40px 2px 0;
+    margin: 3px 29px 2px 0;
     padding: 0;  
     float: right;
     background: #3399FF;
@@ -207,8 +207,8 @@
     #topNav div.user-box>div.user-photo{
         width: 30px;
         height: 30px;
+        margin: 2.5px 20px;
         float: right;
-        margin: 2.5px;
         }
         #topNav div.user-box>div.user-photo>a.img{
             width: 100;

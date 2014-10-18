@@ -75,13 +75,20 @@ steal('init.js')
                         }
                     }
                 });
-            }else if(this.survey_type || this.survey_type_sub){
-                $this.info$ = {survey_type:$this.survey_type, survey_type_sub:$this.survey_type_sub} ;
+            }else if(parseInt($this.survey_type) > 0 || parseInt($this.survey_type_sub) > 0){
+                $this.info$ = {} ;
+
+                if(parseInt(this.survey_type) > 0){
+                    $this.info$.survey_type = $this.survey_type ;
+                }
+                if(parseInt(this.survey_type_sub) > 0){
+                    $this.info$.survey_type_sub = $this.survey_type_sub ;
+                }
             }
 
             // 用户账户信息更新
             setTimeout(function(){
-                $this.user_accout() ;
+                $this.user_info() ;
             }, 200) ;
         },
 
@@ -99,7 +106,7 @@ steal('init.js')
         },
 
         // 金币信息初始化
-        user_accout : function(){
+        user_info : function(){
             var $this = this ;
 
             // 访问用户账户信息查询接口
@@ -107,7 +114,7 @@ steal('init.js')
                 $.ajax({
                     type    : 'post',
                     url     : __API__,      
-                    data    : {api:'user_accout_find', user_code:$this.user_code},  // 用户编码
+                    data    : {api:'user_info_find', user_code:$this.user_code},  // 用户编码
                     async   : false,                  // 异步加载
                     success : function(data$){
                         if(data$.status){

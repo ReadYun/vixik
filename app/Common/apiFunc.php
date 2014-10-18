@@ -255,7 +255,7 @@ function api_user_action_verify(){
 */
 function api_user_list_select(){
     $user_code = func_get_args()[0]['user_code'] ;  // 取参数：用户编码
-    $type      = func_get_args()[0]['type'] ;       // 取参数：调查类型
+    $type      = func_get_args()[0]['type'] ;       // 取参数：调查类型 
 
     $data                = array() ;
     $user                = array() ;
@@ -697,6 +697,29 @@ function api_survey_create(){
                 $start_time       = $data['start_time'] = date('Y-m-d H:i:s') ;
                 $data['end_time'] = date('Y-m-d H:i:s', strtotime("$start_time + $length_day day")) ;
                 unset($info['length_day']) ;
+            }
+
+            // 调查标签处理
+            if($info['survey_tag']){
+                M(TB_BAS_SURVEY_TAG) -> where("survey_code = '$survey_code'") -> delete() ;
+
+                for($t = 0; $t < count($info['survey_tag']); $t++){
+                    $tag = array(
+                        'survey_tag' => $info['survey_tag'][$t], 'survey_code' => $survey_code, 'survey_type' => $info['survey_type'], 
+                        'survey_type_sub' => $info['survey_type_sub'], 'survey_class' => $info['survey_class'], 
+                    ) ;
+
+                    if(!insertTable(TB_BAS_SURVEY_TAG, $tag)){
+                        return array (
+                            'data'   => false                   ,// 错误编码
+                            'info'   => "更新调查标签信息失败"  ,// 错误信息
+                            'status' => 0                       ,// 返回状态
+                        ) ;
+                    }
+                }
+
+                // 转换标签数组为为字符串格式
+                $info['survey_tag'] = implode(',', $info['survey_tag']) ;
             }
 
             if(!surveyInfoAlter($survey_code, $info)){

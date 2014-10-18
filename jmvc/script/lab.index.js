@@ -29,8 +29,8 @@ steal('init.js')
         	var href = el.attr('data-href') ;
 
             $.post(
-                __API_GET_SERVER_URL__, 
-                {name:'/lab'},function(data){
+                __API__, 
+                {api:'get_server_url', name:'/lab'},function(data){
                 	if(data.status){
                     	window.location.href = data.data + '/' + href ;
                 	}

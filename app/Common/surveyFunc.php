@@ -116,6 +116,7 @@ function surveyInfoSelect($survey_code, $url){
 function surveyInfoAlter($survey_code, $data){
     $condition['survey_code'] = $survey_code ;
 
+    // dump('------------------------------------------') ;
     // dump($survey_code) ;
     // dump($data) ;
 

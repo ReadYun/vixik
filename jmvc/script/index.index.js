@@ -44,9 +44,9 @@ steal('init.js')
         },
 
         publish_data : function(){
-        	var model$ = this ;
-        	var date = moment().add('d', -31) ;
-        	var date$ = [] , data$ = [] , i ;
+        	var date$  = [] , 
+        	    model$ = this,
+        	    date   = moment().add('d', -31) ;
 
         	// 生成最近31天日期数组
         	while(date.format('MM-DD') != moment().format('MM-DD')){
@@ -109,9 +109,10 @@ steal('init.js')
         },
 
         partake_data : function(){
-        	var model$ = this ;
-        	var date = moment().add('d', -31) ;
-        	var date$ = [] , data$ = [] , i ;
+        	var date$  = [], 
+        	    data$  = [],
+        	    model$ = this,
+        	    date   = moment().add('d', -31) ;
 
         	// 生成最近31天日期数组
         	while(date.format('MM-DD') != moment().format('MM-DD')){
@@ -119,7 +120,7 @@ steal('init.js')
         		date = date.add('d', 1) ;
         	}
 
-        	for(i = 0; i < 5; i++){
+        	for(var i = 0; i < 5; i++){
         		data$.push(model$.random_array(31, 400, 300)) ;
         	}
 

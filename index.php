@@ -39,6 +39,7 @@ define('TB_BAS_USER_FOLLOW_SURVEY'               ,'BasUserFollowSurvey'         
 define('TB_BAS_USER_FOLLOW_SVTYPE'               ,'BasUserFollowSvtype'            ) ;  // 用户关注调查分类
 define('TB_BAS_USER_SHARE_SURVEY'                ,'BasUserShareSurvey'             ) ;  // 用户分享调查信息
 define('TB_BAS_SURVEY_INFO'                      ,'BasSurveyInfo'                  ) ;  // 调查基本信息
+define('TB_BAS_SURVEY_TAG'                       ,'BasSurveyTag'                   ) ;  // 调查标签信息
 define('TB_BAS_SURVEY_RECOMMEND'                 ,'BasSurveyRecommend'             ) ;  // 调查推荐信息
 define('TB_BAS_SURVEY_RECOMMEND_RULE'            ,'BasSurveyRecommendRule'         ) ;  // 调查推荐规则
 define('TB_BAS_SURVEY_RECOMMEND_USER'            ,'BasSurveyRecommendUser'         ) ;  // 调查推荐用户清单

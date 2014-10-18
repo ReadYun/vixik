@@ -122,7 +122,7 @@ create index idx_tb_bas_user_follow_survey__follow_code on tb_bas_user_follow_su
 /********用户关注调查类型********/
 drop table if exists tb_bas_user_follow_svtype ;
 create table tb_bas_user_follow_svtype
-(
+(
     user_code       integer     ,#主用户编码
     svtype_sub      integer     ,#关注调查大类编码
     svtype_main     integer     ,#关注调查小类编码
@@ -149,6 +149,7 @@ create table tb_bas_survey_info
     survey_code        integer not null  ,#调查编码
     survey_name        varchar(64)       ,#调查名称
     survey_desc        varchar(256)      ,#调查说明
+	  survey_tag         varchar(128)      ,#调查标签
     survey_type        integer           ,#调查类型
     survey_type_sub    integer           ,#调查小类
     survey_class       integer           ,#调查大类
@@ -178,11 +179,24 @@ create table tb_bas_survey_info
     answer_num         integer           ,#参与答题人数
     primary key(survey_code)
 ) ;
-create index idx_bas_survey_info_survey_code  on tb_bas_survey_info(survey_code) ;
-create index idx_bas_survey_info_survey_name  on tb_bas_survey_info(survey_name) ;
-create index idx_bas_survey_info_survey_type  on tb_bas_survey_info(survey_type) ;
-create index idx_bas_survey_info_survey_class on tb_bas_survey_info(survey_class) ;
-create index idx_bas_survey_info_survey_state on tb_bas_survey_info(survey_state) ;
+create index idx_bas_survey_info__survey_code  on tb_bas_survey_info(survey_code) ;
+create index idx_bas_survey_info__survey_name  on tb_bas_survey_info(survey_name) ;
+create index idx_bas_survey_info__survey_type  on tb_bas_survey_info(survey_type) ;
+create index idx_bas_survey_info__survey_class on tb_bas_survey_info(survey_class) ;
+create index idx_bas_survey_info__survey_state on tb_bas_survey_info(survey_state) ;
+
+/********调查标签详情********/
+drop table if exists tb_bas_survey_tag ;
+create table tb_bas_survey_tag
+(
+	  survey_tag         varchar(32)    ,#调查标签
+    survey_code        integer        ,#调查编码
+    survey_type        integer        ,#调查类型
+    survey_type_sub    integer        ,#调查小类
+    survey_class       integer        ,#调查大类
+) ;
+create index idx_tb_bas_survey_tag__survey_code on tb_bas_survey_tag(survey_code) ;
+create index idx_tb_bas_survey_tag__survey_tag  on tb_bas_survey_tag(survey_tag) ;
 
 /********调查推荐信息********/
 drop table if exists tb_bas_survey_recommend ;

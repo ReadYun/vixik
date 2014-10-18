@@ -198,7 +198,6 @@ steal('init.js')
                             });
                         }
                     }else{
-                        console.log(data$.info) ;
                         if(models$.collect$.check){
                             alert('调查发布不成功！') ;
                         }
@@ -243,55 +242,58 @@ steal('init.js')
             var now, state, length,
                 $this = this ;
 
-            if($this.options.$syncBox.attr('data-state') == '-1' && vixik$.user_verify()){
-                $this.options.$syncBox.show() ;
-                // 倒计时处理（间隔0.5秒处理一次）
-                var cd$ = setInterval(function(){
-                    now    = moment() ;
-                    state  = $this.options.$syncBox.attr('data-state') ;
-                    length = $this.options.models$.draft$.length ;
+            if($this.options.$syncBox.attr('data-state') == '-1'){
+                // 保存草稿前确认用户已登录
+                if(vixik$.user_verify()){
+                    $this.options.$syncBox.show() ;
+                    // 倒计时处理（间隔0.5秒处理一次）
+                    var cd$ = setInterval(function(){
+                        now    = moment() ;
+                        state  = $this.options.$syncBox.attr('data-state') ;
+                        length = $this.options.models$.draft$.length ;
 
-                    if(!$this.options.models$.draft$.last || !$this.options.models$.draft$.next){
-                        // 倒计时初始化
-                        $this.options.models$.draft$.last = moment() ;
-                        $this.options.models$.draft$.next = moment($this.options.models$.draft$.last).add('m', length) ;
-                        $this.options.$syncBox.attr('data-state', 0) ;
+                        if(!$this.options.models$.draft$.last || !$this.options.models$.draft$.next){
+                            // 倒计时初始化
+                            $this.options.models$.draft$.last = moment() ;
+                            $this.options.models$.draft$.next = moment($this.options.models$.draft$.last).add('m', length) ;
+                            $this.options.$syncBox.attr('data-state', 0) ;
 
-                        cd_last$ = countdown(now, moment($this.options.models$.draft$.last)) ;   // 上次保存时间倒计时
-                        cd_next$ = countdown(moment($this.options.models$.draft$.next), now) ;   // 下次保存时间倒计时
+                            cd_last$ = countdown(now, moment($this.options.models$.draft$.last)) ;   // 上次保存时间倒计时
+                            cd_next$ = countdown(moment($this.options.models$.draft$.next), now) ;   // 下次保存时间倒计时
 
-                        if(cd_last$.seconds % 5 == 0){
-                            $this.options.$syncBox.find('.last .time').text(cd_last$.minutes + ':' + cd_last$.seconds + '前') ;
-                            $this.options.$syncBox.find('.next .time').text(cd_next$.minutes + ':' + cd_next$.seconds + '后') ;
-                        }
-                    }else if(now.diff($this.options.models$.draft$.next) >= 0){
-                        if(state != 2){
-                            // 已到保存时间，保存调查（now > next）
-                            if(vixik$.user_verify()){
-                                $this.options.$syncBox.attr('data-state', 2) ;
-                                $this.options.$survey.trigger('save_draft') ;
-                            }else{
-                                clearInterval(cd$) ;    // 用户校验都不通过，当然要停止倒计时咯
+                            if(cd_last$.seconds % 5 == 0){
+                                $this.options.$syncBox.find('.last .time').text(cd_last$.minutes + ':' + cd_last$.seconds + '前') ;
+                                $this.options.$syncBox.find('.next .time').text(cd_next$.minutes + ':' + cd_next$.seconds + '后') ;
+                            }
+                        }else if(now.diff($this.options.models$.draft$.next) >= 0){
+                            if(state != 2){
+                                // 已到保存时间，保存调查（now > next）
+                                if(vixik$.user_verify()){
+                                    $this.options.$syncBox.attr('data-state', 2) ;
+                                    $this.options.$survey.trigger('save_draft') ;
+                                }else{
+                                    clearInterval(cd$) ;    // 用户校验都不通过，当然要停止倒计时咯
+                                }
+                            }
+                        }else{
+                            // 如果还没到下次保存时间（now < next）
+                            cd_last$ = countdown(now, moment($this.options.models$.draft$.last)) ;   // 上次保存时间倒计时
+                            cd_next$ = countdown(moment($this.options.models$.draft$.next), now) ;   // 下次保存时间倒计时
+
+                            if(cd_last$.seconds % 5 == 0){
+                                $this.options.$syncBox.find('.last .time').text(cd_last$.minutes + ':' + cd_last$.seconds + '前') ;
+                                $this.options.$syncBox.find('.next .time').text(cd_next$.minutes + ':' + cd_next$.seconds + '后') ;
                             }
                         }
-                    }else{
-                        // 如果还没到下次保存时间（now < next）
-                        cd_last$ = countdown(now, moment($this.options.models$.draft$.last)) ;   // 上次保存时间倒计时
-                        cd_next$ = countdown(moment($this.options.models$.draft$.next), now) ;   // 下次保存时间倒计时
-
-                        if(cd_last$.seconds % 5 == 0){
-                            $this.options.$syncBox.find('.last .time').text(cd_last$.minutes + ':' + cd_last$.seconds + '前') ;
-                            $this.options.$syncBox.find('.next .time').text(cd_next$.minutes + ':' + cd_next$.seconds + '后') ;
-                        }
-                    }
-                }, 500) ;
-            }else{
-                if(cd$){
-                    clearInterval(cd$) ;    // 停止倒计时
+                    }, 500) ;
                 }
-                $this.options.$syncBox.attr('data-state', '-1').hide() ;
+                else{
+                    if(cd$){
+                        clearInterval(cd$) ;    // 停止倒计时
+                    }
+                    $this.options.$syncBox.attr('data-state', '-1').hide() ;
+                }
             }
-
         },
 
         // 立即保存草稿

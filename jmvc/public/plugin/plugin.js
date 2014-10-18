@@ -41,6 +41,13 @@ var bswitch = [
 		// "flat-ui-fonts.css"    //flat-ui样式
 	] ;
 
+//标签插件
+var tagit = [
+		"js/tag-it.min.js",           //插件主文件
+		"css/jquery.tagit.css",          	//插件样式文件
+		"css/tagit.vixik.css"    //flat-ui样式
+	] ;
+
 //Font Awesome图标字体
 var fontAwesome = [
 		"font-awesome.min.css"   //字体主文件

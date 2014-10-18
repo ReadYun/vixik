@@ -157,6 +157,7 @@ steal('init.js')
                 user_name = el.val() ;
 
             $this.warning('hide') ;
+            
             if(user_name){
                 // 访问用户数统计查询接口
                 $.post(__API__, {api:'user_count', condition_key:$.toJSON({user_name:user_name})}, function(data$){
@@ -209,6 +210,7 @@ steal('init.js')
         defaults : {
             $Header : {}   ,// topBar主对象 
             user$   : {}   ,// 用户信息汇总
+            $umenu  : $('.user-menu')   ,// 用户信息汇总
         },
         listensTo : ['user_refresh']
     }, {
@@ -256,8 +258,8 @@ steal('init.js')
         },
 
         // 鼠标进入用户头像打开用户信息菜单
-        "div.user-photo>a mouseover" : function(el){
-            el.click() ;
+        "{$umenu} mouseover" : function(el){
+            this.element.find('.user-photo').addClass('open') ;
         },
 
         // 退出登录

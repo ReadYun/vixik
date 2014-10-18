@@ -1378,61 +1378,51 @@ class ApiAction extends Action{
     * @Return : array  $array  出参
     */
     public function test(){
-    
-    $update_type = 'cover' ;
-    $user_code   = 10000000 ;
-    // $svtype      = explode(',', '1001') ;
-    $svtype      = explode(',', '10011,10012,10013,10008') ;
 
-    $tbDetSurveyTypeSub    = M(TB_DET_SURVEY_TYPE_SUB)    -> getTableName() ;
-    $tbBasUserFollowSvtype = M(TB_BAS_USER_FOLLOW_SVTYPE) -> getTableName() ;
+    $survey_code = 10000429 ;
 
-    // 更新方式判断处理
-    if($update_type == 'cover'){
-        M(TB_BAS_USER_FOLLOW_SVTYPE) -> where("user_code = $user_code") -> delete() ;
-    }
+    $info = array(
+        'survey_name' => 'hahaha',
+        'survey_class' => '',
+        'survey_type' => '',
+        'survey_type_sub' => '',
+        'survey_tag' => array('dsaffda', '打发打发', '234dfjafj999')
+        ) ;
 
-    // 更新关注类型
-    for($i = 0; $i < count($svtype); $i++){
-        switch (strlen($svtype[$i])) {
-            case 4 :
-                // 调查小类
-                $sql = "delete from $tbBasUserFollowSvtype where user_code = $user_code and svtype_sub in ( ".
-                       "select survey_type_sub_code from $tbDetSurveyTypeSub where survey_type_code = ". $svtype[$i]. ") " ;
-                M() -> execute($sql) ;
+            // 调查标签处理
+            if($info['survey_tag']){
+                M(TB_BAS_SURVEY_TAG) -> where("survey_code = '$survey_code'") -> delete() ;
 
-                $data = array('user_code' => $user_code,'svtype_main' => $svtype[$i], 'follow_time' => date('Y-m-d H:i:s')) ;
-                insertTable(TB_BAS_USER_FOLLOW_SVTYPE, $data) ;
-                break ;
+                for($t = 0; $t < count($info['survey_tag']); $t++){
+                    $data = array(
+                        'survey_tag' => $info['survey_tag'][$t], 'survey_code' => $survey_code, 'survey_type' => $info['survey_type'], 
+                        'survey_type_sub' => $info['survey_type_sub'], 'survey_class' => $info['survey_class'], 
+                    ) ;
 
-            case 5 :
-                // 调查大类
-                $data = array('user_code' => $user_code,'svtype_sub' => $svtype[$i], 'follow_time' => date('Y-m-d H:i:s')) ;
-                insertTable(TB_BAS_USER_FOLLOW_SVTYPE, $data) ;
-                break ;
-        }
-    }
+                    if(!insertTable(TB_BAS_SURVEY_TAG, $data)){
+                        return array (
+                            'data'   => false                   ,// 错误编码
+                            'info'   => "更新调查标签信息失败"  ,// 错误信息
+                            'status' => 0                       ,// 返回状态
+                        ) ;
+                    }
+                }
 
-    // 统计关注的调查小类按对应大类分组统计数量
-    $sql = "select a.survey_type_code, count(1) cnt from $tbDetSurveyTypeSub a, $tbBasUserFollowSvtype b ".
-           "where a.survey_type_sub_code = b.svtype_sub and b.user_code = $user_code group by a.survey_type_code" ;
-    $stats = M() -> query($sql) ;
+                // 转换标签数组为为字符串格式
+                $info['survey_tag'] = implode('-', $info['survey_tag']) ;
+                // $info['survey_tag'] = 'faf123a,adslf' ; 
+                // dump($info['survey_tag']) ;
+            }
 
-    // 遍历统计结果判断处理
-    for($i = 0; $i < count($stats); $i++){
-        // 统计目标调查大类下在维表中包含的调查小类数量
-        $cnt = M(TB_DET_SURVEY_TYPE_SUB) -> where("survey_type_code = ". $stats[$i]['survey_type_code']) -> count() ;
+            dump($info) ;
 
-        // 如果关注的小类数量等于维表的小类数量，切换到大类关注
-        if($stats[$i]['cnt'] == $cnt){
-            $sql = "delete from $tbBasUserFollowSvtype where user_code = $user_code and svtype_sub in ( ".
-                   "select survey_type_sub_code from $tbDetSurveyTypeSub where survey_type_code = ". $stats[$i]['survey_type_code']. ") " ;
-            M() -> execute($sql) ;
-
-            $data = array('user_code' => $user_code,'svtype_main' => $stats[$i]['survey_type_code'], 'follow_time' => date('Y-m-d H:i:s')) ;
-            insertTable(TB_BAS_USER_FOLLOW_SVTYPE, $data) ;
-        }
-    }
+            if(!surveyInfoAlter($survey_code, $info)){
+                return array (
+                    'data'   => false                   ,// 错误编码
+                    'info'   => "更新调查基本信息失败"  ,// 错误信息
+                    'status' => 0                       ,// 返回状态
+                ) ;
+            }
 
     }
 }

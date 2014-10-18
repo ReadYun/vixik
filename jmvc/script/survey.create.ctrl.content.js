@@ -10,7 +10,7 @@
 
 steal('init.js')
 .then(function($){
-    loadPlugin('vkData', 'vkForm') ;
+    loadPlugin('vkData', 'vkForm', 'tagit') ;
 }) 
 .then(function($){
 
@@ -29,6 +29,28 @@ steal('init.js')
         init : function(){
             // 调查内容初始化
             this.element.find('.vk-form').vkForm('init', {reset:true}) ;
+
+            // 调查标签初始化
+            this.element.find('.survey-tag').tagit({
+                placeholderText : '用关键字描述调查，最多可设置三个标签',
+                tagLimit : 3,
+                onTagLimitExceeded : function(){
+                    alert('免费调查只能创建三个标签') ;
+                },
+                afterTagAdded : function(){
+                    if($(this).find('.tagit-choice').size() == 3){
+                        $(this).find('.tagit-new').hide() ;
+                    }
+                },
+                afterTagRemoved  : function(){
+                    $(this).find('.tagit-new').show() ;
+                },
+            }) ;
+
+            // // 离开页面前提示
+            // window.onbeforeunload = function(){  
+            //     return true ;
+            // } ;
             
             // 题目创建按钮功能绑定    
             this.options.$itemBtn.find('div.add-item').survey_create_ctrl_item_add({    
@@ -144,6 +166,7 @@ steal('init.js')
             }else{
                 header$              = data$.data ;
                 header$.create_coins = $this.options.models$.coins$.coins_publish ;
+                header$.survey_tag   = $this.element.find('.survey-tag').tagit("assignedTags") ;
             }
 
             // 再汇总每个题目信息
@@ -210,8 +233,10 @@ steal('init.js')
             }) ;
 
             // 传入数据给总模型
-            $.extend(this.options.models$.info$, header$) ;
+            $.extend($this.options.models$.info$, header$) ;
             this.options.models$.question$ = question$ ;
+
+            console.dir($this.options.models$.info$) ;
 
             return true ;
         }

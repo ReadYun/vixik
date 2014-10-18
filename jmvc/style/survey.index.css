@@ -14,217 +14,303 @@
     font-family: "微软雅黑",Tahoma;
 }
 
-#mainHeader{
-    width: 100%;
-    height: 60px;
-    margin-bottom: 10px;
-    background: #EEE;
+.left-box{
+    width: 620px;
+    float: left;
     overflow: hidden;
 }
+.right-box{
+    width: 300px;
+    float: right;
+    overflow: hidden;
+}
+
+#headerBox{
+    width: 100%;
+    height: 220px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    }
+    #headerBox .sv-recomm{
+        background: #EEE;
+        height: 100%;
+        overflow: hidden;
+        }
+        #headerBox .sr-main{
+            width: 400px;
+            height: 100%;
+            float: left;
+            background: yellow;
+        }
+        #headerBox .sr-sub{
+            width: 220px;
+            height: 100%;
+            float: left;
+            }
+            #headerBox .sr-sub>div{
+                width: 100%;
+                height: 25%;
+                float: left;
+            }
+    #headerBox .sv-action{
+        height: 100%;
+        overflow: hidden;
+        background: #6699FF;
+    }
+    #headerBox .sv-action>div{
+        width: 100%;
+        overflow: hidden;
+    }
+    #headerBox .sa-header{
+        padding: 10px 0;
+        overflow: hidden;
+        font: 25px "宋体",Tahoma;
+        text-align: center;
+        color: #FFF;
+        border-bottom: 1px solid #FFF;
+    }
+    #headerBox .sa-body{
+        }
+        #headerBox .sa-body>div{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 50%;
+            float: left;
+            color: #FFF;
+            text-align: center;
+        }
+        #headerBox .sa-body .sa-title{
+            font: 21px "宋体",Tahoma;
+            margin-top: 20px;
+        }
+        #headerBox .sa-body .sa-value{
+            padding: 25px 0;
+            font-size: 25px;
+            font-style: italic;
+            font-weight: 900;
+        }
+        #headerBox .sa-body .sa-start{
+            width: 100%;
+            padding: 5px 0;
+            margin: 0 auto 10px auto;
+            overflow: hidden;
+            }
+            #headerBox .sa-body .sa-start>a{
+                display: block;
+                width: 110px;
+                padding: 5px 0;
+                margin: 0 auto;
+                color: #FFF;
+                font: 19px "宋体",Tahoma;
+                font-weight: 900;
+                border: 1px solid #FFF;
+            }
+        #headerBox .sa-body .sa-start>a:hover{
+            text-decoration: none;
+            color: #3399FF;
+            background: #FFF;
+        }
 
 #surveyBox{
     width: 100%;
     overflow: hidden;
-    border-bottom: 1px solid #CCC;
     }
     #surveyBox>div{
         width: 100%;
-        height: 300px;
-        margin: 15px 0;
         overflow: hidden;
     }
-    #surveyBox .survey-list{
-        width: 600px;
-        float: left;
+    #surveyBox .nav-box{
+        width: 100%;
+        margin: 10px 0 20px 0;
         overflow: hidden;
+        font: 21px "宋体",Tahoma;
+        color: #FFF;
+        background: #6BB130;
         }
-        #surveyBox .survey-list-header{
-            width: 100%;
+        #surveyBox .nav-box>div{
+            width: 155px;
+            height: 100%;
+            padding: 8px 0;
             float: left;
-            border-bottom: 1px solid #6BB130;
+            text-align: center;
             }
-            #surveyBox .sh-main{
-                width: 400px;
-                float: left;
-                }
-                #surveyBox .sv-type-main{
-                    width: 90px;
-                    height: 100%;
-                    padding: 8px 4px 7px 4px;
-                    float: left;
-                    font: 19px "宋体",Tahoma;
-                    color: #FFF;
-                    text-align: center;
-                    background: #6BB130;
-                }
-                #surveyBox .sv-type-sub{
-                    height: 100%;
-                    float: left;
-                    }
-                    #surveyBox .sv-type-sub>div{
-                        float: left;
-                        padding-top: 7px;
-                        padding-bottom: 1px;
-                        margin-left: 15px;
-                        color: #666;
-                        border-top: 2px solid #FFF;
-                    }
-                    #surveyBox .sv-type-sub>div:hover{
-                        cursor: pointer;
-                        color: #000;
-                        border-color: #6BB130;
-                    }
-                    #surveyBox .sv-type-sub>div.active{
-                        cursor: pointer;
-                        color: #6BB130;
-                        border-color: #6BB130;
-                    }
-            #surveyBox .sh-sub{
-                width: 150px;
-                margin-top: 6px;
-                float: right;
-                }
-                #surveyBox .sh-sub>button{
-                    float: right;
-                    margin-left: 10px;
-                   }
-        #surveyBox .sv-list-body{
+            #surveyBox .nav-box>div>i{
+                margin-right: 5px;
+            }
+        #surveyBox .nav-box>div:hover{
+            cursor: pointer;
+            background: #6CC130;
+        }
+    #surveyBox .sv-list-main .sl-elem{
+        width: 100%;
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+        overflow: hidden;
+        border-bottom: 1px dotted #CCC;
+        }
+        #surveyBox .sv-list-main .sv-name{
             width: 100%;
             overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font: 19px "宋体",Tahoma;
             }
-            #surveyBox .sv-list-body>div{
-                width: 100%;
-                margin-bottom: 3px;
+        #surveyBox .sv-list-main .sv-desc{
+            overflow: hidden;
+            font-size: 12px;
+            color: #999;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        #surveyBox .sv-list-main .sv-prop{
+            overflow: hidden;
+            font-size: 12px;
+            color: #666;
+            }
+            #surveyBox .sv-list-main .sv-prop>div{
+                float: left;
+                margin-right: 20px;
+            }
+            #surveyBox .sv-list-main .sv-type>a{
+                float: left;
+                color: #333;
+            }
+            #surveyBox .sv-list-main .sv-prop i{
+                margin-top: 3px;
+                margin-right: 3px;
+                font-size: 14px;
+                float: left;
+            }
+            #surveyBox .sv-list-main .sv-type>span{
+                margin: 0 3px;
+                float: left;
+            }
+            #surveyBox .sv-list-main .sv-prop>.user-name{
+                max-width: 300px;
                 float: left;
                 overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
                 }
-                #surveyBox .sv-list-elem>div{
-                    float: left;
-                    overflow: hidden;
-                    color: #666;
-                }
-                #surveyBox .sv-list-elem .sv-name{
-                    width: 430px;
-                    margin-right: 5px;
-                }
-                #surveyBox .sv-list-elem .sv-item{
-                    width: 50px;
-                }
-                #surveyBox .sv-list-elem .sv-coin{
-                    width: 50px;
-                }
-                #surveyBox .sv-list-elem .sv-time{
-                    float: right;
-                    background: red;
-                }
-                #surveyBox .sv-list-elem>div>i{
+                #surveyBox .sv-list-main .user-name img{
+                    width: 15px;
+                    height: 15px;
+                    margin-top: -2px;
                     margin-right: 3px;
                 }
-
-    #surveyBox .survey-type{
-        width: 300px;
-        height: 100%;
-        float: right;
-        overflow: hidden;
-        }
-        #surveyBox .stats-nav{
-            margin: 0;
-            border-color: #6BB130;
-            }
-            #surveyBox .stats-nav>li{
+                #surveyBox .sv-list-main .user-name a{
+                    float: right;
+                    color: #333;
+                }
+            #surveyBox .sv-list-main .sv-prop>.sv-time{
                 margin: 0;
-                padding: 4px 5px;
+                color: #BFBFBF;
+                float: right;
             }
-            #surveyBox .stats-nav>li.active{
-            }
-            #surveyBox .stats-nav>li>a{
-                padding: 3.5px;
-                border: none;
-                margin: 0;
-                border-top: 2px solid #FFF;
-                border-radius: 0;
-                color: #666;
-            }
-            #surveyBox .stats-nav>li.active>a{
-                color: #6BB130;
-                border-color: #6BB130;
-            }
-            #surveyBox .stats-nav>li:hover>a{
-                color: #000;
-                background: #FFF;
-                border-color: #6BB130;
-            }
-
-#midBox{
-    width: 100%;
-    height: 80px;
-    margin: 10px 0;
-    background: yellow;
-}
-#rankBox{
-    width: 100%;
-    margin: 10px 0;
-    overflow: hidden;
-    }
-    #rankBox>div{
+    #surveyBox .sv-list-sub>div{
         width: 100%;
-        margin: 15px 0;
+        margin-bottom: 15px;
         overflow: hidden;
         }
-        #rankBox .rank-box{
-            width: 400px;
-            float: left;
-        }
-        #rankBox .rank-header{
+        #surveyBox .sv-list-sub .sl-header{
             width: 100%;
             padding-bottom: 5px;
             margin-bottom: 10px;
-            font: 21px "宋体",Tahoma;
+            overflow: hidden;
+            font: 19px "宋体",Tahoma;
+            font-weight: 900;
+            color: #666;
             border-bottom: 1px solid #CCC;
-            color: #888;
             }
-            #rankBox .rank-header>i{
-                margin-right: 10px;
-            }
-        #rankBox .rank-body{
-            width: 100%;
-            padding-bottom: 5px;
-            margin-bottom: 5px;
-            }
-            #rankBox .rank-list-elem{
-                width: 100%;
-                height: 20px;
-                margin-bottom: 5px;
+            #surveyBox .sv-list-sub .sl-header i{
                 float: left;
-                
+                margin-top: 1px;
+                margin-right: 5px;
+            }
+        #surveyBox .sv-list-sub .sl-body>div{
+            width: 100%;
+            float: left;
+            margin-bottom: 3px;
+            color: #666;
+            }
+            #surveyBox .sv-list-sub .sv-name{
+                width: 220px;
+                float: left;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
                 }
-                #rankBox .rank-list-elem>div{
-                    float: left;
-                    }
-                    #rankBox .rank-list-elem .list-rank{
-                        width: 20px;
-                        text-align: center;
-                        color: #FFF;
-                        background: #CCC;
-                    }
-                    #rankBox .rank-list-elem .list-rank.rank1{background: red;}
-                    #rankBox .rank-list-elem .list-rank.rank2{background: orange;}
-                    #rankBox .rank-list-elem .list-rank.rank3{background: blue;}
-                    #rankBox .rank-list-elem .user-nick{
-                        max-width: 300px;
-                        margin-left: 10px;
-                    }
-                    #rankBox .rank-list-elem .rank-value{
-                        width: 70px;
-                        margin-right: 2px;
-                        float: right;
-                        text-align: right;
-                        color: #666;
-                        font-style: italic;
-                    }
-    #rankBox .rank-box.right{
-        float: right;
+                #surveyBox .sv-list-sub .sv-name i{
+                    margin-right: 5px;
+                }
+            #surveyBox .sv-list-sub .answer-num{
+                float: right;
+                color: #999;
+            }
+
+#rewardBox{
+    width: 100%;
+    margin: 20px 0;
+    overflow: hidden;
     }
+    #rewardBox .award-box>div{
+        width: 25%;
+        height: 120px;
+        float: left;
+        background: red;
+    }
+    #rewardBox .rank-box .rank-header{
+        width: 100%;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        font: 19px "宋体",Tahoma;
+        font-weight: 900;
+        color: #666;
+        border-bottom: 1px solid #CCC;
+        }
+        #rewardBox .rank-box .rank-header>i{
+            margin-top: 1px;
+            margin-right: 5px;
+            float: left;
+        }
+    #rewardBox .rank-box .rank-list-elem{
+        width: 100%;
+        float: left;
+        }
+    #rewardBox .rank-list-elem{
+        width: 100%;
+        height: 20px;
+        margin-bottom: 5px;
+        float: left;
+        }
+        #rewardBox .rank-list-elem>div{
+            float: left;
+            }
+            #rewardBox .rank-list-elem .list-rank{
+                width: 20px;
+                text-align: center;
+                color: #FFF;
+                background: #CCC;
+            }
+            #rewardBox .rank-list-elem .list-rank.rank1{background: red;}
+            #rewardBox .rank-list-elem .list-rank.rank2{background: orange;}
+            #rewardBox .rank-list-elem .list-rank.rank3{background: blue;}
+            #rewardBox .rank-list-elem .user-nick{
+                max-width: 300px;
+                margin-left: 10px;
+            }
+            #rewardBox .rank-list-elem .rank-value{
+                width: 70px;
+                margin-right: 2px;
+                float: right;
+                text-align: right;
+                color: #666;
+                font-style: italic;
+            }
+
 
 #footBox{
     width: 100%;
