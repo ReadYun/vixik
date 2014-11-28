@@ -10,12 +10,12 @@
 </head>
 <body>
     <div id="Header">
-        <include file="Public:topBar" nav-type="sub" nav-name="调查分析" need-login="1"/>
+        <include file="Public:topBar" page='调查分析' nav-type="sub" nav-cur="survey"/>
     </div>
     <div id="navBar">
         <div class="nav-bar">
             <div class="nav-bar-left">
-                <div class="nav-bar-photo"><img src="/vixik/jmvc/style/image/man.png"></div>
+                <div class="nav-bar-photo"><img src=""></div>
                 <div class="nav-bar-info">
                     <div class="nav-bar-title">
                         <a href="{$survey['info']['url_visit']}">{$survey['info']['survey_name']}</a>
@@ -40,10 +40,9 @@
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a data-toggle="tab" data-target="sv-publish">发布的调查</a></li>
                                     <li><a data-toggle="tab" data-target="sv-action">参与的调查</a></li>
-                                    <li><a data-toggle="tab" data-target="sv-follow">收藏的调查</a></li>
+                                    <li><a data-toggle="tab" data-target="sv-follow">关注的调查</a></li>
                                 </ul>
                             </div>
-                            <div class="sc-header-close"><i class="icon-remove"></i></div>
                         </div>
                         <div class="sc-body tab-content">
                             <div class="tab-pane active" id="sv-publish">
@@ -95,7 +94,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -107,12 +105,12 @@
                 <li class="survey-stats active"><a href="#surveyStats" data-toggle="tab">整体分析</a></li>
                 <li class="question-stats"><a href="#questionStats" data-toggle="tab">题目分析</a></li>
                 <li class="survey-content"><a href="#surveyContent" data-toggle="tab">调查内容</a></li>
-                <li class="survey-content"><a href="#surveySetting" data-toggle="tab">调查设置</a></li>
+                <li class="survey-content"><a href="#surveySetting" data-toggle="tab">调查属性</a></li>
                 <li class="survey-comment"><a href="#surveyComment" data-toggle="tab">网友评论</a></li>
             </ul>
         </div>
         <div id="statistContent" class="tab-content">
-            <div id="surveyStats" class="tab-pane active">
+            <div id="surveyStats" class="tab-pane">
                 <div id="itemStats">
                     <div class="stats-desc">
                         <div class="stats-item">
@@ -138,94 +136,136 @@
                         <div class="graphs-line line-textarea" data-elem-num="{$survey['info']['textarea_num']}" title="主观题"></div>
                     </div>
                 </div>
-                <div id="actionStats" data-model="dataAction$" data-model-chart="chartAction$">
-                    <div class="stats-desc">
-                        <div class="answer-cnt">
-                            <div class="stats-title">总参与人数</div>
-                            <div class="stats-value" data-model="user_sum">0</div>
-                        </div> 
-                        <div class="cycle-cnt">
-                            <div class="stats-title">活动进行天数</div>
-                            <div class="stats-value" data-model="date_cnt">0</div>
-                        </div>          
-                        <div class="ave-cnt">
-                            <div class="stats-title">平均参与人数</div>
-                            <div class="stats-value" data-model="user_ave">0</div>
-                        </div>    
+                <div id="trendStats" class="sv-stats" data-model="dataAction$" data-model-chart="chartAction$">
+                    <div class="sv-stats-header">
+                        <label>参与趋势概览</label>
                     </div>
-                    <div class="stats-graphs echarts" data-model-option="chartAction$" data-model-stats="statsAction$"></div>
+                    <div class="sv-stats-body">
+                        <div class="ssb-side">
+                            <div class="sside-elem day">
+                                <div class="stats-value" data-model="date_cnt">0</div>
+                                <div class="stats-title">活动已进行天数</div>
+                            </div>
+                            <div class="sside-elem sum">
+                                <div class="stats-value" data-model="user_sum">0</div>
+                                <div class="stats-title">总参与人数</div>
+                            </div>
+                            <div class="sside-elem avg">
+                                <div class="stats-value" data-model="user_ave">0</div>
+                                <div class="stats-title">平均参与人数</div>
+                            </div>
+                        </div>
+                        <div class="ssb-main">
+                            <div class="stats-graphs"></div>
+                        </div>
+                    </div>
                 </div>
-                <div id="areaStats" data-model="dataArea$" data-model-chart="chartArea$">
-                    <div class="stats-desc">
-                        <div class="area-province">
-                            <div class="stats-title">来源最多地区</div>
-                            <div class="stats-value" data-model="max_cnt$.key">江苏省</div>
-                        </div> 
-                        <div class="sex-male">
-                            <div class="stats-title">男性用户数</div>
-                            <div class="stats-value" data-model="male_cnt">1232</div>
+                <div id="areaStats" class="sv-stats">
+                    <div class="sv-stats-header">
+                        <label>用户地域分布</label>
+                    </div>
+                    <div class="sv-stats-body">
+                        <div class="ssb-side">
+                            <div class="sside-elem">
+                                <div class="stats-value most-province" data-model="date_cnt"></div>
+                                <div class="stats-title">来源最多省份</div>
+                            </div>
+                            <div class="sside-elem">
+                                <div class="stats-value most-city" data-model="user_sum"></div>
+                                <div class="stats-title">来源最多城市</div>
+                            </div>
+                            <div class="sside-elem">
+                                <div class="stats-value least-province" data-model="date_cnt"></div>
+                                <div class="stats-title">来源最少省份</div>
+                            </div>
+                            <div class="sside-elem">
+                                <div class="stats-value least-city" data-model="user_sum"></div>
+                                <div class="stats-title">来源最少城市</div>
+                            </div>
                         </div>
-                        <div class="sex-female">
-                            <div class="stats-title">女性用户数</div>
-                            <div class="stats-value" data-model="female_cnt">43423</div>
+                        <div class="ssb-main">
+                            <div class="stats-graphs"></div>
                         </div>
                     </div>
-                    <div class="stats-graphs echarts" data-model-option="chartArea$" data-model-stats="statsArea$"></div>
+                </div>
+                <div id="userStats" class="sv-stats" data-model="dataAction$" data-model-chart="chartAction$">
+                    <div class="sv-stats-header">
+                        <label>用户属性分布</label>
+                    </div>
+                    <div class="sv-stats-body">
+                        <div class="ssb-side">
+                            <div class="user-prop-elem" data-prop="sex">性别</div>
+                            <div class="user-prop-elem" data-prop="age">年龄</div>
+                            <div class="user-prop-elem" data-prop="edu">学历</div>
+                            <div class="user-prop-elem" data-prop="career">职业</div>
+                        </div>
+                        <div class="ssb-main">
+                            <div class="stats-graphs">
+                                <div class="sg-sex"></div>
+                                <div class="sg-age"></div>
+                                <div class="sg-edu"></div>
+                                <div class="sg-career"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>            
             </div>
             <div id="questionStats" class="tab-pane">
-                <div id="qtStatsHeader">
-                    <div class="select-qt">
-                        <select type="select" name="sv_question" class="input-xlarge qt-select">
-                            <option class="init" value="0">显示全部问题</option>
-                            <volist name="question" id="qt">
-                            <option class="init" value="{$qt.question_code}">{$qt.question_seq}.{$qt.question_name}</option>
-                            </volist>
-                        </select>
-                    </div>
-                    <div class="action-qt">
-                    </div>
+                <div class="qt-stats-header">
+                    <select type="select" name="sv_question" class="input-xlarge qt-select">
+                        <option class="init" value="0">显示全部问题</option>
+                        <volist name="question" id="qt">
+                        <option value="{$qt.question_code}">{$qt.question_seq}.{$qt.question_name}</option>
+                        </volist>
+                    </select>
                 </div>
-                <div id="qtStatsBody">
+                <div id="qtStatsBody" class="qt-stats-body">
                     <volist name="question" id="qt">
                     <if condition="$qt.question_type eq 'textarea'">
                     <div class="question" data-question-code="{$qt.question_code}" data-question-type="{$qt.question_type}">
-                        <div class="item-header navbar navbar-inner">
+                        <div class="item-header">
                             <div class="qt-name">{$qt.question_seq}.{$qt.question_name}(主观题)</div>
                         </div>
                         <div class="qt-text">
                             <div class="text-init">
+                                <div class="no-text">无人参与此主观题</div>
                                 <button class="vkbutton vbtn-block vbtn-primary">主观题不提供分析图表，点击查看详细内容</button>
                             </div>
                             <div class="text-body">
-                                <div class="vkpaging-box"></div>
-                                <div class="vkpaging-nav"></div>
+                                <div class="text-list">
+                                </div>
+                                <div class="text-foot">
+                                    <div class="tf-desc">
+                                        <button class="div">已显示<span>0/0</span>条记录</button>
+                                    </div>
+                                    <div class="tf-button">
+                                        <button class="vkbutton vbtn-border vbtn-default">加载更多</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <else />
-                    <div class="question item-stats" data-question-code="{$qt.question_code}" data-question-name="{$qt.question_name}" data-question-type="{$qt.question_type}">
-                        <div class="item-header navbar navbar-inner">
+                    <div class="question qt-stats" data-question-code="{$qt.question_code}" data-question-name="{$qt.question_name}" data-question-type="{$qt.question_type}">
+                        <div class="item-header">
                             <div class="qt-name">{$qt.question_seq}.{$qt.question_name}
                             <switch name="qt.question_type">
                                 <case value="radio">(单选题)</case>
                                 <case value="checkbox">(多选题)</case>
                             </switch>
                             </div>
-                            <div class="qt-action">
-                            </div>
                         </div>
-                        <div class="stats-opt">
+                        <div class="item-option">
                             <table class="table table-bordered table-thin">
                                 <thead>
                                     <tr>
                                         <th class="option-seq">序号</th>
-                                        <th class="option-name">选项名称</th>
-                                        <th class="choose-num">选择数量</th>
-                                        <th class="option-stats">比例统计</th>
+                                        <th class="option-name">选项</th>
+                                        <th class="choose-num">统计</th>
+                                        <th class="option-stats">比例</th>
                                     </tr>
                                 </thead>
-                                <tbody class="pag-content">                                    
+                                <tbody class="pag-content">
                                     <volist name="option" id="opt">
                                         <eq name="opt.question_code" value="$qt.question_code">
                                         <tr>
@@ -242,30 +282,62 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="stats-prop">
-                            <div class="action-box">
-                                <div class="action-prop">
-                                    <select type="select" name="user_prop" class="input-mini prop-select">
-                                        <option class="init" value="user_sex">按用户性别分析</option>        
-                                        <option class="init" value="user_edu">按用户学历分析</option>        
-                                        <option class="init" value="user_career">按用户职业分析</option>        
-                                    </select>
-                                </div>
-                                <div class="action-option">
+                        <div class="item-graphs">
+                            <ul class="item-graphs-header nav nav-tabs">
+                                <li class="tab active" data-type="sx"><a data-toggle="tab">用户属性分析</a></li>
+                                <li class="tab" data-type="jx"><a data-toggle="tab">交叉题目分析</a></li>
+                                <li class="option-select">
                                     <select type="select" name="sv_option" class="input-xlarge option-select">
                                         <option class="init" value="0">显示全部选项</option>
                                         <volist name="option" id="opt">
                                         <eq name="opt.question_code" value="$qt.question_code"> 
-                                            <option class="init" value="{$opt.option_name}">{$opt.option_seq}.{$opt.option_name}</option>
+                                            <option class="" value="{$opt.option_name}">{$opt.option_seq}.{$opt.option_name}</option>
                                         </eq>
                                         </volist>
                                     </select>
+                                </li>
+                            </ul>
+                            <div class="item-graphs-body">
+                                <div class="item-graphs-sx active">
+                                    <select type="select" name="user_prop" class="input-xlarge">
+                                        <option class="init" value="user_sex">按用户性别分析</option>
+                                        <option class="" value="user_age">按用户年龄分析</option>
+                                        <option class="" value="user_edu">按用户学历分析</option>
+                                        <option class="" value="user_career">按用户职业分析</option>
+                                    </select>
+                                    <div class="graphs-box">
+                                        <div class="highchart"></div>
+                                        <div class="nochart" style="display:none">
+                                            没有任何人选择此选项。。囧。。
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-graphs-jx">
+                                    <select type="select" name="sv_question" class="input-xlarge item">
+                                        <volist name="question" id="jqt">
+                                        <neq name="jqt.question_code" value="$qt.question_code">
+                                            <neq name="jqt.question_type" value="textarea">
+                                            <option value="{$jqt.question_code}">{$jqt.question_seq}.{$jqt.question_name}</option>
+                                            </neq>
+                                        </neq>
+                                        </volist>
+                                    </select>
+                                    <div class="graphs-box">
+                                        <div class="highchart"></div>
+                                        <div class="nochart" style="display:none">
+                                            没有任何人选择此选项。。囧。。
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="graphs-box">
-                                <div class="highchart"></div>
-                                <div class="nochart" style="display:none">
-                                    没有任何人选择此选项。。囧。。
+                            <div class="item-graphs-action">
+                                <div class="iga-left">
+                                </div>
+                                <div class="iga-right">
+                                    <button class="vkbutton vbtn-border vbtn-default small">举报</button>
+                                    <button class="vkbutton vbtn-border vbtn-default small">关注</button>
+                                    <button class="vkbutton vbtn-border vbtn-default small">分享</button>
+                                    <button class="vkbutton vbtn-border vbtn-default small">下载</button>
                                 </div>
                             </div>
                         </div>
@@ -275,99 +347,211 @@
                 </div>
             </div>
             <div id="surveyContent" class="tab-pane">
-                <div class="sv-desc">{$survey['info']['survey_desc']}</div>
-                <div class="sv-item"></div>
             </div>
             <div id="surveySetting" class="tab-pane">
-                <div class="sv-setting sv-prop">
-                    <div class="sv-prop-elem">
-                        <div class="sp-elem-header">基本属性</div>
-                        <div class="sp-elem-content">
-                            <div class="spe-item" data-prop="survey_type">
-                                <div class="spe-item-desc">调查归属大类</div>
-                                <div class="spe-item-value">{$survey['info']['survey_type']}</div>
-                                <div class="spe-item-action">
-                                    <button type="button" class="btn btn-link">更多同类调查</button>
-                                </div>
+                <div class="sv-prop-elem sv-desc">
+                    <div class="sp-elem-header">
+                        <span></span>
+                        <div class="seh-title">调查说明</div>
+                    </div>
+                    <div class="sp-elem-content">xlsdjflasdfsdf</div>
+                </div>
+                <div class="sv-prop-elem">
+                    <div class="sp-elem-header">
+                        <span></span>
+                        <div class="seh-title">基本属性</div>
+                    </div>
+                    <div class="sp-elem-content">
+                        <div class="spe-item" data-prop="survey_type">
+                            <div class="spe-item-desc">调查归属大类</div>
+                            <div class="spe-item-value">{$survey['info']['survey_type_name']}</div>
+                            <div class="spe-item-action">
+                                <button type="button" class="btn btn-link">更多同类调查</button>
                             </div>
-                            <div class="spe-item" data-prop="survey_type_sub">
-                                <div class="spe-item-desc">调查归属小类</div>
-                                <div class="spe-item-value">{$survey['info']['survey_type_sub']}</div>
-                                <div class="spe-item-action">
-                                    <button type="button" class="btn btn-link">更多同类调查</button>
-                                </div>
+                        </div>
+                        <div class="spe-item" data-prop="survey_type_sub">
+                            <div class="spe-item-desc">调查归属小类</div>
+                            <div class="spe-item-value">{$survey['info']['survey_type_sub_name']}</div>
+                            <div class="spe-item-action">
+                                <button type="button" class="btn btn-link">更多同类调查</button>
                             </div>
-                            <div class="spe-item" data-prop="survey_class">
-                                <div class="spe-item-desc">调查所属行业</div>
-                                <div class="spe-item-value">{$survey['info']['survey_class']}</div>
-                                <div class="spe-item-action">
-                                    <button type="button" class="btn btn-link">更多同类调查</button>
-                                </div>
+                        </div>
+                        <div class="spe-item" data-prop="survey_class">
+                            <div class="spe-item-desc">调查所属行业</div>
+                            <div class="spe-item-value">{$survey['info']['survey_trade_name']}</div>
+                            <div class="spe-item-action">
+                                <button type="button" class="btn btn-link">更多同类调查</button>
                             </div>
-                            <div class="spe-item" data-prop="target_range">
-                                <div class="spe-item-desc">参与用户范围</div>
-                                <div class="spe-item-value">{$survey['info']['target_range']}</div>
-                                <div class="spe-item-action">
-                                    <button type="button" class="btn btn-link">等级权限说明</button>
-                                </div>
+                        </div>
+                        <div class="spe-item" data-prop="target_range">
+                            <div class="spe-item-desc">参与用户范围</div>
+                            <div class="spe-item-value">{$survey['info']['target_range']}</div>
+                            <div class="spe-item-action">
+                                <button type="button" class="btn btn-link">等级权限说明</button>
                             </div>
-                            <div class="spe-item" data-prop="create_coins">
-                                <div class="spe-item-desc">创建使用金币</div>
-                                <div class="spe-item-value">{$survey['info']['create_coins']}</div>
-                                <div class="spe-item-action">
-                                    <button type="button" class="btn btn-link">金币使用规则</button>
-                                </div>
+                        </div>
+                        <div class="spe-item" data-prop="create_coins">
+                            <div class="spe-item-desc">创建使用金币</div>
+                            <div class="spe-item-value">{$survey['info']['create_coins']}</div>
+                            <div class="spe-item-action">
+                                <button type="button" class="btn btn-link">金币使用规则</button>
                             </div>
-                            <div class="spe-item" data-prop="answer_coins">
-                                <div class="spe-item-desc">参与奖励金币</div>
-                                <div class="spe-item-value">{$survey['info']['answer_coins']}</div>
-                                <div class="spe-item-action">
-                                    <button type="button" class="btn btn-link">如何获取金币</button>
-                                </div>
+                        </div>
+                        <div class="spe-item" data-prop="answer_coins">
+                            <div class="spe-item-desc">参与奖励金币</div>
+                            <div class="spe-item-value">{$survey['info']['answer_coins']}</div>
+                            <div class="spe-item-action">
+                                <button type="button" class="btn btn-link">如何获取金币</button>
                             </div>
                         </div>
                     </div>
-                    <div class="sv-prop-elem">
-                        <div class="sp-elem-header">时间设置</div>
-                        <div class="sp-elem-content">
-                            <div class="spe-item" data-prop="start_time">
-                                <div class="spe-item-desc">活动开始时间</div>
-                                <div class="spe-item-value">{$survey['info']['start_time']}</div>
-                            </div>
-                            <div class="spe-item" data-prop="end_time">
-                                <div class="spe-item-desc">活动结束时间</div>
-                                <div class="spe-item-value">{$survey['info']['end_time']}</div>
-                            </div>
-                            <div class="spe-item" data-prop="survey_state">
-                                <div class="spe-item-desc">活动当前状态</div>
-                                <div class="spe-item-value">活动{$survey['info']['survey_state']}</div>
+                </div>
+                <div class="sv-prop-elem">
+                    <div class="sp-elem-header">
+                        <span></span>
+                        <div class="seh-title">时间设置</div>
+                    </div>
+                    <div class="sp-elem-content">
+                        <div class="spe-item" data-prop="start_time">
+                            <div class="spe-item-desc">活动开始时间</div>
+                            <div class="spe-item-value">{$survey['info']['start_time']}</div>
+                        </div>
+                        <div class="spe-item" data-prop="end_time">
+                            <div class="spe-item-desc">活动结束时间</div>
+                            <div class="spe-item-value">{$survey['info']['end_time']}</div>
+                        </div>
+                        <div class="spe-item" data-prop="survey_state">
+                            <div class="spe-item-desc">活动当前状态</div>
+                            <div class="spe-item-value">活动{$survey['info']['survey_state']}</div>
+                            <div class="spe-item-action">
+                                <button type="button" class="btn btn-link">关于活动状态</button>
                             </div>
                         </div>
                     </div>
-                    <div class="sv-prop-elem">
-                        <div class="sp-elem-header">推荐设置</div>
-                        <div class="sp-elem-content">
-                            <div class="spe-item" data-prop="recomm_type">
-                                <div class="spe-item-desc">活动推荐方式</div>
-                                <div class="spe-item-value">自定义推荐</div>
+                </div>
+                <div class="sv-prop-elem">
+                    <div class="sp-elem-header">
+                        <span></span>
+                        <div class="seh-title">推荐设置</div>
+                    </div>
+                    <div class="sp-elem-content">
+                        <div class="spe-item" data-prop="recomm_type">
+                            <div class="spe-item-desc">活动推荐方式</div>
+                            <div class="spe-item-value">自定义推荐</div>
+                            <div class="spe-item-action">
+                                <button type="button" class="btn btn-link">关于推荐调查</button>
                             </div>
-                            <div class="spe-item" data-prop="end_time">
-                                <div class="spe-item-desc">推荐规则设置</div>
-                                <div class="spe-item-content">
-                                    <volist name="recommend" id="rec">
-                                    <div class="recommend-rule">
-                                        <div class="recommend-rule-desc">{$rec.prop}</div>
-                                        <div class="recommend-rule-value">{$rec.desc}</div>
-                                    </div>
-                                    </volist>
+                        </div>
+                        <div class="spe-item" data-prop="end_time">
+                            <div class="spe-item-desc">推荐规则设置</div>
+                            <div class="spe-item-content">
+                                <volist name="recommend" id="rec">
+                                <div class="recommend-rule">
+                                    <div class="recommend-rule-desc">{$rec.prop}</div>
+                                    <div class="recommend-rule-value">{$rec.desc}</div>
                                 </div>
+                                </volist>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id="surveyComment" class="tab-pane">
-                网友评论。。。
+            <div id="surveyComment" class="tab-pane active">
+                <div class="comment-main">
+                    <div class="comment-no">暂无任何评论</div>
+                    <div class="comment-ok">
+                        <div class="comment-my">
+                            <div class="unlogin"></div>
+                            <div class="cm-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
+                            <div class="cm-main">
+                                <div class="cm-input" contenteditable="true"></div>
+                                <div class="cm-submit"><button class="vkbutton vbtn-success">发表评论</button></div>
+                            </div>
+                        </div>
+                        <div class="comment-list">
+                            <div class="cl-elem">
+                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
+                                <div class="cl-elem-main">
+                                    <div class="cm-user">
+                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
+                                        <div class="time">23分钟前</div>
+                                    </div>
+                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
+                                </div>
+                            </div>
+                            <div class="cl-elem">
+                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
+                                <div class="cl-elem-main">
+                                    <div class="cm-user">
+                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
+                                        <div class="time">23分钟前</div>
+                                    </div>
+                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
+                                </div>
+                            </div>
+                            <div class="cl-elem">
+                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
+                                <div class="cl-elem-main">
+                                    <div class="cm-user">
+                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
+                                        <div class="time">23分钟前</div>
+                                    </div>
+                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
+                                </div>
+                            </div>
+                            <div class="cl-elem">
+                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
+                                <div class="cl-elem-main">
+                                    <div class="cm-user">
+                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
+                                        <div class="time">23分钟前</div>
+                                    </div>
+                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
+                                </div>
+                            </div>
+                            <div class="cl-elem">
+                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
+                                <div class="cl-elem-main">
+                                    <div class="cm-user">
+                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
+                                        <div class="time">23分钟前</div>
+                                    </div>
+                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
+                                </div>
+                            </div>
+                            <div class="cl-elem">
+                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
+                                <div class="cl-elem-main">
+                                    <div class="cm-user">
+                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
+                                        <div class="time">23分钟前</div>
+                                    </div>
+                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
+                                </div>
+                            </div>
+                            <div class="cl-elem">
+                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
+                                <div class="cl-elem-main">
+                                    <div class="cm-user">
+                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
+                                        <div class="time">23分钟前</div>
+                                    </div>
+                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
+                                </div>
+                            </div>
+                            <div class="cl-elem-more"><button class="vkbutton vbtn-default block large">加载更多</button></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-sub">
+                    <div class="comment-my">
+                        <div class="cm-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
+                        <div class="cm-main">
+                            <div class="cm-input" contenteditable="true"></div>
+                            <div class="cm-submit"><button class="vkbutton vbtn-success">发表评论</button></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

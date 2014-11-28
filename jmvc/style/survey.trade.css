@@ -1,8 +1,8 @@
     /*
- * Document    : survey.type.css
- * Description : CSS for Survey/type.html
+ * Document    : survey.trade.css
+ * Description : CSS for Survey/trade.html
  *
- * Created on  : 2012-11-7
+ * Created on  : 2014-11-7
  * Author      : ReadYun
  * Copyright   : VixiK
  */
@@ -45,26 +45,30 @@
         float: right;
         overflow: hidden;
         }
-        #surveyHeader .sv-type-sub{
+        #surveyHeader .sv-trade-sub{
             width: 100%;
+            height: 34px;
             float: left;
             }
-            #surveyHeader .st-sub{
-                padding-bottom: 1px;
-                margin-bottom: 10px;
-                margin-right: 20px;
+            #surveyHeader .sv-trade-name{
                 float: left;
-                font-family: "微软雅黑",Tahoma;
-                color: #666;
+                font: 21px "宋体",Tahoma;
+                color: #555;
+                font-weight: 900;
             }
-            #surveyHeader .st-sub.active{
-                color: #333;
-                border-bottom: 3px solid #6BB130;
-            }
-            #surveyHeader .st-sub:hover{
-                color: #000;
-                cursor: pointer;
-            }
+            #surveyHeader .sv-trade-follow{
+                float: right;
+                }
+                #surveyHeader .sv-trade-follow>div{
+                    margin-top: 1.5px;
+                    margin-right: 10px;
+                    float: right;
+                    color: #777;
+                }
+                #surveyHeader .sv-trade-follow>button{
+                    float: right;
+                    padding: 1px 10px;
+                }
         #surveyHeader .sv-list-nav a{
             padding: 5px 10px;
             border-radius: 0;
@@ -207,89 +211,43 @@
 
 #mainRight>div{
     width: 100%;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     margin-bottom: 10px;
     float: left;
     }
-    #typeBox .switch-type{
-    padding-bottom: 5px;
-    }
-    #typeBox .switch-type button{
+    #switchBox button{
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         width: 100%;
+        margin: 0;
     }
-    #typeBox .switch-type.open button{
+    #switchBox.open button{
         color: #FFF;
         background: #CCC;
+        margin: 0;
         }
-        #typeBox .switch-content{
+        #switchBox .switch-content{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
             width: 400px;
+            margin: 0;
+            padding: 10px;
             overflow: hidden;
             border-radius: 0;
-            margin: 0;
             }
-            #typeBox .switch-type-elem{
-                box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                -webkit-box-sizing: border-box;
-                width: 100%;
-                padding: 10px 0;
-                overflow: hidden;
+            #switchBox .switch-trade-elem{
+                width: 90px;
+                margin: 10px 0;
                 float: left;
-                }
-                #typeBox .switch-type-main{
-                    width: 100%;
-                    padding-left: 5px;
-                    overflow: hidden;
-                    float: left;
-                    font: 19px "宋体",Tahoma;
-                    color: #333;
-                    border-left: 8px solid #6BB130;
-                    cursor: pointer;
-                }
-                #typeBox .switch-type-sub{
-                    box-sizing: border-box;
-                    -moz-box-sizing: border-box;
-                    -webkit-box-sizing: border-box;
-                    width: 100%;
-                    float: left;
-                    }
-                    #typeBox .switch-type-sub>div{
-                        width: 80px;
-                        margin-top: 5px;
-                        margin-left: 15px;
-                        float: left;
-                        font-size: 14px;
-                        cursor: pointer;
-                        color: #999;
-                    }
-                    #typeBox .switch-type-main:hover{color: #6BB130}
-                    #typeBox .switch-type-sub>div:hover{color: #6BB130;}
+                font-size: 14px;
+                cursor: pointer;
+                color: #999;
+                text-align: center;
+            }
+            #switchBox .switch-trade-elem:hover{color: #6BB130}
 
-    #typeBox .type-follow{
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        width: 100%;
-        margin-top: 20px;
-        overflow: hidden;
-        border-left: 8px solid #6BB130;
-        }
-        #typeBox .follow-desc{
-            padding-left: 5px;
-            float: left;
-        }
-        #typeBox .follow-desc>span{
-            margin: 0 2px;
-            color: #333;
-            font-weight: 900;
-        }
-        #typeBox .type-follow>button{
-            float: right;
-            padding: 0 10px;
-        }
 #actionBox{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -484,4 +442,4 @@
                 #rankBox .rank-elem:hover .user-follow{
                     display: block;
                 }
- 
+     

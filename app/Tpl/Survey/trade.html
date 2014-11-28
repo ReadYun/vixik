@@ -1,24 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
 <head>
-    <include file="Public:meta" title="{$target} | 维新调研 · 倾听观点，发现价值"/>
-    <link rel="stylesheet" href="__JMVC__/style/survey.type.css" type="text/css"/>
-    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.type.js"></script>
+    <include file="Public:meta" title="{$trade_name} | 维新调研 · 倾听观点，发现价值"/>
+    <link rel="stylesheet" href="__JMVC__/style/survey.trade.css" type="text/css"/>
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.trade.js"></script>
 </head>
 <body>
     <div id="Header">
         <include file="Public:topBar" survey="current" nav-type="main" need-login="0"/>
     </div>
-    <div id="Main" data-type="{$type}" data-mode="{$mode}">
+    <div id="Main" data-trade="{$trade_code}" data-mode="{$mode}">
         <div id="mainLeft">
             <div id="surveyHeader">
-                <div class="sh-main">{$name}</div>
+                <div class="sh-main">{$trade_name}</div>
                 <div class="sh-sub">
-                    <div class="sv-type-sub">
-                        <div class="st-sub all" data-type="{$type_code}">全部调查</div>
-                        <volist name="stype" id="st">
-                            <div class="st-sub" data-type="{$st.survey_type_sub_code}">{$st.survey_type_sub_name}</div>
-                        </volist>
+                    <div class="sv-trade-sub">
+                        <div class="sv-trade-name">{$trade_name}</div>
+                        <div class="sv-trade-follow">
+                            <button class="vkbutton vbtn-border vbtn-default">关注</button>
+                            <div class="follow-desc"><span>892839</span>人关注此行业调查</div>
+                        </div>
                     </div>
                     <div class="sv-list-nav">
                         <ul class="nav nav-tabs">
@@ -38,27 +39,12 @@
             </div>
         </div>
         <div id="mainRight">
-            <div id="typeBox">
-                <div class="switch-type dropdown">
-                    <button class="vkbutton vbtn-border vbtn-default dropdown-toggle large" data-toggle="dropdown">查看其他类型调查</button>
-                    <div class="switch-content dropdown-menu pull-right tabbable" role="menu" aria-labelledby="dLabel">
-                        <volist name="survey_type" id="st">
-                        <div class="switch-type-elem">
-                            <div class="switch-type-main switch-type-ele" data-type="{$st.survey_type_code}">{$st.survey_type_name}</div>
-                            <div class="switch-type-sub">
-                                <volist name="survey_type_sub" id="sts">
-                                    <eq name="st.survey_type_code" value="$sts.survey_type_code">
-                                    <div class="sts-elem switch-type-ele" data-type="{$sts.survey_type_sub_code}">{$sts.survey_type_sub_name}</div>
-                                    </eq>
-                                </volist>
-                            </div>
-                        </div>
-                        </volist> 
-                    </div>
-                </div>
-                <div class="type-follow">
-                    <div class="follow-desc"><span>892839</span>人关注此类调查</div>
-                    <button class="vkbutton vbtn-border vbtn-default">关注</button>
+            <div id="switchBox" class="dropdown">
+                <button class="vkbutton vbtn-border vbtn-default dropdown-toggle large" data-toggle="dropdown">查看其他行业调查</button>
+                <div class="switch-content dropdown-menu pull-right tabbable" role="menu" aria-labelledby="dLabel">
+                    <volist name="survey_trade" id="st">
+                    <div class="switch-trade-elem" data-trade="{$st.survey_trade_code}">{$st.survey_trade_name}</div>
+                    </volist> 
                 </div>
             </div>
             <div id="actionBox">
@@ -67,7 +53,7 @@
                         <div class="action-title">已发布调查数量</div>
                         <div class="action-value">1232345</div>
                     </div>
-                    <div class="action-now"><button class="vkbutton vbtn-primary block" data-action="create">发布此类调查</button></div>
+                    <div class="action-now"><button class="vkbutton vbtn-primary block" data-action="create">发布此行业调查</button></div>
                 </div>
                 <span></span>
                 <div class="action-box">
@@ -75,7 +61,7 @@
                         <div class="action-title">已参与调查人数</div>
                         <div class="action-value">8878797</div>
                     </div>
-                    <div class="action-now"><button class="vkbutton vbtn-primary block" data-action="answer">参与此类调查</button></div>
+                    <div class="action-now"><button class="vkbutton vbtn-primary block" data-action="answer">参与此行业调查</button></div>
                 </div>
             </div>
             <div id="typeSearch" class="st-box-elem">
@@ -132,8 +118,6 @@
             </div>
         </div>
     </div>
-    <div id="Footer">
-        <include file="Public:footer" type="main"/>
-    </div>
+    <div id="Footer"><include file="Public:footer" type="main"/></div>
 </body>
 </html>

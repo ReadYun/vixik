@@ -22,9 +22,10 @@ define('APP_PATH'   ,'./app/'   ) ;  // 定义项目路径
 define('APP_DEBUG'  ,true       ) ;  // 开启调试模式
 
 // 项目常量定义
-define('ROOT'       ,'./'              ) ;  // 定义网站根路径
+// define('ROOT'       ,'http://readyun.gicp.net') ;  // 定义网站根路径（花生壳）
+define('ROOT'       ,'./'              ) ;  // 定义网站根路径（本地）
 define('VIXIK'      ,ROOT.'vixik/'     ) ;  // 系统核心类库目录
-define('VK_JMVC'    ,ROOT.'jmvc/'      ) ;  // VixiK前端管理JMVC目录
+define('VK_JMVC'    ,VIXIK.'jmvc/'     ) ;  // VixiK前端管理JMVC目录
 define('VK_PUBLIC'  ,VK_JMVC.'public/' ) ;  // VixiK公共目录
 define('VK_PUB_IMG' ,VK_PUBLIC.'image/') ;  // VixiK公共图片目录
 
@@ -54,6 +55,7 @@ define('TB_BAS_PROP_DET_RELATION'                ,'BasPropDetRelation'          
 define('TB_DET_USER_PROP'                        ,'DetUserProp'                    ) ;  // 用户属性配置表
 define('TB_DET_USER_TYPE'                        ,'DetUserType'                    ) ;  // 用户类型维表
 define('TB_DET_USER_SEX'                         ,'DetUserSex'                     ) ;  // 用户性别维表
+define('TB_DET_USER_AGE'                         ,'DetUserAge'                     ) ;  // 用户年龄维表
 define('TB_DET_USER_CAREER'                      ,'DetUserCareer'                  ) ;  // 用户职业维表
 define('TB_DET_INDUSTRY_CLASS'                   ,'DetIndustryClass'               ) ;  // 行业大类维表
 define('TB_DET_INDUSTRY_CLASS_SUB'               ,'DetIndustryClassSub'            ) ;  // 行业小类维表
@@ -66,10 +68,12 @@ define('TB_DET_USER_STATURE'                     ,'DetUserStature'              
 define('TB_DET_USER_HOBBY'                       ,'DetUserHobby'                   ) ;  // 用户性格类型维表
 define('TB_DET_AREA_PROVINCE'                    ,'DetAreaProvince'                ) ;  // 省级地域维表
 define('TB_DET_AREA_CITY'                        ,'DetAreaCity'                    ) ;  // 城市地域维表
+define('TB_DET_AREA_MAP'                         ,'DetAreaMap'                     ) ;  // 城市地域总维表
 define('TB_DET_SURVEY_TYPE'                      ,'DetSurveyType'                  ) ;  // 调查类型
 define('TB_DET_SURVEY_TYPE_SUB'                  ,'DetSurveyTypeSub'               ) ;  // 调查子类型
 define('TB_DET_SURVEY_CLASS'                     ,'DetSurveyClass'                 ) ;  // 调查大类
 define('TB_DET_SURVEY_CLASS_SUB'                 ,'DetSurveyClassSub'              ) ;  // 调查小类
+define('TB_DET_SURVEY_TRADE'                     ,'DetSurveyTrade'                 ) ;  // 调查行业分类
 define('TB_DET_SURVEY_STATE'                     ,'DetSurveyState'                 ) ;  // 调查类型维表
 define('TB_DET_SURVEY_RECOMM_TYPE'               ,'DetSurveyRecommType'            ) ;  // 调查推荐类型
 define('TB_DET_QUESTION_CLASS'                   ,'DetQuestionClass'               ) ;  // 问题类型
@@ -90,6 +94,7 @@ define('TB_DET_USER_TYPE_SURVEY_RECOMM_RELATION' ,'DetUserTypeSurveyRecommRelati
 
 // 接口表常量定义
 define('TB_API_PARAM_CHECK_CONFIG'               ,'apiParamCheckConfig'            ) ;  // 接口参数校验规则
+define('TB_SYS_PAGE_PATH_CONFIG'                 ,'sysPagePathConfig'              ) ;  // 页面路径信息配置
 
 // 加载框架入口文件
 require ('./system/ThinkPHP.php') ;

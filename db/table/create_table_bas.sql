@@ -49,13 +49,14 @@ create table tb_bas_user_info
     interest_prize     varchar(32)   ,#感兴趣奖品类型
     primary key(user_code)
 ) ;
-create index idx_bas_user_info__user_code     on tb_bas_user_info(user_code) ;
-create index idx_bas_user_info__user_name     on tb_bas_user_info(user_name) ;
-create index idx_bas_user_info__user_age      on tb_bas_user_info(user_age) ;
-create index idx_bas_user_info__area_province on tb_bas_user_info(area_province) ;
-create index idx_bas_user_info__area_city     on tb_bas_user_info(area_city) ;
-create index idx_bas_user_info__user_edu      on tb_bas_user_info(user_edu) ;
-create index idx_bas_user_info__user_career   on tb_bas_user_info(user_career) ;
+create index idx_bas_user_info__user_code        on tb_bas_user_info(user_code) ;
+create index idx_bas_user_info__user_name        on tb_bas_user_info(user_name) ;
+create index idx_bas_user_info__user_age         on tb_bas_user_info(user_age) ;
+create index idx_bas_user_info__user_age_section on tb_bas_user_info(user_age_section) ;
+create index idx_bas_user_info__area_province    on tb_bas_user_info(area_province) ;
+create index idx_bas_user_info__area_city        on tb_bas_user_info(area_city) ;
+create index idx_bas_user_info__user_edu         on tb_bas_user_info(user_edu) ;
+create index idx_bas_user_info__user_career      on tb_bas_user_info(user_career) ;
 
 /********用户扩展信息********/
 drop table if exists tb_bas_user_extend_info ;
@@ -150,9 +151,10 @@ create table tb_bas_survey_info
     survey_name        varchar(64)       ,#调查名称
     survey_desc        varchar(256)      ,#调查说明
 	  survey_tag         varchar(128)      ,#调查标签
-    survey_type        integer           ,#调查类型
-    survey_type_sub    integer           ,#调查小类
-    survey_class       integer           ,#调查大类
+    survey_type        integer           ,#调查归属大类
+    survey_type_sub    integer           ,#调查归属小类
+    survey_class       integer           ,#调查分类（功能待定）
+    survey_trade       integer           ,#调查行业
     survey_state       integer           ,#调查状态
     create_step        integer           ,#创建阶段(0:完成，1:阶段一，2:阶段二，....)
     user_code          integer           ,#用户编码
@@ -161,6 +163,8 @@ create table tb_bas_survey_info
     is_template        integer           ,#是否设为模板(1:是，0:否)
     recomm_type        integer           ,#推荐标志(0:不推荐，1:系统推荐，2:自定义推荐)
     recomm_grade       integer           ,#调查推荐级别
+  	end_type           integer           ,#结束方式
+  	end_value          integer           ,#结束方式对应值	
     create_time        datetime          ,#调查创建时间
     state_time         datetime          ,#调查状态更新时间
     start_time         datetime          ,#调查活动开始时间

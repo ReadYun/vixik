@@ -25,8 +25,6 @@ steal('init.js')
             coins$      : {}  ,// 金币计算对象
             user$       : {}  ,// 用户信息
             info$       : {}  ,// 调查基本信息
-            question$   : {}  ,// 调查题目信息
-            recommend$  : {}  ,// 自定义推荐设置信息
             draft$      : {}  ,// 数据收集标志位
             collect$    : {}  ,// 数据收集标志位
         }
@@ -42,29 +40,40 @@ steal('init.js')
                 type    : 'post',
                 url     : __API__,                                                  
                 data    : {api:'user_action_cfg_select', action:$.toJSON([{code:1003},{code:1004},{code:1005}])},
-                async   : false,
                 success : function(data$){
                     if(data$.status){
                         $this.coins$.sv_create = parseInt(data$.data['1003'].user_coins.value) ;  // 创建调查
                         $this.coins$.qt_add    = parseInt(data$.data['1004'].user_coins.value) ;  // 增加题目
                         $this.coins$.sv_recomm = parseInt(data$.data['1005'].user_coins.value) ;  // 调查推荐
+                        $this.coins_cnt() ;
                     }
                 }
             });
 
             // 如果是修改调查页面，初始化调查相关信息
-            if(this.survey_code){
+            if($this.survey_code){
                 $.ajax({
                     type    : 'post',
                     url     : __API__,
-                    data    : {api:'survey_info_find', survey_code:$this.survey_code},
-                    async   : false,
+                    data    : {api:'survey_info_find', survey_code:$this.survey_code, is_base: 1},
                     success : function(data$){
                         // 取调查相关信息成功，更新模型并匹配页面数据
                         if(data$.status){
-                            $this.info$      = data$.data.info ;
-                            $this.question$  = data$.data.question ;
-                            $this.recommend$ = data$.data.recommend ;
+                            if(data$.data.info){
+                                $this.info$ = data$.data.info ;
+                                $this.trigger('sv_info') ;
+                            }
+
+                            if(data$.data.question){
+                                $this.question$ = data$.data.question ;
+                                $this.trigger('sv_question') ;
+                            }
+
+                            if(data$.data.recommend){
+                                $this.recommend$ = data$.data.recommend ;
+                                $this.trigger('sv_recommend') ;
+                            }
+
 
                             // 初始化调查名称默认值
                             if($this.info$.survey_name == '未命名'){
@@ -98,10 +107,26 @@ steal('init.js')
         },
 
         // 页面元素定位与提示刷新
-        location : function($target){
-            if($target){
-                this.$active = $target ;
-                this.trigger('active') ;
+        elem_refresh : function($target, type){
+            switch(type){
+                case 'active' :
+                    this.$active = $target ;
+                    this.trigger('active') ;
+                    break ;
+
+                case 'location' :
+                    this.$location = $target ;
+                    this.trigger('location') ;
+                    break ;
+
+                default :
+                    if($target){
+                        this.$active = this.$location = $target ;
+
+                        this.trigger('active') ;
+                        this.trigger('location') ;
+                    }
+                    break ;
             }
         },
 
@@ -115,7 +140,6 @@ steal('init.js')
                     type    : 'post',
                     url     : __API__,      
                     data    : {api:'user_info_find', user_code:$this.user_code},  // 用户编码
-                    async   : false,                  // 异步加载
                     success : function(data$){
                         if(data$.status){
                             $this.coins$.user_coins = parseInt(data$.data.user_coins) ;    // 用户当前金币
@@ -141,7 +165,6 @@ steal('init.js')
                 type    : 'post',
                 url     : __API__,                                                  
                 data    : {api:'user_action_cfg_select', action_code:action_code},
-                async   : true,
                 success : function(data$){
                     if(data$.status){
                         $this.coins$[action_key] = parseInt(data$.data.user_coins.value) ;
@@ -168,7 +191,7 @@ steal('init.js')
             }else{
                 sv_recomm = 0 ;
             }
-
+            
             coins$.coins_publish = coins$.sv_create + coins$.qt_add * this.qt_num + sv_recomm ;  // 计算已使用金币（发布所需金币）
             coins$.coins_surplus = coins$.user_coins - coins$.coins_publish ;                    // 计算剩余金币
 

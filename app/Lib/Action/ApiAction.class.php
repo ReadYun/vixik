@@ -1379,52 +1379,44 @@ class ApiAction extends Action{
     */
     public function test(){
 
-    $survey_code = 10000429 ;
+    $survey_code = 10000451 ;
 
-    $info = array(
-        'survey_name' => 'hahaha',
-        'survey_class' => '',
-        'survey_type' => '',
-        'survey_type_sub' => '',
-        'survey_tag' => array('dsaffda', '打发打发', '234dfjafj999')
-        ) ;
+    $survey = M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> find() ;
+    $data['survey_state'] = $survey['survey_state'] ;
 
-            // 调查标签处理
-            if($info['survey_tag']){
-                M(TB_BAS_SURVEY_TAG) -> where("survey_code = '$survey_code'") -> delete() ;
+    if($survey['survey_state'] == 3){
+        switch($survey['end_type']){
+            // 按人数结束
+            case 1 :
+                // 统计如已参与调查人数大于（或等于）设定人数，活动结束
+                if(M(TB_BAS_SURVEY_ACTION) -> where("survey_code = '$survey_code'") -> count() >= $survey['end_value']){
+                    $data['survey_state'] = 4 ;
+                    $data['state_time']   = $data['end_time'] = date('Y-m-d H:i:s') ;
 
-                for($t = 0; $t < count($info['survey_tag']); $t++){
-                    $data = array(
-                        'survey_tag' => $info['survey_tag'][$t], 'survey_code' => $survey_code, 'survey_type' => $info['survey_type'], 
-                        'survey_type_sub' => $info['survey_type_sub'], 'survey_class' => $info['survey_class'], 
-                    ) ;
-
-                    if(!insertTable(TB_BAS_SURVEY_TAG, $data)){
-                        return array (
-                            'data'   => false                   ,// 错误编码
-                            'info'   => "更新调查标签信息失败"  ,// 错误信息
-                            'status' => 0                       ,// 返回状态
-                        ) ;
-                    }
+                    M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> setField($data) ;
                 }
+                break ;
 
-                // 转换标签数组为为字符串格式
-                $info['survey_tag'] = implode('-', $info['survey_tag']) ;
-                // $info['survey_tag'] = 'faf123a,adslf' ; 
-                // dump($info['survey_tag']) ;
-            }
+            case 2 :  // 按日期结束
+                $now        = date('Y-m-d H:i:s') ;
+                $length_day = $survey['end_value'] ;
+                $start_time = $survey['start_time'] ;
+                $end_time   = date('Y-m-d H:i:s', strtotime("$start_time + $length_day day")) ;
 
-            dump($info) ;
+                // 计算如已当前时间超出（或等于）设定的结束时间，活动结束
+                if($now >= $end_time){
+                    $data['survey_state'] = 4 ;
+                    $data['state_time']   = $data['end_time'] = date('Y-m-d H:i:s') ;
 
-            if(!surveyInfoAlter($survey_code, $info)){
-                return array (
-                    'data'   => false                   ,// 错误编码
-                    'info'   => "更新调查基本信息失败"  ,// 错误信息
-                    'status' => 0                       ,// 返回状态
-                ) ;
-            }
-
+                    M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> setField($data) ;
+                }
+                break ;
+        }
     }
+
+    return $data['survey_state'] ;
+
+    }   
 }
 
 ?>

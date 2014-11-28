@@ -16,17 +16,18 @@ insert into tb_sys_page_cfg values ('search/index',   '维新搜索', 'sub',  0, 0) 
 insert into tb_sys_page_cfg values ('user/recover',   '密码找回', 'sub',  0, 0) ;
 
 delete from tb_bas_prop_det_relation ;
-insert into tb_bas_prop_det_relation values('BasUserInfo','user_type','DetUserType','user_type_code','user_type_desc') ;
-insert into tb_bas_prop_det_relation values('BasUserInfo','area_province','DetAreaProvince','area_province_code','area_province_sname') ;
-insert into tb_bas_prop_det_relation values('BasUserInfo','area_city','DetAreaCity','area_city_code','area_city_name') ;
-insert into tb_bas_prop_det_relation values('BasUserInfo','user_sex','DetUserSex','user_sex_code','user_sex_desc') ;
-insert into tb_bas_prop_det_relation values('BasUserInfo','user_career','DetUserCareer','user_career_code','user_career_desc') ;
-insert into tb_bas_prop_det_relation values('BasUserInfo','user_edu','DetUserEdu','user_edu_code','user_edu_desc') ;
-insert into tb_bas_prop_det_relation values('BasUserAccout','user_level','DetUserLevel','user_level_value','user_level_desc') ;
-insert into tb_bas_prop_det_relation values('BasSurveyInfo','survey_type','DetSurveyType','survey_type_code','survey_type_desc') ;
-insert into tb_bas_prop_det_relation values('BasSurveyInfo','survey_class','DetSurveyClass','survey_class_code','survey_class_desc') ;
-insert into tb_bas_prop_det_relation values('BasSurveyInfo','survey_state','DetSurveyState','survey_state_code','survey_state_desc') ;
-insert into tb_bas_prop_det_relation values('BasSurveyInfo','recomm_type','DetSurveyRecommType','survey_type_code','survey_type_desc') ;
+insert into tb_bas_prop_det_relation values('user_type','BasUserInfo','user_type','DetUserType','user_type_code','user_type_desc') ;
+insert into tb_bas_prop_det_relation values('area_province','BasUserInfo','area_province','DetAreaProvince','area_province_code','area_province_sname') ;
+insert into tb_bas_prop_det_relation values('area_city','BasUserInfo','area_city','DetAreaCity','area_city_code','area_city_sname') ;
+insert into tb_bas_prop_det_relation values('user_sex','BasUserInfo','user_sex','DetUserSex','user_sex_code','user_sex_desc') ;
+insert into tb_bas_prop_det_relation values('user_career','BasUserInfo','user_career','DetUserCareer','user_career_code','user_career_desc') ;
+insert into tb_bas_prop_det_relation values('user_edu','BasUserInfo','user_edu','DetUserEdu','user_edu_code','user_edu_desc') ;
+insert into tb_bas_prop_det_relation values('user_age','BasUserInfo','user_age_section','DetUserAge','user_age_code','user_age_desc') ;
+insert into tb_bas_prop_det_relation values('user_level','BasUserAccout','user_level','DetUserLevel','user_level_value','user_level_desc') ;
+insert into tb_bas_prop_det_relation values('survey_type','BasSurveyInfo','survey_type','DetSurveyType','survey_type_code','survey_type_desc') ;
+insert into tb_bas_prop_det_relation values('survey_class','BasSurveyInfo','survey_class','DetSurveyClass','survey_class_code','survey_class_desc') ;
+insert into tb_bas_prop_det_relation values('survey_state','BasSurveyInfo','survey_state','DetSurveyState','survey_state_code','survey_state_desc') ;
+insert into tb_bas_prop_det_relation values('recomm_type','BasSurveyInfo','recomm_type','DetSurveyRecommType','survey_type_code','survey_type_desc') ;
 
 delete from tb_det_user_prop ;
 insert into tb_det_user_prop values ('area_province', '省份',        'BasUserInfo','DetAreaProvince','area_province_code', 'area_province_name') ;
@@ -234,6 +235,14 @@ insert into tb_det_user_income_section values(1021,'25000-29999元',25000,29999, 
 insert into tb_det_user_income_section values(1022,'30000-39999元',30000,39999, '20000元以上',    5) ;
 insert into tb_det_user_income_section values(1023,'40000-49999元',40000,49999, '20000元以上',    5) ;
 insert into tb_det_user_income_section values(1024,'50000元以上'  ,50000,999999,'20000元以上',    5) ;
+
+insert into tb_det_user_age values(1001,'15岁及以下',0, 15) ;
+insert into tb_det_user_age values(1002,'16岁-24岁', 16,24) ;
+insert into tb_det_user_age values(1003,'25岁-34岁', 25,34) ;
+insert into tb_det_user_age values(1004,'35岁-44岁', 35,44) ;
+insert into tb_det_user_age values(1005,'45岁-54岁', 45,54) ;
+insert into tb_det_user_age values(1006,'55岁-64岁', 55,64) ;
+insert into tb_det_user_age values(1007,'65岁及以上',65,99) ;
 
 delete from tb_det_user_character ;
 insert into tb_det_user_character values(1001,'温柔') ;

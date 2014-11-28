@@ -4,101 +4,197 @@
     <link rel="stylesheet" href="__JMVC__/style/public.topbar.css" type="text/css"/>
 </head>
 <body>
-    <div id="topNavWrapper">
-        <div id="topNav" data-logged-in="0" style="display:none">
-            <div class="nav-left">
-                <div class="nav-box [nav-type]">
-                    <div class="home [home]" title="首页"><a href="__COM__"><i class="icon-home"></i></a></div>
-                    <div class="[survey] main"><a href="__COM__/survey">调查中心</a></div>
-                    <div class="[brand] main"><a href="__COM__/brand">品牌专区</a></div>
-                    <div class="[shop] main"><a href="__COM__/shop">积分商城</a></div>
-                    <div class="[page] sub current"><a>[nav-name]</a></div>
-                </div>
-            </div>
-            <div class="nav-mid">
-                <div class="search-box [min-search]">
-                    <div class="min-search">
-                        <input id="minSearch" class="search-input" type="text" placeholder="搜索: 调查/问题/用户">
+    <div id="topBar" class="[nav-type]" data-nav="[nav-cur]" data-logged-in="0" style="display:none">
+        <div class="topbar-main">
+            <div class="topbar-main-wrap">
+                <div class="topbar-left">
+                    <a class="logo-box" href="{:U('/')}">
+                        <img class="logo-main" src="__JMVC__/public/image/logo/main.png">
+                        <img class="logo-sub"  src="__JMVC__/public/image/logo/sub.png">
+                    </a>
+                    <div class="search-box vkform">
+                        <input class="search-input vk-input green" type="text" placeholder="搜索: 调查/问题/用户/标签">
                         <div class="search-btn"><i class="icon-search"></i></div>
                     </div>
-                </div>
-            </div>
-            <div class="nav-user">
-                <div class="login-box">
-                    <ul>
-                        <li class="login" data-toggle="modal"><a class="login">登录</a></li>
-                        <li class="signup"><a class="regist" href="{:U('user/regist')}" target="_blank">注册</a></li>
-                    </ul>
-                </div>
-                <div class="user-box" data-href="{:U('/user')}">
-                    <div class="user-photo">
-                        <a class="img user-menu" data-toggle="dropdown">
-                            <i class="icon-user"></i>
-                            <img src="__JMVC__/public/image/user/user.jpg" style="display:none"/>
-                        </a>
-                        <ul class="user-menu dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
-                            <div class="nick"></div>
-                            <div class="accout card-box">
-                                <div class="accout-level">
-                                    <div class="value"></div>
-                                    <div class="title">等级</div>
-                                </div>
-                                <div class="accout-coins">
-                                    <div class="value"></div>
-                                    <div class="title">金币</div>
-                                </div>
-                            </div>
-                            <div class="stats card-box">
-                                <div class="sv-public">
-                                    <div class="value"></div>
-                                    <div class="title">已发布调查</div>
-                                </div>
-                                <div class="sv-answer">
-                                    <div class="value"></div>
-                                    <div class="title">已参与调查</div>
-                                </div>
-                            </div>
-                            <div class="action">
-                                <div class="visit" href="{:U('/user')}">访问</div>
-                                <div class="setting" href="{:U('/user')}">设置</div>
-                                <div class="exit">退出</div>
-                            </div>
-                        </ul>
+                    <div class="nav-box">
+                        <div class="home"><a href="__COM__">首页</a></div>
+                        <div class="survey"><a href="__COM__/survey">调查</a></div>
+                        <div class="brand"><a href="__COM__/brand">品牌</a></div>
+                        <div class="shop"><a href="__COM__/shop">积分</a></div>
                     </div>
                 </div>
-                <div class="action-box dropdown">
-                    <a class="start dropdown-toggle" data-toggle="dropdown">开始</a>
-                    <ul class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
-                        <li><a tabindex="-1" href="{:U('survey/answer')}">参与调查</a></li>
-                        <li><a tabindex="-1" href="{:U('survey/create')}">创建调查</a></li>
-                    </ul>
+                <div class="topbar-right">
+                    <div class="action-box dropdown">
+                        <a class="start dropdown-toggle" data-toggle="dropdown">开始</a>
+                        <ul class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
+                            <li><a tabindex="-1" href="{:U('survey/answer')}">参与调查</a></li>
+                            <li><a tabindex="-1" href="{:U('survey/create')}">创建调查</a></li>
+                        </ul>
+                    </div>
+                    <div class="user-box">
+                        <div class="login-signup vkform">
+                            <div class="signup-box dropdown">
+                                <div class="dropdown-toggle" data-toggle="dropdown">
+                                    <span>注册</span>
+                                    <div class="signuped">
+                                        <img class="" src="__JMVC__/public/image/user/user.jpg">
+                                        <div class="">欢迎您，<span class"user-name"></span></div>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+                                    <div class="dm-body vk-form before">
+                                        <div class="item-elem vf-elem">
+                                            <label title="用户名">用户名<i class="icon-ok"></i></label>
+                                            <div class="elem-form">
+                                                <input type="text" name="user_name" class="vk-input blue input-xlarge">
+                                            </div>
+                                            <div class="elem-hint">
+                                                <div class="hint-guide">请输入您常用的用户名，用于登录网站</div>
+                                                <div class="hint-warn">抱歉此用户名已经被别人使用，请选择其他用户名</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-elem vf-elem">
+                                            <label title="设置密码">设置密码<i class="icon-ok"></i></label>
+                                            <div class="elem-form">
+                                                <input type="password" name="user_pwd" class="vk-input blue input-xlarge">
+                                            </div>
+                                            <div class="elem-hint">
+                                                <div class="hint-guide">请输入6位以上字母和数字组合</div>
+                                                <div class="hint-warn">密码设置不符合要求，请重新设置</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-elem vf-elem">
+                                            <label title="确认密码">确认密码<i class="icon-ok"></i></label>
+                                            <div class="elem-form">
+                                                <input type="password" name="user_pwdd" class="vk-input blue input-xlarge">
+                                            </div>
+                                            <div class="elem-hint">
+                                                <div class="hint-guide">请再次输入一遍之前设置的密码</div>
+                                                <div class="hint-warn">两次输入密码不一致，请检查并重新输入</div>
+                                            </div>
+                                        </div>
+                                        <div class="item-elem vf-elem">
+                                            <label title="电子邮箱">电子邮箱<i class="icon-ok"></i></label>
+                                            <div class="elem-form">
+                                                <input type="text" name="user_email" class="vk-input blue input-xlarge">
+                                            </div>
+                                            <div class="elem-hint">
+                                                <div class="hint-guide">请输入您最常用的电子邮箱</div>
+                                                <div class="hint-warn">邮箱格式不符合要求，请重新输入</div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="si-submit vkbutton vbtn-primary large block">提交注册</button>
+                                    </div>
+                                    <div class="dm-body vk-form after">                                        
+                                        <div class="dm-recstep">推荐您现在去：</div>
+                                        <div class="dm-stepbtn">
+                                            <button class="vkbutton vbtn-border vbtn-primary large" href="{:U('user/index')}"> 
+                                                完善基本资料<br>获得大量经验和金币奖励
+                                            </button>
+                                            <button class="vkbutton vbtn-border vbtn-primary large" href="{:U('survey/answer')}">
+                                                参加一次调查<br>来感受参与调查的乐趣吧
+                                            </button>
+                                            <button class="vkbutton vbtn-border vbtn-primary large" href="{:U('survey/index')}">
+                                                逛逛调查中心<br>各种有趣的调查正在进行中
+                                            </button>
+                                        </div>
+                                        <div class="dm-close">知道了，但我想留在本页</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="login-box dropdown">
+                                <div class="dropdown-toggle" data-toggle="dropdown"><span>登录</span></div>
+                                <div class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+                                    <div class="dm-body">
+                                        <div class="dm-main">
+                                            <div class="form-box">
+                                                <div class="form-elem user-name">
+                                                    <label>用户名</label><input class="vk-input blue login-user" type="text">
+                                                </div>
+                                                <div class="form-elem user-password">
+                                                    <label>密码</label><input class="vk-input blue login-pswd" type="password">
+                                                </div>
+                                                <div class="form-warning"><div class="warning alert">用户名或密码错误，请重新输入</div></div>
+                                                <button type="button" class="vkbutton vbtn-primary large block">登 录</button>
+                                            </div>
+                                        </div>
+                                        <div class="dm-footer">
+                                            <a class="lg-forget">忘记密码</a><span>|</span><a class="lg-regist">注册新用户</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-info dropdown" data-href="{:U('/user')}">
+                            <div class="user-info-header">
+                                <div class="user-nick"><a href=""></a></div>
+                                <div class="user-photo user-menu" data-toggle="dropdown">
+                                    <img src="__JMVC__/public/image/user/user.jpg"/>
+                                </div>
+                            </div>
+                            <div class="user-info-menu dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
+                                <div class="accout card-box">
+                                    <div class="accout-level">
+                                        <div class="value"></div>
+                                        <div class="title">等级</div>
+                                    </div>
+                                    <div class="accout-coins">
+                                        <div class="value"></div>
+                                        <div class="title">金币</div>
+                                    </div>
+                                </div>
+                                <div class="stats card-box">
+                                    <div class="sv-public">
+                                        <div class="value"></div>
+                                        <div class="title">已发布调查</div>
+                                    </div>
+                                    <div class="sv-answer">
+                                        <div class="value"></div>
+                                        <div class="title">已参与调查</div>
+                                    </div>
+                                </div>
+                                <div class="action">
+                                    <div class="visit" href="{:U('/user/visit')}">访问</div>
+                                    <div class="setting" href="{:U('/user')}">管理</div>
+                                    <div class="exit">退出</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!----------用户登录窗口---------->
-    <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" style="display:none">
-        <div class="modal-header">
-            <i class="close icon-remove" data-dismiss="modal" aria-hidden="true"></i>
-            <h3 id="myModalLabel">用户登录</h3>
-        </div>
-        <div class="modal-body">
-            <div class="form-box">
-                <div class="form-elem user-nick">
-                    <label>用户名</label><input class="login-user" type="text">
-                </div>
-                <div class="form-elem user-password">
-                    <label>密码</label><input class="login-pswd" type="password">
-                </div>
-                <button type="button" class="vkbutton vbtn-vixik vbtn-pure btn-block">登 录</button>
+        <div class="topbar-sub">
+            <div class="topbar-left">
+                <div class="title-box">[page]</div>
             </div>
-            <div class="warning-box">
-                <div class="warning alert" style="display:block">用户名或密码错误，请重新输入</div>
+            <div class="topbar-right">
+                <ul class="path-box breadcrumb">
+                <?php 
+                for($i = 0; $i < count($path); $i++){
+                    if($path[$i]['active']){
+                        if($path[$i]['target']){
+                            echo "<li class='active'>".$path[$i]['path_name']."<span class='divider'>/</span>".$path[$i]['target']."</li>" ;
+                        }else{
+                            echo "<li class='active'>".$path[$i]['path_name']."</li>" ;
+                        }
+                    }else{
+                        echo "<li><a href='".$path[$i]['url']."'>".$path[$i]['path_name']."</a> <span class='divider'>/</span></li>" ;
+                    }
+                }
+                ?>
+                </ul>
+                <div class="search-box vkform">
+                    <input class="search-input vk-input green" type="text" placeholder="搜索: 调查/问题/用户/标签">
+                    <div class="search-btn"><i class="icon-search"></i></div>
+                </div>
+                <div class="nav-box">
+                    <div class="home"><a href="__COM__">首页</a></div>
+                    <div class="survey"><a href="__COM__/survey">调查</a></div>
+                    <div class="brand"><a href="__COM__/brand">品牌</a></div>
+                    <div class="shop"><a href="__COM__/shop">积分</a></div>
+                </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <a>忘记密码</a><span>|</span><a>注册新用户</a>
         </div>
     </div>
 </body>

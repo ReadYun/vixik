@@ -64,7 +64,7 @@ steal('init.js')
         survey_list : function(){
         	var list$,
                 $this = this,
-        	    $body = $('#surveyList .sv-list-body'),
+        	    $body = $('#surveyList .sv-list-body') ;
         	    page  = parseInt($body.children().size() / 10) + 1 ;  // 计算页数
 
         	$this.options.$button.text('更多调查加载中...') ;
@@ -115,7 +115,7 @@ steal('init.js')
      * 页面总控制器
      *
      **/
-    $.Controller('Survey.Type.Ctrl.Main', {
+    $.Controller('Survey.Trade.Ctrl.Main', {
         defaults : {
             models$     : {}                ,// 页面总模型
             $rankBox    : $('#rankBox')     ,// 活跃用户模块
@@ -152,22 +152,21 @@ steal('init.js')
             }) ;
         },
 
-        // 打开切换调查类型菜单
-        ".switch-type mouseover" : function(el){
+        // 鼠标进入用户头像打开用户信息菜单
+        "#switchBox mouseover" : function(el){
             el.addClass('open') ;
         },
 
-        // 关闭切换调查类型菜单
-        ".switch-type mouseout" : function(el){
+        "#switchBox mouseout" : function(el){
             el.removeClass('open') ;
         },
 
-        // 切换调查类型
-        ".switch-type-ele click" : function(el){
-            $.post(__API__, {api:'get_server_url', name:'survey/type'}, 
+        // 切换调查行业
+        ".switch-trade-elem click" : function(el){
+            $.post(__API__, {api:'get_server_url', name:'survey/trade'}, 
                 function(data$){
                     if(data$.status){
-                        window.location.href = data$.data + '?type=' + el.attr('data-type') ;
+                        window.location.href = data$.data + '?trade=' + el.attr('data-trade') ;
                     }
                 }
             ) ;
@@ -229,6 +228,6 @@ steal('init.js')
         },
     }) ;
 
-    $('#Main').survey_type_ctrl_main() ;
+    $('#Main').survey_trade_ctrl_main() ;
 }) ;
 

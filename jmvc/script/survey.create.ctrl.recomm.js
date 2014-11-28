@@ -15,7 +15,7 @@ steal('init.js')
      * 问卷推荐模块控制器
      *
      **/
-    $.Controller('Survey.Create.Ctrl.Recomm.Rule', {
+    $.Controller('Survey.Create.Ctrl.Recomm.Self', {
         defaults : {
             models$ : {}                               ,// 页面总模型
             $recomm : {}                               ,// 推荐模块总对象
@@ -29,25 +29,25 @@ steal('init.js')
     }, {
         init : function(){
             // 初始重置所有设置表单元素
-            this.options.$body.vkForm('init', {
-                reset : true,     // 顺便重置表单
+            // this.options.$body.vkForm('init', {
+            //     reset : true,     // 顺便重置表单
 
-                // 事件定义
-                event : {
-                    // 选中事件
-                    check : function(el){
-                        el.iCheck('check') ;  // 调用iCheck插件的check方法
-                    },
+            //     // 事件定义
+            //     event : {
+            //         // 选中事件
+            //         check : function(el){
+            //             el.iCheck('check') ;  // 调用iCheck插件的check方法
+            //         },
 
-                    // 取消选中事件
-                    uncheck : function(el){
-                        el.iCheck('uncheck') ;  // 调用iCheck插件的uncheck方法
-                    },
-                },
-            }) ;
+            //         // 取消选中事件
+            //         uncheck : function(el){
+            //             el.iCheck('uncheck') ;  // 调用iCheck插件的uncheck方法
+            //         },
+            //     },
+            // }) ;
 
             // 规则匹配
-            this.rule_fix() ;
+            // this.rule_fix() ;
         },
 
         // 规则匹配
@@ -237,12 +237,13 @@ steal('init.js')
         listensTo : ["recomm_reset", "data_collect"]
     }, {
         init : function(){
-            // 自定义推荐设置模块控制器
-            this.options.$recommRule.survey_create_ctrl_recomm_rule({
-                models$ : this.options.models$ ,
-                $recomm : this.element
-            }) ;
+            // // 自定义推荐设置模块控制器
+            // this.element.find('.recomm-self').survey_create_ctrl_recomm_self({
+            //     models$ : this.options.models$,
+            //     $recomm : this.element
+            // }) ;
 
+            // 已有数据匹配
             if(this.options.models$.info$){
                 var recomm_type = this.options.models$.info$.recomm_type ;
 
@@ -255,30 +256,43 @@ steal('init.js')
         },
 
         // 选择不同的推荐方式
-        "{$recommType} click" : function(el){
-            var recomm_type = el.attr('data-recomm'),
-                coins       = parseInt(el.find('.coins-value').text()) ;
+        ".recomm-main>.recomm-elem click" : function(el){
+            var type  = el.attr('data-rec'),
+                coins = parseInt(el.find('.re-value').text()) ;
 
-            this.options.models$.info$.recomm_type = recomm_type ;
+            if(!el.hasClass('ok')){
+                switch(type){
+                    // 不推荐
+                    case '0' :
+                        this.options.models$.info$.recomm_type = type ;
+                        break ;
 
-            if(coins > 0 && !el.hasClass('active')){
-                alert('提示：选择此项需要消耗' + coins + '金币') ;
-            }
+                    // 自定义推荐
+                    case '1' :
+                        alert('自定义推荐功能正在优化中。。先帮你自动推荐调查') ;
+                        this.options.models$.info$.recomm_type = 2 ;
+                        break ;
 
-            if(recomm_type == '2'){
-                this.options.$recommRule.modal() ;
-            }else{
+                    // 自定义推荐
+                    case '2' :
+                        if(confirm('提示：选择此项需要消耗' + coins + '金币')){
+                            this.options.models$.info$.recomm_type = type ;
+                        }
+                        break ;
+                }
+
                 this.recomm_reset() ;
             }
         },
 
         // 推荐模块重置
         recomm_reset : function(){
-            var recomm_type = this.options.models$.info$.recomm_type ;
+            var type = this.options.models$.info$.recomm_type ;
 
             // 推荐方式选择选项当前状态更新
-            this.options.$recommType.removeClass('active') ;
-            this.options.$recommType.filter('[data-recomm=' + recomm_type + ']').addClass('active') ;
+            this.element.attr('data-recomm', type)
+            .find('.recomm-elem').removeClass('ok')
+            .filter('[data-rec=' + type + ']').addClass('ok') ;
 
             // 数据模型更新
             this.options.models$.coins_cnt() ;
@@ -287,23 +301,25 @@ steal('init.js')
         // 这里的实际上就是数据校验
         data_collect : function(){
             if(this.options.models$.info$.recomm_type == null){
-                if(this.options.models$.collect$.check){
+                if(this.options.models$.collect$.state == 'submit'){
                     alert('请确定调查推荐方式') ;
-                    this.options.models$.location(this.element) ;
-                    this.options.models$.collect$.flag = false ;
 
+                    this.options.models$.collect$.flag = false ;
+                    this.options.models$.elem_refresh(this.element) ;
                     return false ;
                 }
             }else{
-                if(this.options.models$.info$.recomm_type > 1){
-                    if(!$.vkData('data_check_null', this.options.models$.recommend$).status){
-                        alert('自定义推荐规则设置不完整，请检查完善信息') ;
-                        this.options.models$.location(this.element) ;
-                        this.options.models$.collect$.flag = false ;
+                return true ;
+                // // 自定义推荐规则校验
+                // if(this.options.models$.info$.recomm_type > 1){
+                //     if(!$.vkData('data_check_null', this.options.models$.recommend$).status){
+                //         alert('自定义推荐规则设置不完整，请检查完善信息') ;
+                //         this.options.models$.location(this.element) ;
+                //         this.options.models$.collect$.flag = false ;
 
-                        return false ;
-                    }
-                }
+                //         return false ;
+                //     }
+                // }
             }
         }
     }) ;

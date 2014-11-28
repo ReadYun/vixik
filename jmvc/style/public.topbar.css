@@ -7,350 +7,620 @@
  * Copyright   : VixiK
  */
 
-#topNavWrapper {
+#topBar{
     width: 100%;
-    height: 35px;
-    position: relative ;
-    background: #333;
-}
-#topNav{
-    width: 100%;
-    height: 35px;
-    padding: 0;  
-    margin: 0;
-    background: #333;
+    background: #FFF;
     text-align: center;
     font: 19px "宋体",Tahoma;   
     color: #CCC;
-    z-index: 100;
-    overflow: visible;
-    position: fixed;
-    top: 0;
+    border-bottom: 1px solid #CCC;
+    background: #FFF;
+    z-index: 99;
     }
-    #topNav>div{
-        width: 33.33%;
-        min-width: 310px;
-        height: 100%;
-        float: left;
-    }
-    #topNav ul.dropdown-menu{
+    #topBar .dropdown-menu{
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         min-width: 0;
         padding: 0;
-        margin-top: 2.5px;
         border-radius: 0;
         box-shadow: none;
         -moz-box-shadow: none;
         -webkit-box-shadow: none;
     }
-    
-#topNav div.nav-box{
-    height: 100%;
+#topBar .topbar-left{
     float: left;
-    overflow: hidden;
     }
-    #topNav div.nav-box>div{
-        height: 23px;
-        padding: 6px;
-        margin-right: 1px;
+    #topBar .topbar-left>div, #topBar .topbar-left>a{
         float: left;
-        cursor: pointer;
-        }
-        #topNav div.nav-box>div a{
-            color: #FFF;
-            text-decoration:none;
-        }
-        #topNav div.nav-box>div:hover{
-            background: #6BB130;
-        }
-        #topNav div.nav-box>div:hover>a{
-            color: #FFF;
-        }
-    #topNav div.nav-box>div.current{
-        background: #6BB130;
-        }
-    #topNav div.nav-box>div.home{
-        width: 24px;
-        height: 100%;
-        background: #6BB130;
-        }
-        #topNav div.nav-box>div.home i{
-            color: #FFF;
-        }
-        #topNav div.nav-box>div.home:hover i{
-            color: #666;
-        }
-    #topNav div.nav-box>div.home.current{
-        background: #6BB130;
-        }
-        #topNav div.nav-box>div.home.current:hover i{
-            color: #FFF;
-        }
+    }
+#topBar .topbar-right{
+    float: right;
+    }
+    #topBar .topbar-right>div{
+        float: right;
+    }
 
-#topNav div.search-box{
-    height: 100%;
-    margin: 0 auto;
-    overflow: hidden;
-    }    
-    #topNav div.search-box>div{
-        width: 300px;
-        height: 25px;
-        margin: 4px auto;
-        border: 1px solid #999;
-        border-radius: 15px;
-        overflow: hidden;
+#topBar .topbar-main{
+    width: 100%;
+    height: 40px;
+    }
+    #topBar .topbar-main-wrap{
+        width: 960px;
+        height: 100%;
+        margin: 0 auto;
         position: relative;
         }
-        #topNav div.search-box input{
-            width: 260px;
-            height: 100%;
-            padding: 0 30px 0 10px;
-            float: left;
-            font: 17px "宋体",Tahoma;  
-            color: #999999;
-            background: none;
-            border: none;
-            border-radius: 15px 0 0 15px;
-        }
-        #topNav div.search-box input:focus{
-            color: #333333;
-            background: #FFF;
-            box-shadow: none;
-            -moz-box-shadow: none;
-            -webkit-box-shadow: none;
-        }
-        #topNav div.search-box div.search-btn{
-            width: 30px;
-            height: 100%;
+        #topBar .topbar-main-wrap .topbar-right{
             position: absolute;
-            top: 2px;
-            right: 1px;
+            right: 0;
         }
-         
-#topNav div.action-box{
-    height: 29px;
-    margin: 3px 29px 2px 0;
-    padding: 0;  
-    float: right;
-    background: #3399FF;
+        #topBar .topbar-main-wrap .topbar-left{
+            position: absolute;
+            left: 0;
+        }
+body.topbar-hover .topbar-main{
+    z-index: 100;
+    overflow: visible;
+    position: fixed;
+    top: 0;
+    border-bottom: 1px solid #CCC;
+    background: #FFF;
     }
-    #topNav div.action-box>a{
-        width: 70px;
-        padding: 3px 0;
+
+/* Logo设置 */
+#topBar .logo-box{
+    margin-right: 20px;
+    float: right;
+    color: #FFF;
+    }
+    #topBar .logo-box>img{
+        display: none;
+        height: 100%;
+    }
+    #topBar .logo-box>img.logo-main{
+        height: 50px;
+        margin-top: 18px;
+    }
+    #topBar .logo-box>img.logo-sub{
+        height: 30px;
+        margin-top: 5px;
+    }
+    #topBar.main .logo-box>img.logo-main{
+        display: block;
+    }
+    #topBar.sub .logo-box>img.logo-sub{
+        display: block;
+    }
+    body.topbar-hover #topBar.main img.logo-main{display: none;}
+    body.topbar-hover #topBar.main img.logo-sub{display: block;}
+
+/* 主导航栏 */
+#topBar .nav-box{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 40px;
+    overflow: hidden;
+    }
+    #topBar .nav-box>div{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        height: 100%;
+        padding-top: 5.5px;
+        margin-right: 20px;
         float: left;
-        font: 19px "宋体",Tahoma;
+        cursor: pointer;
+        border-top: 4px solid #FFF;
+        border-bottom: 4px solid #FFF;
+        }
+        #topBar .nav-box>div a{
+            display: inline;
+            width: 100%;
+            font: 19px "宋体",Tahoma;
+            color: #666;
+            text-decoration:none;
+        }
+        #topBar .nav-box>div:hover>a{
+            color: #6BB130;
+        }
+
+#topBar .topbar-main .nav-box{margin-left: 20px;}
+#topBar .topbar-sub .nav-box{margin-right: 47px;}
+
+/* 搜索模块 */
+#topBar .search-box{
+    margin-top: 3px;
+    overflow: hidden;
+    position: relative;
+    }
+    #topBar .search-box input{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 300px;
+        height: 30px;
+        padding: 0 30px 0 5px;
+        margin: 0;
+        float: left;
+        font: 12px "微软雅黑",Tahoma;
+        border-radius: 0;
+        line-height: 30px
+            border: 1px solid #CCC;
+        color: #999;
+    }
+    #topBar .search-box input:focus{
+        background: #FFF;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        color: #666;
+    }
+    #topBar .search-box .search-btn{
+        width: 30px;
+        height: 100%;
+        position: absolute;
+        top: 4px;
+        right: 1px;
+    }
+#topBar .topbar-main .search-box{
+    margin-top: 5px;
+    margin-right: 20px;    
+    }
+    #topBar .topbar-main .search-box input{
+        width: 290px
+
+    }
+
+/* 开始按钮 */
+#topBar .action-box>a{
+    display: block;
+    width: 80px;
+    height: 40px;
+    font: 19px "宋体",Tahoma;
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+    background: #6699FF;
+    line-height: 40px;
+    }
+    #topBar .action-box>.dropdown-menu{
+        width: 80px;
+        margin: 0;
+        background: #333;
+        border: 0;
+        border-top: 1px solid #FFF;
+    }
+    #topBar div.action-box li>a{
+        padding: 10px 1px;  
+        font: 12px "微软雅黑",Tahoma;
         color: #FFF;
+        background: #6699FF;
+    }
+    #topBar div.action-box li>a:hover{
+        color: #333;
+        background: #0099FF;
+    }
+    #topBar .action-box:hover{
+        cursor: pointer;
+    }
+
+/* 登录注册模块 */
+#topBar .login-signup{
+    width: 105px;
+    height: 100%;
+    padding: 0;
+    margin: 0 5px;
+    }
+    #topBar .login-signup>div{
+        box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        width: 50px;
+        height: 27px;
+        float: right;
+        cursor: pointer;
+        }
+        #topBar .login-signup .dropdown-toggle{
+            box-sizing:border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+            width: 100%;
+            height: 40px;
+            padding: 7px 0;
+            font: 12px "微软雅黑",Tahoma;
+            border: 1px solid #FFF;
+            border-top: none;
+            color: #6699FF;
+            }
+            #topBar .login-signup .dropdown-toggle>span, #topBar .login-signup .open>.dropdown-toggle:hover>span{
+                display: block;
+                box-sizing:border-box;
+                -moz-box-sizing:border-box;
+                -webkit-box-sizing:border-box;
+                width: 40px;
+                height: 26px;
+                margin: 0 auto;
+                border: 1px solid #FFF;
+                line-height: 24px;
+            }
+            #topBar .login-signup .dropdown-toggle:hover>span{
+                border-color: #6699FF;
+            }
+        #topBar .login-signup .open>.dropdown-toggle{
+            border-color:#6699FF;
+            border-bottom: none;
+        }
+    #topBar .login-signup .dropdown-menu{
+        box-sizing:border-box;
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        width: 367px;
+        margin: 13px 0 0 0;
+        border-left: 1px solid #6699FF;
+        border-right: 1px solid #6699FF;
+        border-bottom: 1px solid #6699FF;
+        border-top: none;
+    }
+    #topBar .login-signup>.signup-box .dropdown-menu{
+        width: 422px;
+    }
+    #topBar .login-signup .dropdown-menu>.dm-body{
+        width: 270px;
+        padding: 15px 0 15px 47px;
+        float: left;
+        border-top: 1px solid #6699FF;
+        overflow: hidden;
+        }
+        #topBar .dm-body .dm-main{
+            width: 100%;
+            overflow: hidden;
+        }
+        #topBar .dm-body .form-box{
+            width: 100%;
+            overflow: hidden;
+        }
+        #topBar .dm-body .form-box>.form-elem{
+            width: 100%;
+            margin: 5px 0;
+            overflow: hidden;
+            float: left;
+            }
+            #topBar .dm-body .form-box label{
+                margin-top: 4px;
+                font: 19px "宋体",Tahoma;
+                float: left;
+                color: #888;
+            }
+            #topBar .dm-body .form-box input{
+                width: 100%;
+                float: left;
+            }
+            #topBar .dm-body .form-box button{
+                margin-bottom: 15px;
+            }
+        #topBar .dm-body .form-box>.form-warning{
+            width: 100%;
+            height: 30px;
+            overflow: hidden;
+            float: left;
+            }
+            #topBar .dm-body .warning{
+                display: none;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                width: 100%;
+                padding: 5px;
+                float: left;
+                font: 12px "微软雅黑",Tahoma;
+                text-align: center;
+                border-radius: 0;
+            }
+        #topBar .dm-body .dm-footer{
+            width: 100%;
+            margin-top: 5px;
+            overflow: hidden;
+            }
+            #topBar .dm-body .dm-footer a{
+                font: 12px "微软雅黑",Tahoma;
+                color: #999;
+                cursor: pointer;
+                float: right;
+            }
+            #topBar .dm-body .dm-footer a:hover{
+                color: #666;
+            }
+            #topBar .dm-body .dm-footer span{
+                height: 5px;
+                padding: 0 5px;
+                float: right;
+            }
+    #topBar .login-signup>.signup-box .dropdown-menu>.dm-body{
+        width: 325px;
+        padding-top: 25px;
+        overflow: hidden;
+        }
+        #topBar .signup-box .dm-body .item-elem{
+            width: 100%;
+            margin-bottom: 5px;
+            overflow: hidden;
+            }
+            #topBar .signup-box .dm-body .item-elem>label{
+                float: left;
+                text-align: left;
+                color: #666;
+                font: 19px "宋体",Tahoma;
+                }
+                #topBar .signup-box .dm-body .item-elem>label>i{
+                    display: none;
+                    margin-left: 10px;
+                    color: #66CC66;
+                }
+            #topBar .signup-box .dm-body .item-elem input{
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                width: 100%;
+                height: 28px;
+                margin: 0;
+                float: left;
+            }
+            #topBar .signup-box .dm-body .item-elem .elem-hint{
+                width: 100%;
+                height: 18px;
+                margin-top: 2px;
+                float: left;
+                font: 12px "微软雅黑",Tahoma;
+                text-align: left;
+                opacity: 0.6;
+                }
+                #topBar .signup-box .dm-body .item-elem .hint-guide{
+                    display: none;
+                    color: orange;
+                }
+                #topBar .signup-box .dm-body .item-elem .hint-warn{
+                    display: none;
+                    color: red;
+                }
+                #topBar .signup-box .item-elem.guide .hint-guide{display:block;}
+                #topBar .signup-box .item-elem.warn   .hint-warn{display:block;}
+                #topBar .signup-box .item-elem.ok        label>i{display:inline;}
+        #topBar .signup-box .dm-body button{
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        #topBar .signup-box .dm-body>.dm-recstep{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100%;
+            margin-bottom: 5px;
+            text-align: left;
+            color: #999;
+            padding: 0;
+            }
+        #topBar .signup-box .dm-body button{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        #topBar .signup-box .dm-body .dm-close{
+            width: 100%;
+            margin: 10px 0;
+            color: #9F9F9F;
+            text-align: right;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        #topBar .signup-box .dm-body .dm-close:hover{
+            color: #666;
+        }
+        #topBar .login-signup.ed .signup-box.open{
+            width: 422px;
+            }
+            #topBar .login-signup .signuped{
+                display: none;
+                width: 100%;
+                background: #FFF;
+                overflow: hidden;
+                }
+                #topBar .signuped>img{
+                    width: 30px;
+                    height: 30px;
+                    padding-top: 5px;
+                    padding-right: 10px;
+                    float: right;
+                    border: none;
+                }
+                #topBar .signuped>div{
+                    display: none;
+                    width: 320px;
+                    padding-top: 10px;
+                    padding-left: 47px;
+                    float: left;
+                    font: 19px "宋体",Tahoma;
+                    text-align: left;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    color: #999;
+                    }
+                    #topBar .signuped>div>span{
+                        color: #6699FF;
+                    }
+                    #topBar .signuped>div:hover>span{
+                        text-decoration: underline;
+                    }
+                #topBar .open .signuped>div{
+                    display: inline;
+                }
+        #topBar .login-signup .signup-box .dm-body.after{
+            display: none; 
+            border: none;
+            padding-top: 5px;
+        }
+
+        #topBar .login-signup.ed .login-box{display: none;}
+        #topBar .login-signup.ed .signup-box .dm-body.before{display: none;}
+        #topBar .login-signup.ed .signup-box .dm-body.after{display: block;}
+        #topBar .login-signup.ed .signup-box .dropdown-toggle{padding-top: 0;}
+        #topBar .login-signup.ed .signup-box .dropdown-toggle>span{display: none;}
+        #topBar .login-signup.ed .signup-box .signuped{display: block;}
+            
+#topBar div.user-info{
+    display: none;
+    height: 100%;
+    float: right;
+    background: #FCFCFC;
+    margin-right: 10px;
+    }
+    #topBar .user-info>.user-info-header{
+        padding: 0 5px;
+        height: 100%;
+        overflow: hidden;
+    }
+    #topBar .user-info .user-nick{
+        display: none;
+        width: 145px;
+        height: 100%;
+        padding-top: 10px;
+        padding-left: 5px;
+        margin-right: 8px;
+        float: left;
+        overflow: hidden;
+        font: 14px "微软雅黑",Tahoma;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         text-decoration: none;
         text-align: center;
     }
-    #topNav div.action-box>ul.dropdown-menu{
-        width: 70px;
-        background: #333;
-        border: 0;
-        margin-top: 3px;
-        }
-        #topNav div.action-box li>a{
-            padding: 10px 1px;  
-            font: 12px "微软雅黑",Tahoma;
-            color: #FFF;
-            background: #3399FF;
-        }
-        #topNav div.action-box li>a:hover{
-            color: #333;
-        }
-#topNav div.action-box:hover{
-    cursor: pointer;
-}
-       
-#topNav div.login-box{
-    float: right;
-    overflow: hidden;
-    border-left: 1px solid #00CC66;
-    border-right: 1px solid #00CC66;
+    #topBar .user-info.open .user-nick{
+        display: block;
     }
-    #topNav div.login-box ul{
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
-    }
-    #topNav div.login-box ul li{
-        height: 35px;
-        padding: 0;
-        float: left;
-        display: inline;
-        cursor: pointer;
-        }
-        #topNav div.login-box ul li>a{
-            height: 19px;
-            padding: 8px;
-            float: left;
-            text-decoration: none;
-            font: 17px '宋体';
-            color: #00CC66;
-        }
-    #topNav div.login-box ul li:hover{
-        background-color: #00CC66;
-        }
-        #topNav div.login-box ul li:hover>a{
-            color: #000;
-        }
-            
-#topNav div.user-box{
-    display: none;
-    height: 100%;
-    padding: 0;  
-    margin: 0;
-    float: right;
-    }
-    #topNav div.user-box>div.user-photo{
+    #topBar .user-info .user-photo{
         width: 30px;
         height: 30px;
-        margin: 2.5px 20px;
+        margin-top: 5px;
         float: right;
         }
-        #topNav div.user-box>div.user-photo>a.img{
-            width: 100;
+        #topBar .user-info .user-photo>img{
+            width: 100%;
             height: 100%;
-            float: right;
-            }
-            #topNav div.user-box>div.user-photo img{
-                width: 100%;
-                height: 100%;
-            }
-            #topNav div.user-box>div.user-photo i{
-                font-size: 30px;
-                color: #999;
-            }
-        #topNav div.user-box ul.dropdown-menu{
+        }
+        #topBar .user-info .user-info-menu{
             width: 200px;
-            background: #FFF;
+            padding-top: 15px;
             margin: 0;
+            border: 0;
+            overflow: hidden;
+            float: left;
             }
-            #topNav div.user-box ul.dropdown-menu>div.nick{
-                width: 100%;
-                padding: 5px 0;
-                margin-bottom: 10px;
-                float: left;
-                overflow: hidden;
-                font-size: 17px;
-                color: #333;
-                border-bottom: 1px solid #CCC;
-            }
-            #topNav div.user-box div.card-box{
+            #topBar .user-info .card-box{
                 width: 100%;
                 margin-bottom: 10px;
                 float: left;
-                color: #666;
                 }
-                #topNav div.user-box div.card-box>div{
+                #topBar .user-info .card-box>div{
                     width: 50%;
                     padding: 2px 0;
                     margin: 0;
                     float: left;
                     text-align: center;
                     }
-                    #topNav div.user-box div.value{
+                    #topBar .user-info .value{
                         margin-bottom: 2px;
                         font-size: 23px;
                         font-weight: 900;
                         color: #666;
                     }
-                    #topNav div.user-box div.title{
+                    #topBar .user-info .title{
                         font: 12px "微软雅黑",Tahoma;
                         color: #BBB;
                     }
-            #topNav div.user-box div.action{
+            #topBar div.user-info div.action{
                 width: 100%;
+                margin-top: 5px;
                 float: left;
-                background: #3399FF;
+                background: #6699FF;
                 }
-                #topNav div.user-box div.action>div{
+                #topBar div.user-info div.action>div{
                     width: 33.33%;
                     padding: 7px 0;
                     float: left;
                     color: #FFF;
-                    font: 19px  "宋体",Tahoma;
+                    font: 19px "宋体",Tahoma;
                 }
-                #topNav div.user-box div.action>div:hover{
+                #topBar div.user-info div.action>div:hover{
                     cursor: pointer;
                     color: #333;
+                    background: #0099FF;
                 }
-#topNav .nav-user.logged div.user-box{display: block;}
-#topNav .nav-user.logged div.login-box{display: none;}
+            #topBar div.user-info>div{
+                border-right: 1px solid #FFF;
+                border-left: 1px solid #FFF;
+            }
+            #topBar div.user-info.open>div{                
+                border-right: 1px solid #6699FF;
+                border-left: 1px solid #6699FF;
+            }
+#topBar .user-box.logined div.user-info{display: block;}
+#topBar .user-box.logined div.login-signup{display: none;}
+  
 
-#loginModal{
-    width: 400px;
-    margin-left: -180px;
-    border-radius: 0;
+#topBar .topbar-sub{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 960px;
+    height: 45px;
+    padding: 5px 0;
+    margin: 0 auto;
     }
-    #loginModal div.modal-header{
-        font: 25px  "宋体",Tahoma;  
-        color: white;
-        background: #6BB130;
+    #topBar .topbar-sub .title-box{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        height: 40px;
+        padding: 5px 5px 5px 0;
+        overflow: hidden;
+        font: 27px "宋体",Tahoma;
+        text-align: left;
+        color: #666;
         }
-        #loginModal div.modal-header button{
+        #topBar .topbar-sub .title-box>i{
+            width: 40px;
+            height: 100%;
+            margin-right: 15px;
+            color: #777;
             overflow: hidden;
-            color: white;
         }
-    #loginModal div.modal-body{
-        min-width: 0;
-        padding: 0;
+    #topBar .topbar-sub .path-box{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        height: 100%;
+        margin: 0;
+        padding: 15px 0 0 0;
+        font: 12px "微软雅黑",Tahoma;
+        float: right;
+        background: none;
+        opacity: 0.5;
         }
-        #loginModal div.modal-body div.form-box{
-            width: 300px;
-            margin: 20px auto 0 auto;
+        #topBar .topbar-sub .path-box li{
+            max-width: 200px;
+            _width: expression((documentElement.clientWidth > 200) ? "200px" : "auto");
             overflow: hidden;
-            }
-            #loginModal div.modal-body div.form-box>div.form-elem{
-                width: 100%;
-                height: 30px;
-                margin: 15px 0;
-                }
-                #loginModal div.modal-body div.form-elem label{
-                    width: 60px;
-                    padding: 5px 0;  
-                    margin-right: 10px;
-                    float: left;
-                    text-align: left;
-                    font: 19px  "宋体",Tahoma;  
-                    color: #666666;
-                }
-                #loginModal div.modal-body div.form-elem input{
-                    width: 210px;
-                    float: right;
-                }
-                #loginModal div.modal-body div.form-elem.user-nick input{
-                    font: 17px  "宋体",Tahoma;  
-                }
-            #loginModal div.modal-body div.form-box>button{
-                margin: 30px 0;
-                font: 21px  "宋体",Tahoma;
-            }
-        #loginModal div.modal-body div.warning-box{
-            padding: 0;
-            margin: 0;
-            }
-            #loginModal div.modal-body div.warning-box>div.warning{
-                padding: 5px 10px;
-                margin: 0;
-                font: 17px  "宋体",Tahoma;  
-                text-align: center;
-                border-radius: 0;
-            }
-    #loginModal div.modal-footer{
-        padding: 10px;
-        opacity: 0.7;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-decoration: none;
         }
-        #loginModal div.modal-footer a{
-            padding: 5px;
-            font: 12px "微软雅黑",Tahoma;
-            color: #666;
-            cursor: pointer;
-        }
-        
-        
+    #topBar .topbar-sub .path-box:hover{
+        opacity: 0.8;
+    }
         
 /************************
  * 
@@ -358,9 +628,14 @@
  *
  ************************/
 
-div.hide{display: none}
-#topNav div.nav-box{display:block;}
-#topNav div.nav-box>div{display:none;}
-#topNav div.nav-box>div.home{display:block;}
-#topNav div.nav-box.main>div.main{display:block;}
-#topNav div.nav-box.sub>div.sub{display:block;}
+body.topbar-hover .topbar-sub{display: none;}
+body.topbar-hover #topBar.main .nav-box, body.topbar-hover #topBar.main .search-box{display: block;}
+
+#topBar .topbar-main .nav-box>.active, #topBar .topbar-main .nav-box>.active>a{color: #6BB130; border-top-color: #6BB130;}
+#topBar .topbar-sub .nav-box>.active, #topBar .topbar-sub .nav-box>.active>a{color: #6BB130; border-bottom-color: #6BB130;}
+
+#topBar.main .topbar-main .search-box, #topBar.main .topbar-main .nav-box{display:none;}
+#topBar.main .topbar-sub .way-box, #topBar.main .topbar-sub .title-box{display:none;}
+
+#topBar.sub .topbar-sub .nav-box, #topBar.sub .topbar-sub .search-box{display:none;}
+

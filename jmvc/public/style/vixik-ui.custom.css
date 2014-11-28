@@ -57,7 +57,7 @@ select>option{
     font-size: 12px;
     text-align: center;
     background: #E3E3E3;
-    border: 1px solid #E3E3E3;
+    border: 1px solid #D3D3D3;
 }
 .vkbutton:hover{
     cursor: pointer;
@@ -65,33 +65,33 @@ select>option{
 }
 
 .vkbutton.vbtn{
-    background: #E3E3E3;
-    border-color: #E3E3E3;
+    background: #D3D3D3;
+    border-color: #D3D3D3;
 }
 
 /******** 各种颜色样式 ********/
-.vkbutton.vbtn-primary{background: #3355FF; border-color: #3366FF; color: #FFF;}
-.vkbutton.vbtn-success{background: #009933; border-color: #00AA33; color: #FFF;}
-.vkbutton.vbtn-warning{background: #CC6600; border-color: #DD6600; color: #FFF;}
-.vkbutton.vbtn-danger {background: #DD3300; border-color: #FF3300; color: #FFF;}
+.vkbutton.vbtn-primary{background: #6699FF; border-color: #0099FF; color: #FFF;}
+.vkbutton.vbtn-success{background: #66CC66; border-color: #33CC66; color: #FFF;}
+.vkbutton.vbtn-warning{background: #FF9933; border-color: #FF9900; color: #FFF;}
+.vkbutton.vbtn-danger {background: #FF3333; border-color: #FF0033; color: #FFF;}
 .vkbutton.vbtn-royal  {background: #7700FF; border-color: #9900FF; color: #FFF;}
 .vkbutton.vbtn-inverse{background: #222222; border-color: #333333; color: #FFF;}
 .vkbutton.vbtn-vixik  {background: #6BB130; border-color: #6BB130; color: #FFF;}
 
-.vkbutton.vbtn-primary:hover{background: #3366FF; border-color: #3366FF; color: #FFF;}
-.vkbutton.vbtn-success:hover{background: #00AA33; border-color: #00AA33; color: #FFF;}
-.vkbutton.vbtn-warning:hover{background: #DD6600; border-color: #DD6600; color: #FFF;}
-.vkbutton.vbtn-danger:hover {background: #FF3300; border-color: #FF3300; color: #FFF;}
-.vkbutton.vbtn-royal:hover  {background: #9900FF; border-color: #9900FF; color: #FFF;}
-.vkbutton.vbtn-inverse:hover{background: #333333; border-color: #333333; color: #FFF;}
-.vkbutton.vbtn-vixik:hover  {background: #3BB130; border-color: #3BB130; color: #FFF;}
+.vkbutton.vbtn-primary:hover{background: #0099FF;}
+.vkbutton.vbtn-success:hover{background: #33CC66;}
+.vkbutton.vbtn-warning:hover{background: #FF9900;}
+.vkbutton.vbtn-danger:hover {background: #FF0033;}
+.vkbutton.vbtn-royal:hover  {background: #9900FF;}
+.vkbutton.vbtn-inverse:hover{background: #333333;}
+.vkbutton.vbtn-vixik:hover  {background: #3BB130;}
 
 
 /******** vbtn-border ********/
-.vkbutton.vbtn-border.vbtn-primary{color: #3355FF;}
-.vkbutton.vbtn-border.vbtn-success{color: #009933;}
-.vkbutton.vbtn-border.vbtn-warning{color: #CC6600;}
-.vkbutton.vbtn-border.vbtn-danger {color: #DD3300;}
+.vkbutton.vbtn-border.vbtn-primary{color: #6699FF;}
+.vkbutton.vbtn-border.vbtn-success{color: #66CC66;}
+.vkbutton.vbtn-border.vbtn-warning{color: #FF9933;}
+.vkbutton.vbtn-border.vbtn-danger {color: #FF0033;}
 .vkbutton.vbtn-border.vbtn-royal  {color: #7700FF;}
 .vkbutton.vbtn-border.vbtn-inverse{color: #222222;}
 .vkbutton.vbtn-border.vbtn-vixik  {color: #6BB130;}
@@ -101,13 +101,13 @@ select>option{
 .vkbutton.vbtn-border.active{color: #FFF;}
 
 /******** vbtn .active ********/
-.vkbutton.vbtn-primary.active{background: #3366FF; border-color: #3366FF;}
-.vkbutton.vbtn-success.active{background: #00AA33; border-color: #00AA33;}
-.vkbutton.vbtn-warning.active{background: #DD6600; border-color: #DD6600;}
-.vkbutton.vbtn-danger.active {background: #FF3300; border-color: #FF3300;}
-.vkbutton.vbtn-royal.active  {background: #9900FF; border-color: #9900FF;}
-.vkbutton.vbtn-inverse.active{background: #333333; border-color: #333333;}
-.vkbutton.vbtn-vixik.active  {background: #3BB130; border-color: #3BB130;}
+.vkbutton.vbtn-primary.active{background: #6699FF; border-color: #6699FF;}
+.vkbutton.vbtn-success.active{background: #66CC66; border-color: #66CC66;}
+.vkbutton.vbtn-warning.active{background: #FF9933; border-color: #FF9933;}
+.vkbutton.vbtn-danger.active {background: #FF0033; border-color: #FF0033;}
+.vkbutton.vbtn-royal.active  {background: #7700FF; border-color: #7700FF;}
+.vkbutton.vbtn-inverse.active{background: #222222; border-color: #222222;}
+.vkbutton.vbtn-vixik.active  {background: #6BB130; border-color: #6BB130;}
 
 /******** vbtn-block ********/
 .vkbutton.vbtn-block{
@@ -124,9 +124,9 @@ select>option{
 .vkbutton.vbtn-block.vbtn-inverse.active{color: #FFF;}
 
 /******** vbtn-default ********/
-.vkbutton.vbtn-default{color: #666; border-color: #CCC;}
-.vkbutton.vbtn-default:hover{background: #CCC; border-color: #CCC;}
-.vkbutton.vbtn-default.active{background: #CCC; border-color: #CCC;}
+.vkbutton.vbtn-default{color: #999; border-color: #D3D3D3;}
+.vkbutton.vbtn-default:hover{background: #D3D3D3; border-color: #D3D3D3;}
+.vkbutton.vbtn-default.active{background: #D3D3D3; border-color: #D3D3D3;}
 .vkbutton.vbtn-inverse{color: #FFF;}
 
 /******** vbtn-block ********/
@@ -142,19 +142,6 @@ select>option{
 .vkbutton.small {padding: 1px 5px; font-size:10px}
 .vkbutton.large {padding: 8px; font: 19px "宋体",Tahoma;}
 .vkbutton.xlarge{padding: 8px; font: 23px "宋体",Tahoma;}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -14,6 +14,7 @@ create table tb_sys_page_cfg
 drop table if exists tb_bas_prop_det_relation ;
 create table tb_bas_prop_det_relation
 (
+    prop_name         varchar(32)    ,#属性名称
     bas_table_name    varchar(64)    ,#基础表名
     bas_prop_name     varchar(32)    ,#基础表字段名
     det_table_name    varchar(64)    ,#维表表名
@@ -33,30 +34,6 @@ create table tb_det_user_prop
     prop_det_desc     varchar(32)     #属性对应维表字段描述
 ) ;
 
-/********用户类型维表********/
-drop table if exists tb_det_user_type ;
-create table tb_det_user_type
-(
-    user_type_code    integer        ,#用户类型编码
-    user_type_desc    varchar(16)     #用户类型描述
-) ;
-
-/********用户性别维表********/
-drop table if exists tb_det_user_sex ;
-create table tb_det_user_sex
-(
-    user_sex_code    integer        ,#用户性别编码
-    user_sex_desc    varchar(16)     #用户性别描述
-) ;
-
-/********用户职业维表********/
-drop table if exists tb_det_user_career ;
-create table tb_det_user_career
-(
-    user_career_code    integer        ,#用户职业编码
-    user_career_desc    varchar(32)     #用户职业描述
-) ;
-
 /********行业大类维表********/
 drop table if exists tb_det_industry_class ;
 create table tb_det_industry_class
@@ -64,6 +41,7 @@ create table tb_det_industry_class
     industry_class_code    integer        ,#行业大类编码
     industry_class_desc    varchar(32)     #行业大类描述
 ) ;
+create index tb_det_industry_class__industry_class_code on tb_det_industry_class(industry_class_code) ;
 
 /********行业小类维表********/
 drop table if exists tb_det_industry_class_sub ;
@@ -74,6 +52,35 @@ create table tb_det_industry_class_sub
     industry_class_code        integer        ,#行业大类编码
     industry_class_desc        varchar(32)     #行业大类描述
 ) ;
+create index tb_det_industry_class_sub__industry_class_sub_code on tb_det_industry_class_sub(industry_class_sub_code) ;
+
+/********用户类型维表********/
+drop table if exists tb_det_user_type ;
+create table tb_det_user_type
+(
+    user_type_code    integer        ,#用户类型编码
+    user_type_desc    varchar(16)     #用户类型描述
+) ;
+create index tb_det_user_type__user_type_code on tb_det_user_type(user_type_code) ;
+
+/********用户性别维表********/
+drop table if exists tb_det_user_sex ;
+create table tb_det_user_sex
+(
+    user_sex_code    integer        ,#用户性别编码
+    user_sex_desc    varchar(16)     #用户性别描述
+) ;
+create index idx_tb_det_user_sex__user_sex_code on tb_det_user_sex(user_sex_code) ;
+
+/********用户职业维表********/
+drop table if exists tb_det_user_career ;
+create table tb_det_user_career
+(
+    user_career_code    integer        ,#用户职业编码
+    user_career_desc    varchar(32)     #用户职业描述
+) ;
+create index idx_tb_det_user_career__user_career_code on tb_det_user_career(user_career_code) ;
+
 
 /********用户学历维表********/
 drop table if exists tb_det_user_edu ;
@@ -82,6 +89,7 @@ create table tb_det_user_edu
     user_edu_code    integer        ,#用户学历编码
     user_edu_desc    varchar(16)     #用户学历描述
 ) ;
+create index idx_tb_det_user_edu__user_edu_code on tb_det_user_edu(user_edu_code) ;
 
 /********用户收入分类维表********/
 drop table if exists tb_det_user_income ;
@@ -102,6 +110,19 @@ create table tb_det_user_income_section
     section_class_desc     varchar(32)    ,#收入区间大类描述
     section_class_code     integer         #收入区间大类编码
 ) ;
+create index idx_tb_det_user_income_section__income_section_code on tb_det_user_income_section(income_section_code) ;
+create index idx_tb_det_user_income_section__section_class_code on tb_det_user_income_section(section_class_code) ;
+
+/********用户年龄维表********/
+drop table if exists tb_det_user_age ;
+create table tb_det_user_age
+(
+    user_age_code    integer        ,#年龄编码
+    user_age_desc    varchar(32)    ,#年龄说明
+    user_age_lower   integer        ,#年龄下限
+    user_age_upper   integer         #年龄上限
+) ;
+create index idx_tb_det_user_age__user_age_code on tb_det_user_age(user_age_code) ;
 
 /********省级地域维表********/
 drop table if exists tb_det_area_province ;
@@ -123,6 +144,24 @@ create table tb_det_area_city
     area_city_name        varchar(32)    ,#城市地域名称
     area_province_code    integer         #省级地域编码
 ) ;
+
+/********地域总维表********/
+drop table if exists tb_det_area_map ;
+create table tb_det_area_map
+(
+    area_city_seq          integer        ,#城市地域编码序列
+    area_city_code         integer        ,#城市地域编码
+    area_city_name         varchar(32)    ,#城市地域名称
+    area_city_sname        varchar(32)    ,#城市地域简称
+    area_province_code     integer        ,#省级地域编码
+    area_province_name     varchar(32)    ,#省级地域名称
+    area_province_sname    varchar(32)    ,#省级地域简称
+    area_class_code        integer        ,#省级大区编码
+    area_class_name        varchar(32)    ,#省级大区名称
+) ;
+create index tb_det_area_map__area_city_seq      on tb_det_area_map(area_city_seq) ;
+create index tb_det_area_map__area_city_code     on tb_det_area_map(area_city_code) ;
+create index tb_det_area_map__area_province_code on tb_det_area_map(area_province_code) ;
 
 /********用户性格类型维表********/
 drop table if exists tb_det_user_character ;
@@ -164,6 +203,7 @@ create table tb_det_survey_type
     survey_type_name    varchar(16)    ,#调查类型名称
     survey_type_desc    varchar(128)    #调查类型描述
 ) ;
+create index tb_det_survey_type__survey_type_code on tb_det_survey_type(survey_type_code) ;
 
 /********调查子类型********/
 drop table if exists tb_det_survey_type_sub ;
@@ -174,6 +214,17 @@ create table tb_det_survey_type_sub
     survey_type_sub_code    integer        ,#调查小类编码
     survey_type_sub_name    varchar(16)     #调查小类描述
 ) ;
+create index tb_det_survey_type_sub__survey_type_code on tb_det_survey_type_sub(survey_type_code) ;
+
+/********调查行业分类********/
+drop table if exists tb_det_survey_trade ;
+create table tb_det_survey_trade
+(
+    survey_trade_code    integer        ,#调查行业分类编码
+    survey_trade_name    varchar(16)    ,#调查行业分类名称
+    survey_type_desc     varchar(128)    #调查行业分类描述
+) ;
+create index tb_det_survey_trade__survey_trade_code on tb_det_survey_trade(survey_trade_code) ;
 
 /********调查大类********/
 drop table if exists tb_det_survey_class ;
@@ -182,6 +233,7 @@ create table tb_det_survey_class
     survey_class_code    integer        ,#调查大类编码
     survey_class_desc    varchar(16)     #调查大类描述
 ) ;
+create index tb_det_survey_class__survey_class_code on tb_det_survey_class(survey_class_code) ;
 
 /********调查小类********/
 drop table if exists tb_det_survey_class_sub ;
@@ -191,6 +243,7 @@ create table tb_det_survey_class_sub
     survey_class_sub_desc    varchar(16)    ,#调查小类描述
     survey_class_code        varchar(8)      #对应调查大型编码
 ) ;
+create index tb_det_survey_class_sub__survey_class_sub_code on tb_det_survey_class_sub(survey_class_sub_code) ;
 
 /********调查状态********/
 drop table if exists tb_det_survey_state ;

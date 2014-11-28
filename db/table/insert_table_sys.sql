@@ -14,12 +14,30 @@ insert tb_sys_date_add_type values(7,'MONTH') ;
 insert tb_sys_date_add_type values(8,'QUARTER') ;
 insert tb_sys_date_add_type values(9,'YEAR') ;
 
+/********页面路径信息配置********/
+delete from tb_sys_page_path_config ;
+insert into tb_sys_page_path_config values(100,'首页',    '/index',        null,null, null, null, null) ;
+insert into tb_sys_page_path_config values(200,'用户',    '/user',         100, null, null, null, null) ;
+insert into tb_sys_page_path_config values(300,'调查',    '/survey',       100, null, null, null, null) ;
+insert into tb_sys_page_path_config values(400,'品牌',    '/user',         100, null, null, null, null) ;
+insert into tb_sys_page_path_config values(500,'积分',    '/survey',       100, null, null, null, null) ;
+insert into tb_sys_page_path_config values(201,'用户访问','user/visit',    200, 'code', 'TB_BAS_USER_INFO', 'user_code', 'user_nick') ;
+insert into tb_sys_page_path_config values(202,'个人中心','user/index',    200, null,   'TB_BAS_USER_INFO', 'user_code', 'user_nick') ;
+insert into tb_sys_page_path_config values(301,'调查中心','survey/index',  300, null, null, null, null) ;
+insert into tb_sys_page_path_config values(302,'调查访问','survey/visit',  300, 'code', 'TB_BAS_SURVEY_INFO', 'survey_code', 'survey_name') ;
+insert into tb_sys_page_path_config values(303,'调查创建','survey/create', 300, 'code', 'TB_BAS_SURVEY_INFO', 'survey_code', 'survey_name') ;
+insert into tb_sys_page_path_config values(304,'调查预览','survey/answer', 300, 'code', 'TB_BAS_SURVEY_INFO', 'survey_code', 'survey_name') ;
+insert into tb_sys_page_path_config values(305,'调查参与','survey/answer', 300, 'code', 'TB_BAS_SURVEY_INFO', 'survey_code', 'survey_name') ;
+insert into tb_sys_page_path_config values(306,'调查分析','survey/analyse',300, 'code', 'TB_BAS_SURVEY_INFO', 'survey_code', 'survey_name') ;
+insert into tb_sys_page_path_config values(307,'调查分类','survey/type',   300, 'code', 'TB_DET_SURVEY_TYPE', 'survey_type_code', 'survey_type_name') ;
+insert into tb_sys_page_path_config values(308,'调查行业','survey/trade',  300, 'code', 'TB_DET_SURVEY_TRADe','survey_trade_code', 'survey_trade_name') ;
+
 /********接口参数校验规则********/
 delete from tb_api_param_check_config ;
 insert tb_api_param_check_config values('api_user_create','user_name','string',1) ;
 insert tb_api_param_check_config values('api_user_create','user_pwd','md5',1) ;
 insert tb_api_param_check_config values('api_user_create','user_email','string',1) ;
-insert tb_api_param_check_config values('api_user_create','create_ip','string',1) ;
+insert tb_api_param_check_config values('api_user_create','create_ip','string',0) ;
 insert tb_api_param_check_config values('api_user_count','condition_key','json',0) ;
 insert tb_api_param_check_config values('api_user_count','condition_sql','json',0) ;
 insert tb_api_param_check_config values('api_user_info_find','user_code','number',1) ;
@@ -51,6 +69,7 @@ insert tb_api_param_check_config values('api_survey_info_update','sv_info','json
 insert tb_api_param_check_config values('api_survey_info_update','sv_item','json',0) ;
 insert tb_api_param_check_config values('api_survey_info_find','survey_code','number',1) ;
 insert tb_api_param_check_config values('api_survey_info_find','user_code','number',0) ;
+insert tb_api_param_check_config values('api_survey_info_find','is_base','number',0) ;
 insert tb_api_param_check_config values('api_survey_type_list_select','type','string',0) ;
 insert tb_api_param_check_config values('api_survey_type_list_select','mode','string',0) ;
 insert tb_api_param_check_config values('api_survey_type_list_select','page','number',0) ;
@@ -76,15 +95,20 @@ insert tb_api_param_check_config values('api_survey_recomm_create','rule','json'
 insert tb_api_param_check_config values('api_follow_list_select','type','string',1) ;
 insert tb_api_param_check_config values('api_follow_list_select','target','number',1) ;
 insert tb_api_param_check_config values('api_stats_survey_type_cnt','type','number',0) ;
-insert tb_api_param_check_config values('api_stats_survey_type_cnt','action','string',0) ;
+insert tb_api_param_check_config values('api_stats_sv_trend','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_stats_sv_action_cnt','survey_code','number',1) ;
 insert tb_api_param_check_config values('api_stats_sv_action_cnt','survey_code','number',1) ;
 insert tb_api_param_check_config values('api_stats_sv_group_cnt','survey_code','number',1) ;
-insert tb_api_param_check_config values('api_stats_sv_group_cnt','condition','json',1) ;
-insert tb_api_param_check_config values('api_stats_qt_group_cnt','survey_code','number',1) ;
-insert tb_api_param_check_config values('api_stats_qt_group_cnt','question_code','number',0) ;
-insert tb_api_param_check_config values('api_stats_qt_group_cnt','condition','json',1) ;
-insert tb_api_param_check_config values('api_text_content','survey_code','number',1) ;
-insert tb_api_param_check_config values('api_text_content','question_code','number',1) ;
+insert tb_api_param_check_config values('api_stats_sv_group_cnt','prop','string',0) ;
+insert tb_api_param_check_config values('api_stats_qt_group_prop','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_stats_qt_group_prop','question_code','number',0) ;
+insert tb_api_param_check_config values('api_stats_qt_group_prop','prop','json',1) ;
+insert tb_api_param_check_config values('api_stats_qt_group_item','survey_code','number',1) ;
+insert tb_api_param_check_config values('api_stats_qt_group_item','target_qt','number',1) ;
+insert tb_api_param_check_config values('api_stats_qt_group_item','target_opt','number',0) ;
+insert tb_api_param_check_config values('api_stats_qt_group_item','group_qt','number',1) ;
+insert tb_api_param_check_config values('api_text_content','survey_code','number',0) ;
+insert tb_api_param_check_config values('api_text_content','question_code','number',0) ;
 insert tb_api_param_check_config values('api_det_data_select','table','string',1) ;
 insert tb_api_param_check_config values('api_det_data_select','condition','string',1) ;
 insert tb_api_param_check_config values('api_search_go','type','string',1) ;

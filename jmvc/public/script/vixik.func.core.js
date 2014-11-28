@@ -377,10 +377,6 @@ function arrayKeyCount(srcData$, count_key, count_type){
  * @Return : array  newData$  汇总后数据
  */
 function optionSumGroup(srcData$, key_group, key_count){
-    console.log(srcData$) ;
-    console.log(key_group) ;
-    console.log(key_count) ;
-
     var newData$ = {} ;
     var value$ = [] ;
     var option , key , value , str_eval ;

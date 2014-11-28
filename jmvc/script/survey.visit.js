@@ -69,13 +69,13 @@ steal('init.js')
 
                 case 2 :
                     // 活动开始倒计时
-                    this.count_down('start') ;
+                    // this.count_down('start') ;
                     this.options.$state.addClass('st-count') ;
                     break ;
 
                 case 3 :
                     // 活动结束倒计时
-                    this.count_down('end') ;
+                    // this.count_down('end') ;
                     this.options.$state.addClass('st-count') ;
                     this.options.$button.show() ;
 

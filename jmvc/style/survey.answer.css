@@ -1,6 +1,6 @@
 /*
- * Document    : answer.action.css
- * Description : CSS for Survey/action.html
+ * Document    : answer.answer.css
+ * Description : CSS for Survey/answer.html
  *
  * Created on  : 2012-9-25
  * Author      : ReadYun
@@ -9,33 +9,34 @@
 
 #Main{
     margin: 10px auto;
-    width: 100%;
-    min-width: 1000px;
+    width: 960px;
     overflow: hidden;
-    background-color: #FFF;
-}
+    }
+    #Main>div{
+        width: 100%;
+        overflow: hidden;
+    }
 
 /************************ 调查参与区域样式 ************************/
 
-#mainLeft{
-    width: 20%;
-    min-width: 100px;
+#answerBox .ans-box-sub{
+    width: 100%;
     overflow: hidden;
-    float: right;
     position: fixed;
     left: 0;
     }
-#sideBox{
-    width: 70px;
-    margin-top: 46px;
-    margin-right: 30px;
-    float: right;
+#svSider{
+    width: 960px;
+    margin: 10px auto;
     overflow: hidden;
     text-align: left;
 }
+body.topbar-open.topbar-hover #svSider{
+    margin-top: 40px;
+}
 #hintBar{
-    width: 50px;
-    float: right;
+    width: 40px;
+    float: left;
     overflow: hidden;
     font: 15px "宋体",Tahoma;
     text-align: right;
@@ -45,12 +46,12 @@
     overflow: hidden;
     }
     #itemFlag>div{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
         width: 100%;
         float: right;
         overflow: hidden;
-        box-sizing: border-box;
-        -moz-box-sizing: border-box; /* Firefox */
-        -webkit-box-sizing: border-box; /* Safari */
         }
     #itemFlag>div:hover{
         cursor: pointer;
@@ -65,185 +66,222 @@
             border-right: 1px solid #999;
             border-top: 1px solid #999;
         }
-    #itemFlag>div.ok>span{
+    #itemFlag>.ok>span{
         color: #FFF;
         background: #6BB130;
     }
 #aswProgress{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     width: 100%;
     padding: 5px 10px 5px 5px;
     overflow: hidden;
     font: 14px Tahoma;
     border-right: 1px solid #999;
     border-top: 1px solid #999;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box; /* Firefox */
-    -webkit-box-sizing: border-box; /* Safari */
 }
-#mainRight{
-    width: 80%;
+#answerBox .ans-box-main{
+    width: 880px;
     padding: 0;  
     margin: 0;
     float: right;
     overflow: hidden;
+    position: relative;
+    right: 0;
+    z-index: 20;
     }
 
-#navBar{
-    padding: 10px 0;
+#svHeader{
+    width: 100%;
+    margin: 10px 0;
+    float: right;
     overflow: hidden;
+    position: relative;
     }
-    #navBar>div.nav-bar{
-        width: 800px;
+    #svHeader>.sh-main{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 880px;
+        padding-right: 20px;
         float: left;
         overflow: hidden;
         }
-        #navBar div.sv-title{
-            width: 760px;
-            float: left;
-            font: 21px "宋体",Tahoma;
+        #svHeader .sh-main>div{
+            width: 100%;
+            color: #666;
+            font: 19px "宋体",Tahoma;
+        }
+        #svHeader .sh-main>.sv-title{
             text-align: center;
         }
-        #navBar div.sv-desc{
-            width: 40px;
-            float: right;
-            color: #EFEFEF;
-            font: 21px "宋体",Tahoma;
-            text-align: right;
-            cursor: pointer;
+    #svHeader>.sh-sub{
+        width: 25px;
+        height: 100%;
+        float: right;
+        position: absolute;
+        right: 0;
+        font-size: 23px;
+        text-align: right;
         }
-        #navBar:hover div.sv-desc{
-            color: #CCC;
+    #svHeader>.sh-sub>i{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        color: #CCC;
+        cursor: pointer;
         }
-        #navBar div.sv-desc:hover{
-            color: #666;
-        }
-#surveyContent{
-    width: 800px;
-    float:left;
-    }
-#questionBox{
+    #svHeader:hover>.sh-sub>i{color: #999;}
+    #svHeader>.sh-sub:hover>i{color: #666;}
+    #svHeader>.sh-sub>i.icon-double-angle-up{display: none;}
+    #svHeader .sv-desc{display: none;}
+    #svHeader.desc i.icon-double-angle-down, #svHeader.desc .sv-title{display: none;}
+    #svHeader.desc i.icon-double-angle-up, #svHeader.desc .sv-desc{display: block;}
+
+#svBody{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     width: 100%;
-    min-height: 400px;
-    padding: 20px 0;
+    margin-top: 10px;
+    float: right;
+    }
+#question{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    min-height: 300px;
+    _height: expression((documentElement.clientHeight < 300) ? "300px" : "auto");
+    padding: 10px 0;
     float: left;
     overflow: hidden;
     text-align: left;
     background-color: #FFF;
     border: 1px solid #999;
     }
-div.question-item{
-    width: 100%;
-    margin-bottom: 5px;
-    padding: 0 0 10px 0;
-    overflow: hidden;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;    /* Firefox */
-    -webkit-box-sizing: border-box; /* Safari */
-    }
-    div.question-item>div.qt-title{
+    #question .question{
         width: 100%;
-        margin: 10px 0;
         overflow: hidden;
-        font: 19px "宋体",Tahoma;  
-        color: #000;
-        opacity: 0.8;
+        margin: 20px 0;
         }
-        div.question-item>div.qt-title>div.qt-seq{
-            width: 28px;
-            height: 21px;
-            margin-right: 5px;
-            padding-right: 10px;
+        #question .question .qt-sub{
+            width: 35px;
+            height: 80px;
             float: left;
-            text-align: right;
-            color: #333 ;
-            border-right: 1px solid #FFF;
-            border-bottom: 1px solid #CCC;
-        }
-        div.question-item>div.qt-title>div.qt-name{
-            width: 650px;
-            float: left;
-        }
-        div.question-item>div.qt-title>div.qt-type{
-            width: 100px;
-            height: 18px;
-            padding: 2px;
-            font: 17px "宋体",Tahoma;  
-            color: #999;
+            color: #BBB;
+            font: 12px "微软雅黑",Tahoma;
+            text-align: center;
+            }
+            #question .question .qt-sub>.qt-seq{
+                display: block;
+                width: 100%;
+                margin-bottom: 5px;
+                font: 19px "宋体",Tahoma;
+                text-align: right;
+                color: #666;
+                border-bottom: 1px solid #999;
+            }
+            #question .question .qt-sub>.qt-hint{
+                display: none;
+                width: 30px;
+                padding: 1px 0;
+                margin: 5px auto;
+                color: #FFF;
+                background: #CCC;
+            }
+            #question .question:hover .qt-sub>div{
+                display: block;
+            }
+            #question .question:hover .qt-sub>.qt-seq{
+                color: #333;
+            }
+        #question .question .qt-main{
+            width: 820px;
+            margin: 0 10px;
             float: right;
-            border-bottom: 1px solid #CCC;
-        }
-    div.question-item:hover>div.qt-title{
-        opacity: 1;
-        }
-        div.question-item:hover>div.qt-title>div.qt-seq{
-            border-color: #CCC;
-        }
-    div.question-item>div.qt-option{
-        width: 650px;
-        margin-left: 45px;
-        }
-        div.question-item .vf-elem-option{
-            font: 17px "宋体",Tahoma;
-            color: #999;
+            }
+            #question .question .qt-title{
+                font: 19px "宋体",Tahoma;
+                color: #666;
+                margin-bottom: 10px;
+            }
+            #question .question:hover .qt-title{
+                color: #333;
+            }
+        .question .qt-option{
+            width: 100%;
             overflow: hidden;
-        } 
-        div.qt-option textarea{
-            width: 500px;
-            height: 150px;
-            font: 12px "宋体",Tahoma;
-            box-shadow: none;
-            -moz-box-shadow: none;
-            -webkit-box-shadow: none;
-        }
-        div.qt-option textarea:hover{
-            border-color: #AFAFAF;
-        }
-        div.qt-option textarea:focus{
-            border-color: #999;
-        }
-        div.question-item div.custom-option{
+            }
+            .qt-option label.vf-elem-option{
+                width: 100%;
+                margin-bottom: 4px;
+                float: left;
+                font: 12px "微软雅黑",Tahoma;
+                color: #666;
+                }
+                .qt-option .vf-elem-option>div{
+                    top: 0px;
+                    margin-right: 5px;
+                }
+            .qt-option textarea{
+                width: 600px;
+                height: 150px;
+                font: 12px "宋体",Tahoma;
+                box-shadow: none;
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+            }
+            .qt-option textarea:hover{
+                border-color: #AFAFAF;
+            }
+            .qt-option textarea:focus{
+                border-color: #999;
+            }
+        .question .custom-option{
             display: none;
             margin-top: 5px;
             overflow: hidden;
             font-family: "微软雅黑",Tahoma;
             }
-            div.question-item div.custom-option>div.custom-opt-header{
+            .question .custom-option>.custom-opt-header{
                 margin-top: 10px;
                 overflow: hidden;
                 }
-                div.question-item div.custom-option button{
+                .question .custom-option button{
                     height: auto;
                     margin-right: 20px;
                     padding: 5px 10px;
                     cursor: pointer;
                 }
-                div.custom-option button.button>i{
+                .custom-option button.button>i{
                     margin-right: 5px;
                     font-size: 12px;
                 }
-            div.custom-option>div.custom-opt-content{
+            .custom-option>.custom-opt-content{
                 width: 600px;
                 padding: 10px;
                 margin-top: 10px;
                 float: left;
                 border: 1px solid #BBB;
                 }
-                div.custom-option div.custom-opt-content label{
+                .custom-option .custom-opt-content label{
                     font-size: 14px;
                     color: #999;
                 }
-                div.custom-option div.custom-opt-content input{
+                .custom-option .custom-opt-content input{
                     width: 550px;
                     padding: 2px 5px;
                     font: 12px "微软雅黑",Tahoma;
                     color: #333;
                 }
-                div.custom-option div.custom-opt-content select{
+                .custom-option .custom-opt-content select{
                     width: 563px;
                     padding: 2px;
                     font: 12px "微软雅黑",Tahoma;
                 }
-                div.custom-option div.option-ele{
+                .custom-option .option-ele{
                     width: auto;
                     margin-right: 20px;
                     float: left;
@@ -251,41 +289,40 @@ div.question-item{
                     font-style: italic;
                     float: left;
                     }
-                    div.custom-option div.option-ele>div.co-input-name{
+                    .custom-option .option-ele>.co-input-name{
                         float: left;
                         padding-right: 10px;
                     }
-            div.custom-option>div.custom-opt-result{
+            .custom-option>.custom-opt-result{
                 overflow: hidden;
                 }
-                div.custom-opt-result>div.cor-option div.co-input-name{
+                .custom-opt-result>.cor-option .co-input-name{
                     float: left;
                 }
-                div.custom-opt-result>div.cor-alter{
+                .custom-opt-result>.cor-alter{
                     float: left;
                     height: 18px;
                 }
-                div.custom-opt-result>div.cor-alter>i{
+                .custom-opt-result>.cor-alter>i{
                     margin-right: 10px;
                     font-size: 17px;
                     cursor: pointer;
                     color: #999;
                 }
-                div.custom-opt-result>div.cor-alter>i:hover{
+                .custom-opt-result>.cor-alter>i:hover{
                     color: #666;
                 }
-                div.custom-option>div.custom-opt-result>div{
+                .custom-option>.custom-opt-result>div{
                     margin-right: 30px;
                     float: left;
                 }
-        div.custom-option>div{display: none;}
-        div.custom-option[data-state='-1']>div.custom-opt-header{display: block;}
-        div.custom-option[data-state='0']>div.custom-opt-content{display: block;}
-        div.custom-option[data-state='1']>div.custom-opt-result {display: block;}
+        .custom-option>div{display: none;}
+        .custom-option[data-state='-1']>.custom-opt-header{display: block;}
+        .custom-option[data-state='0']>.custom-opt-content{display: block;}
+        .custom-option[data-state='1']>.custom-opt-result {display: block;}
 #submit{
     width: 100%;
-    padding-top: 20px;  
-    margin: 10px auto;
+    margin-top: 50px;
     float: left;
     }
     #submit>button{
@@ -317,12 +354,12 @@ div.question-item{
         font: 35px "宋体",Tahoma;
         cursor: auto;
     }
-    #afterBox div.after-elem-content{
+    #afterBox .after-elem-content{
         width: 100%;
         margin-top: 5px;
         overflow: hidden;
         }
-        #afterBox div.after-elem-content>div{
+        #afterBox .after-elem-content>div{
             width: 50%;
             padding: 10px 20px;
             float: left;
@@ -331,11 +368,11 @@ div.question-item{
             -moz-box-sizing: border-box; /* Firefox */
             -webkit-box-sizing: border-box; /* Safari */
         }
-        #afterBox div.after-elem-content>div.after-elem-content-left>div{
+        #afterBox .after-elem-content>.after-elem-content-left>div{
             float: right;
             overflow: hidden;
         }
-        #afterBox div.after-elem-content>div.after-elem-content-right>div{
+        #afterBox .after-elem-content>.after-elem-content-right>div{
             float: left;
             overflow: hidden;
         }
@@ -358,14 +395,14 @@ div.question-item{
         #reward>label{
             border-bottom: 1px solid orange;
         }
-        #reward div.reward-elem{
+        #reward .reward-elem{
             font-size: 35px;
             }
-            #reward div.reward-elem>div{
+            #reward .reward-elem>div{
                 width: 100%;
                 margin-bottom: 15px;
             }
-            #reward div.reward-elem>div.reward-value{
+            #reward .reward-elem>.reward-value{
                 line-height: normal;
                 text-align: center;
             }
@@ -374,43 +411,44 @@ div.question-item{
         overflow: hidden;
         background: #6BB130;
         }
-        #next>div.after-elem-content{
+        #next>.after-elem-content{
             width: 960px;
             margin: 0 auto;
             }
-            #next div.next-elem{
+            #next .next-elem{
                 font:17px "宋体",Tahoma;
                 text-align: center;
+                color: #FFF;
                 }
-                #next div.after-elem-content-left>div.next-elem>div{
+                #next .after-elem-content-left>.next-elem>div{
                     width: 170px;
                     float: right;
                     margin: 10px;
                     cursor: pointer;
                 }
-                #next div.after-elem-content-right>div.next-elem>div{
+                #next .after-elem-content-right>.next-elem>div{
                     width: 170px;
                     float: left;
                     margin: 10px;
                     cursor: pointer;
                 }
-                #next div.next-elem>div:hover{
-                    color: #FFF;
+                #next .next-elem>div:hover{
+                    color: #666;
                 }
-                #next div.next-elem>div>i{
+                #next .next-elem>div>i{
                     font-size: 55px;
                     text-align: center;
                 }
 
-    #recommBox>div.after-elem-content>div{
+    #recommBox>.after-elem-content>div{
     float: none;
     }
-    #recommBox div.recomm-sv-type{
+    #recommBox .recomm-sv-type{
         padding: 0;
         margin: 10px auto;
         overflow: hidden;
         }
-        #recommBox div.recomm-sv-type>div{
+        #recommBox .recomm-sv-type>div{
             display: inline;
             padding: 5px;
             margin: 0 5px;
@@ -418,14 +456,14 @@ div.question-item{
             font:17px "宋体",Tahoma;
             border: 1px solid #CCC;
         }
-        #recommBox div.recomm-sv-type>div:hover{
+        #recommBox .recomm-sv-type>div:hover{
             cursor: pointer;
             border-color: #666;
         }
-        #recommBox div.recomm-sv-type>div.active{
+        #recommBox .recomm-sv-type>.active{
             background: #EEE;
         }
-    #recommBox div.recomm-sv-list{
+    #recommBox .recomm-sv-list{
         margin: 5px auto;
         padding: 5px 0;
         overflow: hidden;

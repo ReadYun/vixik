@@ -29,7 +29,7 @@
 
 #viewBox{
     min-width: 960px;
-    height: 350px;
+    height: 400px;
     }    
     #viewBox img{
         width: 100%;
@@ -37,7 +37,7 @@
     }
     
 #searchBox{
-    padding: 20px 0;
+    padding: 80px 0 50px 0;
     }
     #searchBox>div.search-main-desc{
         margin: 10px auto;
@@ -111,19 +111,58 @@
             overflow: hidden;
             }
             #actionBox div.start-action>div.action-desc{
-                padding: 20px 0;
+                padding: 30px 0;
                 font: 21px '宋体',Tahoma;
                 text-align: center;
                 color: #666666;
             }
             #actionBox div.start-action>div.action-button{
                 width: 450px;
+                }
+                #actionBox div.start-action>div.action-button>button{
+                    padding: 10px 0;
+                }
+#surveyType{
+    width: 100%;
+    overflow: hidden;
+    margin-top: 100px;
+    }
+    #surveyType>div{
+        width: 100%;
+        font: 39px '宋体',Tahoma;
+        color: #666;
+        overflow: hidden;
+        text-align: center;
+    }
+    #surveyType .sv-type-chart{
+        margin: 80px 0;
+    }
+    #surveyType>div.sv-type-body{
+        background: #6699FF;
+        }
+        #surveyType>div.sv-type-body>div{
+            width: 960px;
+            margin: 0 auto;
+            background: #EEE;
+            cursor: pointer;
             }
+            #surveyType .survey-type{
+                width: 25%;
+                height: 200px;
+                padding: 10px 0;
+                float: left;
+                font-size: 20px;
+                color: #FFF;
+            }
+            #surveyType .survey-type:hover{
+                color: #6699FF;
+                background: #FFF;
+            }
+
 #descBox{
     width: 100%;
-    height: 180px;
-    margin: 50px 0;
-    background: #EEE;
+    height: 200px;
+    background: #6BB130;
     }
     #descBox>div{
         width: 960px;
@@ -136,46 +175,17 @@
             float: left;
             font: 25px '宋体',Tahoma;
             text-align: center;
+            color: #FFF;
         }
         #descBox div.desc-elem:hover{
+            color: #6BB130;
             background: #FFF;
         }
 
-#surveyType{
-    width: 100%;
-    overflow: hidden;
-    }
-    #surveyType>div{
-        width: 100%;
-        font: 39px '宋体',Tahoma;
-        color: #666;
-        overflow: hidden;
-        text-align: center;
-    }
-    #surveyType>div.sv-type-body{
-        margin-top: 50px;
-        background: #EEE;
-        }
-        #surveyType>div.sv-type-body>div{
-            width: 960px;
-            margin: 0 auto;
-            background: #EEE;
-            }
-            #surveyType .survey-type{
-                width: 25%;
-                height: 200px;
-                padding: 10px 0;
-                float: left;
-                font-size: 20px;
-            }
-            #surveyType .survey-type:hover{
-                cursor: pointer;
-                background: #FFF;
-            }
-
+    
 #customBox{
     width: 100%;
-    margin: 30px 0;
+    margin: 50px 0;
     overflow: hidden;
     }
     #customBox>div{
@@ -199,103 +209,7 @@
             cursor: pointer;
             background: #EEE;
         }
-    
-    
-    
 
-
-
-
-    
-    
-#mainBox{
-    width: 960px;
-    margin: 10px auto;
-    overflow: hidden;
-    }
-    #mainBox>div.main-box{
-        width: 100%;
-        overflow: hidden;   
-    }
-    #mainBox div.box-title{
-        width: 100%;
-        height: 23px;
-        padding-top: 4px;
-        font-size: 17px;
-        border-bottom: 1px solid #6BB130;
-        background: #F5F5F5;
-    }
-    #mainBox div.box-body{
-        width: 100%;
-        height: 200px;
-        padding-top: 4px;
-        font-size: 12px;
-        color: #333333;
-    }
-        
-#surveyBox{
-    width: 700px;
-    height: 230px;
-    margin: 0;
-    float: left;
-    background: #FFFFFF;
-    border-top: 2px solid #6BB130;
-    }
-    #surveyBox>div{
-        width: 340px;
-        height: 100px;
-        }
-        #surveyBox div.box-body>div.list-elem{
-            width: 100%;
-            height: 20px;
-            overflow: hidden;
-            }
-            #surveyBox div.box-body>div.list-elem>div.sv-title{
-                width: 250px;
-                float: left;
-            }
-            #surveyBox div.box-body>div.list-elem>div.sv-title:hover{
-                cursor: pointer;
-                color: red;
-            }
-            #surveyBox div.box-body>div.list-elem>div.sv-date{
-                width: 90px;
-                float: right;
-                text-align: right;
-            }
-    #newSurvey{
-        float: left;
-    }
-    #hotSurvey{
-        float: right;
-    }
-    
-    
-#midBox{
-    height: 100px;
-    margin: 20px 0;
-    background: yellow;
-}
-
-#indexBox{
-    width: 700px;
-    height: 230px;
-    margin: 0;
-    float: left;
-    overflow: hidden;
-    border-top: 2px solid #6BB130;
-}
-
-#rankBox{
-    width: 240px;
-    height: 230px;
-    margin: 0;
-    float: right;
-    overflow: hidden;
-    border-top: 2px solid #6BB130;
-    }
-    #rankBox{
-    }
 
 #Footer{
     padding:0;  

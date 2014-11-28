@@ -85,10 +85,6 @@ class surveyAction extends Action{
                 break ;
         }
 
-        // // 调查大类描述（暂时不需要咯）
-        // $name = $stype[0]['survey_type_name'] ;
-        // $desc = M(TB_DET_SURVEY_TYPE) -> where("survey_type_code = $type_code") -> getField('survey_type_desc') ;
-
         // 活跃用户统计
         $sql =  "select b.user_code, b.user_nick, concat('$user_visit?code=', b.user_code) user_visit, b.user_photo, b.user_sex, count(1) cnt ".
                 "from $tbBasSurveyInfo a, $tbBasUserInfo b ".
@@ -110,9 +106,42 @@ class surveyAction extends Action{
         $this -> display() ;
     }
 
+    /* 调查行业页面
+     * ---------------------------------------- */
+    public function trade(){
+        // 入参值初始化
+        $_GET['trade'] ? $trade = $_GET['trade'] : $trade = 1001  ;// 调查行业编码
+        $_GET['mode']  ? $mode  = $_GET['mode']  : $mode = 'new'  ;// 调查模式（new/hot/rec）
+        
+        $user_visit      = U('user/visit') ;
+        $survey_trade    = M(TB_DET_SURVEY_TRADE)    -> select() ;
+        $tbBasSurveyInfo = M(TB_BAS_SURVEY_INFO)     -> getTableName() ;
+        $tbBasUserInfo   = M(TB_BAS_USER_INFO)       -> getTableName() ;
+
+        $trade  = M(TB_DET_SURVEY_TRADE) -> where("survey_trade_code = $trade") -> find() ;
+
+        // 活跃用户统计
+        $sql =  "select b.user_code, b.user_nick, concat('$user_visit?code=', b.user_code) user_visit, b.user_photo, b.user_sex, count(1) cnt ".
+                "from $tbBasSurveyInfo a, $tbBasUserInfo b ".
+                "where a.user_code = b.user_code ".
+                "and a.survey_trade = $trade".
+                "group by user_code having count(1) order by cnt desc limit 5" ;
+        $user = M() -> query($sql) ;
+
+        // 页面变量
+        $this -> assign('survey_trade', $survey_trade) ;
+        $this -> assign('trade_code',   $trade['survey_trade_code']) ;
+        $this -> assign('trade_name',   $trade['survey_trade_name']) ;
+        $this -> assign('mode',         $mode) ;
+        $this -> assign('user',         $user) ;
+
+        $this -> display() ;
+    }
+
     /* 调查创建页面
      * ---------------------------------------- */
     public function create(){
+        $page        = '调查创建' ;
         $survey_code = $_GET['code'] ;
         $user_code   = cookie('user_code') ;
 
@@ -121,39 +150,57 @@ class surveyAction extends Action{
 
         // 先判断是否有调查编码参数
         if($survey_code){
-            // 有调查编码转入修改模式
-            $survey = surveyInfoFind($survey_code) ;  // 查询调查基本信息
+            // 查询调查基本信息
+            if($survey = surveyInfoFind($survey_code)){
+                switch($survey['survey_state']){
+                    case 2 :  // 活动已发布
+                        if($user_code == $survey['user_code']){
+                            // 调查发布者
+                            $this -> error('已发布的活动不能修改，帮您转入调查分析页面', U('survey/analyse?code='. $survey_code)) ;
+                        }else{
+                            $this -> error('不能修改别人发布的调查，帮您转入调查访问页面', U('survey/visit?code='. $survey_code)) ;
+                        }
+                        break ;
 
-            if($survey){
-                if($survey[survey_state] > 1){
-                    // 已发布调查直接转到调查分析页面
-                    $url = U('survey/analyse') . '?code=' . $survey_code . '#svContent' ;
-                    redirect($url) ;
-                }else{
-                    // 用户权限判断
-                    if($user_code == $survey['user_code']){
-                        // 取调查问题相关信息
-                        $question = questionInfoSelect($survey_code) ;
-                        $option   = optionInfoSelect($survey_code) ;
+                    case 3 :  // 活动进行中
+                        if($user_code == $survey['user_code']){
+                            // 调查发布者
+                            $this -> error('进行中的活动不能修改，帮您转入调查分析页面', U('survey/analyse?code='. $survey_code)) ;
+                        }else{
+                            $this -> error('不能修改别人发布的调查，帮您转入调查访问页面', U('survey/visit?code='. $survey_code)) ;
+                        }
+                        break ;
+                        
+                    case 4 :  // 活动已结束
+                        $this -> error('本次调查已结束，帮您转入调查分析页面', U('survey/analyse?code='. $survey_code)) ;
+                        break ;
+                        
+                    default :
+                        // 用户权限判断
+                        if($user_code == $survey['user_code']){
+                            // 取调查问题相关信息
+                            $question = questionInfoSelect($survey_code) ;
+                            $option   = optionInfoSelect($survey_code) ;
 
-                        cookie('survey_code', $survey_code, 3600) ;
+                            cookie('survey_code', $survey_code, 3600) ;
 
-                        $this -> assign('survey',   $survey) ;
-                        $this -> assign('question', $question) ;
-                        $this -> assign('option',   $option) ;
-                    }else{
-                        $this -> error('您不是该调查创建者没有权限修改该调查','__ROOT__') ;            
-                    }            
+                            $this -> assign('survey',   $survey) ;
+                            $this -> assign('question', $question) ;
+                            $this -> assign('option',   $option) ;
+                        }else{
+                            $this -> error('此调查不存在，返回前一页') ;
+                        }       
+                        break ;
                 }
             }else{  // 查不到调查编码对应的信息重新转入到新建调查页面
-                redirect(U()) ;
+                $this -> error('此调查不存在，现在创建一个调查吧', U()) ;
             }
         }else{  // 无调查编码转入创建模式
             cookie('survey_code', null) ;
         }
 
         $survey_type  = M(TB_DET_SURVEY_TYPE)   -> select() ;
-        $survey_class = M(TB_DET_SURVEY_CLASS)  -> select() ;
+        $survey_trade = M(TB_DET_SURVEY_TRADE)  -> select() ;
         $province     = M(TB_DET_AREA_PROVINCE) -> select() ;
         $career       = M(TB_DET_USER_CAREER)   -> select() ;
         $edu          = M(TB_DET_USER_EDU)      -> select() ;
@@ -161,13 +208,15 @@ class surveyAction extends Action{
 
         $this -> assign('survey_code',  $survey_code) ;
         $this -> assign('sv_type',      $sv_type) ;
-        $this -> assign('sv_type_sub',  $sv_type_sub) ;
+        $this -> assign('sv_type_sub',  $sv_type_sub) ; 
         $this -> assign('survey_type',  $survey_type) ;
-        $this -> assign('survey_class', $survey_class) ;
+        $this -> assign('survey_trade', $survey_trade) ;
         $this -> assign('province',     $province) ;
         $this -> assign('career',       $career) ;
         $this -> assign('edu',          $edu) ;
         $this -> assign('level',        $level) ;
+        $this -> assign('page',         $page) ;
+        $this -> assign('path',         vkPath($page)) ;
 
         $this -> display() ;
     }
@@ -185,17 +234,17 @@ class surveyAction extends Action{
         }else{   
             // 取获得的调查编码生成调查相关信息
             if($survey_code == 'preview'){
-                $page   = '创建调查·预览题目' ;
-                $survey = json_decode(cookie('survey_preview'), true) ;   // 取cookie的调查信息
-                $info   = $survey['info'] ;
+                $page        = '调查预览' ;
+                $survey_code = cookie('sv_preview') ;   // 取cookie的调查信息
+                $survey      = surveyInfoSelect($survey_code) ;
+                $info        = $survey['info'] ;
             }else{
-                $page   = '参与调查' ;
+                $page   = '调查参与' ;
                 $survey = surveyInfoSelect($survey_code) ;
                 $info   = $survey['info'] ;
-
                 
                 if(!$info){
-                    $this->error('要参与的调查活动不存在，返回调查中心！', U('index')) ;
+                    $this -> error('要参与的调查活动不存在，返回调查中心！', U('index')) ;
                     return false ;
                 }else{
                     // 判断访问用户角色（发布者/参与者）
@@ -204,12 +253,12 @@ class surveyAction extends Action{
                         switch($info['survey_state']){
                             case 0 :
                                 // 活动无效，不能打开
-                                $this->error('此调查活动不存在或已删除，返回调查中心！', U('index')) ;
+                                $this -> error('此调查活动不存在或已删除，返回调查中心！', U('index')) ;
                                 return false ;
                                 break ;
                             case 1 :
                                 // 活动未发布，转入编辑页面
-                                $this->redirect('survey/create', array('s' => $survey_code), 5, '调查未发布，5秒后转入编辑页面') ;
+                                $this->redirect('survey/create', array('code' => $survey_code), 5, '调查未发布，5秒后转入编辑页面') ;
                                 return false ;
                                 break ;
                             default :
@@ -219,20 +268,20 @@ class surveyAction extends Action{
                                 break ;                            
                         }
                     }else{
-                        // 调查访问者
+                        // 调查参与者、游客
                         if($info['survey_state'] < 2){
-                            $this->error('要参与的调查活动不存在，返回调查中心！', U('index')) ;
+                            $this -> error('要参与的调查活动不存在，返回调查中心！', U('index')) ;
                             return false ;
                         }else{
                             switch($info['survey_state']){
                                 case 2 :    // 活动已发布未开始
-                                    $this->redirect('survey/visit', array('s' => $survey_code), 5, '调查活动还未开始，5秒后转入调查访问页面') ;
+                                    $this->redirect('survey/visit', array('code' => $survey_code), 5, '调查活动还未开始，5秒后转入调查访问页面') ;
                                     return false ;
                                     break ;
 
                                 case 4 :
                                     // 活动已结束
-                                    $this->redirect('survey/analyse', array('s' => $survey_code), 5, '本次调查活动已结束，5秒后转入调查分析页面') ;
+                                    $this->redirect('survey/analyse', array('code' => $survey_code), 5, '本次调查活动已结束，5秒后转入调查分析页面') ;
                                     return false ;
                                     break ;
                             }
@@ -241,9 +290,12 @@ class surveyAction extends Action{
                 }
             }
 
-            $this -> assign('page',            $page) ;
-            $this -> assign('survey_code',     $survey_code) ;
-            $this -> assign('survey',          $survey) ;
+            $this -> assign('code',        $_GET['code']) ;
+            $this -> assign('survey_code', $survey_code) ;
+            $this -> assign('survey',      $survey) ;
+            $this -> assign('page',        $page) ;
+            $this -> assign('path',        vkPath($page, $survey_code)) ;
+
             $this -> display() ;
         }
     }
@@ -267,12 +319,15 @@ class surveyAction extends Action{
                 // 取获得的调查编码生成调查相关信息
                 $page   = '访问调查' ;
                 $data   = surveyInfoSelect($survey_code) ;
-                $survey = array_merge($data['info'], $data['stats']) ;
+                $survey = array_merge($data['info'], $data['stats'], $data['url']) ;
             }
 
             cookie('survey', json_encode($survey)) ;
             $this -> assign('page',   $page) ;
             $this -> assign('survey', $survey) ;
+            $this -> assign('path',   vkPath('调查访问', $survey_code)) ;
+
+            // dump($survey) ;
 
             $this -> display() ;
         }
@@ -383,7 +438,9 @@ class surveyAction extends Action{
         $this -> assign('option',    $option) ;
         $this -> assign('question',  $survey['question']) ;
         $this -> assign('recommend', $recommend) ;
+        $this -> assign('path',      vkPath('调查分析', $survey_code)) ;
 
+        // dump($survey) ;
         $this -> display() ;    
     }
 
@@ -418,13 +475,13 @@ class surveyAction extends Action{
     //             // $info   = $survey['info'] ;
                 
     //             // if(!$info){
-    //             //     $this->error('要参与的调查活动不存在，返回调查中心！', U('index')) ;
+    //             //     $this -> error('要参与的调查活动不存在，返回调查中心！', U('index')) ;
     //             //     return false ;
     //             // }else{
     //             //     // 判断访问用户角色（发布者/参与者）
     //             //     if($user_code === $info['user_code']){  // 调查发布者
     //             //         if($info['survey_state'] == 0){
-    //             //             $this->error('要参与的调查活动不存在，返回调查中心！', U('index')) ;
+    //             //             $this -> error('要参与的调查活动不存在，返回调查中心！', U('index')) ;
     //             //             return false ;
     //             //         }else{
     //             //             if($info['survey_state'] == 1){
@@ -438,7 +495,7 @@ class surveyAction extends Action{
     //             //         return false ;
     //             //     }else{  // 调查访问者
     //             //         if($info['survey_state'] == 0 || $info['survey_state'] == 1){   // 活动无效/草稿
-    //             //             $this->error('要参与的调查活动不存在，返回调查中心！', U('index')) ;
+    //             //             $this -> error('要参与的调查活动不存在，返回调查中心！', U('index')) ;
     //             //             return false ;
     //             //         }else{
     //             //             switch($info['survey_state']){

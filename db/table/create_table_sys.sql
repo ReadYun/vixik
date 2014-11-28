@@ -36,6 +36,20 @@ create table tb_api_param_check_config
     param_must   integer        #接口参数是否必须
 ) ;
 
+/********页面路径信息配置********/
+drop table if exists tb_sys_page_path_config ;
+create table tb_sys_page_path_config
+(
+    path_code     integer        ,#路径编码
+    path_name     varchar(32)    ,#路径名称
+    path_value    varchar(32)    ,#路径值
+    path_parent   integer        ,#路径上级编码
+    url_param     varchar(32)    ,#路径URL参数名称
+    table_name    varchar(32)    ,#路径对应表明称
+    key_input     varchar(32)    ,#路径输入字段名
+    key_output    varchar(32)     #路径输出字段名
+) ;
+
 
 
 

@@ -1,13 +1,20 @@
 <%for(var i = 0; i < data.length; i++){%>
-    <div class="text-list">
-		<%if(data['user_sex'] == 1){%>
-    		<div class="photo-box"><img src="/vixik/jmvc/style/image/man.png"></div>
-		<%}else{%>
-    		<div class="photo-box"><img src="/vixik/jmvc/style/image/woman.png"></div>
-		<%}%>
-    	<div class="content-box">
-	    	<div class="text-content"><%= data[i].option_name %></div>
-	    	<div class="user-area">来自<%= data[i].user_city %></div>
-    	</div>
+    <div class="tl-elem">
+        <div class="photo-sex"><img src="<%= data[i].photo %>"></img></div>
+        <div class="text-main">
+            <div class="user-prop">
+                <%if(data[i].province && data[i].city){%>
+                    <div class="usp-area province city" title="地域">
+                <%}else if(!data[i].province && !data[i].city){%>
+                    <div class="usp-area" title="地域">
+                <%}%>
+                    <%= data[i].province %><span> / </span><%= data[i].city %>
+                </div>
+                <div class="usp-age" title="年龄"><%= data[i].age %>岁</div>
+                <div class="usp-career" title="职业"><%= data[i].career %></div>
+                <div class="usp-edu" title="学历"><%= data[i].edu %></div>
+            </div>
+            <div class="text-content"><%= data[i].option_name %></div>
+        </div>
     </div>
 <%}%>

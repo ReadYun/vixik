@@ -7,88 +7,191 @@
 </head>
 <body>
     <div id="Header">
-        <include file="Public:topBar" nav-type="sub" nav-name="调查访问"/>
+        <include file="Public:topBar" page="调查访问" nav-type="sub" nav-cur="survey" page-icon="icon-list-alt"/>
     </div>
     <div id="Main" data-survey="{$survey['survey_code']}">
         <div id="surveyHeader">
-            <div class="left-box">
-                <div class="survey-title">{$survey['survey_name']}</div>
+            <div class="sv-header">
+                <div class="sv-name left-box">{$survey['survey_name']}</div>
+                <div class="sv-prop right-box">
+                    <a class="sv-type">{$survey['survey_type_name']}</a>
+                    <a class="sv-trade">{$survey['survey_trade_name']}</a>
+                </div>
+            </div>
+        </div>
+        <div id="surveyInfo">
+            <div class="sv-info left-box">
                 <div class="user-box">
                     <div class="user-photo"><img src="/vixik/jmvc/public/image/user/{$survey['user_code']}_60.jpg"></div>
-                    <div class="user-main">
-                        <div class="user-nick"><a href="{$survey['url_user']}" target="_blank">{$survey['user_nick']}</a></div>
-                        <div class="user-action"><span>创建于</span>{$survey['create_time']}</div>
+                    <div class="user-nick"><a href="{$survey['url_user']}" target="_blank">{$survey['user_nick']}</a></div>
+                </div>
+                <div class="sv-time">
+                    <i class="icon-calendar"></i>
+                    <div class="start-time"><span>开始于</span>{$survey['start_time']}</div>
+                    <div class="end-time"><span>结束于</span>{$survey['end_time']}</div>
+                </div>
+                <div class="sv-tag">
+                    <i class="icon-tags"></i>
+                    <div class="tags">
+                        <a class="svtag">开发的说法</a>
+                        <a class="svtag">大幅缩短开发</a>
+                        <a class="svtag">dfsdfFSDAF</a>
                     </div>
                 </div>
             </div>
-            <div class="right-box sv-item">
+            <div class="sv-item right-box">
                 <div class="item-cnt">
-                    <div class="ic-value">{$survey['radio_num']}</div>
                     <div class="ic-title">单选题</div>
+                    <div class="ic-value">{$survey['radio_num']}</div>
                 </div>
+                <span></span>
                 <div class="item-cnt">
-                    <div class="ic-value">{$survey['checkbox_num']}</div>
                     <div class="ic-title">多选题</div>
+                    <div class="ic-value">{$survey['checkbox_num']}</div>
                 </div>
+                <span></span>
                 <div class="item-cnt">
-                    <div class="ic-value">{$survey['textarea_num']}</div>
                     <div class="ic-title">主观题</div>
+                    <div class="ic-value">{$survey['textarea_num']}</div>
                 </div>
             </div>
         </div>
         <div id="surveyTime">
-            <div class="left-box st-state" data-state="{$survey['survey_state']}">
-                <div class="st-count">
-                    <div class="cd-desc"></div>
-                    <div class="cd-action"></div>
-                </div>
-                <div class="st-other">活动已结束</div>
+            <div class="st-doing">
+                <div class="sd-desc">9天23小时46分钟23秒后</div>
+                <div class="sd-span">活动结束</div>
             </div>
-            <div class="right-box st-info">
-                <div class="start-date">
-                    <div class="si-title">开始时间</div>
-                    <div class="si-value">{$survey['start_time']}</div>
-                </div>
-                <div class="end-date">
-                    <div class="si-title">结束时间</div>
-                    <div class="si-value">{$survey['end_time']}</div>
-                </div>
-            </div>
+            <div class="st-end">活动已结束</div>
         </div>
         <div id="surveyMain">
-            <div class="left-box sm-desc">{$survey['survey_desc']}</div>
-            <div class="right-box sm-action">
+            <div class="sv-desc left-box">{$survey['survey_desc']}</div>
+            <div class="sv-stats right-box">
                 <div class="action-cnt">
-                    <div class="sa-elem">
+                    <div class="ac-elem">
                         <div class="ac-title">奖励金币</div>
                         <div class="ac-value">{$survey['answer_coins']}</div>
                     </div>
-                    <div class="sa-elem">
+                    <div class="ac-elem">
                         <div class="ac-title">参与人数</div>
                         <div class="ac-value">{$survey['answer_count']}</div>
                     </div>
+                    <div class="ac-elem">
+                        <div class="ac-title">关注人数</div>
+                        <div class="ac-value">123123</div>
+                    </div>
                 </div>
                 <div class="action-hint">
-                    <div class="sa-elem">
-                        <div class="ac-value">{$survey['follow_count']}</div>
-                        <div class="ac-title"><button class="vkbutton vbtn-border vbtn-primary large block">收藏</button></div>
-                    </div>
-                    <div class="sa-elem">
-                        <div class="ac-value">{$survey['share_count']}</div>
-                        <div class="ac-title"><button class="vkbutton vbtn-border vbtn-primary large block">分享</button></div>
-                    </div>
-                    <div class="sa-elem">
-                        <div class="ac-value">0</div>
-                        <div class="ac-title"><button class="vkbutton vbtn-border vbtn-primary large block">评论</button></div>
-                    </div>
+                    <div class="ah-elem"><button class="vkbutton vbtn-border vbtn-default block">关注</button></div>
+                    <span></span>
+                    <div class="ah-elem"><button class="vkbutton vbtn-border vbtn-default block">分享</button></div>
+                    <span></span>
+                    <div class="ah-elem"><button class="vkbutton vbtn-border vbtn-default block">举报</button></div>
                 </div>
             </div>
         </div>
         <div id="surveyButton">
-            <button class="vkbutton vbtn-vixik xlarge block answer" href="{$survey['url_answer']}">立即开始参与调查</button>
-            <button class="vkbutton vbtn-primary xlarge block analyse" href="{$survey['url_analyse']}">去查看调查分析</button>
+            <button class="vkbutton vbtn-success xlarge answer" href="{$survey['url_answer']}">参与调查</button>
+            <button class="vkbutton vbtn-success xlarge analyse" href="{$survey['url_analyse']}">查看分析</button>
+        </div>
+        <div id="surveyRecomm">
+            <div class="sr-type">
+                <div class="sr-header">
+                    <div class="sr-title">同类调查·商业调查</div>
+                    <div class="sr-more">更多</div>
+                </div>
+                <div class="sr-body">
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                </div>
+            </div>
+            <div class="sr-trade">
+                <div class="sr-header">
+                    <div class="sr-title">同类调查·服装鞋帽</div>
+                    <div class="sr-more">更多</div>
+                </div>
+                <div class="sr-body">
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                    <div class="sr-list-elem">
+                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
+                        <div class="sv-stats">98987人参与</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div id="Footer"></div>
+    <div id="Footer"><include file="Public:footer" type="main"/></div>
 </body>
 </html>

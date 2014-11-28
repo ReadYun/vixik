@@ -26,8 +26,8 @@
 				//获取服务器对应的行为URL接口
 	            $.ajax({
 	                type    : 'post',
-	                url     : __API_GET_SERVER_URL__,
-	                data    : {name:option$.name},
+	                url     : __API__,
+	                data    : {api: 'get_server_url', name: option$.name},
 	                async   : false,
 	                success : function(data$){
 	                    url = data$.data + option$.tail ;

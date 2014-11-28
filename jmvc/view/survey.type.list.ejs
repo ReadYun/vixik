@@ -1,17 +1,23 @@
 <%for(var i = 0; i < data.length; i++){%>
     <div class="sv-list-elem">
-        <div class="sv-list-main">
-            <div class="survey-header">
-                <div class="survey-title"><a href="<%= data[i].url_visit %>" target="_blank"><%= data[i].survey_name %></a></div>
-                <div class="publish-time"><span><%= data[i].start_date %></span>发布</div>
-                <button class="vkbutton vbtn-default">关注</button>
-            </div>
-            <div class="survey-desc"><%= data[i].survey_desc %></div>
+        <div class="sv-title">
+            <a class="sv-name" href="<%= data[i].url_visit %>" target="_blank"><%= data[i].survey_name %></a>
+            <div class="sv-time"><%= data[i].start_date %>发布</div>
+            <button class="sv-follow vkbutton vbtn-default">关注</button>
         </div>
-        <div class="sv-list-sub">
-            <div class="user-nick" title="用户昵称"><i class="icon-user"></i><a href="<%= data[i].url_visit %>" target="_blank"><%= data[i].user_nick %></a></div>
-            <div class="survey-type-sub" title="调查类型"><i class="icon-bookmark"></i><%= data[i].survey_type_sub_name %></div>
-            <div class="item-num" title="题目数量"><i class="icon-book"></i><%= data[i].question_num %></div>
+        <div class="sv-desc"><%= data[i].survey_desc %></div>
+        <div class="sv-prop">
+            <div class="user-nick">
+                <a href="<%= data[i].url_user %>" target="_blank"><img src="<%= data[i].user_photo %>"><%= data[i].user_nick %></a>
+            </div>
+            <div class="sv-type">
+                <i class="icon-tint"></i>
+                <a class="sv-type-main" href="<%= data[i].url_type %>"><%= data[i].survey_type_name %></a>
+                <span>/</span>
+                <a class="sv-type-sub" href="<%= data[i].url_type_sub %>"><%= data[i].survey_type_sub_name %></a>
+            </div>
+            <div class="sv-trade"><i class="icon-leaf"></i><a href="<%= data[i].url_trade %>"><%= data[i].survey_trade_name %></a></div>
+            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i><%= data[i].question_num %></div>
         </div>
     </div>
 <%}%>

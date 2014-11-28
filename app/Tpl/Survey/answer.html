@@ -7,31 +7,32 @@
 </head>
 <body>
     <div id="Header" data-verify="1">
-        <include file="Public:topBar" nav-type="sub" nav-name="{$page}"/>
+        <include file="Public:topBar" page="{$page}" nav-type="sub" nav-cur="survey" need-login="1"/>
     </div>
-    <div id="Main" main-state="0" data-survey="{$survey_code}">
+    <div id="Main" main-state="0" data-survey="{$code}">
         <div id="answerBox">
-            <div id="mainLeft">
-                <div id="sideBox">
+            <div class="ans-box-sub">
+                <div id="svSider">
                     <div id="hintBar">
                         <div id="itemFlag"></div>
                         <div id="aswProgress">0%</div>
                     </div>
                 </div>
             </div>
-            <div id="mainRight">
-                <div id="navBar">
-                    <div class="nav-bar">
+            <div class="ans-box-main">
+                <div id="svHeader">
+                    <div class="sh-main">
                         <div class="sv-title">{$survey['info']['survey_name']}</div>
-                        <div class="sv-desc"><i class="icon-eye-open"></i></div>
+                        <div class="sv-desc">{$survey['info']['survey_desc']}</div>
+                    </div>
+                    <div class="sh-sub">
+                        <i class="icon-double-angle-up"></i>
+                        <i class="icon-double-angle-down"></i>
                     </div>
                 </div>
-                <div id="surveyContent">
-                    <div id="questionBox" class="vk-form">
-                    </div>
-                    <div id="submit">
-                        <button type="button" class="vkbutton vbtn-success large block">提交结果</button>
-                    </div>
+                <div id="svBody">
+                    <div id="question" class="vk-form"></div>
+                    <div id="submit"><button type="button" class="vkbutton vbtn-success large block">提交结果</button></div>
                 </div>
             </div>
         </div>

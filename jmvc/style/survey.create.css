@@ -8,27 +8,31 @@
  */
 #Main{
     min-width: 960px;
-    padding-bottom: 50px;  
+    _width: expression((documentElement.clientWidth < 960) ? "960px" : "auto");
+    padding-bottom: 50px;
     margin: 0 auto;
     overflow: hidden;
+    padding-bottom: 50px;
 }
+
 #mainSider{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     width: 20%;
     min-width: 200px;
+    _width: expression((documentElement.clientWidth < 200) ? "200px" : "auto");
+    padding: 0;
     height: 100%;
-    padding-top: 10px;
     float: right;
     position: fixed;
     left: 0;
-    border-right: 1px solid #CCC; 
-    box-sizing:border-box;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
+    border-right: 1px solid #CCC;
     }
     #mainSider>div{
-        box-sizing:border-box;
-        -moz-box-sizing:border-box;
-        -webkit-box-sizing:border-box;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
         width: 100%;
         margin-bottom: 10px;
         float: right;
@@ -37,35 +41,37 @@
     }
     #coinsBox{
         width: 100%;
-        padding: 0 10px;
+        padding: 10px 10px 0 10px;
         overflow: hidden;
         text-align: center;
-        color: #FFF;
+        color: #666;
+    }
+    body.topbar-open #coinsBox{
+        padding-top: 50px;
         }
         #coinsBox>div{
             width: 50%;
             height: 100%;
             padding: 5px 0;
             float: left;
-            background: #6BB130;
             }
             #coinsBox div.coins-value{
                 width: 100%;
                 height: 50px;
-                font-size: 40px;
+                font-size: 45px;
                 font-weight: 900;
             }
             #coinsBox>div.remain-coins>div.coins-value{
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
                 padding-top: 10px;
                 font-size: 30px;
-                box-sizing:border-box;
-                -moz-box-sizing:border-box;
-                -webkit-box-sizing:border-box;
             }
             #coinsBox>div>div.coins-desc{
                 width: 100%;
-                height: 25px;
-                font: 13px "微软雅黑",Tahoma;
+                font: 12px "微软雅黑",Tahoma;
+                color: #999;
             }
     #stepBox{
         width: 100%;
@@ -87,7 +93,7 @@
                 float: left;
                 font: 23px "宋体",Tahoma;
                 text-align: center;
-                color: #000;
+                color: #666;
                 cursor: pointer;
                 border-top: 1px solid #FFF;
                 border-bottom: 1px solid #FFF;
@@ -95,7 +101,7 @@
             #stepBox ul>li:hover{
                 background: #EEE;
                 }
-                #stepBox ul>li.action{
+                #stepBox ul>li.active{
                     cursor: auto;
                     background: #FFF;
                     border-top: 1px solid #CCC;
@@ -103,6 +109,9 @@
                     border-right: 1px solid #FFF;
                     color: #6BB130;
                 }
+                #stepBox ul>li.step1.active{color: #6BB130;}
+                #stepBox ul>li.step2.active{color: #6699FF;}
+                #stepBox ul>li.step3.active{color: #FF6633;}
         #syncBox{
             display: block;
             padding: 0 10px;
@@ -115,12 +124,12 @@
                 font: 14px "微软雅黑",Tahoma;
                 }
                 #syncBox>div.sync-auto>div{
-                    width: 100%;
-                    float: left;
-                    padding: 5px 0;
                     box-sizing: border-box;
                     -moz-box-sizing: border-box;
                     -webkit-box-sizing: border-box;
+                    width: 100%;
+                    float: left;
+                    padding: 5px 0;
                 }
                 #syncBox div.time{
                     float: left;
@@ -175,108 +184,100 @@
         position:absolute;
         bottom: 0;
         text-align: center;
+        overflow: hidden;
         }
         #helpBox{
             width: 100%;
             float: left;
+            padding-bottom: 50px;
+            overflow: hidden;
             }
             #helpBox>div{
                 width: 100%;
                 padding: 5px 0;
-                font: 17px "宋体",Tahoma; 
+                font: 19px "宋体",Tahoma; 
                 border-top: 1px solid #CCC;
             }
             #helpBox>div:hover{
                 background: #CCC;
                 cursor: pointer;
             }
-        #stateBox{
-            height: 100px;
-            width: 100%;
-            padding-top: 10px;
-            float: left;
-            border-top: 1px solid #CCC;
-        }
+
 #mainBody{
-    width: 80%;
-    min-width: 760px;
-    float: right;
+    width: 960px;
+    margin: 0 auto;
     overflow: hidden;
     }
     #surveyBox{
         width: 740px;
+        margin-top: 10px;
         margin-left: 20px;
-        float: left;
+        float: right;
         overflow: hidden;
         }
-        #surveyBox>div.sv-content{
+        #surveyBox>.sv-content{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
             width: 100%;
+            padding-bottom: 10px;
             margin: 10px 0;
             float: left;
-            overflow: hidden;
             background: #FFF;
-            border: 1px solid #CCC;
-            box-sizing:border-box;
-            -moz-box-sizing:border-box;
-            -webkit-box-sizing:border-box;
         }
-        div.sv-content>div{
+        #surveyBox>.sv-content>div{
             width: 100%;
             float: left;
-            overflow: hidden;
         }
-        div.sv-content>div.svc-header{
+        div.sv-content>.svc-header{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
             width: 100%;
-            padding: 5px 10px;
+            padding: 5px 20px;
             float: left;
             font: 22px "宋体",Tahoma;  
             color: #FFF;
             background: #6BB130;
         }
-        div.sv-content>div.svc-body{
-            width: 730px;
-            padding: 0;  
-            margin: 5px;
+        div.sv-content>.svc-body{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100%;
+            padding-top: 10px; 
             float: left;
-            overflow: hidden;
-            font: 14px "宋体",Tahoma;  
-            color: #000;
+            font: 14px "宋体",Tahoma;
+            border: 1px solid #CCC;
+            border-top: none;
             }
             div.svc-body>div.cs-item{
-                width: 710px;
-                padding: 5px 0 10px 0;  
-                margin: 5px 10px;
+                width: 100%;
+                padding: 8px 0;
                 float: left;
-                overflow: hidden;
-                border-bottom: 1px dotted #CFCFCF;
                 }
                 div.svc-body div.cs-item div.cs-label{
-                    width: 95%;
-                    padding-bottom: 5px;  
+                    box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    width: 100%;
+                    padding-left: 10px;
+                    margin-bottom: 5px;
                     float: left;
                     overflow: hidden;
                     font: 19px "宋体",Tahoma;  
                     color: #333;
-                    }
-                    div.cs-item div.cs-label>i{
-                        padding-right: 3px;
-                        font-size: 17px;
-                        color: #777;
+                    border-left: 10px solid #6BB130;
                     }
                     div.cs-item div.cs-label>i.icon-angle-down{
                         padding-left: 5px;
                         color: #999;
                     }
-                div.svc-body>div.cs-item:hover{
-                    color: #000;
-                    border-color: #6BB130;
-                    }
                 div.svc-body div.cs-item div.cs-content{
-                    width: 95%;
-                    padding: 3px  0 3px 18px;  
-                    margin: 0;
+                    width: 700px;
+                    padding: 5px 0;  
+                    margin-left: 20px;
                     float: left;
-                    overflow: hidden;
                     color: #555555;
                     }
                     div.svc-body div.cs-item div.cs-content>label{
@@ -289,125 +290,299 @@
                     float: left;
                     overflow: hidden;
                 }
+#surveySetting>.svc-header{background: #6699FF;}
+#surveySetting .cs-label{border-color: #6699FF;}
+#surveyRecommend>.svc-header{background: #FF9933;}
 
-#surveyTitle input[type=text]{
-    width: 660px;  
-    height: 25px;
-    padding: 0 5px;  
-    margin: 0;
-    font: 17px "宋体",Tahoma;  
-    color: #555;
+#surveyTitle input{
+    font: 19px "宋体",Tahoma;  
+    height: 30px;
+    color: #999;
 }
+#surveyTitle input:focus{color: #666;}
+
 #surveyTag ul{
-    width: 660px;
-    padding: 0 5px;  
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    padding: 0 5px;
     margin: 0;
-    font: 17px "宋体",Tahoma;
+    font: 19px "宋体",Tahoma;
     }
     #surveyTag ul li{
-        margin-top: 4px;
+        margin-top: 2px;
+        padding: 1px 20px 3px 5px;
     }
     #surveyTag ul input{
-        width: 320px;
-        font: 17px "宋体",Tahoma;
+        width: 350px;
+        padding-top: 2px;
+        font: 19px "宋体",Tahoma;
     }
-#surveyExplain textarea{
-    width: 660px;  
-    height: 140px;
-    padding: 5px;  
-    margin: 0;
-    font: 12px "宋体",Tahoma;  
+#surveyDesc .vk-input{
+    min-height: 82px;
+    _height: 82px;
 }
 #surveyItem{
     border: 0;
     margin-bottom: 0;
-}
+    }
+    #surveyItem .cs-content{
+        border: 0;
+        margin-bottom: 0;
+    }
 
-#itemBody>div.item{
-    width: 730px;
-    padding: 0;   
-    margin: 5px 0 15px 0;
+#itemBody>.item{
+    width: 700px;
+    min-height: 120px;
+    padding-top: 5px;   
+    margin-bottom: 10px;
     overflow: hidden;
     }
-    #itemBody>div.item>div{
-        width: 100%;
-        padding: 0;   
-        margin-bottom: 5px;
-        float: left;
-        overflow: hidden;
-    }
-    #itemBody>div.item>div.item-side{
-        width: 25px;
-        padding: 0;   
+    #itemBody>.item>.item-main{
+        width: 660px;
+        margin-right: 5px;
         float: left;
         overflow: hidden;
         }
-        div.item>div.item-side>div.item-seq{
-            box-sizing:border-box;
-            -moz-box-sizing:border-box;
-            -webkit-box-sizing:border-box;
+        #itemBody>.item .item-title{
             width: 100%;
-            height: 30px;
-            padding-top: 1px;
-            margin-bottom: 10px;
-            float: left;
+            margin-bottom: 5px;
             overflow: hidden;
-            font-size: 21px; 
-            color: #666666;
-            text-align: center;
-            font-weight: 900;
-            border-right: 1px solid #CFCFCF;
-            border-bottom: 1px solid #CFCFCF;
-        }
-        div.item>div.item-side>div.item-alter{
+            }
+            #itemBody>.item .item-seq{
+                width: 30px;
+                margin-right: 5px;
+                float: left;
+                overflow: hidden;
+                font: 21px "宋体",Tahoma;
+                color: #666;
+                font-weight: 900;
+            }
+            #itemBody>.item:hover .item-seq{
+                color: #6BB130;
+            }
+            #itemBody>.item .item-title>.vk-input{
+                width: 625px;
+                float: left;
+                overflow: hidden;
+            }
+        #itemBody>.item .item-option{
             width: 100%;
-            height: 88px;
-        }
-        div.item>div.item-side>div.item-setting{
-            width: 100%;
-            height: 25px;
             overflow: hidden;
-            text-align: center;
-            font-size: 20px;
-            color: #999;
-            cursor: pointer;
-        }
-        div.item>div.item-side>div.item-setting:hover>i{
-            font-size: 23px;
-        }
-    #itemBody>div.item>div.item-body{
-        width: 700px;
+            }
+    #itemBody>.item>.item-sub{
+        width: 35px;
         float: right;
         overflow: hidden;
         }
-        div.item>div.item-body>div{
+        #itemBody>.item .item-type{
+            width: 100%;
+            margin-top: 2px;
             float: left;
-            }
-        div.item>div.item-body>div.item-title{
+            font: 19px "宋体",Tahoma;
+            text-align: right;
+            overflow: hidden;
+        }
+        #itemBody>.item .item-config{
+            display: none;
+            width: 100%;
             float: left;
+            overflow: hidden;
+            font: 19px "宋体",Tahoma;
+            text-align: center;
             }
-            div.item>div.item-body>div.item-title>div.item-type{
-                height: 12px;
-                width: 30px;
-                padding: 9px 0;
+            #itemBody>.item .item-cog{
+                width: 100%;
+                height: 26px;
+                padding: 0;
                 float: left;
-                font: 12px "宋体",Tahoma;
+                overflow: hidden;
+                font-size: 26px;
+                text-align: center;
+                color: #66CC66;
+                line-height: 0;
+                cursor: pointer;
+                opacity: 0.7;
+            }
+            #itemBody>.item .item-cog:hover{
+                opacity: 1;
+            }
+            #itemBody>.item .item-cog.disable, #itemBody>.item .item-cog.disable:hover{
+                color: #CCC;
+                cursor: auto;
+            }
+            #itemBody>.item .item-cog:hover{
+                opacity: 1;
+            }
+            #itemBody>.item .item-alter{
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                width: 100%;
+                padding: 5px;
+                float: left;
+                overflow: hidden;
                 text-align: center;
                 color: #999;
             }
-            div.item-body>div.item-title input[type="text"]{
-                width: 615px;
-                float: left;
-                font: 17px "宋体",Tahoma;
+            #itemBody>.item .item-alter>div{
+                width: 22px;
+                height: 22px;
+                padding: 1px;
+                margin: 2px auto;
+                text-align: center;
+                border-radius: 12px;
+                cursor: pointer;
             }
+            #itemBody>.item .item-alter>div:hover{
+                color: #FFF;
+                background: #66CC66;
+            }
+            #itemBody>.item .item-alter>div.disable, #itemBody>.item .item-alter>div.disable:hover{
+                background: #FFF;
+                cursor: auto;
+                opacity: 0.3;
+            }
+            #itemBody>.item .item-config>.popover{
+                width: 200px;
+                border-radius: 0;
+                box-shadow: none;
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+                }
+                #itemBody>.item .item-config>.popover>.popover-title{
+                    display: none;
+                }
+                #itemBody>.item .item-config>.popover .popover-content{
+                    width: 100%;
+                    padding: 0;
+                }
+                #itemBody>.item .item-config .item-setting{
+                    width: 100%;
+                    margin: 0 auto;
+                    }
+                    #itemBody .item-config .item-setting>div{
+                        box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        width: 180px;
+                        margin: 10px auto;
+                        font: 12px "微软雅黑",Tahoma;
+                        text-align: center;
+                        }
+                        #itemBody .item-config .item-setting>div>a{
+                            box-sizing: border-box;
+                            -moz-box-sizing: border-box;
+                            -webkit-box-sizing: border-box;
+                            display: block;
+                            width: 100%;
+                            padding: 8px 0;
+                            color: #666;
+                            text-align: center;                            
+                            text-decoration: none;
+                            border: 1px solid #CCC;
+                        }
+                    #itemBody .item-config .item-setting>div>a:hover{
+                        cursor: pointer;
+                        border-color: #666;
+                    }
+                    #itemBody .item-config .item-setting .open, #itemBody .item-config .item-setting .open:hover{
+                        border-radius: 0;
+                        cursor: pointer;
+                    }
+                    #itemBody .item-config .item-setting .open>a, #itemBody .item-config .item-setting .open>a:hover{
+                        color: #666;
+                        background: #FFF;
+                        border-color: #999;
+                        border-bottom: none;
+                    }
+                    #itemBody .item-config .item-setting .dropdown-menu{
+                        width: 550px;
+                        padding: 0;
+                        padding-bottom: 10px;
+                        margin: 0;
+                        border-radius: 0;
+                        border-color: #999;
+                        border-top: none;
+                        box-shadow: none;
+                        -moz-box-shadow: none;
+                        -webkit-box-shadow: none;
+                        overflow: hidden;
+                        }
+                        #itemBody .item-setting .dropdown-menu>.dropdown-wrap{
+                            width: 100%;
+                        }
+                        #itemBody .item-setting .dropdown-menu .dw-left{
+                            width: 372px;
+                            float: left;
+                            border-top: 1px solid #999;
+                        }
+                        #itemBody .item-setting .dropdown-menu>.dropdown-body{
+                            box-sizing: border-box;
+                            -moz-box-sizing: border-box;
+                            -webkit-box-sizing: border-box;
+                            width: 100%;
+                            padding: 10px;
+                        }
+                        #itemBody .item-setting .dropdown-menu .oc-elem{
+                            box-sizing: border-box;
+                            -moz-box-sizing: border-box;
+                            -webkit-box-sizing: border-box;
+                            width: 160px;
+                            margin: 15px 8px;
+                            float: left;
+                            overflow: hidden;
+                            border: 1px solid #CCC;
+                            cursor: pointer;
+                        }
+                        #itemBody .item-setting .dropdown-menu .oc-elem>a{
+                            display: block;
+                            width: 100%;
+                            padding: 5px 0;
+                            color: #666;
+                            text-decoration: none;
+                        }
+                        #itemBody .item-setting .dropdown-menu .oc-elem>a:hover{
+                            background: #EEE;
+                        }
+                        #itemBody .item-setting .dropdown-menu .oc-elem.active{
+                            border-color: #666;
+                        }
+                        #itemBody .item-setting .dropdown-menu .oc-elem .custom-user-lvl{
+                            display: none;
+                            box-sizing: border-box;
+                            -moz-box-sizing: border-box;
+                            -webkit-box-sizing: border-box;
+                            width: 100%;
+                            padding: 10px 10px 0 10px;
+                            overflow: hidden;
+                            border-top: 1px solid #CCC;
+                            }
+                            #itemBody .item-setting .oc-elem .cl-title{
+                                margin-top: 2px;
+                                float: left;
+                                overflow: hidden;
+                            }
+                            #itemBody .item-setting .oc-elem .cl-select{
+                                width: 55px;
+                                height: 20px;
+                                padding: 0;
+                                float: right;
+                                overflow: hidden;
+                            }
+        #itemBody .item-setting .dropdown-menu .oc-elem:hover .custom-user-lvl{display: block;}
+        #itemBody>.item:hover .item-type{display: none;}
+        #itemBody>.item:hover .item-config{display: block;}
+
         #itemBody>div.item div.item-option{
-            width: 550px;
+            width: 650px;
             margin: 5px 0;
             float: left;
             overflow: hidden;
             }
             div.item div.item-option>div.option{
-                width: 100;
+                width: 100%;
                 margin: 5px 0;
                 float: left;
                 overflow: hidden;
@@ -419,168 +594,582 @@
                 }
                 div.item-option div.option-content>div.option-seq{
                     width: 20px;
-                    padding: 3px 5px;
+                    padding: 1px 5px;
+                    margin-right: 5px;
                     float: left;
-                    font-size: 17px;
+                    font-size: 19px;
                     text-align: right;
-                    color: #999;            
+                    color: #999;
                     text-decoration: underline;
                 }
                 div.item-option>div.option>div>input[type="text"]{
-                    width: 400px;
+                    width: 450px;
                     padding: 2px;
+                    padding-left: 5px;
                     margin: 0;
-                    font: 12px "宋体",Tahoma;  
+                    font: 12px "微软雅黑",Tahoma;  
+                    color: #666;
                 }
                 div.item-option>div.textarea>textarea{
-                    width: 390px;
-                    height: 80px;
-                    margin-bottom: 10px;
-                    margin-left: 30px;
+                    width: 435px;
+                    height: 60px;
+                    margin: 5px 0 10px 35px;
                     background-color: #FCFCFC;
                 }
         #itemBody>div.item div.option-button{
-            width: 630px;
+            width: 640px;
             padding-left: 30px;
             margin-top: 5px;
             float: left;
+            overflow: hidden;
         }
         #itemBody>div.item[data-item-type='textarea']:hover div.option-button{
             display: none;
         }
-        #itemBody div.option-button>div.add-option{
-            float: left;
-        }
-        #itemBody>div.item .custom-option{
-            float: right;
-        }
-        #itemBody>div.item div.custom-option>div.custom-auth{
-            margin-bottom: 5px;
-            overflow: hidden;
-            background: #EFEFEF;
-            }
-            #itemBody>div.item div.custom-option div.auth-elem{
-                width: 100%;
-                padding: 10px 0;
-                float: left;
-                overflow: hidden;
-                font-size: 17px;
-                text-align: center;
-                cursor: pointer;
-                border-left: 5px solid #EFEFEF;
-            }
-            #itemBody>div.item div.custom-auth div.auth-elem:hover{
-                color: #333;
-                border-left-color: #6BB130;
-                }
-                #itemBody>div.item div.auth-some-setting{
-                    display: none;
-                    width: 100%;
-                    margin-top: 10px;
-                    overflow: hidden;
-                    font-size: 12px;
-                    float: left;
-                    }
-                    #itemBody>div.item div.auth-some-setting>label{
-                        position: relative;
-                        top: 2px;
-                        margin-left: 15px;
-                        font-size: 12px;
-                        float: left;
-                        color: #333;
-                    }
-                    #itemBody>div.item div.auth-some-setting>select{
-                        width: 130px;
-                        height: 20px;
-                        padding: 2px;
-                        margin-right: 15px;
-                        float: right;
-                        font: 12px "宋体",Tahoma;
-                    }
-                #itemBody>div.item div.custom-option div.auth-elem.active>div.auth-some-setting{
-                    display: block;
-                }
-    #itemBody div.alter{
+    #itemBody .option-alter{
+        display: none;
+        width: 120px;
         overflow: hidden;
         float: left;
+    }
+    #itemBody .item:hover .option-alter{
+        display: inline;
         }
-        #itemBody div.alter>div{
-            width: 14px;
-            height: 18px;
-            padding: 2px 2px 1px 4px;
+        #itemBody .option-alter>div.alter{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 22px;
+            height: 22px;
+            padding: 2px 0;
+            margin-top: 2px;
+            margin-left: 5px;
             float: left;
+            font-size: 15px;
+            color: #999;
+            text-align: center;
             overflow: hidden;
             border: 1px solid #CCC;
-            color: #333;
-            opacity: 0.7;
         }
-        #itemBody div.option-alter>div{
-            margin-left: 5px;
-        }
-        #itemBody div.item-alter>div{
-            margin-bottom: 5px;
-        }
-        #itemBody div.alter>div:hover{
+        #itemBody .option-alter>div.alter:hover{
             cursor: pointer;
-            background: #CCC;
-            opacity: 1;
+            color: #FFF;
+            border-color: #66CC66;
+            background: #66CC66;
         }
-        #itemBody div.alter>div[data-disabled='true']{
-            opacity: 0.2;
-        }
-        #itemBody div.alter>div[data-disabled='true']:hover{
+        #itemBody div.alter>div.disable, #itemBody div.alter>div.disable:hover{
             cursor: auto;
+            border-color: #FFF;
             background: none;
-            opacity: 0.2;
+            opacity: 0.3;
         }
-    div.item div.popover>.popover-title{
-        font-size: 12px;
-        padding: 5px;
-    }
-    div.item div.popover>.popover-content{
-        font-size: 12px;
-        padding: 5px;
-        }
-        div.item div.popover .add-more-option>textarea{
-            height: 80px;
-        }
-    div.item div.setting{
-        display: none;
-    }
-    div.item:hover div.setting{
-        display: block;
-    }
+        div.item .option-alter>.popover{
+            width: 600px;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            }
+            div.item .popover>.arrow{
+                border-left-color: #CCC ;
+            }
+            div.item .option-alter>.popover>.popover-title{
+                padding: 5px 0 5px 13px;
+                font: 12px "微软雅黑",Tahoma;
+                border-radius: 0;
+            }
+            div.item .option-alter.popover .add-option{
+                width: 100%;
+                font: 12px "微软雅黑",Tahoma;
+                }
+                div.item .option-alter .add-option>.vk-input{
+                    width: 100%;
+                    min-height: 75px;
+                    overflow: hidden;
+                }
+                div.item .option-alter .add-option-button{
+                    width: 100%;
+                    margin: 10px 0;
+                    float: left;
+                    }
+                    div.item .option-alter .add-option button{
+                        width: 40px;
+                        margin-left: 20px;
+                        float: right;
+                    }
 #itemButton{
     width: 100%;
     padding-top: 15px;
+    margin-top: 15px;
     border-top: 1px dotted #CFCFCF;
+    overflow: hidden;
     }
-    #itemButton>div.add-item{
+    #itemButton>.add-item{
         float: left;
-    }
-    #itemButton>div.preview-item{
+        }
+        #itemButton>.add-item>button{
+            float: left;
+            margin-right: 20px;
+        }
+    #itemButton>.preview-item{
         float: right;
     }
-#surveySetting .cs-item{
-    min-height: 60px;
-}
-
-#surveySetting .vf-elem-option{
-    margin-right: 22px;
-    margin-bottom: 3px;
+#surveySetting .cs-content>div{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 170px;
+    height: 100px;
+    margin: 0 30px;
     float: left;
-}
-#surveySetting div.sure input{
-    display: block;
-}
-#targetRange select{
-    width: 250px;
-    font-size: 17px;
-}
+    color: #999;
+    text-align: center;
+    font-size: 19px;
+    font-family: "宋体" ;
+    }
+    #surveySetting .cs-content .se-body{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        height: 65px;
+        float: left;
+    }
+    #surveySetting .cs-content .se-body>a{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        padding: 20px 0;
+        float: left;
+        font: 23px "宋体",Tahoma;
+        text-decoration: none;
+        cursor: pointer;
+        color: #666;
+        border: 1px solid #CCC;
+    }
+    #surveySetting .cs-content .se-body.ok>a{
+        font-weight: 900;
+        color: #6699FF;
+    }
+    #surveySetting .cs-content .se-body>a>i{
+        margin-left: 5px;
+        font-weight: 100;
+        color: #999;
+    }
+    #surveySetting .cs-content .se-body>a:hover, #surveySetting .cs-content .se-body.open>a{
+        border-color: #6699FF;
+    }
+    #surveySetting .cs-content .se-body.open>a{
+        border-color: #6699FF;
+        border-bottom: none;
+    }
+    #surveySetting .cs-content .se-body>.dropdown-menu{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        min-width: 100%;
+        margin: 0;
+        float: left;
+        cursor: pointer;
+        box-shadow: none;
+        -moz-box-shadow: none;
+        -webkit-box-shadow: none;
+        border-radius: 0;
+        overflow: hidden;
+        border-color: #6699FF;
+        }
+        #surveySetting .se-body>.dropdown-menu>a{
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 5px 0;
+            float: left;
+            font: 19px "宋体",Tahoma;
+            color: #666;
+            text-decoration: none;
+        }
+        #surveySetting .se-body>.dropdown-menu>a.sts-tpl{
+            display: none;
+        }
+        #surveySetting .se-body>.dropdown-menu>a:hover{
+            color: #FFF;
+            background: #6699FF;
+        }
+    #surveySetting .dropdown-menu.sv-trade{
+        width: 400px;
+        padding: 10px;
+        }
+        #surveySetting .dropdown-menu.sv-trade>a{
+            width: 25%;
+            margin: 2px 0;
+            float: left;
+            cursor: pointer;
+            box-shadow: none;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            border-radius: 0;
+            overflow: hidden;
+            border-color: #6699FF;
+        }
+        .survey-class[data-sv-type='0'] .survey-type-sub, .survey-class[data-sv-type='0'] .survey-trade{display:none;}
 
+    #surveySetting .cs-content .se-desc{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        height: 35px;
+        padding: 6px 0;
+        overflow: hidden;
+        float: left;
+        font: 19px "宋体",Tahoma;
+        border: 1px solid #CCC;
+        border-top: none;
+    }
+    #surveySetting .end-value input{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        height: 65px;
+        text-align: center;
+        border: 1px solid #CCC;
+        border-radius: 0;
+        font: 27px "宋体",Tahoma;
+        color: #666;
+        font-weight: 100;
+    }
+    #surveySetting .end-value input.ok{
+        color: #6699FF;
+        font-weight: 900;
+    }
+    #surveySetting .end-value input:hover{
+        color: #666;
+        border-color: #6699FF;
+    }
+    #surveySetting .end-value input:focus{
+        font-weight: 100;
+        color: #666;
+        border-color: #6699FF;
+    }
+    #surveySetting .survey-end[data-sv-end='0'] .end-value{display:none}
+    #surveySetting .end-value .end-val-1, #surveySetting .end-value .end-val-2{display: none;}
+    #surveySetting .survey-end[data-sv-end='1'] .end-val-1{display: block;}
+    #surveySetting .survey-end[data-sv-end='2'] .end-val-2{display: block;}
+
+    #surveySetting .end-desc{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 170px;
+        height: 100px;
+        margin: 0 30px;
+        float: left;
+        color: #6699FF;
+        text-align: center;
+        background: #FFF;
+        font: 19px "宋体",Tahoma;  
+        font-weight: 900;      
+        border: 1px solid #6699FF;
+    }
+#surveySetting .survey-range select{
+    width: 630px;
+    height: 35px;
+    margin-left: 30px;
+    padding: 5px;
+    font: 19px "宋体",Tahoma;
+}
+#surveyRecommend .svc-body{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding: 20px 25px;
+    }
+    #surveyRecommend .recomm-elem{
+        width: 180px;
+        height: 160px;
+        border: 1px solid #CCC;
+        float: left;
+        cursor: pointer;
+    }
+    #surveyRecommend .recomm-elem.auto{margin: 0 70px}
+    #surveyRecommend .recomm-elem.none{float: right}
+    #surveyRecommend .re-title{
+        width: 100%;
+        padding: 10px 0;
+        font: 19px "宋体",Tahoma;
+        text-align: center;
+        border-bottom: 1px solid #CCC;
+    }
+    #surveyRecommend .re-desc{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        padding: 20px 10px;
+        text-align: center;
+        font: 19px "宋体",Tahoma;
+        }
+        #surveyRecommend .re-desc .re-value{
+            width: 100%;
+            font-size: 50px;
+            font-weight: 900;
+            color: #666;
+        }
+        #surveyRecommend .re-desc .re-span{
+            width: 100%;
+            margin: 0;
+            float: left;
+            font: 12px "微软雅黑",Tahoma;
+            color: #999;
+        }
+    #surveyRecommend .recomm-elem:hover, #surveyRecommend .recomm-elem.ok{
+        border-color: #FFF;
+    }
+    #surveyRecommend .recomm-elem:hover .re-title{
+        color: #FFF;
+        background: #FF9933;
+        border-color: #FFF;
+    }
+    #surveyRecommend .re-focus{
+        display: none;
+        width: 100%;
+        height: 100%;
+        color: #FFF;
+        background: #FF9933;
+    }
+    #surveyRecommend .re-after{
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: #FF9933;
+        text-align: center;
+    }
+    #surveyRecommend .re-after>.rea-desc{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        padding: 40px 0 10px 0;
+        font: 23px "宋体",Tahoma;
+        color: #FFF;
+    }
+    #surveyRecommend .re-after>.rea-icon{
+        font-size: 60px;
+        color: #FFF;
+    }
+    #surveyRecommend .recomm-elem .re-focus{display: none;}
+    #surveyRecommend .recomm-elem .re-after{display: none;}
+    #surveyRecommend .recomm-elem:hover .re-before, #surveyRecommend .recomm-elem.ok .re-before{display: none;}
+    #surveyRecommend .recomm-elem:hover .re-focus{display: block;}
+    #surveyRecommend .recomm-elem.ok:hover .re-focus{display: none;}
+    #surveyRecommend .recomm-elem.ok .re-after{display: block;}
+
+#surveyRecommend .recomm-self, #surveyRecommend[data-recomm='1'] .recomm-main{display: none;}
+#surveyRecommend[data-recomm='1'] .recomm-self,{display: block;}
+#surveyRecommend .recomm-self .res-sub{
+    width: 100%;
+    overflow: hidden;
+}
+#surveyRecommend .recomm-self .recomm-elem{
+    height: 60px;
+    border-bottom: none;
+}
+#surveyRecommend .recomm-self .recomm-elem.self{
+    height: 45px;
+    padding-top: 15px;
+    font: 23px "宋体",Tahoma;
+    text-align: center;
+    border-color: #FF9933;
+    color: #666;
+    border-bottom: none;
+}
+#surveyRecommend .recomm-self .res-main{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    border: 1px solid #FF9933;
+    border-top: none;
+    overflow: hidden;
+    }
+    #surveyRecommend .recomm-self .res-wrap{
+        width: 506px;
+        height: 15px;
+        float: right;
+        border-top: 1px solid #FF9933;
+    }
+    #surveyRecommend .recomm-self .res-nav{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        height: 80px;
+        padding: 0 20px;
+        float: left;
+        overflow: hidden;
+        }
+        #surveyRecommend .recomm-self .rule-nav{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 90px;
+            height: 70px;
+            margin: 0 30px;
+            float: left;
+            border: 1px solid #999;
+            cursor: pointer;
+        }
+        #surveyRecommend .recomm-self .rule-nav:hover{
+            border-color: #FF9933;
+        }
+        #surveyRecommend .recomm-self .rule-nav.active{
+            height: 80px;
+            border-color: #FF9933;
+            border-bottom: none;
+            cursor: auto;
+            
+            }
+            #surveyRecommend .recomm-self .rule-nav.active>.rule-seq{
+                color: #FF9933;
+                border-color: #FF9933;
+            }
+        #surveyRecommend .recomm-self .rule-add{
+            width: 50px;
+            height: 50px;
+            margin-top: 10px;
+            margin-left: 20px;
+            float: left;
+            border: 1px solid #CCC;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 24px;
+            line-height: 52px;
+            color: #CCC;
+            cursor: pointer;
+        }
+        #surveyRecommend .recomm-self .rule-add:hover{
+            border-color: #EEE;
+            background: #EEE;
+            color: #FFF;
+        }
+        #surveyRecommend .recomm-self .rule-nav>.rule-seq{
+            width: 100%;
+            padding: 5px 0;
+            font: 19px "宋体",Tahoma;
+            text-align: center;
+            color: #666;
+            border-bottom: 1px solid #999;
+        }
+        #surveyRecommend .recomm-self .rule-nav>.rule-num{
+            width: 100%;
+            padding: 7px 0;
+            font: 19px "宋体",Tahoma;
+            text-align: center;
+            font-weight: 900;
+            color: #666;
+        }
+        #surveyRecommend .recomm-self .res-body{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100%;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+        #surveyRecommend .recomm-self .rule-setting{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100%;
+            border-top: 1px solid #FF9933;
+            border-bottom: 1px solid #FF9933;
+            overflow: hidden;
+        }
+        #surveyRecommend .recomm-self .rule-setting>.rst-body{
+            float: left;
+        }
+        #surveyRecommend .recomm-self .rule-setting>.rst-sider{
+            width: 120px;
+            float: right;
+            background: #FFCC99;
+            }
+            #surveyRecommend .recomm-self .rule-setting .rst-menu{
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                width: 100%;
+                padding: 15px 0;
+                float: right;
+                font: 19px "宋体",Tahoma;
+                text-align: center;
+                color: #666;
+                border-left: 3px solid #FFCC99;
+                cursor: pointer;
+            }
+            #surveyRecommend .recomm-self .rule-setting .rst-menu.active, 
+            #surveyRecommend .recomm-self .rule-setting .rst-menu.active:hover{
+                color: #333;
+                background: #FFF;
+                border-color: #FFF;
+                cursor: auto;
+            }
+            #surveyRecommend .recomm-self .rule-setting .rst-menu:hover{
+                color: #333;
+                border-color: #FF9933;
+            }
+        #surveyRecommend .recomm-self .res-footer{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100%;
+            padding: 10px 20px 15px 20px;
+            margin-top: 20px;
+            float: left;
+            background: #FF9933;
+            }
+            #surveyRecommend .recomm-self .res-footer>.recomm-num{
+                width: 200px;
+                margin-top: 8px;
+                margin-right: 30px;
+                font: 19px "宋体",Tahoma;
+                float: left;
+                color: #FFF;
+                }
+                #surveyRecommend .recomm-self .res-footer>.recomm-num>span{
+                    margin-left: 10px;
+                    font-weight: 900;
+                    font-size: 21px;
+                }
+            #surveyRecommend .recomm-self .res-footer>.recomm-confirm{
+                height: 35px;
+                width: 260px;
+                float: left;
+                color: #FF9933;
+            }
+            #surveyRecommend .recomm-self .res-footer>.recomm-cancel{
+                height: 35px;
+                width: 100px;
+                margin-right: 20px;
+                float: right;
+            }
+            #surveyRecommend .recomm-self .res-footer button{
+                width: 100%;
+                color: #FFF;
+                border-color: #FFF;
+                background: #FF9933;
+                cursor: pointer;
+            }
+            #surveyRecommend .recomm-self .res-footer button:hover{
+                color: #FF9933;
+                background: #FFF;
+            }
 #surveyButton{
     width: 100%;
-    padding-top: 20px;
+    padding-top: 50px;
     overflow: hidden;
     }
     #surveyButton>button{
@@ -588,289 +1177,33 @@
         font: 25px "宋体",Tahoma;
         font-weight: 900;
     }
+#footerBox{
+    width: 100%;
+    margin-top: 50px;
+    text-align: center;
+    color: #999;
+}
 
-#surveyDate{
-    border: 0;
-    }
-    #surveyDate table{
-        border-collapse:collapse;
-    }
-    #surveyDate td{ 
-        width: 200px;
-        height: 40px;
-        padding: 0px;
-        border-collapse:collapse;
-    }
-
-#recommChoose{
-    width: 660px;
-    margin: 20px 0 20px 30px;
+#successBox{
+    width: 500px;
+    margin: 50px auto;
     overflow: hidden;
-    float: left;
     }
-    #recommChoose>div.choose-elem{
-        width: 220px;
-        height: 180px;
-        float: left;
-        border-left: 1px solid #EEE;
-        border-right: 1px solid #EEE;
-        box-sizing:border-box;
-        -moz-box-sizing:border-box;
-        -webkit-box-sizing:border-box;
-    }
-    #recommChoose>div.choose-elem[data-recomm='1']{
-            border: 0;
-        }
-        #recommChoose>div.choose-elem>div.type-desc-before{
-            width: 100%;
-            height: 100%;
-            padding: 0 5px;
-            box-sizing:border-box;
-            -moz-box-sizing:border-box;
-            -webkit-box-sizing:border-box;
-        }
-        #recommChoose>div.choose-elem>div.type-desc-after{
-            width: 100%;
-            height: 100%;
-            padding: 20px;
-            display: none;
-            box-sizing:border-box;
-            -moz-box-sizing:border-box;
-            -webkit-box-sizing:border-box;
-        }
-        #recommChoose>div.choose-elem.active>div.type-desc-before{
-            display: none;
-        }
-        #recommChoose>div.choose-elem.active>div.type-desc-after{
-            display: block;
-            font-size: 25px;
-        }
-        #recommChoose>div.choose-elem div.choose-desc{
-            width: 100%;
-            height: 50%;
-            font-size: 17px;
-            text-align: center;
-            }
-            #recommChoose>div.choose-elem div.choose-desc>div.choose-title{
-                width: 100%;
-                float: left;
-                margin-top: 10px;
-                font-size: 29px;
-                color: #666;
-            }
-            #recommChoose>div.choose-elem div.choose-desc>div.choose-detail{
-                display: none;
-                width: 100%;
-                margin-top: 20px;
-                float: left;
-            }
-            #recommChoose>div.choose-elem:hover div.choose-desc>div.choose-title{
-                display: none;
-            }
-            #recommChoose>div.choose-elem:hover div.choose-desc>div.choose-detail{
-                display: block;
-            }
-        #recommChoose>div.choose-elem div.choose-coins{
-            width: 100%;
-            height: 50%;
-            text-align: center;
-            }
-            #recommChoose>div.choose-elem div.choose-coins>div.coins-desc{
-                height: 15px;
-                margin-top: 20px;
-                font: 12px "宋体",Tahoma;
-                color: #888;
-            }
-            #recommChoose>div.choose-elem div.choose-coins>div.coins-value{
-                height: 45px;
-                font: 49px "宋体",Tahoma;
-                color: #666;
-                font-weight: 900;  
-            }
-    #recommChoose>div.choose-elem:hover{
-        background: #EEE;
-        cursor: pointer;
-        }
-    #recommChoose>div.choose-elem.active{
-        cursor: pointer;
-        background: #6BB130;
-        color: #FFF
-    }
-#recommendRule{
-    width: 800px;
-    height: auto;
-    margin-left: -400px;
-    overflow: hidden;
-    border-radius: 0;
-    border-top: 5px solid #6BB130;
-    }
-    #recommendRule>div.modal-header{
-        padding: 5px;
-        overflow: hidden;
-        }
-        #recommendRule div.name{
-            height: 100%;
-            float: left;
-            font-weight: 900;
-            text-align: center;
-            font: 21px "宋体",Tahoma;
-            color: #333;
-        }
-        #recommendRule button.rule-cancel{
-            float: right;
-            font-weight: 100;
-            opacity: 1;
-        }
-    #recommendRule>div.modal-body{
-        padding: 0;
-        color: #000;
-    }
-    #recommendRule div.recomm-rule-body{
-        width: 675px;
-        height: 100%;
-        min-height: 300px;
-        padding: 20px;
-        float: left;
-        box-sizing:border-box;
-        -moz-box-sizing:border-box;
-        -webkit-box-sizing:border-box;
-        border-right: 1px solid #CCC;
-        }
-        #recommendRule div.recomm-rule-body>div.tab-pane{
-            width: 100%;
-            }
-            #recommendRule div.recomm-rule-body .vf-elem-option{
-                min-width: 150px;
-                margin: 4px;
-            }
-            #recommendRule div.recomm-rule-body .vf-elem-option.large{
-                min-width: 300px;
-            }
-    #recommendRule div.recomm-rule-side{
-        width: 125px;
-        height: 100%;
-        min-height: 300px;
-        float: right;
-        overflow: hidden;
-        }
-        #recommendRule div.recomm-rule-side div.recomm-rule-option{
-            width: 100%;
-            margin: 10px 0;
-            overflow: hidden;
-            border-bottom: 1px solid #CCC;
-            }
-            #recommendRule div.recomm-rule-option ul{
-                width: 100%;
-                margin: 0;
-                padding: 10px 0;
-                }
-                #recommendRule div.recomm-rule-option ul>li{
-                    width: 100%;
-                    }
-                    #recommendRule div.recomm-rule-option ul>li>a{
-                        margin: 0;
-                        color: #333;
-                        font: 17px "宋体",Tahoma;
-                        border-radius: 0;
-                        border-top: 1px solid #FFF;
-                        border-bottom: 1px solid #FFF;
-                    }
-                    #recommendRule div.recomm-rule-option ul>li.active>a{
-                        margin: 0;
-                        background: #EEE;
-                        border-top: 1px solid #CCC;
-                        border-bottom: 1px solid #CCC;
-                    }
-                    #recommendRule div.recomm-rule-option ul>li:hover>a{
-                        cursor: pointer;
-                        opacity: 0.9;
-                        }
-                        #recommendRule div.recomm-rule-option ul>li i{
-                            margin-right: 8px;
-                            float: right;
-                            position: relative;
-                            top: 4px;
-                            opacity: 0;
-                        }
-                        #recommendRule div.recomm-rule-option ul>li.valid i{
-                            opacity: 0.7;
-                        }
-                        div.recomm-rule-option ul>li i.icon-remove{
-                            display:none;
-                        }
-                        div.recomm-rule-option ul>li.valid i{
-                            opacity: 1;
-                        }
-                        div.recomm-rule-option ul>li.valid:hover i.icon-ok{
-                            display:none;
-                        }
-                        div.recomm-rule-option ul>li.valid:hover i.icon-remove{
-                            display:block;
-                        }
-
-    #recommendRule>div.modal-footer{
-        width: 100%;
-        padding: 10px;
-        float: left;
-        box-sizing:border-box;
-        -moz-box-sizing:border-box;
-        -webkit-box-sizing:border-box;
-        }
-        #recommendRule div.recomm-rule-stats{
-            width: 220px;
-            padding: 10px 0;
-            float: left;
-            overflow: hidden;
-            font: 19px "宋体",Tahoma; 
-            text-align: center;
-            border-right: 1px solid #CCC;
-            }
-            #recommendRule div.recomm-rule-stats>div.desc{ 
-                width: 130px;
-                float: left;
-            }
-            #recommendRule div.recomm-rule-stats>div.value{ 
-                width: 90px;
-                float: right;
-            }
-        #recommendRule div.recomm-rule-submit{
-            width: 500px;
-            height: 40px;
-            float: right;
-            }
-            #recommendRule div.recomm-rule-submit>button{
-                width: 100%;
-                height: 100%;
-                font: 17px "宋体",Tahoma; 
-            }
-
-#successModal{
-    top: 200px;
-    border-radius: 0;
-    font-family: "宋体",Tahoma;
-    }
-    #successModal>div.modal-header{
-        padding: 20px 0;
-        font-size: 27px;
+    #successBox>label{
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+        font: 29px "宋体",Tahoma;
+        color: orange;
         font-weight: 900;
-        text-align: center;
-        color: #6BB130;
-    }
-    #successModal>div.modal-body{
-        padding: 0;
-        background: #000;
+        border-bottom: 1px solid orange;
         }
-        #successModal>div.modal-body>div.next-action{
-            width: 50%;
-            padding: 30px 0;
-            font-size: 21px;
-            float: left;
-            text-align: center;
-            background: #6BB130;
+        #successBox>label>i{
+            margin-right: 10px;
         }
-        #successModal>div.modal-body>div.next-action:hover{
-            cursor: pointer;;
-            font-size: 31px;
-            color: #FFF;
-            opacity: 0.9;
-        } 
+    #successBox .suc-next>a{
+        display: block;
+        width: 100%;
+        margin-bottom: 10px;
+        float: left;
+        font: 25px "宋体",Tahoma;
+        }   

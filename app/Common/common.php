@@ -373,4 +373,50 @@ function vkSearch($type, $words){
     }
 }
 
+/*
+ * @Name   : vkPath
+ * @Desc   : 项目路径
+ * @Param  : string  $type   搜索类型
+ * @Param  : string  $words  搜索关键字
+ * @Return : array   $data   搜索结果
+ */
+function vkPath($page, $target){
+    $path = array() ;
+
+    if($code = M(TB_SYS_PAGE_PATH_CONFIG) -> where("path_name = '$page'") -> getField('path_code')){
+        do{
+            $data = M(TB_SYS_PAGE_PATH_CONFIG) -> where("path_code = $code") -> find() ;
+
+            // 目标页面URL全写
+            $target && $data['url_param'] ? 
+                $data['url'] = U($data['path_value']) . '?' . $data['url_param'] . '=' . $target : $data['url'] = U($data['path_value']) ;
+
+            if($target && $data['table_name']){
+                $cond = $data['key_input'] . '=' . $target ;
+                $data['target'] = M(constant($data['table_name'])) -> where($cond) -> getField($data['key_output']) ;
+
+                // 替换换行符和占位符为空格字符串
+                $data['target'] = str_replace(array('<br>', '&nbsp;'), ' ', $data['target']) ;
+            }
+
+            // 删除不需要的字段
+            unset($data['path_code']) ;
+            unset($data['path_value']) ;
+            unset($data['url_param']) ;
+            unset($data['table_name']) ;
+            unset($data['key_input']) ;
+            unset($data['key_output']) ;
+
+            array_unshift($path, $data) ;
+        }while($code = $data['path_parent']) ;
+    }else{
+        return false ;
+    }
+
+    $path[count($path) - 1]['active'] = true ;
+
+    return $path ;
+
+}
+
 ?>

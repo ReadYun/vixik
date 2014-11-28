@@ -17,7 +17,7 @@
         margin: 10px 0;
         float: left;
         overflow: hidden;
-        border-left: 5px solid #6BB130;
+        border-left: 3px solid #CCC;
     }
     .vf-elem{
         margin-right: 20px;
@@ -28,3 +28,42 @@
         width: 100%;
         margin-bottom: 20px;
     }
+
+#vkEdit .vk-form-style{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 20px;
+    }
+    #vkEdit .vk-form-style .vf-header{
+        padding-left: 10px;
+        margin-bottom: 10px;
+        font: 21px "宋体",Tahoma;
+        border-left: 5px solid #6BB130;
+    }
+    #vkEdit .vi-elem{
+        width: 600px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        }
+        #vkEdit .vi-elem label{
+            width: 50px;
+            padding-top: 2px;
+            float: left;
+            overflow: hidden;
+            font: 19px "宋体",Tahoma;
+        }
+        #vkEdit .vf-input{
+            margin-bottom: 10px;
+        }
+        #vkEdit .vi-elem.vixik label{color: #6BB130;}
+        #vkEdit .vi-elem.blue label{color: #6699FF;}
+        #vkEdit .vi-elem.green label{color: #66CC66;}
+        #vkEdit .vi-elem.orange label{color: #FF9933;}
+
+
+
+
+
+

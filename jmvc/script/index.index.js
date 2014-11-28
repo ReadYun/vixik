@@ -68,7 +68,8 @@ steal('init.js')
 	                text: ''
 	            },
 	            subtitle: {
-	                text: '最近一个月发布调查活动数量统计'
+	                text  : '最近一个月发布调查活动数量统计',
+	                style : {fontSize:'19px', color:'#666'},
 	            },
 	            xAxis: {
 	                categories : date$ ,
@@ -137,7 +138,8 @@ steal('init.js')
 	                text: ''
 	            },
 	            subtitle: {
-	                text: '最近一个月参与调查活动用户统计'
+	                text  : '最近一个月参与调查活动用户统计',
+	                style : {fontSize:'19px', color:'#666'},
 	            },
 	            xAxis: {
 	                categories : date$ ,
@@ -193,47 +195,6 @@ steal('init.js')
         }
     }) ;
 
-    /*
-     * 调查行动控制器
-     *
-     **/
-    $.Controller('Home.Index.Ctrl.Action', {
-        defaults : {
-            models$    : {}               ,// 页面总模型
-            $actionBox : $('#actionBox')  ,// 调查行动模块
-        }
-    }, {
-        init : function(){
-        	this.highchart() ;
-        },
-
-        highchart : function(){
-        	var data$, model, eval_str,
-        	    $this = this ;
-
-        	var theme$ = {
-	            // 图表颜色方案
-	            //  colors : ['#3399FF','#FF7F50','#87CEFA','#DA70D6','#32CD32','#FFD700','#33A6F2','#CC6633','#3CB371','#FF00FF','#FFF263'],
-
-	            // 名片设置
-	            credits : {
-	                enabled : false
-	            }
-        	}
-
-			this.element.find('.highchart').each(function(){
-				model    = $(this).attr('data-model') ;
-				eval_str = 'data$ = $this.options.models$.' + model ;
-				eval(eval_str) ;
-
-				$(this).vkHighChart(data$, ['gray', theme$]) ;
-			}) ;
-        }, 
-
-        "button click" : function(el){
-        	window.location.href = el.attr('href') ;
-        }
-    }) ;
 
     /*
      *  调查类型控制器
@@ -318,7 +279,7 @@ steal('init.js')
 							        },
 							        title: {
 							            text  : '丰富多样的调查类型，总有一款适合你',
-							            style : {fontSize:'29px', color:'#FFF'},
+							            style : {fontSize:'29px', color:'#666'},
 							        },
 							        yAxis: {
 							            title: {
@@ -356,7 +317,7 @@ steal('init.js')
 							                    // display only if larger than 1
 							                    return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.point.rate + '%': null ;
 							                },
-							                color: '#FFF'
+							                color: '#666'
 							            }
 							        }]
 				        		},
@@ -367,6 +328,49 @@ steal('init.js')
                 }
             ) ;
         },
+    }) ;
+
+    /*
+     * 调查行动控制器
+     *
+     **/
+    $.Controller('Home.Index.Ctrl.Action', {
+        defaults : {
+            models$    : {}               ,// 页面总模型
+            $actionBox : $('#actionBox')  ,// 调查行动模块
+        }
+    }, {
+        init : function(){
+        	this.highchart() ;
+        },
+
+        highchart : function(){
+        	var data$, model, eval_str,
+        	    $this = this ;
+
+        	var theme$ = {
+	            // 图表颜色方案
+	            //  colors : ['#3399FF','#FF7F50','#87CEFA','#DA70D6','#32CD32','#FFD700','#33A6F2','#CC6633','#3CB371','#FF00FF','#FFF263'],
+
+	            // 名片设置
+	            credits : {
+	                enabled : false
+	            }
+        	}
+
+			this.element.find('.highchart').each(function(){
+				model    = $(this).attr('data-model') ;
+				eval_str = 'data$ = $this.options.models$.' + model ;
+				eval(eval_str) ;
+
+				$(this).vkHighChart(data$) ;
+				// $(this).vkHighChart(data$, ['gray', theme$]) ;
+			}) ;
+        }, 
+
+        "button click" : function(el){
+        	window.location.href = el.attr('href') ;
+        }
     }) ;
 
     /*

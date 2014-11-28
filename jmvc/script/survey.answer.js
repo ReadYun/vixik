@@ -37,39 +37,33 @@ steal('init.js')
                 models$     = this,
                 survey_code = models$.survey_code ;
 
-            // 根据不同的类型获取调查相关数据
-            if(models$.survey_code === 'preview'){
-                // 创建调查预览题目类型
-                models$.survey$ = $.parseJSON($.cookie('survey_preview')) ;
-            }else{
-                // 正式参与调查类型
-                // 取调查基本数据（访问调查信息查询接口）
-                $.ajax({
-                    type    : 'post',
-                    url     : __API__,
-                    data    : {api:'survey_info_find', survey_code:survey_code},
-                    async   : false,
-                    success : function(data$){
-                        if(data$.status){
-                            models$.survey$.info       = data$.data.info ;
-                            models$.survey$.question$  = data$.data.question ;
-                        }
+            // 正式参与调查类型
+            // 取调查基本数据（访问调查信息查询接口）
+            $.ajax({
+                type    : 'post',
+                url     : __API__,
+                data    : {api:'survey_info_find', survey_code:survey_code},
+                async   : false,
+                success : function(data$){
+                    if(data$.status){
+                        models$.survey$.info       = data$.data.info ;
+                        models$.survey$.question$  = data$.data.question ;
                     }
-                });
+                }
+            });
 
-                // 取用户参与调查行为相关配置信息（访问用户行为配置规则查询接口）
-                $.ajax({
-                    type    : 'post',
-                    url     : __API__,
-                    data    : {api:'user_action_cfg_select', action:$.toJSON([{code:1001, value:survey_code}])},
-                    async   : false,
-                    success : function(data$){
-                        if(data$.status){
-                            models$.action$ = data$.data[1001] ;
-                        }
+            // 取用户参与调查行为相关配置信息（访问用户行为配置规则查询接口）
+            $.ajax({
+                type    : 'post',
+                url     : __API__,
+                data    : {api:'user_action_cfg_select', action:$.toJSON([{code:1001, value:survey_code}])},
+                async   : false,
+                success : function(data$){
+                    if(data$.status){
+                        models$.action$ = data$.data[1001] ;
                     }
-                });
-            }
+                }
+            });
         }
     }) ;
 
@@ -80,14 +74,17 @@ steal('init.js')
     $.Controller('Survey.Action.Ctrl.Answer', {
         defaults : {
             models$      : {}                 ,// 页面总模型
-            $questionBox : $('#questionBox')  ,// 调查问题DOM
+            $question    : $('#question')     ,// 调查问题DOM
             $hintBar     : $('#hintBar')      ,// 调查提示栏DOM
             $itemFlag    : $('#itemFlag')     ,// 题目状态栏DOM对象
+            $svHeader    : $('#svHeader')     ,// 调查头部DOM对象
             $aswProgress : $('#aswProgress')  ,// 答题进度提示DOM对象
         },
         listensTo : ["progress_hint", "data_collect"]
     }, {
         init : function(){
+            var $this = this ;
+
             // 问题清单生成
             this.question_list(0) ;
 
@@ -96,6 +93,124 @@ steal('init.js')
                 __JMVC_VIEW__ + 'survey.answer.flag.ejs'                           ,// 题目状态列表模板路径
                 {seq: seqArray(1, this.options.models$.survey$.question$.length)}   // 调用快速序列生成满足题目数量序列
             ) ;
+
+            if($this.options.models$.survey$.info.survey_desc == null || $this.options.models$.survey$.info.survey_desc == ''){
+                $this.options.$svHeader.find('i').remove() ;
+            }
+        },
+
+        // 点击状态栏题目序号快速定位到对应题目
+        ".item-flag click" : function(el){
+            var $item = this.options.$question.find('.question[data-question_seq=' + el.text() + ']') ;
+
+            window.scrollTo(0, $item.offset().top - 130) ;
+        },
+
+        "i.icon-double-angle-down click" : function(el){
+            this.options.$svHeader.addClass('desc') ;
+        },
+        "i.icon-double-angle-up click" : function(el){
+            this.options.$svHeader.removeClass('desc') ;
+        },
+
+        // 主观题失去焦点事件
+        "textarea blur" : function(el){
+            this.progress_hint() ;
+        },
+
+        // 点击包含有自定义选项的radio，消除对应的自定义选项
+        "input ifClicked" : function(el){
+            if(el.parents('.question').attr('data-question_type') == 'radio'){
+                this.element.find('.question').not(el.parent('.question')).find('.custom-option').each(function(){
+                    if($(this).attr('data-state') == 1){
+                        $(this).attr('data-state', -1) ;
+                        $(this).find('input.custom-opt').iCheck('uncheck') ;
+                    }
+                }) ;
+
+                el.iCheck('check') ;
+            }
+        },
+
+        // 调查数据提交
+        "#submit>button click" : function(el){
+            var $this   = this,
+                models$ = $this.options.models$ ;
+
+            if(this.options.$main.attr('data-survey') === 'preview'){
+                alert('预览调查模拟提交') ;
+            }else{
+                // 提交前先校验用户是否已登录
+                if(vixik$.user_verify({trigger$:{false:['login']}})){
+                    // 收集数据（需交验）
+                    if(this.data_collect(1)){
+                        // 自定义选项信息处理
+                        models$.custom$ = [] ;
+                        this.element.find('.custom-option').each(function(){
+                            $(this).trigger('data_collect') ;
+                        }) ;
+
+                        // 如果有自定义选项信息，访问自定义选项增加接口提交数据
+                        if(models$.custom$.length > 0){
+                            $.ajax({
+                                type    : 'post',
+                                url     : __API__,
+                                data    : { api           : 'survey_custom_option_add',
+                                            user_code     : $.cookie('user_code'),     // 用户编码
+                                            survey_code   : models$.survey_code,       // 调查编码
+                                            custom_option : $.toJSON(models$.custom$)  // 自定义选项信息
+                                          },
+                                async   : false,
+                                success : function(data$){
+                                    if(data$.status){
+                                        alert('您的自定义选项已创建成功') ;
+
+                                        // 自定义选项创建完成后更新自定义选项编码
+                                        for(var i = 0; i < data$.data.length; i++){
+                                            $this.element.find('.custom-option [name=' + data$.data[i].question_code + ']')
+                                            .attr('value', data$.data[i]['option_code']) ;
+                                        }
+                                    }else{
+                                        alert('您的自定义选项未创建成功，请检查设置') ;
+                                        return false ;
+                                    }
+                                }
+                            });
+                        }
+
+                        // 收集答题数据（需要做数据校验）成功后提交到服务器
+                        if($this.data_collect(1)){
+                            var survey$ = {} ;
+
+                            // 调查参与其他信息汇总
+                            survey$.user_code   = models$.user_code ;
+                            survey$.survey_code = models$.survey_code ;
+                            survey$.get_score   = models$.action$.user_score ;
+                            survey$.get_coins   = models$.action$.user_coins ;
+                            survey$.start_time  = moment(models$.start_time).format("YYYY-MM-DD HH:mm:ss") ;
+                            survey$.end_time    = moment().format("YYYY-MM-DD HH:mm:ss") ;
+                            survey$.use_times   = 
+                                moment(survey$.end_time, "YYYY-MM-DD HH:mm:ss").diff(moment(models$.start_time, "YYYY-MM-DD HH:mm:ss")) / 1000 ;
+
+                            // 访问接口提交数据
+                            $.post(__API__, 
+                                {
+                                    api      : 'survey_answer_submit'       ,// 调查参与提交接口
+                                    survey   : $.toJSON(survey$)            ,// 参与调查信息
+                                    question : $.toJSON(models$.question$)  ,// 参与题目信息
+                                },
+                                function(data$){
+                                    if(data$.status){  // 提交成功更新页面
+                                        $this.options.$main.trigger('answer_judage') ;
+                                    }else{
+                                        alert(data$.data) ;
+                                    }
+                                }
+                            ) ;
+                        }
+                    }
+                }
+            }
         },
 
         // 问题列表展示
@@ -106,12 +221,15 @@ steal('init.js')
 
             // 调查题目内容生成
             if(question$[num]){
-                $this.options.$questionBox.append(
+                $this.options.$question.append(
                     __JMVC_VIEW__ + 'survey.answer.question.ejs',  // 调查题目模板路径
                     {data: question$[num]},
                     function(item){
                         // 定位最新生成的题目
-                        $question = this.find('.question-item').last() ;
+                        $question = this.find('.question').last() ;
+
+                        // 包含空格和换行符在用模板无法显示。。暂时先单独再匹配一下
+                        $question.find('.qt-title').html(question$[parseInt($question.attr('data-question_seq'))-1].question_name) ;
 
                         //  表单元素使用iCheck样式
                         $question.find('.vf-elem-option input').iCheck({
@@ -172,46 +290,12 @@ steal('init.js')
             this.options.$aswProgress.text(parseInt(question$.length * 100 / $flagElem.size()) + '%') ;
         },
 
-        // 点击状态栏题目序号快速定位到对应题目
-        "div.item-flag click" : function(el){
-            var seq   = el.text(),
-                $item = $('div.seq-' + seq) ;
-
-            window.scrollTo(0, $item.offset().top - 130) ;
-        },
-
-        // 查看调查详情点击事件
-        ".sv-desc>i click" : function(el){
-            var $this = this ;
-
-            // 新打开页面到调查访问
-        },
-
-        // 主观题失去焦点事件
-        "textarea blur" : function(el){
-            this.progress_hint() ;
-        },
-
-        // 点击包含有自定义选项的radio，消除对应的自定义选项
-        "input ifClicked" : function(el){
-            if(el.parents('.question-item').attr('data-question_type') == 'radio'){
-                this.element.find('.question-item').not(el.parent('.question-item')).find('.custom-option').each(function(){
-                    if($(this).attr('data-state') == 1){
-                        $(this).attr('data-state', -1) ;
-                        $(this).find('input.custom-opt').iCheck('uncheck') ;
-                    }
-                }) ;
-
-                el.iCheck('check') ;
-            }
-        },
-
         // 答题信息数据收集与校验
         data_collect : function(check){
             var flag, $item,
 
             // 数据收集
-            data$ = this.options.$questionBox.vkForm('get_value', {
+            data$ = this.options.$question.vkForm('get_value', {
                 get_type    : '3',
                 get_null    : false,
                 check_null  : check,
@@ -225,95 +309,13 @@ steal('init.js')
                 this.options.models$.question$ = data$.data ;  // 送数据进总模型
                 return true ;
             }else{
-                $item  = this.element.find('div.question-item[data-question_code=' + data$.info + ']') ;
+                $item  = this.element.find('div.question[data-question_code=' + data$.info + ']') ;
 
                 alert('题目【 ' + $item.find('div.qt-name').text() + '】 是必选项') ;
                 window.scrollTo(0, $item.offset().top - 130) ;
                 return false ;
             }
         },
-
-        // 调查数据提交
-        "#submit>button click" : function(el){
-            var question_code,
-                $this   = this,
-                models$ = $this.options.models$ ;
-
-            // 提交前先校验用户是否已登录
-            if(vixik$.user_verify({trigger$:{false:['login']}})){
-                // 收集数据（需交验）
-                if(this.data_collect(1)){
-                    if(parseInt(models$.survey_code) > 10000000){
-                        // 自定义选项信息处理
-                        models$.custom$ = [] ;
-                        this.element.find('.custom-option').each(function(){
-                            $(this).trigger('data_collect') ;
-                        }) ;
-
-                        // 如果有自定义选项信息，访问自定义选项增加接口提交数据
-                        if(models$.custom$.length > 0){
-                            $.ajax({
-                                type    : 'post',
-                                url     : __API__,
-                                data    : { api           : 'survey_custom_option_add',
-                                            user_code     : $.cookie('user_code'),     // 用户编码
-                                            survey_code   : models$.survey_code,       // 调查编码
-                                            custom_option : $.toJSON(models$.custom$)  // 自定义选项信息
-                                          },
-                                async   : false,
-                                success : function(data$){
-                                    if(data$.status){
-                                        alert('您的自定义选项已创建成功') ;
-
-                                        // 自定义选项创建完成后更新自定义选项编码
-                                        for(var i = 0; i < data$.data.length; i++){
-                                            $this.element.find('.custom-option [name=' + data$.data[i].question_code + ']')
-                                            .attr('value', data$.data[i]['option_code']) ;
-                                        }
-                                    }else{
-                                        alert('您的自定义选项未创建成功，请检查设置') ;
-                                        return false ;
-                                    }
-                                }
-                            });
-                        }
-
-                        // 收集答题数据（需要做数据校验）成功后提交到服务器
-                        if($this.data_collect(1)){    
-                            var survey$ = {} ;
-
-                            // 调查参与其他信息汇总
-                            survey$.user_code   = models$.user_code ;
-                            survey$.survey_code = models$.survey_code ;
-                            survey$.get_score   = models$.action$.user_score ;
-                            survey$.get_coins   = models$.action$.user_coins ;
-                            survey$.start_time  = moment(models$.start_time).format("YYYY-MM-DD HH:mm:ss") ;
-                            survey$.end_time    = moment().format("YYYY-MM-DD HH:mm:ss") ;
-                            survey$.use_times   = 
-                                moment(survey$.end_time, "YYYY-MM-DD HH:mm:ss").diff(moment(models$.start_time, "YYYY-MM-DD HH:mm:ss")) / 1000 ;
-
-                            // 访问接口提交数据
-                            $.post(__API__, 
-                                {
-                                    api      : 'survey_answer_submit'       ,// 调查参与提交接口
-                                    survey   : $.toJSON(survey$)            ,// 参与调查信息
-                                    question : $.toJSON(models$.question$)  ,// 参与题目信息
-                                },
-                                function(data$){
-                                    if(data$.status){  // 提交成功更新页面
-                                        $this.options.$main.trigger('answer_judage') ;
-                                    }else{
-                                        alert('调查提交未成功，请检查答题内容') ;
-                                    }
-                                }
-                            ) ;
-                        }
-                    }else{
-                        alert('预览调查模拟提交') ;
-                    }
-                }
-            }
-        }
     }) ;
 
     /*
@@ -349,7 +351,7 @@ steal('init.js')
 
         // 设置完成提交按钮功能
         "button.co-submit click" : function(el){
-            var question_code = this.element.parents('.question-item').attr('data-question_code'),
+            var question_code = this.element.parents('.question').attr('data-question_code'),
                 value = this.element.find('.custom-opt-name>input').val(),
                 spare = this.element.find('.custom-opt-spare>select').val(),
                 $elem = this.element.find('.custom-opt-result>.cor-option') ;
@@ -418,7 +420,7 @@ steal('init.js')
                 var data$ = {
                     option_name   : this.element.find('.custom-opt-name input').val(),                  // 自定义选项名称
                     custom_spare  : this.element.find('.custom-opt-spare select').val(),                // 自定义选项对应备用选项编码
-                    question_code : this.element.parents('.question-item').attr('data-question_code'),  // 对应问题编码
+                    question_code : this.element.parents('.question').attr('data-question_code'),  // 对应问题编码
                 }
 
                 this.options.models$.custom$.push(data$) ;
@@ -514,11 +516,20 @@ steal('init.js')
         listensTo : ["answer_judage"]
     }, {
         init : function(){
+            var survey_code ;
+
+            // 根据不同的类型获取调查相关数据
+            if(this.element.attr('data-survey') === 'preview'){
+                survey_code = $.cookie('sv_preview') ;
+            }else{
+                survey_code = this.element.attr('data-survey') ;
+            }
+
             // 新建模型实例并初始化
             this.options.models$ = new Survey.Action.Model({    
                 user$       : vixik$.user$                            ,// 用户总模型
                 user_code   : $.cookie('user_code')                   ,// 用户编码
-                survey_code : this.element.attr('data-survey')        ,// 调查编码
+                survey_code : survey_code                             ,// 调查编码
                 start_time  : moment().format("YYYY-MM-DD HH:mm:ss")  ,// 开始时间
             }) ;
 

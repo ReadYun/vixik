@@ -19,7 +19,8 @@ return array(
         '__APPCMN__' => __APP__  . '/Common',                //项目公共文件路径
         '__JMVC__'   => __ROOT__ . '/jmvc',                  //项目JMVC文件路径
         '__PUBLIC__' => __JMVC__ . '/public',                //项目JMVC文件路径
-        '__COM__'    => 'http://localhost/vixik/index.php',  //网站根目录
+        '__COM__'    => 'http://localhost/vixik/index.php',  //网站根目录（本地）
+        // '__COM__'    => 'http://readyun.gicp.net/vixik/index.php',  //网站根目录（花生壳）
     ),
 
     /*项目函数库加载设置*/

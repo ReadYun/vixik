@@ -44,7 +44,7 @@ function surveyCreate($user_code){
  * @Return : array    $data         调查信息汇总数据（基本信息/题目统计/答题统计/关注统计）
  */
 function surveyInfoFind($survey_code){
-$survey = M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> find() ;
+    $survey = M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> find() ;
 
     if($survey){
         $survey['answer_count'] = M(TB_BAS_SURVEY_ACTION)      -> where("survey_code = '$survey_code'") -> count() ;  // 参与统计
@@ -63,16 +63,38 @@ $survey = M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> find
  * @Param  : integer  $survey_code  调查编码
  * @Return : array    $survey       调查信息汇总数据（基本信息/题目统计/答题统计）
  */
-function surveyInfoSelect($survey_code, $url){
-    $survey['info'] = M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> find() ;
+function surveyInfoSelect($survey_code, $base){
+    $tbBasUserInfo      = M(TB_BAS_USER_INFO)       -> getTableName() ;
+    $tbBasSurveyInfo    = M(TB_BAS_SURVEY_INFO)     -> getTableName() ;
+    $tbDetSurveyTypeSub = M(TB_DET_SURVEY_TYPE_SUB) -> getTableName() ;
+    $tbDetSurveyTrade   = M(TB_DET_SURVEY_TRADE)    -> getTableName() ;
+
+    // 先更新下调查状态
+    surveyState($survey_code) ;
+
+    if($base){
+        $survey['info'] = M(TB_BAS_SURVEY_INFO) -> where("survey_code = $survey_code") -> find() ;
+    }else{
+        $sql = "select t0.*, t1.survey_type_name, t1.survey_type_sub_name, t2.survey_trade_name
+                from ( 
+                  select a.*, b.user_photo,  date_relative_now(a.start_time) start_date
+                  from $tbBasSurveyInfo a, $tbBasUserInfo b
+                  where a.user_code = b.user_code and survey_code = $survey_code) t0
+                left outer join $tbDetSurveyTypeSub t1 on t0.survey_type_sub = t1.survey_type_sub_code
+                left outer join $tbDetSurveyTrade   t2 on t0.survey_trade    = t2.survey_trade_code " ;
+        $survey['info'] = M() -> query($sql)[0] ;
+    }
 
     if($survey['info']){
         // $survey['info']['survey_desc'] = str_replace("\n", "<br/>", $survey['info']['survey_desc']) ;           // 调查说明输出前换行符转换
-        $survey['url']['url_user']    = U('user/user/visit')       . '?code=' . $survey['info']['user_code'] ;    // 调查创建者访问地址
-        $survey['url']['url_create']  = U('survey/survey/create')  . '?code=' . $survey['info']['survey_code'] ;  // 调查参与地址
-        $survey['url']['url_visit']   = U('survey/survey/visit')   . '?code=' . $survey['info']['survey_code'] ;  // 调查参与地址
-        $survey['url']['url_answer']  = U('survey/survey/answer')  . '?code=' . $survey['info']['survey_code'] ;  // 调查参与地址
-        $survey['url']['url_analyse'] = U('survey/survey/analyse') . '?code=' . $survey['info']['survey_code'] ;  // 调查分析地址
+        $survey['url']['url_user']     = U('user/user/visit')       . '?code='  . $survey['info']['user_code'] ;        // 调查创建者访问地址
+        $survey['url']['url_create']   = U('survey/survey/create')  . '?code='  . $survey['info']['survey_code'] ;      // 调查创建地址
+        $survey['url']['url_visit']    = U('survey/survey/visit')   . '?code='  . $survey['info']['survey_code'] ;      // 调查访问地址
+        $survey['url']['url_answer']   = U('survey/survey/answer')  . '?code='  . $survey['info']['survey_code'] ;      // 调查参与地址
+        $survey['url']['url_analyse']  = U('survey/survey/analyse') . '?code='  . $survey['info']['survey_code'] ;      // 调查分析地址
+        $survey['url']['url_type']     = U('survey/survey/type')    . '?type='  . $survey['info']['survey_type'] ;      // 调查归属大类地址
+        $survey['url']['url_type_sub'] = U('survey/survey/type')    . '?type='  . $survey['info']['survey_type_sub'] ;  // 调查归属小类地址
+        $survey['url']['url_trade']    = U('survey/survey/trade')   . '?trade=' . $survey['info']['survey_type'] ;      // 调查行业地址
 
         $survey['stats']['answer_count'] = M(TB_BAS_SURVEY_ACTION)      -> where("survey_code = '$survey_code'") -> count() ;  // 参与统计
         $survey['stats']['follow_count'] = M(TB_BAS_USER_FOLLOW_SURVEY) -> where("follow_code = '$survey_code'") -> count() ;  // 收藏统计
@@ -99,11 +121,54 @@ function surveyInfoSelect($survey_code, $url){
                 }
             }
         }
-
+        
         return $survey ;
     }else{
         return false ;
     }
+}
+
+/*
+ * @Name   : surveyState
+ * @Desc   : 调查状态处理
+ * @Param  : integer  $survey_code   调查编码
+ * @Return : integer  $survey_state  调查最新状态
+ */
+function surveyState($survey_code){
+    $survey               = M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> find() ;
+    $data['survey_state'] = $survey['survey_state'] ;
+
+    if($survey['survey_state'] == 3){
+        switch($survey['end_type']){
+            // 按人数结束
+            case 1 :
+                // 统计如已参与调查人数大于（或等于）设定人数，活动结束
+                if(M(TB_BAS_SURVEY_ACTION) -> where("survey_code = '$survey_code'") -> count() >= $survey['end_value']){
+                    $data['survey_state'] = 4 ;
+                    $data['state_time']   = $data['end_time'] = date('Y-m-d H:i:s') ;
+
+                    M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> setField($data) ;
+                }
+                break ;
+
+            case 2 :  // 按日期结束
+                $now        = date('Y-m-d H:i:s') ;
+                $length_day = $survey['end_value'] ;
+                $start_time = $survey['start_time'] ;
+                $end_time   = date('Y-m-d H:i:s', strtotime("$start_time + $length_day day")) ;
+
+                // 计算如已当前时间超出（或等于）设定的结束时间，活动结束
+                if($now >= $end_time){
+                    $data['survey_state'] = 4 ;
+                    $data['state_time']   = $data['end_time'] = date('Y-m-d H:i:s') ;
+
+                    M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> setField($data) ;
+                }
+                break ;
+        }
+    }
+
+    return $data['survey_state'] ;
 }
 
 /*
