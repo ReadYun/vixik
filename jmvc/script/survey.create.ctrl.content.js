@@ -87,10 +87,11 @@ steal('init.js')
 
         // 预览题目
         ".preview-item>button click" : function(el, ev){
-            if(this.options.$survey.trigger('save_draft') && this.options.models$.survey_code){
-                $.cookie('sv_preview', this.options.models$.survey_code, {path:'/'}) ;
                 $.vixik('get_url', {name:'survey/answer', tail:'?code=preview', open:'new'}) ;
-            }
+            // if(this.options.$survey.trigger('save_draft') && this.options.models$.survey_code){
+            //     $.cookie('sv_preview', this.options.models$.survey_code, {path:'/'}) ;
+            //     $.vixik('get_url', {name:'survey/answer', tail:'?code=preview', open:'new'}) ;
+            // }
         },
 
         // 点击增加题目按钮
