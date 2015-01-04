@@ -15,7 +15,7 @@
 }
 
 #mainLeft{
-    width: 680px;
+    width: 660px;
     float: left;
     overflow: hidden;
 }
@@ -32,13 +32,15 @@
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
-        width: 80px;
-        height: 65px;
-        padding: 3px 15px;
+        width: 70px;
+        height: 70px;
         float: left;
         font: 25px "宋体",Tahoma;
         color: #FFF;
-        background: #6BB130;
+    }
+    #surveyHeader .sh-main>img{
+        width: 100%;
+        height: 100%;
     }
     #surveyHeader .sh-sub{
         width: 580px;
@@ -48,23 +50,37 @@
         #surveyHeader .sv-type-sub{
             width: 100%;
             float: left;
+            margin-bottom: 10px;
+            color: #666;
             }
-            #surveyHeader .st-sub{
-                padding-bottom: 1px;
-                margin-bottom: 10px;
-                margin-right: 20px;
+            #surveyHeader .sv-type-sub>.sv-type-name{
                 float: left;
-                font-family: "微软雅黑",Tahoma;
-                color: #666;
+                font: 25px "宋体",Tahoma;
             }
-            #surveyHeader .st-sub.active{
-                color: #333;
-                border-bottom: 3px solid #6BB130;
-            }
-            #surveyHeader .st-sub:hover{
-                color: #000;
-                cursor: pointer;
-            }
+            #surveyHeader .sv-type-sub>.sv-type-follow{
+                float: right;
+                }
+                #surveyHeader .sv-type-sub>.sv-type-follow>.follow-button{
+                    width: 60px;
+                    float: right;
+                    padding-left: 10px;
+                    margin-left: 10px;
+                }
+                #surveyHeader .sv-type-sub>.sv-type-follow button{
+                    display: none;
+                    float: right;
+                }
+                #surveyHeader .sv-type-sub>.sv-type-follow>.follow-button.unfollow>button[data-action='add']{
+                    display: block;   
+                }
+                #surveyHeader .sv-type-sub>.sv-type-follow>.follow-button.followed>button[data-action='del']{
+                    display: block;   
+                }
+                #surveyHeader .sv-type-sub>.sv-type-follow>.follow-desc{
+                    margin-top: 2px;
+                    float: right;
+                    color: #999;
+                }
         #surveyHeader .sv-list-nav a{
             padding: 5px 10px;
             border-radius: 0;
@@ -75,162 +91,152 @@
     width: 100%;
     overflow: hidden;
     }
-    #surveyList>div.sv-list-body{
+    #surveyList>.sv-list-body{
         width: 100%;
         margin-bottom: 10px;
         overflow: hidden;
         float: left;
         }
-        #surveyList .sv-list-elem{
+        #surveyList>.sv-list-body>div{
             width: 100%;
             padding-bottom: 10px;
             margin-bottom: 10px;
             overflow: hidden;
             float: left;
             border-bottom: 1px dotted #CCC;
-            }
-            #surveyList .sv-list-elem .sv-title{
-                width: 100%;
-                height: 24px;
-                overflow: hidden;
-                float: left;
-                }
-                #surveyList .sv-list-elem .sv-name{
-                    max-width: 500px;
-                    float: left;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    font: 19px "宋体",Tahoma;
-                }
-                #surveyList .sv-list-elem .sv-time{
-                    width: 100px;
-                    float: right;
-                    overflow: hidden;
-                    color: #999;
-                    text-align: right;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                }
-                #surveyList .sv-list-elem .sv-follow{
-                    display: none;
-                    float: right;
-                    height: 18px;
-                }
-                #surveyList .sv-list-elem:hover .sv-time{
-                    display: none;
-                }
-                #surveyList .sv-list-elem:hover .sv-follow{
-                    display: inline;
-                }
-                #surveyList .sv-list-elem .sv-desc{
-                    width: 100%;
-                    float: left;
-                    font: 12px "微软雅黑",Tahoma;
-                    color: #999;
-                }
-
-        #surveyList .sv-list-elem .sv-prop{
+        }
+        #surveyList>.sv-list-body>div:last-child{
+            border: none;
+        }
+    #surveyList .sl-elem .sl-stats{
+        width: 45px;
+        height: 33px;
+        margin-top: 4px;
+        margin-right: 5px;
+        float: left;
+        color: #FFF;
+        line-height: 33px;
+        background: #9999FF;
+        text-align: center;
+    }
+    #surveyList .sl-elem .sl-main{
+        width: 500px;
+        float: left;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        }
+        #surveyList .sl-elem .sl-main .sv-name{
             width: 100%;
-            float: left;
-            overflow: hidden;
-            font-size: 12px;
+            font: 14px "微软雅黑",Tahoma;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        #surveyList .search-list.question .sl-elem .sl-main .sv-name{
+            font: 12px "微软雅黑",Tahoma;
+        }
+        #surveyList .search-list.question .sl-elem .sl-main .qt-name{
+            font: 15px "微软雅黑",Tahoma;
             color: #666;
-            }
-            #surveyList .sv-list-elem .sv-prop>div{
-                float: left;
-                margin-right: 20px;
-            }
-            #surveyList .sv-list-elem .sv-prop a{
-                float: left;
-                color: #666;
-            }
-            #surveyList .sv-list-elem .sv-prop a:hover{
-                color: #006699;
-            }
-            #surveyList .sv-list-elem .sv-prop i{
-                margin-top: 3px;
-                margin-right: 3px;
-                font-size: 14px;
-                float: left;
-            }
-            #surveyList .sv-list-elem .sv-type>span{
-                margin: 0 3px;
-                float: left;
-            }
-            #surveyList .sv-list-elem .sv-prop>.user-name{
-                max-width: 300px;
-                float: left;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                }
-                #surveyList .sv-list-elem .user-nick img{
-                    width: 15px;
-                    height: 15px;
-                    margin-top: -2px;
-                    margin-right: 3px;
-                }
-
+        }
+        #surveyList .search-list.question .sl-elem .sl-main .qt-type{
+            width: 80px;
+        }
+        #surveyList .sl-elem .sl-main .sv-desc{
+            width: 100%;
+            margin-bottom: 5px;
+            font: 12px "微软雅黑",Tahoma;
+            color: #888;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        #surveyList .sl-elem .sl-main .sv-info>div{
+            margin-right: 20px;
+            float: left;
+            color: #666;
+            margin-top: 3px;
+        }
+        #surveyList .sl-elem .sv-info .sv-user{
+            width: 80px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        #surveyList .sl-elem .sv-info .sv-item{
+            width: 40px;
+        }
+        #surveyList .sl-elem .sv-info .sv-type{
+            width: 140px;
+        }
+        #surveyList .sl-elem .sv-info img{
+            width: 18px;
+            height: 18px;
+            margin-right: 5px;
+            margin-top: -3px;
+        }
+        #surveyList .sl-elem .sv-info a{
+            color: #666;
+        }
+        #surveyList .sl-elem .sv-info span{
+            margin: 0 3px;
+        }
+        #surveyList .sl-elem .sv-info i{
+            display: block;
+            margin-top: 1px;
+            margin-right: 5px;
+            float: left;
+            font-size: 16px;
+        }
+    #surveyList .sl-elem .sl-sub{
+        width: 100px;
+        float: right;
+        color: #CCC;
+        text-align: right;
+        }
+        #surveyList .sl-elem .sl-sub .sv-time{
+            margin-bottom: 26px;
+        }
     #surveyList>div.sv-list-footer{
         width: 100%;
         float: left;
         font-size: 14px;
-        }
-        #surveyList>div.sv-list-footer>div{
-            float: right;
-            }
-            #surveyList>div.sv-list-footer .paging-go{
-                width: 130px;
-                color: #666;
-                }
-                #surveyList .paging-go span.go{
-                    padding-top: 1px;
-                    float: left;
-                }
-                #surveyList .paging-go span.page{
-                    padding-top: 1px;
-                    float: right;
-                }
-                #surveyList .paging-go input{
-                    width: 40px;
-                    height: 10px;
-                    margin: 0 5px;
-                }
-            #surveyList>div.sv-list-footer .paging-nav{
-                float: left;
-                overflow: hidden;
-                }
-            #surveyList>div.sv-list-footer .paging-nav>div{
-                float: left;
-                }
-
-#mainRight>div{
+    }
+#switchBox{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     width: 100%;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    float: left;
+    margin-bottom: 25px;
     }
-    #typeBox .switch-type{
-    padding-bottom: 5px;
+    #switchBox button{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        margin: 0;
     }
-    #typeBox .switch-type button{
+    #switchBox .switch-type{
+        padding-bottom: 5px;
+    }
+    #switchBox .switch-type button{
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         width: 100%;
     }
-    #typeBox .switch-type.open button{
+    #switchBox .switch-type.open button{
         color: #FFF;
         background: #CCC;
         }
-        #typeBox .switch-content{
+        #switchBox .switch-content{
             width: 400px;
             overflow: hidden;
             border-radius: 0;
             margin: 0;
             }
-            #typeBox .switch-type-elem{
+            #switchBox .switch-type-elem{
                 box-sizing: border-box;
                 -moz-box-sizing: border-box;
                 -webkit-box-sizing: border-box;
@@ -239,9 +245,9 @@
                 overflow: hidden;
                 float: left;
                 }
-                #typeBox .switch-type-main{
+                #switchBox .switch-type-main{
                     width: 100%;
-                    padding-left: 5px;
+                    padding-left: 10px;
                     overflow: hidden;
                     float: left;
                     font: 19px "宋体",Tahoma;
@@ -249,14 +255,15 @@
                     border-left: 8px solid #6BB130;
                     cursor: pointer;
                 }
-                #typeBox .switch-type-sub{
+                #switchBox .switch-type-sub{
                     box-sizing: border-box;
                     -moz-box-sizing: border-box;
                     -webkit-box-sizing: border-box;
                     width: 100%;
                     float: left;
+                    margin-left: 5px;
                     }
-                    #typeBox .switch-type-sub>div{
+                    #switchBox .switch-type-sub>div{
                         width: 80px;
                         margin-top: 5px;
                         margin-left: 15px;
@@ -265,48 +272,25 @@
                         cursor: pointer;
                         color: #999;
                     }
-                    #typeBox .switch-type-main:hover{color: #6BB130}
-                    #typeBox .switch-type-sub>div:hover{color: #6BB130;}
-
-    #typeBox .type-follow{
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        width: 100%;
-        margin-top: 20px;
-        overflow: hidden;
-        border-left: 8px solid #6BB130;
-        }
-        #typeBox .follow-desc{
-            padding-left: 5px;
-            float: left;
-        }
-        #typeBox .follow-desc>span{
-            margin: 0 2px;
-            color: #333;
-            font-weight: 900;
-        }
-        #typeBox .type-follow>button{
-            float: right;
-            padding: 0 10px;
-        }
+                    #switchBox .switch-type-main:hover{color: #6BB130}
+                    #switchBox .switch-type-sub>div:hover{color: #6BB130;}
 #actionBox{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    padding: 20px 10px;
     width: 100%;
+    padding: 20px 10px;
+    margin-bottom: 30px;
     background: #3399FF;
     overflow: hidden;
     }
     #actionBox .action-box{
         width: 100px;
-        margin-bottom: 10px;
         float: left;
         }
         #actionBox .action-desc{
             width: 100%;
-            margin-bottom: 5px;
+            margin-top: 5px;
             overflow: hidden;
             color: #FFF;
             text-align: center;
@@ -321,7 +305,7 @@
         #actionBox .action-now{
             width: 90%;
             height: 28px;
-            margin: 0 auto;
+            margin: 20px auto 5px auto;
         }
         #actionBox .action-now>button{
             border: 1px solid #FFF;
@@ -336,121 +320,95 @@
         height: 20px;
         float: left;
     }
-
-
     #mainRight .st-box-elem{
         width: 100%;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        float: left;
         overflow: hidden;
         }
         #mainRight .st-box-elem .sb-header{
             padding-left: 5px;
-            margin-top: 10px;
             margin-bottom: 10px;
             font: 19px "宋体",Tahoma;
             border-left: 8px solid #6BB130;
         }
         #mainRight .st-box-elem .sb-body{
-            padding-top: 10px;
-            border-top: 1px solid #CCC;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #CCC;
+            overflow: hidden;
         }
-
-
-            #tagBox .sv-tag-elem{
-                margin-bottom: 5px;
-                margin-right: 5px;
-                float:left;
-                color: #666;
-                }
-                #tagBox .sv-tag-elem>a{
-                    padding: 2px 5px;
-                    coLor: #FFF;
-                    text-decoration: none;
-                    background: #99CCFF;
-                    opacity: 0.6;
-                }
-                #tagBox .sv-tag-elem>a:hover{
-                    coLor: #666;
-                    opacity: 1;
-                }
-
-        #classBox .sc-elem{
+        #mainRight .trade-hot .th-elem{
             box-sizing: border-box;
             -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            padding: 5px 10px;
-            width: 110px;
+            -webkit-box-sizing: border-box;   
+            width: 100%;
             margin-right: 10px;
-            margin-bottom: 10px;
+            padding-bottom: 15px;
             float: left;
             overflow: hidden;
-            background: #EEE;
             cursor: pointer;
             }
-            #classBox .sc-elem>div{
+            #mainRight .trade-hot .th-elem>.sh-img{
+                width: 45px;
+                height: 45px;
+                float: left;
+            }
+            #mainRight .trade-hot .th-elem>.sh-info{
+                width: 185px;
+                float: left;
+                margin-left: 10px;
+            }
+            #mainRight .trade-hot .sh-info>div{
                 width: 100%;
+                margin-bottom: 4px;
                 float: left;
                 }
-                #classBox .sc-elem a{
-                    text-decoration: none;
-                }
-                #classBox .sc-value{
-                    color: #999;
-                    font-style: italic;
-                }
-                #classBoxb .sc-value>a{
-                    color: #999;
-                }
-        #classBox .sc-elem:hover{
-            background: #3399FF;
-            }
-            #classBox .sc-elem:hover a{
-                color: #FFF;
-            }
-            #classBox .sc-elem:hover .sc-value{
-                color: #FFF;
-            }
-            #classBox .sc-value>a{
+                #mainRight .trade-hot .si-top>button{
+                    display: none;
+                    opacity: 0;
+                    float: right;
+                    padding: 0 5px;
+                    }
+                    #mainRight .trade-hot .th-elem:hover .si-top>button{
+                        opacity: 1;
+                    }
+                    #mainRight .trade-hot .th-elem.unfollow button[data-action='add']{
+                        display: block;   
+                    }#mainRight .trade-hot .th-elem.followed button[data-action='del']{
+                        display: block;   
+                    }
+            #mainRight .trade-hot .th-elem>.sh-info>span{
+                display: block;
+                width: 80px;
+                float: left;
                 color: #999;
+                text-align: left;
             }
-
-    #typeSearch .sb-header{
-        width: 100%;
-        overflow: hidden;
-    }
-    #typeSearch.st-box-elem>.sb-body{
-        width: 100%;
-        overflow: hidden;
-        padding: 0;
-        border: none;
-        }
-        #mainRight input{
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            width: 100%;
-            height: 30px;
-            margin: 0;
-        }
-    #rankBox .rank-elem{
+            #mainRight .trade-hot .th-elem>.sh-info>span.follow-cnt{
+                float: right;
+                text-align: right;
+            }
+#mainRight .user-brisk .rank-elem{
         width: 100%;
         float: left;
         margin-bottom: 10px;
         }
-        #rankBox .rank-elem>div{
+        #mainRight .user-brisk .rank-elem>div{
             float: left;
             }
-            #rankBox .user-photo{
+            #mainRight .user-brisk .user-photo{
                 width: 50px;
                 height: 50px;
                 margin-right: 10px;
                 margin-bottom: 2px;
                 float: left;
             }
-        #rankBox .user-info{
+        #mainRight .user-brisk .user-info{
             width: 180px;
             float: left;
             }
-            #rankBox .user-nick{
+            #mainRight .user-brisk .user-nick{
                 width: 100%;
                 margin-bottom: 7px;
                 float: left;
@@ -458,30 +416,29 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
             }
-            #rankBox .user-action{
+            #mainRight .user-brisk .user-action{
                 width: 100%;
                 overflow: hidden;
                 }
-                #rankBox .user-publish{
+                #mainRight .user-brisk .user-publish{
                     margin-top: 1px;
                     float: left;
                     overflow: hidden;
                     color: #666;
                     }
-                    #rankBox .user-publish>span{
+                    #mainRight .user-brisk .user-publish>span{
                         margin: 0 2px;
                         color: #333;
                         font-weight: 900;
                     }
-                #rankBox .user-follow{
+                #mainRight .user-brisk .user-follow{
                     display: none;
                     float: float;
                     padding: 0 5px;
                 }
-                #rankBox .rank-elem:hover .user-publish{
+                #mainRight .user-brisk .rank-elem:hover .user-publish{
                     display: none;
                 }
-                #rankBox .rank-elem:hover .user-follow{
+                #mainRight .user-brisk .rank-elem:hover .user-follow{
                     display: block;
                 }
- 

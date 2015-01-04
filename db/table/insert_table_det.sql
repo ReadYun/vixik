@@ -302,7 +302,8 @@ insert into tb_det_survey_type_sub values(1004,'个性调查',10014,'娱乐',0) ;
 insert into tb_det_survey_type_sub values(1004,'个性调查',10015,'情感',0) ;
 insert into tb_det_survey_type_sub values(1004,'个性调查',10016,'校园',0) ;
 insert into tb_det_survey_type_sub values(1004,'个性调查',10017,'职场',0) ;
-insert into tb_det_survey_type_sub values(1004,'个性调查',10018,'话题',0) ;
+insert into tb_det_survey_type_sub values(1004,'个性调查',10018,'生活',0) ;
+insert into tb_det_survey_type_sub values(1004,'个性调查',10019,'话题',0) ;
 
 delete from tb_det_survey_class ;
 insert into tb_det_survey_class values(1001,'机构组织') ;
@@ -383,6 +384,14 @@ delete from tb_det_survey_recommend_type ;
 insert into tb_det_survey_recommend_type values(0,'不推荐') ;
 insert into tb_det_survey_recommend_type values(1,'系统推荐') ;
 insert into tb_det_survey_recommend_type values(2,'自定义推荐') ;
+
+delete from tb_det_question_class_type ;
+insert into tb_det_question_class_type values(1, '选择题', 11, '单项选择') ;
+insert into tb_det_question_class_type values(1, '选择题', 12, '多项选择') ;
+insert into tb_det_question_class_type values(2, '主观题', 21, '单行填空') ;
+insert into tb_det_question_class_type values(2, '主观题', 22, '多行填空') ;
+insert into tb_det_question_class_type values(3, '评分题', 31, '单项评分') ;
+insert into tb_det_question_class_type values(3, '评分题', 32, '多项评分') ;
 
 delete from tb_det_question_type ;
 insert into tb_det_question_type values('radio','单选题') ;

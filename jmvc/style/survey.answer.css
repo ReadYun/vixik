@@ -8,7 +8,7 @@
  */
 
 #Main{
-    margin: 10px auto;
+    margin: 20px auto;
     width: 960px;
     overflow: hidden;
     }
@@ -35,7 +35,7 @@ body.topbar-open.topbar-hover #svSider{
     margin-top: 40px;
 }
 #hintBar{
-    width: 40px;
+    width: 45px;
     float: left;
     overflow: hidden;
     font: 15px "宋体",Tahoma;
@@ -94,17 +94,27 @@ body.topbar-open.topbar-hover #svSider{
 
 #svHeader{
     width: 100%;
-    margin: 10px 0;
+    margin-bottom: 5px;
     float: right;
     overflow: hidden;
     position: relative;
+    }
+    #svHeader>.sh-sub{
+        width: 50px;
+        float: left;
+        color: #666;
+    }
+    #svHeader>.sh-sub>i{
+        display: none;
+        font-size: 40px;
     }
     #svHeader>.sh-main{
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
-        width: 880px;
+        width: 830px;
         padding-right: 20px;
+        margin-top: 7px;
         float: left;
         overflow: hidden;
         }
@@ -113,30 +123,44 @@ body.topbar-open.topbar-hover #svSider{
             color: #666;
             font: 19px "宋体",Tahoma;
         }
-        #svHeader .sh-main>.sv-title{
-            text-align: center;
+        #svHeader .sh-main>.sv-title>a{
+            display: line;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            color: #666;
         }
-    #svHeader>.sh-sub{
+        #svHeader .sh-main>.sv-title>a:hover{
+            color: #0033FF;
+        }
+        #svHeader .sh-main>.sv-desc{
+            display: none;
+            margin-top: 5px;
+            color: #999;
+            font: 12px "微软雅黑",Tahoma;
+        }
+    #svHeader>.sh-icon{
         width: 25px;
         height: 100%;
         float: right;
         position: absolute;
+        top: 5px;
         right: 0;
+        bottom: 0;
         font-size: 23px;
         text-align: right;
         }
-    #svHeader>.sh-sub>i{
+    #svHeader>.sh-icon>i{
         position: absolute;
         right: 0;
         bottom: 0;
         color: #CCC;
         cursor: pointer;
         }
-    #svHeader:hover>.sh-sub>i{color: #999;}
-    #svHeader>.sh-sub:hover>i{color: #666;}
-    #svHeader>.sh-sub>i.icon-double-angle-up{display: none;}
-    #svHeader .sv-desc{display: none;}
-    #svHeader.desc i.icon-double-angle-down, #svHeader.desc .sv-title{display: none;}
+    #svHeader:hover>.sh-icon>i{color: #999;}
+    #svHeader>.sh-icon:hover>i{color: #666;}
+    #svHeader>.sh-icon>i.icon-double-angle-up{display: none;}
+    #svHeader.desc i.icon-double-angle-down{display: none;}
     #svHeader.desc i.icon-double-angle-up, #svHeader.desc .sv-desc{display: block;}
 
 #svBody{
@@ -152,14 +176,14 @@ body.topbar-open.topbar-hover #svSider{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     width: 100%;
-    min-height: 300px;
-    _height: expression((documentElement.clientHeight < 300) ? "300px" : "auto");
+    min-height: 400px;
+    _height: expression((documentElement.clientHeight < 400) ? "400px" : "auto");
     padding: 10px 0;
     float: left;
     overflow: hidden;
     text-align: left;
     background-color: #FFF;
-    border: 1px solid #999;
+    border: 1px solid #CCC;
     }
     #question .question{
         width: 100%;
@@ -180,27 +204,25 @@ body.topbar-open.topbar-hover #svSider{
                 margin-bottom: 5px;
                 font: 19px "宋体",Tahoma;
                 text-align: right;
-                color: #666;
-                border-bottom: 1px solid #999;
+                color: #FFF;
+                background: #CCC;
             }
             #question .question .qt-sub>.qt-hint{
                 display: none;
                 width: 30px;
                 padding: 1px 0;
-                margin: 5px auto;
+                margin-top: 5px;
                 color: #FFF;
                 background: #CCC;
+                float: right;
             }
             #question .question:hover .qt-sub>div{
                 display: block;
             }
-            #question .question:hover .qt-sub>.qt-seq{
-                color: #333;
-            }
         #question .question .qt-main{
             width: 820px;
             margin: 0 10px;
-            float: right;
+            float: left;
             }
             #question .question .qt-title{
                 font: 19px "宋体",Tahoma;
@@ -322,8 +344,9 @@ body.topbar-open.topbar-hover #svSider{
         .custom-option[data-state='1']>.custom-opt-result {display: block;}
 #submit{
     width: 100%;
-    margin-top: 50px;
+    margin: 50px 0;
     float: left;
+    overflow: hidden;
     }
     #submit>button{
         padding: 10px 0;

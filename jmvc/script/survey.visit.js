@@ -11,7 +11,7 @@
 steal('init.js')
 .then('script/public.header.js')
 .then(function($){
-    loadPlugin('countdown') ;
+    loadPlugin('countdown', 'vkForm') ;
 }) 
 .then(function($){
 
@@ -21,8 +21,8 @@ steal('init.js')
      **/
     $.Controller('Ctrl.Survey.Visit.Main', {
         defaults : {
-            $state  : $('.st-state')             ,// 调查状态提示
-            $button : $('#surveyButton>button')  ,// 参与按钮
+            $Comment   : $('#svComment')    ,// 调查评论模块
+            $commenTpl : $('.sc-elem.tpl')  ,// 评论列表模板
         }
     }, {
         init : function(){
@@ -39,95 +39,212 @@ steal('init.js')
                     async   : false,
                     success : function(data$){
                         if(data$.status){
-                            $this.options.survey$ = data$.data.info ;
+                            $this.options.survey$ = data$.data ;
 
-                            // 针对当前的调查状态做处理
-                            $this.survey_state($this.options.survey$.survey_state) ;
+                            $this.survey_tag($this.options.survey$) ;
+                            $this.survey_state($this.options.survey$) ;
+                            $this.comment_list() ;
                         }
                     }
                 });
-
-            }else{
-                
             }
 
+            if(parseInt(user_code) >= 10000000){
+                $this.user_info(vixik$.user$) ;
+                $this.user_action_verify(user_code) ;
+            }
+            
+            $('body').show() ;
         },
 
-        // 调查状态处理
-        survey_state : function(state){
-            var $this = this ;
+        // 总对象用户数据更新时触发
+        "{vixik$} user" : function(){
+            this.options.user_code = $.cookie('user_code') ;
 
-            // 判断当前调查状态做相应处理
-            switch(parseInt(state)){
-                case 0 :
-                    this.options.$state.addClass('st-other').find('.st-other').text('活动未发布') ;
-                    break ;
+            $this.user_info(vixik$.user$) ;
+            $this.user_action_verify(this.options.user_code) ;
+        },
 
-                case 1 :
-                    this.options.$state.addClass('st-other').find('.st-other').text('活动未开始') ;
-                    break ;
+        // 调查说明详情切换
+        ".sl-ext>a click" : function(el){
+            if(el.hasClass('more')){
+                el.parents('#svDesc').addClass('all') ;
+            }else{
+                el.parents('#svDesc').removeClass('all') ;
+            }
+        },
 
-                case 2 :
-                    // 活动开始倒计时
-                    // this.count_down('start') ;
-                    this.options.$state.addClass('st-count') ;
-                    break ;
+        // 评论登录
+        ".need-login>button click" : function(){
+            vixik$.user_verify({trigger$:{false:['login_open']}}) ;
+        },
 
-                case 3 :
-                    // 活动结束倒计时
-                    // this.count_down('end') ;
-                    this.options.$state.addClass('st-count') ;
-                    this.options.$button.show() ;
+        // 提交评论
+        ".cm-submit>button click" : function(){
+            var $this = this,
+                txt   = this.element.find('.cm-input').html() ;
 
-                    // 调查参与信息查询接口
-                    $.post(__API__, 
-                        {
-                            api         : 'survey_action_select',
-                            type        : 'simple',
-                            user_code   : $this.options.user_code, 
-                            survey_code : $this.options.survey_code, 
-                        }, function(data$){
+            if(txt != ''){
+                // 提交评论
+                $.ajax({
+                    type    : 'post',
+                    url     : __API__,   // 调查基本信息查询接口
+                    data    : {api:'survey_comment_submit', user_code:this.options.user_code,survey_code:this.options.survey_code,comment_txt:txt},
+                    success : function(data$){
                         if(data$.status){
-                            if(data$.data > 0){
-                                // 如果数据非空，说明该用户已经参与过该问卷
-                                $this.options.$button.filter('.answer').hide() ;
-                                $this.options.$button.filter('.analyse').text('您已参与此调查，去查看调查分析').show() ;
-                            }
+                            alert('评论成功') ;
+                            $this.comment_list() ;
+                            $this.element.find('.cm-input').text('') ;
                         }
-                    }) ;
+                    }
+                });
+            }
+        },
+
+        ".sv-button>button click" : function(el){
+            if(!el.hasClass('disabled')){
+                window.location.href = el.attr('href') ;
+            }
+        },
+
+        // 用户信息匹配
+        user_info : function(user$){
+            var user_photo ;
+
+            vixik$.user$.user_photo == 1 ?
+                user_photo = __JMVC_IMG__ + 'user/' + vixik$.user$.user_code + '_60.jpg' :
+                user_photo = __JMVC_IMG__ + 'user/user.jpg' ;
+
+            this.element.find('.comment-my .sc-sub>img').attr('src', user_photo) ;
+        },
+
+        // 用户参与判断
+        user_action_verify : function(user_code){
+            var $this       = this,
+                survey_code = this.options.survey_code,
+                action$     = $.toJSON(['create_survey', 'answer_survey', 'follow_survey']) ;
+
+            // 用户行为校验
+            $.ajax({
+                type    : 'post',
+                url     : __API__,   // 调查基本信息查询接口
+                data    : {api:'user_action_verify', user_code:user_code, target: survey_code, action: action$},
+                async   : false,
+                success : function(data$){
+                    if(data$.status){
+                        if(parseInt(data$.data.answer_survey)){
+                            $this.element.find('.sv-button>button.answer').addClass('disabled').text('您已参与过本次调查') ;
+                        }
+                    }
+                }
+            });
+        },
+
+        // 调查标签
+        survey_tag : function(survey$){
+            var tags$,
+                $Tag = this.element.find('.sv-tags') ;
+                $tpl = $Tag.find('.tpl') ;
+
+            if(survey$.info.survey_tag){
+                tags$ = survey$.info.survey_tag.split(",") ;
+
+                for(var i = 0; i < tags$.length; i++){
+                    $tpl.clone().removeClass('tpl').text(tags$[i]).appendTo($Tag) ;
+                }
+            }else{
+                $Tag.hide() ;
+            }
+        },
+
+        // 调查评论列表
+        comment_list : function(){
+            var $elem,
+                $this = this ;
+
+            // 取调查基本数据
+            $.ajax({
+                type    : 'post',
+                url     : __API__,   // 调查基本信息查询接口
+                data    : {api:'survey_comment_list_select', survey_code: this.options.survey_code},
+                async   : false,
+                success : function(data$){
+                    if(data$.status){
+                        $this.options.$Comment.addClass('list').find('.comment-list').children().not('.tpl').remove() ;
+
+                        for(var i = 0; i < data$.data.length; i++){
+                            data$.data[i].user_photo == 1 ?
+                                data$.data[i].user_photo = __JMVC_IMG__ + 'user/' + data$.data[i].user_code + '_60.jpg' :
+                                data$.data[i].user_photo = __JMVC_IMG__ + 'user/user.jpg' ;
+
+                            $elem = $this.options.$commenTpl.clone().removeClass('tpl').show() ;
+                            $elem.find('.sc-sub img').attr('src', data$.data[i].user_photo) ;
+                            $elem.find('.nick a').attr('href', data$.data[i].url_user).text(data$.data[i].user_nick) ;
+                            $elem.find('.time').text(data$.data[i].comment_time) ;
+                            $elem.find('.sc-body').html(data$.data[i].comment_txt) ;
+
+                            $elem.appendTo($this.options.$Comment.find('.comment-list')) ;
+                        }
+                    }else{
+                        $this.options.$Comment.removeClass('list') ;
+                    }
+                }
+            });
+        },
+
+        // 调查结束方式
+        survey_state : function(survey$){
+            var $tagert, cd_time,
+                $this  = this,
+                $svEnd = this.element.find('.sv-end'),
+                value  = parseInt(survey$.info.end_value) ;
+
+            switch(parseInt(survey$.info.survey_state)){
+                case 4 :  // 活动已结束
+                    $target = $svEnd.find('.se-over').addClass('active') ;
+                    $this.element.find('.sv-button>button.answer').hide() ;
                     break ;
 
-                case 4 :
-                    this.options.$state.removeClass('st-count').addClass('st-other').find('.st-other').text('活动已结束') ;
-                    this.options.$button.filter('.answer').hide() ;
-                    this.options.$button.filter('.analyse').show() ;
+                case 3 :  // 活动进行中
+                    switch(parseInt(survey$.info.end_type)){
+                        case 1 :
+                            $target = $svEnd.find('.se-cd-1').addClass('active') ;
+                            $target.find('span').text(parseInt(value) - parseInt(survey$.stats.answer_count)) ;
+
+                            break ;
+
+                        case 2 :
+                            $target = $svEnd.find('.se-cd-2').addClass('active') ;
+                            cd_time = moment(survey$.info.start_time).add(value, 'day').format('YYYY-MM-DD hh:mm:ss') ;
+                            $this.count_down($target, cd_time) ;
+
+                            break ;
+                    }
+                    break ;
+
+                case 2 :  // 活动已发布未开始
+                    $target = $svEnd.find('.se-soon').addClass('active') ;
+                    break ;
+
+                default :  // 活动未发布
+                    alert('活动未发布，返回调查中心') ;
                     break ;
             }
         },
 
         // 活动倒计时
-        count_down : function(type){
-            var count$, start, end, time,
+        count_down : function($target, date){
+            var cd$, count$, time,
                 $this = this ;
 
-            var int$ = setInterval(function(){
+            cd$ = setInterval(function(){
                 time   = '' ;
-                count$ = countdown(new Date(), moment($this.options.survey$[type + '_time'])) ;
+                count$ = countdown(new Date(), moment(date)) ;
 
                 if(count$.value <= 0){
                     // 倒计时结束
-                    window.clearInterval(int$) ;
-                    
-                    switch(type){
-                        case 'start' :
-                            $this.options.survey$.survey_state = 3 ;
-                            $this.survey_state(3) ;
-                            break ;
-                        case 'end' :
-                            $this.options.survey$.survey_state = 4 ;
-                            $this.survey_state(4) ;
-                            break ;
-                    }
+                    window.clearInterval(cd$) ;
+                    $this.element.find('.sv-button>button.answer').hide() ;
                 }else{
                     // 倒计进行中
                     if(parseInt(count$.days)){   time = time + count$.days + '天'}
@@ -136,24 +253,11 @@ steal('init.js')
                     if(parseInt(count$.seconds)){time = time + count$.seconds + '秒'}
 
                     if(time != ''){
-                        $this.options.$state.find('.cd-action').text(time + '后') ;
-                    }
-
-                    switch(type){
-                        case 'start' :
-                            $this.options.$state.find('.cd-desc').text('活动开始') ;
-                            break ;
-                        case 'end' :
-                            $this.options.$state.find('.cd-desc').text('活动结束') ;
-                            break ;
+                        $target.find('span').text(time) ;
                     }
                 }
             }, 500) ;
         },
-
-        "{$button} click" : function(el){
-            window.location.href = el.attr('href') ;
-        }
     }) ;
 
     $('#Main').ctrl_survey_visit_main() ;

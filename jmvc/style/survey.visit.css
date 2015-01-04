@@ -1,6 +1,6 @@
 /*
- * Document    : survey.index.css
- * Description : CSS for Survey/index.html
+ * Document    : survey.visit.css
+ * Description : CSS for Survey/visit.html
  *
  * Created on  : 2012-11-7
  * Author      : ReadYun
@@ -8,292 +8,367 @@
  */
 
 #Main{
-    width: 100%;
-    margin: 10px auto;
+    width: 960px;
+    margin: 20px auto;
     overflow: hidden;
-    font-family: "微软雅黑",Tahoma;
 }
 
-.left-box{
-    width: 670px;
+#Main .main-left{
+    width: 600px;
     float: left;
     overflow: hidden;
-}
-.right-box{
-    width: 220px;
+    }
+    #Main .main-left>div{
+        width: 100%;
+        float: left;
+        overflow: hidden;
+    }
+
+#Main .main-right{
+    width: 300px;
+    margin-top: 5px;
     float: right;
     overflow: hidden;
-}
+    }
+    #Main .main-right>div{
+        width: 100%;
+        float: left;
+        overflow: hidden;
+    }
 
-#surveyHeader{
+#svHeader{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #CCC;
+    }
+    #svHeader .sv-name{
+        width: 100%;
+        margin-bottom: 10px;
+        font: 21px "宋体",Tahoma;
+        color: #666;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-decoration: none;
+    }
+    #svHeader .sv-user{
+        width: 100%;
+        height: 30px;
+        margin: 5px 0;
+        overflow: hidden;
+        }
+        #svHeader .sv-user .user-nick{
+            width: 400px;
+            float: left;
+            font: 19px "宋体",Tahoma;
+            color: #666;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-decoration: none;
+            }
+            #svHeader .sv-user .user-nick img{
+                width: 25px;
+                height: 25px;
+                margin-right: 10px;
+                float: left;
+            }
+            #svHeader .sv-user .user-nick a{
+                display: block;
+                margin-top: 1px;
+            }
+        #svHeader .sv-user .publish-time{
+            width: 160px;
+            margin-top: 4px;
+            font: 12px "微软雅黑",Tahoma;
+            float: right;
+            text-align: left;
+            color: #999;
+        }
+        #svHeader .sv-user .publish-time span{
+            float: right;
+            text-align: right;
+        }
+#svExtend{
     width: 100%;
-    padding-bottom: 10px;
+    margin-top: 10px;
+    color: #666;
+    }
+    #svExtend>div{
+        width: 100%;
+        margin-bottom: 20px;
+        overflow: hidden;
+        float: left;
+        font: 19px "宋体",Tahoma;
+        }
+        #svExtend i{
+            font-size: 21px;
+            margin-right: 10px;
+            float: left;
+            color: #666;
+        }
+        #svExtend .tag{
+            line-height: auto;
+            padding: 2.5px 5px;
+            margin-right: 10px;
+            float: left;
+            color: #FFF;
+            text-decoration: none;
+            background: #99CCFF;
+            font: 12px "微软雅黑",Tahoma;
+        }
+        #svExtend .tag.tpl{
+            display: none;
+        }
+        #svExtend .sv-end{
+            font: 19px "宋体",Tahoma;
+            }
+            #svExtend .sv-end>div{
+                display: none;
+            }
+            #svExtend .sv-end>div.active{
+                display: block;
+            }
+        #svExtend .se-cd-1>span{
+            min-width: 50px;
+            _width: expression((documentElement.clientWidth < 50) ? "50px" : "auto");
+            margin-right: 10px;
+            float: left;
+        }
+        #svExtend .se-cd-2>span{
+            min-width: 180px;
+            _width: expression((documentElement.clientWidth < 180) ? "180px" : "auto");
+            float: left;
+        }
+#svAction{
+    width: 100%;
+    height: 30px;
+    overflow: hidden;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    float: left;
+    }
+    #svAction>div{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 25%;
+        height: 100%;
+        float: left;
+        text-align: center;
+        line-height: 30px;
+        border: 1px solid #CCC;
+        border-right: none;
+        cursor: pointer;
+        color: #666;
+        }
+        #svAction>div>i{
+            margin-right: 5px;
+        }
+    #svAction>div:last-child{
+        border-right: 1px solid #CCC;
+    }
+    #svAction>div:hover{
+        background: #EEE;        
+    }
+
+.sv-label{
+    width: 100%;
+    padding-bottom: 5px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     overflow: hidden;
     border-bottom: 1px solid #CCC;
     }
-    #surveyHeader .sv-header{
-        width: 960px;
-        margin: 0 auto;
-        overflow: hidden;
-        }
-        #surveyHeader .sv-name{
-            font: 27px "宋体",Tahoma;
-            color: #666;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            text-decoration: none;
-        }
-        #surveyHeader .sv-prop>a{
-            display: block;
-            width: 90px;
-            padding: 5px;
-            float: left;
-            font: 19px "宋体",Tahoma;
-            text-align: center;
-            text-decoration: none;
-            color: #FFF;
-            background: #6699FF;
-            cursor: pointer;
-        }
-        #surveyHeader .sv-prop>a.sv-trade{
-            float: right;
-        }
-        #surveyHeader .sv-prop>a:hover{
-            color: #333;
-            background: #0099FF;
-        }
-
-#surveyInfo{
-    width: 960px;
-    margin: 0 auto;
-    padding-top: 20px;
-    overflow: hidden;
-    }
-    #surveyInfo .sv-info>div{
-        width: 100%;
-        margin-bottom: 15px;
+    .sv-label .sl-title{
         float: left;
-        overflow: hidden;
-        }
-        #surveyInfo .sv-info .user-photo{
-            width: 23px;
-            height: 23px;
-            margin-right: 10px;
-            float: left;
-            overflow: hidden;
-        }
-        #surveyInfo .sv-info .user-nick{
-            width: 600px;
-            float: left;
-            overflow: hidden;
-            font: 19px "宋体",Tahoma;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            text-decoration: none;
-        }
-        #surveyInfo i{
-            float: left;
-            font-size: 19px;
-            margin-right: 10px;
-            overflow: hidden;
-            color: #666;
-        }
-        #surveyInfo .sv-time>div{
-            margin-right: 30px;
-            float: left;
-            overflow: hidden;
-            color: #333;
-            font-size: 14px;
-        }
-        #surveyInfo .sv-time span{
-            margin-right: 5px;
-            color: #666;
-        }
-        #surveyInfo .svtag{
-            background: #6699FF;
-            padding: 2px 5px;
-            margin-right: 10px;
-            color: #FFF;
-            text-decoration: none;
-            opacity: 0.5;
-        }
-    #surveyInfo .sv-item{
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        border-left: 1px solid #CCC;
-        padding-left: 20px;
-        }
-        #surveyInfo .sv-item>div{
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            width: 230px;
-            height: 40px;
-            padding: 10px 50px;
-            float: right;
-            }
-            #surveyInfo .item-cnt>div{
-                float: left;
-                font: 21px "宋体",Tahoma;
-                color: #666;
-            }
-            #surveyInfo .item-cnt>div.ic-value{
-                float: right;
-                font: 23px "宋体",Tahoma;
-                font-weight: 900;
-                font-style: italic;
-            }
-            #surveyInfo .sv-item span{
-                display: block;
-                width: 100%;
-                float: left;
-                border-bottom: 1px dotted #CCC;
-            }
-
-#surveyTime{
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    width: 960px;
-    padding: 10px 0;
-    margin: 20px auto;
-    font: 25px "宋体",Tahoma;
-    font-weight: 900;
-    color: #FFF;
-    background: #6699FF;
-    overflow: hidden;
+        font: 19px "宋体",Tahoma;
     }
-    #surveyTime .st-doing{
-        width: 400px;
-        margin: 0 auto;
-        overflow: hidden;
-    }
-    #surveyTime .st-doing .sd-desc{
-        float: left;
-        font-style: italic;
-    }
-    #surveyTime .st-doing .sd-span{
+    .sv-label .sl-ext{
         float: right;
-    }
-    #surveyTime .st-end{
-        display: none;
-        text-align: center;
-    }
-
-#surveyMain{
-    width: 960px;
-    min-height: 240px;
-    margin: 0 auto;
-    overflow: hidden;
-    }
-    #surveyMain .sv-desc{
-        min-height: 200px;
-        float: left;
-        color: #666;
-        background: #F9F9F9;
-    }
-    #surveyMain .sv-stats{
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        height: 100%;
-        padding-left: 20px;
-        border-left: 1px solid #CCC;
-        overflow: hidden;
+        font: 12px "微软雅黑",Tahoma;
         }
-        #surveyMain .ac-elem{
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 15px 20px;
-            background: #EEE;
-            overflow: hidden;
-            font: 19px "宋体",Tahoma;
-        }
-        #surveyMain .ac-elem .ac-title{
-            float: left;
+        .sv-label .sl-ext>a{
+            display: block;
+            margin-top: 5px;
+            margin-left: 20px;
+            float: right;
+            text-decoration: none;
+            cursor: pointer;
             color: #999;
         }
-        #surveyMain .ac-elem .ac-value{
-            float: right;
-            text-align: right;
-            font-weight: 900;
-            color: #666;
+        .sv-label .sl-ext>a:hover{
+            color: #3366FF;
         }
-        #surveyMain .action-hint>div{
-            width: 50px;
-            height: 50px;
-            float: left;
-            border: 1px solid #CCC;
+        .sv-label .sl-ext>a>i{
+            margin-right: 5px;
         }
-        #surveyMain .action-hint>span{
-            width: 21.5px;
-            height: 50px;
-            float: left;
-        }
+#svDesc .sv-desc{
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+    color: #999;
+}
+#svDesc.all .sv-desc{
+    height: auto;
+    white-space:normal;
+}
+#svDesc .sl-ext a.up, #svDesc.all .sl-ext a.more{display: none;}
+#svDesc.all .sl-ext a.up{display: block;}
 
-#surveyButton{
-    width: 960px;
-    margin: 0 auto;
-    padding: 30px 0;
-    overflow: hidden;
+#svQuestion .sv-question{
+    width: 100%;
     }
-    #surveyButton button.answer{
-        width: 430px;
+    #svQuestion .sq-list{
+        width: 100%;
+        margin-bottom: 5px;
+        overflow: hidden;
+    }
+    #svQuestion .sq-list>.question-seq{
+        width: 20px;
+        overflow: hidden;
         float: left;
+        color: #666;
     }
-    #surveyButton button.analyse{
-        width: 430px;
+    #svQuestion .sq-list>.question-name{
+        width: 580px;
+        float: left;   
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-decoration: none;
+        cursor: pointer;
+    }
+#svComment{
+    margin: 10px 0;
+    }
+    #svComment .sc-sub{
+        width: 30px;
+        float: left;
+        overflow: hidden;
+        }
+        #svComment .sc-sub>img{
+            width: 30px;
+            height: 30px;
+        }
+    #svComment .sc-main{
+        width: 560px;
         float: right;
+        overflow: hidden;
     }
-
-#surveyRecomm{
-    width: 960px;
-    padding: 10px 0;
-    margin: 20px auto;
-    border-top: 3px solid #666;
-    border-bottom: 3px solid #666;
-    overflow: hidden;
-    }
-    #surveyRecomm>div{
-        width: 430px;
-        float: left;
+    #svComment .sc-elem{
+        width: 100%;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        overflow: hidden;
+        border-bottom: 1px dotted #CCC;
         }
-        #surveyRecomm .sr-header{
+        #svComment .sc-user{
             width: 100%;
-            padding-bottom: 5px;
-            margin-bottom: 5px;
-            border-bottom: 1px solid #999;
-            overflow: hidden;
+            height: 20px;
             }
-            #surveyRecomm .sr-title{
-                font: 19px "宋体",Tahoma;
+            #svComment .sc-user>.nick{
+                width: 500px;
+                height: 100%;
                 float: left;
-                color: #666;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
-            #surveyRecomm .sr-more{
+            #svComment .sc-user>.time{
+                width: 60px;
+                height: 100%;
                 float: right;
+                text-align: right;
                 color: #999;
             }
-            #surveyRecomm .sr-list-elem{
-                width: 100%;
-                margin-bottom: 2px;
-                float: left;
-                }
-                #surveyRecomm .sr-list-elem .sv-name{
-                    float: left;
-                }
-                #surveyRecomm .sr-list-elem .sv-stats{
-                    float: right;
-                    color: #999;
-                }
-
-    #surveyRecomm>div.sr-trade{
-        float: right;
+        #svComment .sc-body{
+            width: 100%;
+            margin-top: 5px;
+            overflow: hidden;
+            color: #666;
+            }
+    #svComment .comment-no{
+        width: 100%;
+        margin-bottom: 50px;
+        overflow: hidden;
+        font: 12px "微软雅黑",Tahoma;
+        color: #999;
     }
+    #svComment .comment-list{
+        display: none;
+        width: 100%;
+        overflow: hidden;
+    }
+    #svComment .comment-my{
+        width: 100%;
+        margin-top: 30px;
+        overflow: hidden;
+        }
+        #svComment .vk-input{
+            min-height: 100px;
+            _height: expression((documentElement.clientHeight < 100) ? "100px" : "auto");
+            margin-bottom: 20px;
+            overflow: hidden;
+            font: 12px "微软雅黑",Tahoma;
+        }
+        #svComment button{
+            padding: 3px 15px;
+            float: right;
+        }
+    #svComment.list .comment-no, #svComment .sl-ext, #svComment .sc-elem.tpl{display:none;}
+    #svComment.list .comment-list, #svComment.list .sl-ext{display:block;}
+    .comment-my .sc-sub, .comment-my .sc-main, body.logined .comment-my .need-login{display:none;}
+    body.logined .comment-my .sc-sub, body.logined .comment-my .sc-main{display:block;}
 
+
+#svStats>div{
+    width: 100%;
+    float: left;
+    background: #6699FF;
+    }
+    #svStats .ss-elem{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100px;
+        padding: 25px 0;
+        float: left;
+        text-align: center;
+        color: #FFF;
+        border-bottom: 1px solid #FFF;
+        }
+        #svStats .si-value{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100px;
+            height: 30px;
+            float: left;
+            font-size: 21px;
+        }
+        #svStats .si-desc{
+            font: 12px "微软雅黑",Tahoma;
+        }
+
+#svButton{
+    width: 100%;
+    margin: 30px 0;
+    overflow: hidden;
+    }
+    #svButton>div{
+        width: 100%;
+        height: 45px;
+        margin: 10px 0;
+        float: left;
+        }
+        #svButton button{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100%;
+            font: 23px "宋体",Tahoma;
+            border: 1px solid #66CC66;
+        }
+
+
+     

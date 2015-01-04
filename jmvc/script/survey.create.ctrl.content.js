@@ -27,34 +27,19 @@ steal('init.js')
         listensTo : ["item_refresh", "data_collect"]
     }, {
         init : function(){
+            var $this = this ;
+
             // 调查内容初始化
             this.element.find('.vk-form').vkForm('init', {reset:true}) ;
 
             if(this.options.models$.survey_code){
-                this.info_fix() ;
-
                 this.options.models$.draft$.flag = true ;
 
-                // this.options.$syncBox.attr('data-state', 1) ;
-                // this.options.$survey.trigger('save_draft') ;
-                // $('#mainSider').trigger('save_countdown') ;
+                this.info_fix() ;
                 this.item_init() ;
             }else{
-                this.tag_init() ;
-                this.item_add({question_type: 'radio', question_name: '', custom_option: 999,}) ;
+                this.item_add({question_type: 'radio', question_name: '', custom_option: 999}) ;
             }
-
-
-            // 修改调查状态处理。。
-            // if(this.options.models$.survey_code){
-            //     // 匹配调查数据
-            //     this.element.find('.vk-form').vkForm('fix', {data$:this.options.models$.info$}) ;
-
-            //     // 启动自动保存草稿
-            //     if($('#syncBox').attr('data-state') == '-1'){
-            //         $('#mainSider').trigger('save_countdown') ;
-            //     }
-            // }
         },
 
         // 总模型调查信息数据更新触发
@@ -71,72 +56,55 @@ steal('init.js')
         },
 
         // 有输入调查标题启动自动保存草稿
-        "[name=survey_name] blur" : function(el){
+        "[name=survey_name1] blur" : function(el){
             if(el.val()){
                 this.options.models$.draft$.flag = true ;
                 $('#syncBox').trigger('save_countdown') ;
             }
         },
 
+        // 增加题目按钮hover
+        ".add-item>.dropdown mouseover" : function(el){
+            el.addClass('open') ;
+        },
+
+        // 增加题目按钮blur
+        ".add-item>.dropdown mouseout" : function(el){
+            el.removeClass('open') ;
+        },
+
+        // 题目获得焦点增加活动状态
+        ".item focus" : function(el){
+            el.addClass('active') ;
+        },
+
+        // 题目失去焦点取消活动状态
+        ".item blur" : function(el){
+            el.removeClass('active') ;
+            el.find('.option-alter>.add').popover('hide') ;
+            el.find('.item-cog').popover('hide') ;
+        },
+
         // 预览题目
         ".preview-item>button click" : function(el, ev){
             if(this.options.$survey.trigger('save_draft') && this.options.models$.survey_code){
-                console.log(this.options.models$.survey_code) ;
                 $.cookie('sv_preview', this.options.models$.survey_code, {path:'/'}) ;
-                console.log($.cookie('sv_preview')) ;
-
                 $.vixik('get_url', {name:'survey/answer', tail:'?code=preview', open:'new'}) ;
             }
         },
 
-        // 预览题目
-        ".preview-item>button1 click" : function(el, ev){
-            var survey$ = {} ;
-
-            this.options.models$.collect$.flag  = true ;
-            this.options.models$.collect$.state = 'preview' ;
-
-            if(this.data_collect()){
-                survey$.info      = this.options.models$.info$ ;
-                survey$.question$ = this.options.models$.question$ ;
-
-                // 校验调查问题数据
-                if(this.options.models$.collect$.flag){
-                    console.log(survey$) ;
-                    console.log('----------------------------------------') ;
-                    // 调查内容信息进cookie
-                    // $.cookie('preview', null, {path:'/'}) ;
-                    console.log($.toJSON(survey$)) ;
-                    $.cookie('sv_prev', null) ;
-                    $.cookie('sv_prev', $.toJSON(survey$.question$)) ;
-                    console.log($.cookie('sv_prev')) ;
-
-
-                    // $.vixik('get_url', {name:'survey/answer', tail:'?code=preview', open:'new'}) ;
-                }
-            }
-        },
-
         // 点击增加题目按钮
-        ".add-item click" : function(el, ev){
-            var type, $item ;
-
-            // 判断要创建的题目类型
-            if(ev){
-                type = $(ev.target).attr('data-type') ;
-            }
-            else{  // 默认选项为单选radio
-                type = 'radio' ;
-            }
-
-            $item = this.item_add({
-                question_type : type  ,// 题目类型
-                question_name : ''    ,// 题目名称
-            }) ;
+        ".ai-btn click" : function(el, ev){
+            var $item = this.item_add({
+                            question_type : el.attr('data-qt-type')  ,// 题目类型
+                            question_name : ''                       ,// 题目名称
+                            custom_option : 999                      ,// 自定义类型
+                        }) ;
 
             // 定位页面位置到新建的题目处
             if($item){
-                window.scrollTo(0, $item.offset().top - 200) ;
+                window.scrollTo(0, $item.offset().top - 150) ;
+                $item.find('.item-title .vk-input').focus() ;
             }
         },
 
@@ -152,39 +120,6 @@ steal('init.js')
             if(info$.survey_desc){
                 this.element.find('#surveyDesc .vk-input').html(info$.survey_desc) ; 
             }
-
-            if(info$.survey_tag){
-                $this.tag_init(info$.survey_tag.split(',')) ;
-            }
-        },
-
-        // 调查标签初始化
-        tag_init : function(data$){
-            $svTag = this.element.find('.survey-tag') ;
-
-            if(data$){
-                $svTag.children().remove() ;
-
-                for(var i = 0; i < data$.length; i++){
-                    $svTag.append('<li>' + data$[i] + '</li>') ;
-                }
-            }
-
-            $svTag.tagit({
-                placeholderText : '用关键字描述调查，最多可设置三个标签',
-                tagLimit : 3,
-                onTagLimitExceeded : function(){
-                    alert('免费调查只能创建三个标签') ;
-                },
-                afterTagAdded : function(){
-                    if($(this).find('.tagit-choice').size() == 3){
-                        $(this).find('.tagit-new').hide() ;
-                    }
-                },
-                afterTagRemoved  : function(){
-                    $(this).find('.tagit-new').show() ;
-                },
-            }) ;
         },
 
         // 题目初始化
@@ -220,7 +155,9 @@ steal('init.js')
                     $item = this.children().last().survey_create_ctrl_item({
                         $itemBody : $this.options.$itemBody,  // 题目容器总对象
                         question$ : data$,                    // 题目相关数据集合
-                    }).trigger('type_change').find('.item-title .vk-input').html(data$.question_name) ;
+                    }) ;
+
+                    $item.trigger('type_change').find('.item-title .vk-input').html(data$.question_name) ;
 
                     $this.options.$itemBody.trigger('item_refresh') ;    // 刷新题目信息
                 }
@@ -276,7 +213,10 @@ steal('init.js')
                 // 基本信息汇总
                 header$.survey_name  = this.element.find('[name=survey_name]').val() ;
                 header$.survey_desc  = this.element.find('[name=survey_desc]').html() ;
-                header$.survey_tag   = $this.element.find('.survey-tag').tagit("assignedTags") ;
+
+                if(header$.survey_desc == ''){
+                    header$.survey_desc = '无此调查说明..' ;
+                }
 
                 if(header$.survey_name == '' && $this.options.models$.collect$ != 'draft'){
                     $this.options.models$.collect$.flag = false ;
@@ -299,7 +239,7 @@ steal('init.js')
                         $options = $(this).find('.item-option>.option') ;
 
                         // 汇总当前题目下各选项信息
-                        if(question$.question_type === 'textarea'){
+                        if(question$.question_type === 'text' || question$.question_type === 'textarea'){
                             option$             = {} ;
                             option$.option_seq  = 1 ;
                             option$.option_name = '主观题选项' ;
@@ -514,6 +454,9 @@ steal('init.js')
         ".type-change click" : function(el){
             this.element.attr('data-item-type', el.attr('data-toggle')) ;
             this.type_change() ;
+
+            // 关闭popover
+            this.element.find('.item-cog').popover('hide') ;
         },
 
         // 题目调整功能
@@ -539,25 +482,32 @@ steal('init.js')
         // 选项类型刷新
         type_change : function(){
             switch(this.element.attr('data-item-type')){
-                case 'textarea' :
-                    this.element.find('.item-type').text('[主]') ;
-
-                    this.element.find('.option').hide() ;
-                    this.element.find('.textarea').show() ;
-                    break ;
-
                 case 'radio' :
-                    this.element.find('.item-type').text('[单]') ;
+                    this.element.find('.item-type span').text('单选') ;
 
                     this.options.$itemSetting.find('.type-change').attr('data-toggle', 'checkbox')
                     .children().text('切换为多选题') ;
                     break ;
 
                 case 'checkbox' :
-                    this.element.find('.item-type').text('[多]') ;
+                    this.element.find('.item-type span').text('多选') ;
 
                     this.options.$itemSetting.find('.type-change').attr('data-toggle', 'radio')
                     .children().text('切换为单选题') ;
+                    break ;
+                    
+                case 'textarea' :
+                    this.element.find('.item-type span').text('主观') ;
+
+                    this.element.find('.option').hide() ;
+                    this.element.find('textarea').show() ;
+                    break ;
+                    
+                case 'text' :
+                    this.element.find('.item-type span').text('主观') ;
+
+                    this.element.find('.option').hide() ;
+                    this.element.find('.item-option input[type=text]').show() ;
                     break ;
             }
         },
@@ -615,6 +565,9 @@ steal('init.js')
 
             // 关闭目标题目的设置popover
             el.parents('.item').find('.item-cog').popover('hide') ;
+
+            // 聚焦选项数据框
+            el.parent().find('.popover .vk-input').focus() ;
         },
 
         // 批量增加选项提交

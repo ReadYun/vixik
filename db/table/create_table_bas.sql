@@ -120,17 +120,16 @@ create table tb_bas_user_follow_survey
 create index idx_tb_bas_user_follow_survey__user_code   on tb_bas_user_follow_survey(user_code) ;
 create index idx_tb_bas_user_follow_survey__follow_code on tb_bas_user_follow_survey(follow_code) ;
 
-/********用户关注调查类型********/
-drop table if exists tb_bas_user_follow_svtype ;
-create table tb_bas_user_follow_svtype
+/********用户关注调查属性信息表********/
+drop table if exists tb_bas_user_follow_svprop ;
+create table tb_bas_user_follow_svprop
 (
-    user_code       integer     ,#主用户编码
-    svtype_sub      integer     ,#关注调查大类编码
-    svtype_main     integer     ,#关注调查小类编码
-    follow_time     datetime     #关注时间
+    user_code       integer      ,#用户编码
+    svprop_type     varchar(16)  ,#关注调查属性类型（survey_type/survey_type_sub/survey_trade）
+    svprop_value    integer      ,#关注调查属性值
+    follow_time     datetime      #关注时间
 ) ;
-create index idx_tb_bas_user_follow_svtype__user_code  on tb_bas_user_follow_svtype(user_code) ;
-create index idx_tb_bas_user_follow_svtype__svtype_sub on tb_bas_user_follow_svtype(svtype_sub) ;
+create index idx_tb_bas_user_follow_svprop__user_code  on tb_bas_user_follow_svprop(user_code) ;
 
 /********用户分享调查信息********/
 drop table if exists tb_bas_user_share_survey ;
@@ -149,7 +148,7 @@ create table tb_bas_survey_info
 (
     survey_code        integer not null  ,#调查编码
     survey_name        varchar(64)       ,#调查名称
-    survey_desc        varchar(256)      ,#调查说明
+    survey_desc        text              ,#调查说明
 	  survey_tag         varchar(128)      ,#调查标签
     survey_type        integer           ,#调查归属大类
     survey_type_sub    integer           ,#调查归属小类
@@ -158,7 +157,6 @@ create table tb_bas_survey_info
     survey_state       integer           ,#调查状态
     create_step        integer           ,#创建阶段(0:完成，1:阶段一，2:阶段二，....)
     user_code          integer           ,#用户编码
-    user_nick          varchar(32)       ,#用户昵称
     answer_flow        integer           ,#答题流程(1:清单展示所有题目，2:按回答进度展示题目)
     is_template        integer           ,#是否设为模板(1:是，0:否)
     recomm_type        integer           ,#推荐标志(0:不推荐，1:系统推荐，2:自定义推荐)
@@ -183,24 +181,29 @@ create table tb_bas_survey_info
     answer_num         integer           ,#参与答题人数
     primary key(survey_code)
 ) ;
-create index idx_bas_survey_info__survey_code  on tb_bas_survey_info(survey_code) ;
-create index idx_bas_survey_info__survey_name  on tb_bas_survey_info(survey_name) ;
-create index idx_bas_survey_info__survey_type  on tb_bas_survey_info(survey_type) ;
-create index idx_bas_survey_info__survey_class on tb_bas_survey_info(survey_class) ;
-create index idx_bas_survey_info__survey_state on tb_bas_survey_info(survey_state) ;
+create index idx_bas_survey_info__survey_code     on tb_bas_survey_info(survey_code) ;
+create index idx_bas_survey_info__survey_name     on tb_bas_survey_info(survey_name) ;
+create index idx_bas_survey_info__survey_type     on tb_bas_survey_info(survey_type) ;
+create index idx_bas_survey_info__survey_type_sub on tb_bas_survey_info(survey_type_sub) ;
+create index idx_bas_survey_info__survey_class    on tb_bas_survey_info(survey_class) ;
+create index idx_bas_survey_info__survey_state    on tb_bas_survey_info(survey_state) ;
+create index idx_bas_survey_info__user_code       on tb_bas_survey_info(user_code) ;
 
-/********调查标签详情********/
-drop table if exists tb_bas_survey_tag ;
-create table tb_bas_survey_tag
+/********调查标签标签********/
+drop table if exists tb_bas_tag_info ;
+create table tb_bas_tag_info
 (
-	  survey_tag         varchar(32)    ,#调查标签
+	  tag_name           varchar(32)    ,#调查标签
     survey_code        integer        ,#调查编码
     survey_type        integer        ,#调查类型
     survey_type_sub    integer        ,#调查小类
-    survey_class       integer        ,#调查大类
+    survey_trade       integer         #调查大类
 ) ;
-create index idx_tb_bas_survey_tag__survey_code on tb_bas_survey_tag(survey_code) ;
-create index idx_tb_bas_survey_tag__survey_tag  on tb_bas_survey_tag(survey_tag) ;
+create index idx_tb_bas_tag_info__survey_code     on tb_bas_tag_info(survey_code) ;
+create index idx_tb_bas_tag_info__survey_tag      on tb_bas_tag_info(tag_name) ;
+create index idx_tb_bas_tag_info__survey_type     on tb_bas_tag_info(survey_type) ;
+create index idx_tb_bas_tag_info__survey_trade    on tb_bas_tag_info(survey_trade) ;
+create index idx_tb_bas_tag_info__survey_type_sub on tb_bas_tag_info(survey_type_sub) ;
 
 /********调查推荐信息********/
 drop table if exists tb_bas_survey_recommend ;
@@ -249,7 +252,7 @@ create table tb_bas_survey_statist
     textarea_num    integer    ,#主观题数量
     create_coins    integer    ,#创建调查使用金币
     answer_coins    integer    ,#回答调查奖励金币
-    answer_num      integer     #参与答题人数
+    answer_num      integer     #参与调查人数
 ) ;
 
 /********题目详情********/
@@ -257,7 +260,7 @@ drop table if exists tb_bas_question_info ;
 create table tb_bas_question_info
 (
     question_code      integer       ,#题目编码
-    question_name      varchar(80)   ,#题目名称
+    question_name      varchar(80)   ,#题目名称	
     question_seq       integer       ,#题目序号
     survey_code        integer       ,#调查编码
     question_type      varchar(8)    ,#题目类型
@@ -265,7 +268,8 @@ create table tb_bas_question_info
     question_option    varchar(512)  ,#题目选项
     custom_option      integer       ,#自定义题目类型（-1:无自定义功能；>-1:有自定义功能，根据值不同限定对应的用户等级下限；0:允许所有用户）
     is_bank            integer       ,#是否属于题库(1:是；0:否)
-    create_time        datetime       #题目创建时间
+    create_time        datetime      ,#题目创建时间
+    answer_num         integer        #参与答题人数
 ) ;
 create index idx_bas_question_info_question_code on tb_bas_question_info(question_code) ;
 create index idx_bas_question_info_question_name on tb_bas_question_info(question_name) ;
@@ -325,8 +329,17 @@ create table tb_bas_question_action
 create index tb_bas_question_action__user_code   on tb_bas_question_action(user_code) ;
 create index tb_bas_question_action__survey_code on tb_bas_question_action(survey_code) ;
 
-drop idx_bsqa_user on tb_bas_question_action ;
-drop idx_bsqa_survey on tb_bas_question_action ;
+/********调查评论详情********/
+drop table if exists tb_bas_survey_comment ;
+create table tb_bas_survey_comment
+(
+    survey_code     integer     ,#调查编码
+    user_code       integer     ,#评论用户编码
+    comment_txt     text        ,#评论内容
+    comment_time    datetime     #评论时间
+) ;
+create index idx_tb_bas_survey_comment__user_code   on tb_bas_survey_comment(user_code) ;
+create index idx_tb_bas_survey_comment__survey_code on tb_bas_survey_comment(survey_code) ;
 
 /********调查参与造数据用户清单（不入文档）********/
 drop table if exists tb_bas_survey_action_build_user ;

@@ -28,6 +28,9 @@
     .vf-elem .vf-elem-option.inline{
         float: left;
     }
+    .vf-elem .vf-elem-option div{
+        float: left;
+    }
     .vf-elem input, .vf-elem select, .vf-elem textarea{
         font: 12px "微软雅黑",Tahoma;
     }
@@ -36,6 +39,9 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
     width: 218px;
     _height: 26px;
     min-height: 26px;

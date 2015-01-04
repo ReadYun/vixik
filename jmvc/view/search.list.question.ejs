@@ -1,18 +1,22 @@
 <%for(var i = 0; i < data.length; i++){%>
-    <div class="search-list">
-        <div class="content-title">
-            <span class="label label-success">问题</span>
-            <a class="question-name" href="<%= data[i].url_survey_analyse %>"><%= data[i].question_name %></a>
-        </div>
-        <div class="content-body question">
-            <div title="问题选项" class="<%= data[i].question_option %>"></div>
-            <div class="content-stats">
-                <div title="所属问卷名称" class="survey-name"><i class="icon-list-alt"></i>
-                    <a href="<%= data[i].url_survey_visit %>"><%= data[i].survey_name %></a>
-                </div>
-                <div title="问题创建时间" class="create-date"><i class="icon-time"></i><%= data[i].create_date %></div>
-                <div title="问题状态" class="survey-state"><i class="icon-bookmark"></i><%= data[i].survey_state %></div>
+<div class="sl-elem" title="参与人数">
+    <div class="sl-stats"><%= data[i].answer_num %></div>
+    <div class="sl-main">
+        <div class="qt-name search-text"><%= data[i].question_name %></div>
+        <a class="sv-name" href="<%= data[i].url_sv_visit %>"><%= data[i].survey_name %></a>
+        <div class="sv-info">
+            <div class="sv-user"><img src="<%= data[i].user_photo %>"><a href="<%= data[i].url_us_visit %>"><%= data[i].user_nick %></a></div>
+            <div class="qt-type"><i class="icon-fire"></i><%= data[i].question_type %></div>
+            <div class="sv-type">
+                <i class="icon-sitemap"></i>
+                <a href="<%= data[i].url_sv_type %>"><%= data[i].survey_type %></a><span>/</span><a href="<%= data[i].url_sv_type_sub %>"><%= data[i].survey_type_sub %></a>
             </div>
+            <div class="sv-trade"><i class="icon-beaker"></i><a href="<%= data[i].url_sv_trade %>"><%= data[i].survey_trade %></a></div>
         </div>
     </div>
+    <div class="sl-sub">
+        <div class="sv-time"><%= data[i].start_date %>发布</div>
+        <div class="sv-state"><%= data[i].survey_state %></div>
+    </div>
+</div>
 <%}%>

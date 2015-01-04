@@ -64,16 +64,11 @@
                                 <input type="text" name="survey_name" class="vk-input green large block" placeholder="请输入调查标题">
                             </div>
                         </div>
-                        <div id="surveyTag" class="cs-item">
-                            <div class="cs-label">调查标签</div>
-                            <div class="cs-content base-info">
-                                <ul class="survey-tag" name="survey_tag"></ul>
-                            </div>
-                        </div>
                         <div id="surveyDesc" class="cs-item" data-title="调查说明">
                             <div class="cs-label">调查说明</div>
                             <div class="cs-content base-info vf-elem" data-name="survey_desc">
                                 <div class="vk-input green large block" name="survey_desc" contenteditable="true"></div>
+                                <!-- <div class="vk-input green large block" name="survey_desc" contenteditable="true" onpaste="return false"></div> -->
                             </div>
                         </div>
                         <div id="surveyItem" class="cs-item" data-title="调查题目">
@@ -82,10 +77,28 @@
                                 <div id="itemBody"></div>
                                 <div id="itemButton">
                                     <div class="add-item">
-                                        <button class="vkbutton vbtn-default radio" data-type="radio">新增单选题</button>
-                                        <button class="vkbutton vbtn-default checkbox" data-type="checkbox">新增多选题</button>
-                                        <button class="vkbutton vbtn-default textarea" data-type="textarea">新增主观题</button>
-                                        <button class="vkbutton vbtn-default bank" data-type="bank" style="display:none">从题库选择题目</button>
+                                        <div class="dropdown">
+                                            <button class="vkbutton vbtn-default dropdown-toggle">新增选择题</button>
+                                            <ul class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
+                                                <li class="ai-btn" data-class="1" data-type="11">单项选择</li>
+                                                <li class="ai-btn" data-class="1" data-type="12">多项选择</li>
+                                            </ul>
+                                        </div>
+                                        <div class="dropdown">
+                                            <button class="vkbutton vbtn-default dropdown-toggle">新增主观题</button>
+                                            <ul class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
+                                                <li class="ai-btn" data-class="2" data-type="21">单行填空</li>
+                                                <li class="ai-btn" data-class="2" data-type="22">多行填空</li>
+                                            </ul>
+                                        </div>
+                                        <div class="dropdown">
+                                            <button class="vkbutton vbtn-default dropdown-toggle">新增评分题</button>
+                                            <ul class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
+                                                <li class="ai-btn" data-class="3" data-type="31">单项评分</li>
+                                                <li class="ai-btn" data-class="3" data-type="32">多项评分</li>
+                                            </ul>
+                                        </div>
+                                        <button class="vkbutton vbtn-default bank" data-type="bank">从题库选择题目</button>
                                     </div>
                                     <div class="preview-item">
                                         <button class="vkbutton vbtn-default" data-type="textarea">预览调查题目</button>
@@ -98,8 +111,29 @@
                 <div id="surveySetting" class="sv-elem sv-content" data-step="step2">
                     <div class="svc-header"><strong>调查属性</strong></div>
                     <div class="svc-body">
-                        <div class="cs-item survey-class" data-sv-type="0" data-sv-type-sub="0" data-sv-trade="0">
-                            <div class="cs-label">调查分类</div>
+                        <div class="survey-range cs-item">
+                            <div class="cs-label">参与用户范围</div>
+                            <div class="cs-content base-info vf-elem" data-vf-name="target_range">
+                                <select type="select" name="target_range">
+                                    <option value="999">允许所有用户参与</option>
+                                    <volist name="level" id="lvl">
+                                    <option value="{$lvl.user_level_value}">允许{$lvl.user_level_desc}等级以上用户参与</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="survey-tag cs-item">
+                            <div class="cs-label">调查标签设置</div>
+                            <div class="cs-content base-info">
+                                <ul class="sv-tag-body" name="survey_tag" style="display:none">
+                                    <volist name="tag" id="tag">
+                                    <li>{$tag.tag_name}</li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="survey-class cs-item" data-sv-type="0" data-sv-type-sub="0" data-sv-trade="0">
+                            <div class="cs-label">调查分类设置</div>
                             <div class="cs-content">
                                 <div class="survey-type" data-info="survey_type">
                                     <div class="se-body dropdown">
@@ -134,18 +168,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="cs-item survey-range">
-                            <div class="cs-label">参与用户范围</div>
-                            <div class="cs-content base-info vf-elem" data-vf-name="target_range">
-                                <select type="select" name="target_range">
-                                    <option value="999">允许所有用户参与</option>
-                                    <volist name="level" id="lvl">
-                                    <option value="{$lvl.user_level_value}">允许{$lvl.user_level_desc}等级以上用户参与</option>
-                                    </volist>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="cs-item survey-end" data-sv-end="0" data-sv-end-value="0">
+                        <div class="survey-end cs-item" data-sv-end="0" data-sv-end-value="0">
                             <div class="cs-label">活动周期设置</div>
                             <div class="cs-content">
                                 <div class="end-type">
@@ -339,7 +362,7 @@
             <label class="suc-label"><i class="icon-thumbs-up"></i>本次调查创建成功，我现在想：</label>
             <div class="suc-next">
                 <a class="next-act" href="{:U('survey/create')}">>>   继续创建调查</a>
-                <a class="next-act sv-analy" href="{:U('survey/analyse')}">>>   查看本次调查</a>
+                <a class="next-act sv-analy" href="{:U('survey/visit')}">>>   查看本次调查</a>
                 <a class="next-act" href="{:U('user/index')}">>>   管理我的调查</a>
                 <a class="next-act sv-type" href="{:U('survey/type')}">>>   查看同类型调查</a>
                 <a class="next-act sv-trade" href="{:U('survey/trade')}" sytle="dispalay:none">>>   查看同行业调查</a>
@@ -476,8 +499,8 @@
         <div class="add-option">
             <div class="vk-input green" contenteditable="true"></div>
             <div class="add-option-button">
-                <button type="button" class="vkbutton vbtn-border vbtn-default" data-type="submit">确定</button>
-                <button type="button" class="vkbutton vbtn-border vbtn-default" data-type="cancel">取消</button>
+                <button type="button" class="vkbutton vbtn-border vbtn-default submit" data-type="submit">确定</button>
+                <button type="button" class="vkbutton vbtn-border vbtn-default cancel" data-type="cancel">取消</button>
             </div>
         </div>
     </div>

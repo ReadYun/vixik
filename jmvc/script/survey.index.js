@@ -11,7 +11,7 @@
 steal('init.js')
 .then('script/public.header.js')
 .then(function($){  
-    loadPlugin('vkHighChart', 'vkData', 'iCheck', 'vkForm', 'vkPaging') ;  // 加载所需插件
+    loadPlugin('vkData', 'jQCloud') ;  // 加载所需插件
 })
 .then(function($){
 
@@ -26,157 +26,189 @@ steal('init.js')
         }
     }, {
         init : function(){
-        	this.chart() ;
-        },
-		
-		// 生成一定范围内随机数
-        random_array : function(num, value_bas, value_ext){
-        	var data$ = [] ;
-
-        	// 生成31个一定范围内随机数
-        	for(i = 0; i < num; i++){
-        		data$.push(value_bas + Math.ceil(Math.random() * value_ext + Math.random() * value_ext)) ;
-        	}
-
-        	return data$ ;
         },
 
-        chart : function(){
-        	this.chart$ = {
-		        chart: {
-		            plotBackgroundColor: null,
-		            plotBorderWidth: 0,
-		            plotShadow: false,
-		        },
-		        title: {
-		            text: null,
-		        },
-		        tooltip: {
-		            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-		        },
-		        plotOptions: {
-		            pie: {
-		                dataLabels: {
-		                    // enabled: true,
-		                    distance: -40,
-		                    style: {
-		                        fontWeight: 'bold',
-		                        color: '#666',
-		                        padding: 110,
-		                    }
-		                },
-		                // center: ['50%', '55%']
-		            }
-		        },
-		        series: [{
-		            type: 'pie',
-		            name: 'Browser share',
-		            innerSize: '50%',
-		            data: [
-		                ['公益调查', 45.0],
-		                ['民意调查', 26.8],
-		                ['环保调查', 12.8],
-		                ['时事调查', 8.5],
-		                ['文体调查', 6.2],
-		            ]
-		        }]
-        	} ;
+        // 手动触发模型更新事件
+        trigger : function(prop){    
+            eval("this.attr('" + prop + "', Math.random())") ;
         },
 
-        publish_data : function(){
-        	var model$ = this ;
-        	var date = moment().add('d', -31) ;
-        	var date$ = [] , data$ = [] , i ;
+        get_data : function(data$){
+            var trigger, 
+                $this = this,
+                api$  = $.extend({api:'search_survey'}, data$ || {}) ;
 
-        	// 生成最近31天日期数组
-        	while(date.format('MM-DD') != moment().format('MM-DD')){
-        		date$.push(date.format('MM-DD')) ;
-        		date = date.add('d', 1) ;
-        	}
-
-        	data$ = model$.random_array(31, 50, 200) ;
-
-        	model$.publish$ = {
-	            chart: {
-	                type         : 'area'  ,// 图表类型
-	                width        : 450     ,// 图表长度
-	                height       : 250     ,// 图表宽度
-	            	marginRight  : 20      ,// 右边距
-	            	borderRadius : 0       ,// 无圆角
-	            },
-	            title: {
-	                text: ''
-	            },
-	            subtitle: {
-	                text: '最近一个月发布调查活动数量统计'
-	            },
-	            xAxis: {
-	                categories : date$ ,
-	                tickInterval : 6
-	            },
-	            yAxis: {
-	                title: {
-	                    text: ''
-	                },
-	                labels: {
-	                    formatter: function() {
-	                        return this.value ;
-	                    }
-	                }
-	            },
-	            tooltip: {
-	                pointFormat: '<b style="color:yellow">{point.y:,.0f}</b> 个调查活动发布'
-	            },
-	            plotOptions: {
-	                area: {
-	                    marker: {
-	                        enabled: true,
-	                        symbol: 'circle',
-	                        radius: 2,
-	                        states: {
-	                            hover: {
-	                                enabled: true
-	                            }
-	                        }
-	                    }
-	                }
-	            },
-	            series: [{
-	                name: '问卷调查',
-	                data: data$
-	            	}]
-	        } ;
+            // 访问问卷参与情况统计接口
+            $.ajax({
+                type    : 'post',
+                url     : __API__, 
+                data    : api$,
+                success : function(data$){
+                    if(data$.status){
+                        console.dir(data$.data) ;
+                        $this.data$ = data$.data ;    // 搜索数据
+                        $this.trigger('list_more') ;
+                    }else{
+                        console.log('没有符合条件的数据。。') ;
+                        $this.trigger('list_no') ;
+                    }
+                }
+            });
         },
     }) ;
 
     /*
-     *  页面总控制器
+     * 页面总控制器
+     *
+     **/
+    $.Controller('Survey.Index.Ctrl.Body', {
+        defaults : {
+            models$     : {}                 ,// 页面总模型
+            $svListMain : $('.sv-list-main') ,// 搜索内容模块
+        }
+    }, {
+        init : function(){
+        	var $this = this ;
+
+            this.element.find('.trade-hot .th-elem').each(function(){
+                $(this).find('img').attr('src', __JMVC_IMG__ + 'svtrade/' + $(this).attr('data-code') + '.jpg') ;
+            }) ;
+
+            this.options.models$.get_data() ;
+        },
+
+        "{models$} list_more" : function(){
+            this.survey_list(this.options.models$.data$) ;
+        },
+
+        // 问卷列表分页
+        survey_list : function(data$){
+            var $this = this,
+                list$ = data$.list,
+                next$ = data$.next,
+                page  = data$.page ;
+
+            for(var i = 0; i < list$.length; i++){
+                if(parseInt(list$[i].user_photo)){
+                    list$[i].user_photo = __JMVC_IMG__ + 'user/' + list$[i].user_code + '_60.jpg' ;
+                }else{
+                    list$[i].user_photo = __JMVC_IMG__ + 'user/user.jpg' ;
+                }
+            }
+
+            // 题目状态列表栏生成
+            $this.element.find('.sv-list-main').attr('data-page', page).append(
+                __JMVC_VIEW__ + 'search.list.survey.ejs',  // 题目状态列表模板路径
+                {data: list$}                              // 调用快速序列生成满足题目数量序列
+            ) ;
+
+            if(!next$.length){
+                $this.element.find('.sv-list-more').hide() ;
+            }
+        },
+    }) ;
+
+    /*
+     * 页面总控制器
      *
      **/
     $.Controller('Survey.Index.Ctrl.Main', {
         defaults : {
-            models$     : {}                ,// 页面总模型
+            models$    : {}              ,// 页面总模型
+            $surveyBox : $('#surveyBox') ,// 调查内容模块
+            $rewardBox : $('#rewardBox') ,// 积分专区模块
+            $svRecomm  : $('.sv-recomm') ,// 推荐调查模块
+
         }
     }, {
         init : function(){
         	var $this = this ;
 
             // 新建模型实例并初始化
-            this.options.models$ = new Survey.Index.Model({    
+            this.options.models$ = new Survey.Index.Model({
             }) ;
 
-            // 各调查大类分别初始化
-            this.element.find('.survey-elem').each(function(){
-	        	$(this).find('.st-sub').first().addClass('active') ;
-	        	$(this).find('.sv-list-body').children().first().addClass('active') ;
-				$this.sv_elem_list($(this)) ;
 
-				$()
+            // 搜索结果清单展示模块控制器
+            this.options.$surveyBox.survey_index_ctrl_body({
+                models$ : this.options.models$,
+                $Main   : this.element,
             }) ;
+
+            $this.options.$rewardBox.find('.award-elem>img').each(function(){
+                $(this).attr('src', __JMVC_IMG__ + 'prize/' + $(this).attr('data-img') + '.jpg') ;
+            }) ;
+
+            // 活跃用户显示初始化
+            $this.element.find('.user-hot-elem').each(function(){
+                if($(this).attr('data-photo')){
+                    $(this).find('img').attr('src', __JMVC_IMG__ + 'user/' + $(this).attr('data-code') + '.jpg') ;
+                }else{
+                    $(this).find('img').attr('src', __JMVC_IMG__ + 'user/user.jpg') ;
+                }
+            }) ;
+
+            $this.sv_recomm_init() ;
+            $this.tag_hot() ;
+            $('body').show() ;
         },
 
-        sv_elem_chart : function($elem){
-        	
+        ".sr-sub-elem hover" : function(el){
+            var code = el.addClass('active').attr('data-sr') ;
+            console.log(code) ;
+
+            this.options.models$.sr_countdown = false ;
+
+            this.element.find('.sr-main>a.svr').removeClass('active').filter('[data-sr=' + code + ']').addClass('active') ;
+            this.element.find('.sr-sub-elem').not(el).removeClass('active') ;
+        },
+
+        ".sr-sub mouseout" : function(){
+            this.options.models$.sr_countdown = true ;
+        },
+
+        sv_recomm_init : function($elem){
+            var code,
+                $this     = this,
+                $svRecomm = $this.options.$svRecomm,
+                $tpl      = $svRecomm.find('.sr-main>.tpl') ;
+
+            $svRecomm.find('.sr-sub-elem').each(function(){
+                code = $(this).attr('data-sr') ;
+                $svRecomm.find(".sr-main").append(
+                    $tpl.clone().removeClass('tpl').addClass('svr').attr('href', $(this).attr('href')).attr('data-sr', code)
+                    .find('img').attr('src', __JMVC_IMG__ + 'survey/' + code + '.jpg').end()) ;
+            }) ;
+
+            this.element.find('.sr-main>.svr').first().addClass('active') ;
+            this.element.find('.sr-sub>a').first().addClass('active') ;
+
+            $this.options.models$.sr_countdown = true ;
+            $this.sr_countdown() ;
+        },
+
+        sr_countdown : function(){
+            var $img, $sub,
+                $this = this ;
+
+            // 倒计时处理（间隔0.5秒处理一次）
+            var cd$ = setInterval(function(){
+                if($this.options.models$.sr_countdown){
+                    $img = $this.options.$svRecomm.find('a.active').first() ;
+                    $sub = $this.options.$svRecomm.find('.sr-sub-elem.active').first() ;
+
+                    $this.options.$svRecomm.find('a.svr').removeClass('active') ;
+                    $this.options.$svRecomm.find('.sr-sub-elem').removeClass('active') ;
+
+                    if($sub.next().size()){
+                        $img.next().addClass('active') ;
+                        $sub.next().addClass('active') ;
+                    }else{
+                        $this.options.$svRecomm.find('a.svr').first().addClass('active') ;
+                        $this.options.$svRecomm.find('.sr-sub-elem').first().addClass('active') ;
+                    }
+                }
+            }, 4000) ;
         },
 
         // 调查列表显示
@@ -279,18 +311,34 @@ steal('init.js')
             ) ;
         },
 
-        // 监控搜索框输入并且回车提交搜索请求
-        "{$mainSearch} keydown" : function(el, ev){
-            var type = 'survey' ;
+        // 热门标签
+        tag_hot : function(){
+            var cond, 
+                tags$   = [],
+                $this   = this ;
 
-            if(ev.keyCode == 13 && el.val()){
-                $.post(
-                    __API_SEARCH_GO__, 
-                    {type:type,words:el.val()},function(url){
-                        window.location.href = url ;
+            // 访问问卷参与情况统计接口
+            $.ajax({
+                type    : 'post',
+                url     : __API__, 
+                data    : {api:'stats_tag_hot'},
+                success : function(data$){
+                    if(data$.status){
+                        for(var i = 0; i < data$.data.length; i++){
+                            var tag$ = {} ;
+
+                            tag$.text      = data$.data[i].tag_name ;
+                            tag$.weight    = parseInt(data$.data[i].cnt) / 2 ;
+                            tag$.link      = {} ;
+                            tag$.link.href = data$.data[i].url_tag ;
+
+                            tags$.push(tag$) ;
+                        }
+
+                        $this.element.find('.tag-hot .ss-body').jQCloud(tags$) ;
                     }
-                ) ;
-            }
+                }
+            });
         },
     }) ;
 

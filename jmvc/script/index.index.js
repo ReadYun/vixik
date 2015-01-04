@@ -401,6 +401,8 @@ steal('init.js')
             this.options.$surveyType.home_index_ctrl_st({
                 models$ : this.options.models$
             }) ;
+            
+            $('body').show() ;
         },
 
         "{$liAllStats} click" : function(){

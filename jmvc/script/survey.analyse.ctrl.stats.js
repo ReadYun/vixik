@@ -29,10 +29,15 @@ steal('init.js')
     }, {
         init : function(){
             // 考虑到同步加载的时差问题，初始就做一次统计功能
-            this.stats_item() ;
-            this.stats_trend() ;
-            // this.stats_area() ;
-            this.stats_user() ;
+            if(this.options.models$.svsTrend$){
+                this.stats_trend() ;
+            }
+            if(this.options.models$.svsUser$){
+                this.stats_user() ;
+            }
+            if(this.options.models$.question$){
+                this.stats_item() ;
+            }
 
             this.element.find('#userStats .ssb-side>div').first().addClass('active') ;
             this.element.find('#userStats .stats-graphs>div').first().addClass('active') ;
@@ -45,18 +50,15 @@ steal('init.js')
 
         // 用户属性统计模型更新触发
         "{models$} svs_user" : function(){
-            // this.stats_area() ;
             this.stats_user() ;
         },
 
         // 用户属性分布分析
         ".ssb-side>div.user-prop-elem mouseover" : function(el){
-            var prop = el.attr('data-prop') ;
+            var prop = el.addClass('active').attr('data-prop') ;
 
             // 侧边导航刷新
             this.element.find('.ssb-side>div').removeClass('active') ;
-            el.addClass('active') ;
-
             this.element.find('.stats-graphs>div').removeClass('active') ;
             this.element.find('.stats-graphs>.sg-' + prop).addClass('active') ;
         },
@@ -100,62 +102,64 @@ steal('init.js')
                 $this.options.$trendStats.find('.avg>.stats-value').text(svsTrend$.stats.cnt_avg) ;
 
                 // 整理数据
-                for(var i = 0; i < svsTrend$.data.length; i++){
-                    date$.push(svsTrend$.data[i].end_date.substr(6)) ;
-                    data$.push(parseInt(svsTrend$.data[i].cnt)) ;
-                }
+                if(svsTrend$.length){
+                    for(var i = 0; i < svsTrend$.data.length; i++){
+                        date$.push(svsTrend$.data[i].end_date.substr(6)) ;
+                        data$.push(parseInt(svsTrend$.data[i].cnt)) ;
+                    }
 
-                // 生成图表
-                this.options.$trendStats.find('.stats-graphs').vkHighChart({
-                    chart: {
-                        type         : 'area'  ,// 图表类型
-                        width        : 680     ,// 图表长度
-                        height       : 350     ,// 图表宽度
-                        marginRight  : 10      ,// 右边距
-                    },
-                    title: {
-                        text: '',
-                        stype:{margin:'0'},
-                    },
-                    subtitle: {
-                        text  : svsTrend$.data[0].end_date + ' 至 ' + svsTrend$.data[svsTrend$.data.length-1].end_date,
-                        style : {fontSize:'19px', color:'#666', margin:'0'},
-                    },
-                    xAxis: {
-                        categories : date$,
-                    },
-                    yAxis: {
-                        title: {
-                            text: ''
+                    // 生成图表
+                    this.options.$trendStats.find('.stats-graphs').vkHighChart({
+                        chart: {
+                            type         : 'area'  ,// 图表类型
+                            width        : 680     ,// 图表长度
+                            height       : 350     ,// 图表宽度
+                            marginRight  : 10      ,// 右边距
                         },
-                        labels: {
-                            formatter: function() {
-                                return this.value ;
+                        title: {
+                            text: '',
+                            stype:{margin:'0'},
+                        },
+                        subtitle: {
+                            text  : svsTrend$.data[0].end_date + ' 至 ' + svsTrend$.data[svsTrend$.data.length-1].end_date,
+                            style : {fontSize:'19px', color:'#666', margin:'0'},
+                        },
+                        xAxis: {
+                            categories : date$,
+                        },
+                        yAxis: {
+                            title: {
+                                text: ''
+                            },
+                            labels: {
+                                formatter: function() {
+                                    return this.value ;
+                                }
                             }
-                        }
-                    },
-                    tooltip: {
-                        pointFormat: '<b style="color:#333;font-weight:900">{point.y:,.0f}</b> 人参与调查'
-                    },
-                    plotOptions: {
-                        area: {
-                            marker: {
-                                enabled: true,
-                                symbol: 'circle',
-                                radius: 2,
-                                states: {
-                                    hover: {
-                                        enabled: true
+                        },
+                        tooltip: {
+                            pointFormat: '<b style="color:#333;font-weight:900">{point.y:,.0f}</b> 人参与调查'
+                        },
+                        plotOptions: {
+                            area: {
+                                marker: {
+                                    enabled: true,
+                                    symbol: 'circle',
+                                    radius: 2,
+                                    states: {
+                                        hover: {
+                                            enabled: true
+                                        }
                                     }
                                 }
                             }
-                        }
-                    },
-                    series: [{
-                        name: '参与调查人数',
-                        data: data$
-                        }]
-                }) ;
+                        },
+                        series: [{
+                            name: '参与调查人数',
+                            data: data$
+                            }]
+                    }) ;
+                }
             }            
         },
 
@@ -175,61 +179,62 @@ steal('init.js')
                 $areaStats.find('.stats-value.least-city').text(svsUser$.area.city[svsUser$.area.city.length-1].city_name) ;
 
                 // 按EChart图表格式整理数据
-                for(var i = 0; i < svsUser$.area.province.length; i++){
-                    if(svsUser$.area.province[i].cnt == null){
-                        svsUser$.area.province[i].cnt = 0
-                    }else{
-                        sum += parseInt(svsUser$.area.province[i].cnt) ;
+                if(svsUser$.area.province.length){
+                    for(var i = 0; i < svsUser$.area.province.length; i++){
+                        if(svsUser$.area.province[i].cnt == null){
+                            svsUser$.area.province[i].cnt = 0
+                        }else{
+                            sum += parseInt(svsUser$.area.province[i].cnt) ;
+                        }
+
+                        series$.push({name:svsUser$.area.province[i].province_name, value:parseInt(svsUser$.area.province[i].cnt)}) ;
                     }
 
-                    series$.push({name:svsUser$.area.province[i].province_name, value:parseInt(svsUser$.area.province[i].cnt)}) ;
-                }
-
-                // 图表生成
-                $.vkEChart($areaStats.find('.stats-graphs'), {
-                    title : {
-                        text: '',
-                        subtext: '',
-                    },
-                    tooltip : {
-                        trigger: 'item'
-                    },
-                    dataRange: {
-                        min: 0,
-                        max: sum,
-                        x: 'right',
-                        y: 'bottom',
-                        text:['高','低'],           // 文本，默认为数值文本
-                        calculable : true
-                    },
-                    toolbox: {
-                        show: false,
-                        orient : 'vertical',
-                        x: 'right',
-                        y: 'center',
-                        feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: false},
-                            restore : {show: true},
-                            saveAsImage : {show: true}
-                        }
-                    },
-                    series : [
-                        {
-                            name: '参与调查人数',
-                            type: 'map',
-                            mapType: 'china',
-                            roam: false,
-                            itemStyle:{
-                                normal:{label:{show:true}},
-                                emphasis:{label:{show:true}}
-                            },
-                            data:series$
+                    // 图表生成
+                    $.vkEChart($areaStats.find('.stats-graphs'), {
+                        title : {
+                            text: '',
+                            subtext: '',
                         },
-                    ]
-                }) ;                    
+                        tooltip : {
+                            trigger: 'item'
+                        },
+                        dataRange: {
+                            min: 0,
+                            max: sum,
+                            x: 'right',
+                            y: 'bottom',
+                            text:['高','低'],           // 文本，默认为数值文本
+                            calculable : true
+                        },
+                        toolbox: {
+                            show: false,
+                            orient : 'vertical',
+                            x: 'right',
+                            y: 'center',
+                            feature : {
+                                mark : {show: true},
+                                dataView : {show: true, readOnly: false},
+                                restore : {show: true},
+                                saveAsImage : {show: true}
+                            }
+                        },
+                        series : [
+                            {
+                                name: '参与调查人数',
+                                type: 'map',
+                                mapType: 'china',
+                                roam: false,
+                                itemStyle:{
+                                    normal:{label:{show:true}},
+                                    emphasis:{label:{show:true}}
+                                },
+                                data:series$
+                            },
+                        ]
+                    }) ;                    
+                }
             }
-
         },
 
         // 用户属性分布分析

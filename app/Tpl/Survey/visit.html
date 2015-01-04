@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
 <head>
-    <include file="Public:meta" title="{$survey['survey_name']} | 维新调研 · 倾听观点，发现价值"/>
+    <include file="Public:meta" title="{$survey['info']['survey_name']} | 维新调研 · 倾听观点，发现价值"/>
     <link rel="stylesheet" href="__JMVC__/style/survey.visit.css" type="text/css"/>
     <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.visit.js"></script>
 </head>
@@ -9,185 +9,180 @@
     <div id="Header">
         <include file="Public:topBar" page="调查访问" nav-type="sub" nav-cur="survey" page-icon="icon-list-alt"/>
     </div>
-    <div id="Main" data-survey="{$survey['survey_code']}">
-        <div id="surveyHeader">
-            <div class="sv-header">
-                <div class="sv-name left-box">{$survey['survey_name']}</div>
-                <div class="sv-prop right-box">
-                    <a class="sv-type">{$survey['survey_type_name']}</a>
-                    <a class="sv-trade">{$survey['survey_trade_name']}</a>
+    <div id="Main" data-survey="{$survey['info']['survey_code']}">
+        <div class="main-left">
+            <div id="svHeader">
+                <div class="sv-name">{$survey['info']['survey_name']}</div>
+                <div class="sv-user">
+                    <div class="user-nick">
+                        <img src="__JMVC__/public/image/user/{$survey['info']['user_code']}_60.jpg">
+                        <a href="{:U('/user/visit')}?code={$survey['info']['user_code']}">{$survey['info']['user_nick']}</a>
+                    </div>
+                    <div class="publish-time">发布于<span>{$survey['info']['start_time']}</span></div>
                 </div>
             </div>
-        </div>
-        <div id="surveyInfo">
-            <div class="sv-info left-box">
-                <div class="user-box">
-                    <div class="user-photo"><img src="/vixik/jmvc/public/image/user/{$survey['user_code']}_60.jpg"></div>
-                    <div class="user-nick"><a href="{$survey['url_user']}" target="_blank">{$survey['user_nick']}</a></div>
+            <div id="svExtend">
+                <div class="sv-type">
+                    <i class="icon-sitemap"></i>{$survey['info']['survey_type_name']} / {$survey['info']['survey_type_sub_name']}
                 </div>
-                <div class="sv-time">
-                    <i class="icon-calendar"></i>
-                    <div class="start-time"><span>开始于</span>{$survey['start_time']}</div>
-                    <div class="end-time"><span>结束于</span>{$survey['end_time']}</div>
-                </div>
-                <div class="sv-tag">
+                <notempty name="survey['info']['survey_trade_name']">
+                <div class="sv-trade"><i class="icon-beaker"></i>{survey['info']['survey_trade_name']}</div>
+                </notempty>
+                <div class="sv-tags">
                     <i class="icon-tags"></i>
-                    <div class="tags">
-                        <a class="svtag">开发的说法</a>
-                        <a class="svtag">大幅缩短开发</a>
-                        <a class="svtag">dfsdfFSDAF</a>
-                    </div>
+                    <a class="tag tpl"></a>
+                </div>
+                <div class="sv-end">
+                    <i class="icon-time"></i>
+                    <div class="se-over">活动已结束</div>
+                    <div class="se-soon">活动即将开始</div>
+                    <div class="se-cd-1"><span>235</span>人参与调查后活动结束</div>
+                    <div class="se-cd-2"><span>2天10小时23分钟</span>后活动结束</div>
                 </div>
             </div>
-            <div class="sv-item right-box">
-                <div class="item-cnt">
-                    <div class="ic-title">单选题</div>
-                    <div class="ic-value">{$survey['radio_num']}</div>
+            <div id="svAction">
+                <div class="sv-action"><i class="icon-star"></i>关注</div>
+                <div class="sv-action"><i class="icon-share-alt"></i>分享</div>
+                <div class="sv-action"><i class="icon-comment"></i>评论</div>
+                <div class="sv-action"><i class="icon-legal"></i>举报</div>
+            </div>
+            <div id="svDesc">
+                <div class="sv-label">
+                    <div class="sl-title">调查说明</div>
+                    <div class="sl-ext">
+                        <a class="more"><i class="icon-angle-down"></i>详细</a>
+                        <a class="up"><i class="icon-angle-up"></i>收起</a>
+                    </div>
                 </div>
-                <span></span>
-                <div class="item-cnt">
-                    <div class="ic-title">多选题</div>
-                    <div class="ic-value">{$survey['checkbox_num']}</div>
+                <div class="sv-desc">{$survey['info']['survey_desc']}</div>
+            </div>
+            <div id="svQuestion">
+                <div class="sv-label">
+                    <div class="sl-title">调查题目</div>
                 </div>
-                <span></span>
-                <div class="item-cnt">
-                    <div class="ic-title">主观题</div>
-                    <div class="ic-value">{$survey['textarea_num']}</div>
+                <div class="sv-question">
+                    <volist name="question" id="qt">
+                    <div class="sq-list">
+                        <div class="question-seq"><span>{$qt.question_seq}</span>.</div>
+                        <div class="question-name"><a>（<span>{$qt.question_type}</span>）{$qt.question_name}</a></div>
+                    </div>
+                    </volist>
+                </div>
+            </div>
+            <div id="svComment">
+                <div class="sv-label">
+                    <div class="sl-title">最新评论</div>
+                    <div class="sl-ext">
+                        <a class="up"><i class="icon-comments-alt"></i>更多</a>
+                    </div>
+                </div>
+                <div class="sv-comment">
+                    <div class="comment-no">暂无评论...</div>
+                    <div class="comment-list">
+                        <div class="sc-elem tpl" style="display:none">
+                            <div class="sc-sub"><img src=""></div>
+                            <div class="sc-main">
+                                <div class="sc-user">
+                                    <div class="nick"><a href="" target="_blank"></a></div>
+                                    <div class="time"></div>
+                                </div>
+                                <div class="sc-body"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-my">
+                        <div class="need-login"><button class="vkbutton vbtn-default">现在登录发表评论</button></div>
+                        <div class="sc-sub"><img data-src="__JMVC__/public/image/user/" src=""></div>
+                        <div class="sc-main vkform">
+                            <div class="cm-input vk-input green large block" contenteditable="true" onpaste="return false"></div>
+                            <div class="cm-submit"><button class="vkbutton vbtn-success">我要评论</button></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="surveyTime">
-            <div class="st-doing">
-                <div class="sd-desc">9天23小时46分钟23秒后</div>
-                <div class="sd-span">活动结束</div>
-            </div>
-            <div class="st-end">活动已结束</div>
-        </div>
-        <div id="surveyMain">
-            <div class="sv-desc left-box">{$survey['survey_desc']}</div>
-            <div class="sv-stats right-box">
-                <div class="action-cnt">
-                    <div class="ac-elem">
-                        <div class="ac-title">奖励金币</div>
-                        <div class="ac-value">{$survey['answer_coins']}</div>
+        <div class="main-right">
+            <div id="svStats">
+                <div class="stats-item">
+                    <div class="ss-elem">
+                        <div class="si-value">{$survey['info']['qt_count_xz']}</div>
+                        <div class="si-desc">选择题</div>
                     </div>
-                    <div class="ac-elem">
-                        <div class="ac-title">参与人数</div>
-                        <div class="ac-value">{$survey['answer_count']}</div>
+                    <div class="ss-elem">
+                        <div class="si-value">{$survey['info']['qt_count_zg']}</div>
+                        <div class="si-desc">主观题</div>
                     </div>
-                    <div class="ac-elem">
-                        <div class="ac-title">关注人数</div>
-                        <div class="ac-value">123123</div>
+                    <div class="ss-elem">
+                        <div class="si-value">{$survey['info']['qt_count_pf']}</div>
+                        <div class="si-desc">评分题</div>
                     </div>
                 </div>
-                <div class="action-hint">
-                    <div class="ah-elem"><button class="vkbutton vbtn-border vbtn-default block">关注</button></div>
-                    <span></span>
-                    <div class="ah-elem"><button class="vkbutton vbtn-border vbtn-default block">分享</button></div>
-                    <span></span>
-                    <div class="ah-elem"><button class="vkbutton vbtn-border vbtn-default block">举报</button></div>
-                </div>
-            </div>
-        </div>
-        <div id="surveyButton">
-            <button class="vkbutton vbtn-success xlarge answer" href="{$survey['url_answer']}">参与调查</button>
-            <button class="vkbutton vbtn-success xlarge analyse" href="{$survey['url_analyse']}">查看分析</button>
-        </div>
-        <div id="surveyRecomm">
-            <div class="sr-type">
-                <div class="sr-header">
-                    <div class="sr-title">同类调查·商业调查</div>
-                    <div class="sr-more">更多</div>
-                </div>
-                <div class="sr-body">
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
+                <div class="stats-action">
+                    <div class="ss-elem">
+                        <div class="si-value">{$survey['info']['answer_coins']}</div>
+                        <div class="si-desc">奖励金币</div>
                     </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
+                    <div class="ss-elem">
+                        <div class="si-value">{$survey['stats']['answer_count']}</div>
+                        <div class="si-desc">参与人数</div>
                     </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
+                    <div class="ss-elem">
+                        <div class="si-value">{$survey['stats']['follow_count']}</div>
+                        <div class="si-desc">关注人数</div>
                     </div>
                 </div>
             </div>
-            <div class="sr-trade">
-                <div class="sr-header">
-                    <div class="sr-title">同类调查·服装鞋帽</div>
-                    <div class="sr-more">更多</div>
+            <div id="svButton">
+                <div class="sv-button">
+                    <button class="vkbutton vbtn-border vbtn-success block answer" href="{:U('/survey/answer')}?code={$survey['info']['survey_code']}">参与调查</button>
                 </div>
-                <div class="sr-body">
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
+                <div class="sv-button">
+                    <button class="vkbutton vbtn-border vbtn-success block" href="{:U('/survey/analyse')}?code={$survey['info']['survey_code']}">查看分析</button>
+                </div>
+            </div>
+            <div id="svOther">
+                <div class="sv-label">
+                    <div class="sl-title">Ta的其他调查</div>
+                    <div class="sl-ext">
+                        <a class="more" href="{:U('/user/visit')}?code={$survey['info']['user_code']}" target="_blank">
+                            <i class="icon-plus-sign"></i>更多
+                        </a>
                     </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
+                </div>
+                <div class="sv-list">
+                    <volist name="survey['list']['user']" id="sl_user">
+                    <div class="sl-elem"><a href="{$sl_user.survey_visit}">{$sl_user.survey_name}</a></div>
+                    </volist>
+                </div>
+            </div>
+            <div id="svType">
+                <div class="sv-label">
+                    <div class="sl-title">同类型调查</div>
+                    <div class="sl-ext">
+                        <a class="more" href="{:U('/survey/type')}?type={$survey['info']['survey_type']}" target="_blank">
+                            <i class="icon-plus-sign"></i>更多
+                        </a>
                     </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
+                </div>
+                <div class="sv-list">
+                    <volist name="survey['list']['type']" id="sl_type">
+                    <div class="sl-elem"><a href="{$sl_type.survey_visit}">{$sl_type.survey_name}</a></div>
+                    </volist>
+                </div>
+            </div>
+            <div id="svTrade">
+                <div class="sv-label">
+                    <div class="sl-title">同行业调查</div>
+                    <div class="sl-ext">
+                        <a class="more" href="{:U('/survey/trade')}?trade={$survey['info']['survey_type']}" target="_blank">
+                            <i class="icon-plus-sign"></i>更多
+                        </a>
                     </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
-                    <div class="sr-list-elem">
-                        <div class="sv-name"><a href="">阿萨德雷锋精神啦大幅缩短分</a></div>
-                        <div class="sv-stats">98987人参与</div>
-                    </div>
+                </div>
+                <div class="sv-list">
+                    <volist name="survey['list']['trade']" id="sl_trade">
+                    <div class="sl-elem"><a href="{$sl_trade.survey_visit}">{$sl_trade.survey_name}</a></div>
+                    </volist>
                 </div>
             </div>
         </div>

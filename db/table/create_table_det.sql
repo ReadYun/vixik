@@ -310,6 +310,16 @@ create table tb_det_survey_recommend_type
     recommend_type_desc    varchar(16)     #推荐规则类型描述
 ) ;
 
+/********调查分类********/
+drop table if exists tb_det_question_class_type ;
+create table tb_det_question_class_type
+(
+    question_class_code   integer       ,#问题大类编码
+    question_class_desc   varchar(16)   ,#问题大类描述
+    question_type_code    integer       ,#问题小类编码
+    question_type_desc    varchar(16)    #问题小类描述
+) ;
+
 /********调查类型********/
 drop table if exists tb_det_question_type ;
 create table tb_det_question_type

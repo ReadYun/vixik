@@ -89,14 +89,15 @@ var bsDatetimepicker = [
 		"css/datetimepicker.css",                // 插件样式文件
 	] ;
 
-// VixiK表单插件
-var pin = [
-		"jquery.pin.min.js",    // 插件主JS文件
+// 页面字符搜索
+var textSearch = [
+		"jquery.textSearch-1.0.js",    // 插件主文件
 	] ;
 
-// 顶部自动隐藏
-var Headroom = [
-		"headroom.js",    // 插件主JS文件
+// jQuery标签云
+var jQCloud = [
+		"jqcloud-1.0.4.min.js",    // 插件主文件
+		"jqcloud.css",             // 插件样式文件
 	] ;
 
 /* ======================== 已包含的自助插件配置 · 项目插件 ========================= */
@@ -127,6 +128,13 @@ var vkForm = [
 // VixiK数组插件
 var vkData = [
 		"vkData.js"     // 插件主文件
+	] ;
+
+
+// VixiK按钮插件
+var vkButton = [
+		"vkButton.js"     ,// 插件JS文件
+		"vkButton.css"    ,// 插件样式文件
 	] ;
 
 /* ================================================= *

@@ -18,14 +18,14 @@
                 <div class="nav-bar-photo"><img src=""></div>
                 <div class="nav-bar-info">
                     <div class="nav-bar-title">
-                        <a href="{$survey['info']['url_visit']}">{$survey['info']['survey_name']}</a>
+                        <a href="{$survey['url']['url_visit']}">{$survey['info']['survey_name']}</a>
                     </div>
                     <div class="nav-bar-user">
                         <div class="user-nick">
-                            <a href="{$survey['info']['url_user']}" target="_blank">{$survey['info']['user_nick']}</a>
+                            <a href="{$survey['url']['url_user']}" target="_blank">{$survey['info']['user_nick']}</a>
                         </div>
                         <div class="user-ext">
-                            <div>创建于</div>
+                            <div>发布于</div>
                             <div class="create-time">{$survey['info']['create_time']}</div>
                         </div>
                     </div>
@@ -99,15 +99,17 @@
             </div>
         </div>
     </div>
-    <div id="Main" class="tabbable tabs-right" data-survey="{$survey['info']['survey_code']}">
-        <div id="sideBar" class="tabbable tabs-right">
-            <ul class="nav nav-tabs">
-                <li class="survey-stats active"><a href="#surveyStats" data-toggle="tab">整体分析</a></li>
-                <li class="question-stats"><a href="#questionStats" data-toggle="tab">题目分析</a></li>
-                <li class="survey-content"><a href="#surveyContent" data-toggle="tab">调查内容</a></li>
-                <li class="survey-content"><a href="#surveySetting" data-toggle="tab">调查属性</a></li>
-                <li class="survey-comment"><a href="#surveyComment" data-toggle="tab">网友评论</a></li>
-            </ul>
+    <div id="Main" class="tabbable tabs-right" data-survey="{$survey['info']['survey_code']}" data-ans-cnt="{$survey['stats']['answer_count']}">
+        <div id="sideBar" class="">
+            <div class="side-bar tabbable tabs-right">
+                <ul class="nav nav-tabs">
+                    <li class="survey-stats active"><a href="#surveyStats" data-toggle="tab" onfocus="this.blur()">整体分析</a></li>
+                    <li class="question-stats"><a href="#questionStats" data-toggle="tab" onfocus="this.blur()">题目分析</a></li>
+                    <li class="survey-content"><a href="#surveyContent" data-toggle="tab" onfocus="this.blur()">调查内容</a></li>
+                    <li class="survey-content"><a href="#surveySetting" data-toggle="tab" onfocus="this.blur()">调查属性</a></li>
+                    <li class="survey-comment"><a href="#surveyComment" data-toggle="tab" onfocus="this.blur()">网友评论</a></li>
+                </ul>
+            </div>
         </div>
         <div id="statistContent" class="tab-content">
             <div id="surveyStats" class="tab-pane">
@@ -210,7 +212,7 @@
                     </div>
                 </div>            
             </div>
-            <div id="questionStats" class="tab-pane">
+            <div id="questionStats" class="tab-pane active">
                 <div class="qt-stats-header">
                     <select type="select" name="sv_question" class="input-xlarge qt-select">
                         <option class="init" value="0">显示全部问题</option>
@@ -224,7 +226,7 @@
                     <if condition="$qt.question_type eq 'textarea'">
                     <div class="question" data-question-code="{$qt.question_code}" data-question-type="{$qt.question_type}">
                         <div class="item-header">
-                            <div class="qt-name">{$qt.question_seq}.{$qt.question_name}(主观题)</div>
+                            <div class="qt-name">{$qt.question_seq}.(主观题){$qt.question_name}</div>
                         </div>
                         <div class="qt-text">
                             <div class="text-init">
@@ -248,11 +250,7 @@
                     <else />
                     <div class="question qt-stats" data-question-code="{$qt.question_code}" data-question-name="{$qt.question_name}" data-question-type="{$qt.question_type}">
                         <div class="item-header">
-                            <div class="qt-name">{$qt.question_seq}.{$qt.question_name}
-                            <switch name="qt.question_type">
-                                <case value="radio">(单选题)</case>
-                                <case value="checkbox">(多选题)</case>
-                            </switch>
+                            <div class="qt-name">{$qt.question_seq}.<switch name="qt.question_type"><case value="radio">(单选题)</case><case value="checkbox">(多选题)</case></switch>{$qt.question_name}
                             </div>
                         </div>
                         <div class="item-option">
@@ -456,99 +454,40 @@
                     </div>
                 </div>
             </div>
-            <div id="surveyComment" class="tab-pane active">
+            <div id="surveyComment" class="tab-pane">
                 <div class="comment-main">
-                    <div class="comment-no">暂无任何评论</div>
+                    <div class="comment-no">暂无评论...</div>
                     <div class="comment-ok">
                         <div class="comment-my">
-                            <div class="unlogin"></div>
-                            <div class="cm-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
-                            <div class="cm-main">
-                                <div class="cm-input" contenteditable="true"></div>
-                                <div class="cm-submit"><button class="vkbutton vbtn-success">发表评论</button></div>
+                            <div class="need-login"><button class="vkbutton vbtn-default">现在登录发表评论</button></div>
+                            <div class="sc-sub"><img></div>
+                            <div class="sc-main vkform">
+                                <div class="cm-input vk-input green large block" contenteditable="true" onpaste="return false"></div>
+                                <div class="cm-submit"><button class="vkbutton vbtn-success">我要评论</button></div>
                             </div>
                         </div>
                         <div class="comment-list">
-                            <div class="cl-elem">
-                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
-                                <div class="cl-elem-main">
-                                    <div class="cm-user">
-                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
-                                        <div class="time">23分钟前</div>
+                            <div class="cl-elem tpl" style="display:none">
+                                <div class="sc-sub"><img></div>
+                                <div class="sc-main">
+                                    <div class="sc-user">
+                                        <div class="nick"><a data-href="{:U('/user/visit')}" target="_blank"></a></div>
+                                        <div class="time"></div>
                                     </div>
-                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
-                                </div>
-                            </div>
-                            <div class="cl-elem">
-                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
-                                <div class="cl-elem-main">
-                                    <div class="cm-user">
-                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
-                                        <div class="time">23分钟前</div>
-                                    </div>
-                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
-                                </div>
-                            </div>
-                            <div class="cl-elem">
-                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
-                                <div class="cl-elem-main">
-                                    <div class="cm-user">
-                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
-                                        <div class="time">23分钟前</div>
-                                    </div>
-                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
-                                </div>
-                            </div>
-                            <div class="cl-elem">
-                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
-                                <div class="cl-elem-main">
-                                    <div class="cm-user">
-                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
-                                        <div class="time">23分钟前</div>
-                                    </div>
-                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
-                                </div>
-                            </div>
-                            <div class="cl-elem">
-                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
-                                <div class="cl-elem-main">
-                                    <div class="cm-user">
-                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
-                                        <div class="time">23分钟前</div>
-                                    </div>
-                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
-                                </div>
-                            </div>
-                            <div class="cl-elem">
-                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
-                                <div class="cl-elem-main">
-                                    <div class="cm-user">
-                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
-                                        <div class="time">23分钟前</div>
-                                    </div>
-                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
-                                </div>
-                            </div>
-                            <div class="cl-elem">
-                                <div class="cl-elem-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
-                                <div class="cl-elem-main">
-                                    <div class="cm-user">
-                                        <div class="nick"><a href="">曹志赟asdfasdfsdf三大发达省份</a></div>
-                                        <div class="time">23分钟前</div>
-                                    </div>
-                                    <div class="cm-body">啊所发生的减肥sad副教授李大夫撒旦法</div>
+                                    <div class="sc-body"></div>
                                 </div>
                             </div>
                             <div class="cl-elem-more"><button class="vkbutton vbtn-default block large">加载更多</button></div>
                         </div>
                     </div>
                 </div>
-                <div class="comment-sub">
+                <div class="comment-sub" style="display:none">
                     <div class="comment-my">
-                        <div class="cm-sub"><img src="/vixik/jmvc/public/image/user/10000000_60.jpg"></div>
-                        <div class="cm-main">
-                            <div class="cm-input" contenteditable="true"></div>
-                            <div class="cm-submit"><button class="vkbutton vbtn-success">发表评论</button></div>
+                        <div class="need-login"><button class="vkbutton vbtn-default">现在登录发表评论</button></div>
+                        <div class="sc-sub"><img></div>
+                        <div class="sc-main vkform">
+                            <div class="cm-input vk-input green large block" contenteditable="true" onpaste="return false"></div>
+                            <div class="cm-submit"><button class="vkbutton vbtn-success">我要评论</button></div>
                         </div>
                     </div>
                 </div>

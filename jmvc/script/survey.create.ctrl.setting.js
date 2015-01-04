@@ -36,6 +36,22 @@ steal('init.js')
             if(!$.isEmptyObject(this.options.models$.info$)){
                 this.setting_fix() ;
             }
+
+            this.element.find('.sv-tag-body').show().tagit({
+                placeholderText : '用关键字描述调查，最多可设置三个标签',
+                tagLimit : 3,
+                onTagLimitExceeded : function(){
+                    alert('免费调查只能创建三个标签') ;
+                },
+                afterTagAdded : function(){
+                    if($(this).find('.tagit-choice').size() == 3){
+                        $(this).find('.tagit-new').hide() ;
+                    }
+                },
+                afterTagRemoved  : function(){
+                    $(this).find('.tagit-new').show() ;
+                },
+            }) ;
         },
 
         // 总模型调查信息数据更新触发
@@ -149,7 +165,7 @@ steal('init.js')
                 $survey_end = this.element.find('.survey-end') ;
 
             // 调查类型
-            if(info$.survey_type){
+            if(parseInt(info$.survey_type)){
                 this.sv_type_change(info$.survey_type, info$.survey_type_sub) ;
             }
 
@@ -224,13 +240,16 @@ steal('init.js')
             var $this    = this,
                 setting$ = {} ;
 
+            // 参与用户范围
+            setting$.target_range = $this.options.$surveyRange.find('select').val() ;
+
+            // 调查标签
+            setting$.survey_tag   = $this.element.find('.sv-tag-body').tagit("assignedTags") ;
+            
             // 调查分类
             setting$.survey_type     = $this.options.$surveyClass.attr('data-sv-type') ;
             setting$.survey_type_sub = $this.options.$surveyClass.attr('data-sv-type-sub') ;
             setting$.survey_trade    = $this.options.$surveyClass.attr('data-sv-trade') ;
-
-            // 参与用户范围
-            setting$.target_range = $this.options.$surveyRange.find('select').val() ;
 
             // 活动周期
             setting$.end_type  = $this.options.$surveyEnd.attr('data-sv-end') ;

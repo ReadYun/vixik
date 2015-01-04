@@ -2,14 +2,15 @@
     <div class="item-main">
         <div class="item-title">
             <div class="item-seq"><span><%= data.question_seq %></span>.</div>
-            <div class="vk-input green" contenteditable="true" placeholder="请输入问题标题"><%= data.question_name%></div>
+            <div class="vk-input green" contenteditable="true"><%= data.question_name%></div>
         </div>
         <div class="item-option">
-            <div class="textarea" style="display:none"><textarea rows="3" cols="30" disabled="disabled"></textarea></div>
+            <textarea rows="3" cols="30" disabled="disabled" style="display:none"></textarea>
+            <input type="text" style="display:none" disabled="disabled">
         </div>
     </div>
     <div class="item-sub">
-        <div class="item-type">[单]</div>
+        <div class="item-type">[<span></span>]</div>
         <div class="item-config">
             <div class="item-cog"><i class="icon-cog"></i></div>
             <div class="item-alter">

@@ -113,6 +113,7 @@ steal('init.js')
 
             // 初始刷新数据
             this.data_refresh() ;
+            $('body').show() ;
         },
 
         "{vixik$} user" : function(){

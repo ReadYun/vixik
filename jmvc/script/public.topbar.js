@@ -9,7 +9,7 @@
 
 steal('init.js')
 .then(function($){
-    loadPlugin('vkForm') ;
+    loadPlugin('vkForm', 'vkButton') ;
 }) 
 .then(function($){
     
@@ -143,6 +143,11 @@ steal('init.js')
         // 由总模型触发登录功能
         "{vixik$} login" : function(){
             alert('享受服务请先登录！') ;
+            this.login_open() ;
+        },
+
+        // 由总模型触发登录功能（无登录提示）
+        "{vixik$} login_open" : function(){
             this.login_open() ;
         },
 
@@ -346,7 +351,13 @@ steal('init.js')
 
         // 打开登录界面
         login_open : function(){
-            this.element.children().removeClass('open').filter('.login-box').addClass('open') ;
+            var $this = this ;
+
+            this.options.$Header.find('.topbar-main').slideDown('fast') ;
+
+            setTimeout(function(){
+                $this.element.children().removeClass('open').filter('.login-box').addClass('open') ;
+            }, 100) ;
         },
 
         // 打开注册界面
@@ -380,8 +391,9 @@ steal('init.js')
     }, {
         init : function(){
             this.element.find('.login-signup').public_header_ctrl_login({
-                $Main : this.options.$Main, 
-                $User : this.options.$userBox,
+                $Main   : this.options.$Main, 
+                $Header : this.options.$Header, 
+                $User   : this.options.$userBox,
             }) ;
 
             this.user_refresh() ;
@@ -389,7 +401,9 @@ steal('init.js')
 
         // 总模型用户信息获取后触发
         "{vixik$} user" : function(){
+            this.options.$Main.addClass('logined') ;
             this.user_refresh() ;
+
         },
 
         // 鼠标进入用户头像打开用户信息菜单
@@ -432,7 +446,7 @@ steal('init.js')
 
             // 判断cookie中是否有用户信息
             if(user$){
-                this.element.addClass('logined') ;
+                $('body').addClass('logined') ;
                 this.element.find('.user-nick>a').text(user$.user_nick).attr('href', $setting.attr('href') + '/index') ;
 
                 if(user$.user_photo){
@@ -450,6 +464,8 @@ steal('init.js')
 
                 $menu.find('.sv-public>.value').text(user$.publish_times) ;
                 $menu.find('.sv-answer>.value').text(user$.answer_times) ;
+            }else{
+                $('body').removeClass('logined') ;
             }
 
             this.options.$Main.trigger('data_refresh') ;
@@ -509,15 +525,21 @@ steal('init.js')
         },
 
         // 监控搜索输入框输入并且回车提交搜索请求
-        "{$minSearch} keydown" : function(el, ev){
+        ".search-box>input keydown" : function(el, ev){
             if(ev.keyCode == 13 && el.val()){
-                this.search_go(el.val()) ;
+                $.post(
+                    __API__, 
+                    {api:'get_server_url', name:'search/main'}, function(data$){
+                        if(data$.status){
+                            window.location.href = encodeURI(data$.data + '?type=survey&words=' + el.val()) ;
+                        }
+                    }
+                ) ;
             }
         },
 
         // topbar滚动初始化
         scroll_init : function(){
-            console.log('scro') ;
             var $this    = this,
                 scroll_h = parseInt($this.element.find('.topbar-main').css('height')),
                 scroll_w = $(window).scrollTop() ;
@@ -536,11 +558,11 @@ steal('init.js')
                         if($(window).scrollTop() - scroll_w > 0){
                             // 下拉隐藏
                             $this.options.$Body.removeClass('topbar-open') ;
-                            $this.element.find('.topbar-main').slideUp() ;
+                            $this.element.find('.topbar-main').slideUp('fast') ;
                         }else{
                             // 上拉显示
                             $this.options.$Body.addClass('topbar-open') ;
-                            $this.element.find('.topbar-main').slideDown() ;
+                            $this.element.find('.topbar-main').slideDown('fast') ;
                         }
                         scroll_w = $(window).scrollTop() ;
                     }

@@ -1,16 +1,17 @@
 <%for(var i = 0; i < data.length; i++){%>
-    <div class="search-list">
-        <div class="content-title">
-            <span class="label label-success">用户</span>
-            <a class="user-nick" href="<%= data[i].url_user_visit %>"><%= data[i].user_nick %></a>
+<div class="sl-elem" title="参与人数">
+    <div class="user-photo"><img src="<%= data[i].user_photo %>"></div>
+    <div class="user-info">
+        <div class="user-nick search-text"><a href="<%= data[i].url_us_visit %>"><%= data[i].user_nick %></a></div>
+        <div class="user-accout">
+            <div class="user-level">级别：<%= data[i].user_level %></div>
+            <div class="user-publish">发布调查：<%= data[i].publish_times %></div>
+            <div class="user-answer">参与调查：<%= data[i].answer_times %></div>
         </div>
-        <div class="content-body user">
-            <div title="用户介绍" class="content-desc"><%= data[i].user_desc %></div>
-            <div class="content-stats">
-                <div title="用户等级" class="user-level"><i class="icon-star"></i><%= data[i].user_level %></div>
-                <div title="发布问卷" class="publish-survey"><i class="icon-share"></i><%= data[i].publish_times %></div>
-                <div title="参与问卷" class="answer-survey"><i class="icon-check"></i><%= data[i].answer_times %></div>
-            </div>
+        <div class="user-action"><%= data[i].survey_desc %>
+            <div class="ua-left">动态：<%= data[i].action_time %></div>
+            <div class="ua-right"><%= data[i].action_desc %><a href="<%= data[i].url_sv_action %>"><%= data[i].action_name %></a></div>
         </div>
     </div>
+</div>
 <%}%>

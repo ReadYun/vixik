@@ -1,0 +1,419 @@
+/*
+* Document    : search.main.css
+* Description : css for search.main.html
+*
+* Created on  : 2014-12-1, 14:18:34
+* Author      : ReadYun
+* Copyright   : VixiK
+*/
+
+#Header .topbar-sub, #Header .search-box{display: none;}
+body.topbar-open #Header .search-box{display:block;}
+
+#Main{
+    width: 100%;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+.left-box{
+    width: 700px;
+    float: left;
+}
+.right-box{
+    width: 200px;
+    float: right;
+    overflow: hidden;
+}
+
+#Main .search-index{
+    width: 650px;
+    margin: 80px auto 200px auto ;
+    overflow: hidden;
+    }
+    #Main .search-index>div{
+        width: 100%;
+        margin-bottom: 50px;
+        font: 49px "宋体",Tahoma;
+        text-align: center;
+        color: #6BB130;
+        font-weight: 900;
+    }
+    #Main .search-index>input{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 520px;
+        float: left;
+        height: 50px;
+    }
+    #Main .search-index>button{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 130px;
+        height: 50px;
+        font: 27px "宋体",Tahoma;
+    }
+
+#Main .search-header{
+    width: 100%;
+    height: 90px;
+    border-bottom: 1px solid #CCC;
+    }
+    #Main .search-header>div{
+        width: 960px;
+        margin: 0 auto;
+    }
+    #Main .search-header .sh-main input{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 580px;
+        height: 40px;
+        float: left;
+    }
+    #Main .search-header .sh-main button{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 120px;
+        height: 40px;
+        float: left;
+        font: 19px "宋体",Tahoma;
+    }
+    #Main .search-header .search-nav{
+        margin: 0;
+        float: left;
+        overflow: hidden;
+        }
+        #Main .search-nav>li{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 60px;
+            height: 40px;
+            float: left;
+            font: 19px "宋体",Tahoma;
+            text-align: center;
+            list-style: none;
+            line-height: 40px;
+            border-bottom: 3px solid #FFF;
+        }
+        #Main .search-header .search-nav>li>a{
+            color: #666;
+            text-decoration: none;
+        }
+        #Main .search-header .search-nav>li:hover>a{
+            color: #6BB130;
+        }
+        #Main[data-search-type='survey'] .search-nav>li[data-type='survey'],
+        #Main[data-search-type='question'] .search-nav>li[data-type='question'],
+        #Main[data-search-type='tag'] .search-nav>li[data-type='tag'],
+        #Main[data-search-type='user'] .search-nav>li[data-type='user']{border-color: #6BB130;}
+    #Main .search-header .search-res{
+        margin-top: 10px;
+        float: left;
+        color: #999;
+        }
+        #Main .search-header .search-res span{
+            margin: 0 5px;
+            color: red;
+        }
+    #Main .search-header .order-res{
+        margin-top: 7px;
+        color: #999;
+        float: right;
+        cursor: pointer;
+        }
+        #Main .search-header .order-res>button:hover{
+            background: #FFF;
+            color: #999;
+        }
+        #Main .search-header .order-res>ul{
+            box-shadow: none;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            min-width: 155px;
+            margin: 0;
+            padding: 0;
+            border-radius: 0;
+            border-top: none;
+            }
+            #Main .search-header .order-res>ul>li{
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                padding: 3px 5px ;
+            }
+            #Main .search-header .order-res>ul>li:hover{
+                background: #EEE;
+            }
+    #Main .search-header .filter-res{
+        height: 20px;
+        margin-top: 10px;
+        color: #999;
+        }
+        #Main .search-header .filter-res>div{
+            width: 120px;
+            float: left;
+            overflow: hidden;
+        }
+        #Main .search-header .filter-res i.icon-remove{
+            float: left;
+            margin-top: 1px;
+            font-size: 14px;
+            cursor: pointer;
+            color: #EEE;
+        }
+        #Main .search-header .filter-res:hover i.icon-remove{
+            color: #CCC;
+        }
+        #Main .search-header .filter-res i.icon-remove:hover{
+            color: #999;
+        }
+#Main .search-main{
+    width: 960px;
+    min-height: 400px;
+    margin: 30px auto;
+    overflow: hidden;
+}
+#Main .search-body{
+    overflow: hidden;
+    }
+    #Main .search-body .search-no .sn-desc{
+        padding: 30px 0;
+        margin-bottom: 30px;
+        font: 19px "宋体",Tahoma;
+        color: #666;
+        text-align: center;
+        border-bottom: 1px dotted #CCC;
+    }
+    #Main .search-body .search-no .sn-hint{
+        color: #333;
+    }
+    #Main .search-body .search-no .swords{
+        margin: 0 5px;
+        color: orange;
+    }
+    #Main .search-body .search-no a{
+        margin: 0 5px;
+        text-decoration: underline;
+    }
+    #Main[data-search-type='survey'] .sn-elem.other>a.survey,
+    #Main[data-search-type='question'] .sn-elem.other>a.question,
+    #Main[data-search-type='tag'] .sn-elem.other>a.tag,
+    #Main[data-search-type='user'] .sn-elem.other>a.user{display:none;}
+    #Main .search-body .sl-elem{
+        width: 100%;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px dotted #CCC;
+        overflow: hidden;
+    }
+    #Main .sl-elem .sl-stats{
+        width: 45px;
+        height: 33px;
+        margin-top: 4px;
+        margin-right: 5px;
+        float: left;
+        color: #FFF;
+        line-height: 33px;
+        background: #9999FF;
+        text-align: center;
+    }
+    #Main .sl-elem .sl-main{
+        width: 550px;
+        float: left;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        }
+        #Main .sl-elem .sl-main .sv-name{
+            width: 100%;
+            font: 14px "微软雅黑",Tahoma;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        #Main .search-list.question .sl-elem .sl-main .sv-name{
+            font: 12px "微软雅黑",Tahoma;
+        }
+        #Main .search-list.question .sl-elem .sl-main .qt-name{
+            font: 15px "微软雅黑",Tahoma;
+            color: #666;
+        }
+        #Main .search-list.question .sl-elem .sl-main .qt-type{
+            width: 80px;
+        }
+        #Main .sl-elem .sl-main .sv-desc{
+            width: 100%;
+            margin-bottom: 5px;
+            font: 12px "微软雅黑",Tahoma;
+            color: #999;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        #Main .sl-elem .sl-main .sv-info>div{
+            margin-right: 20px;
+            float: left;
+            color: #666;
+            margin-top: 3px;
+        }
+        #Main .sl-elem .sv-info .sv-user{
+            width: 80px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        #Main .sl-elem .sv-info .sv-item{
+            width: 40px;
+        }
+        #Main .sl-elem .sv-info .sv-type{
+            width: 140px;
+        }
+        #Main .sl-elem .sv-info img{
+            width: 18px;
+            height: 18px;
+            margin-right: 5px;
+            margin-top: -3px;
+        }
+        #Main .sl-elem .sv-info a{
+            color: #666;
+        }
+        #Main .sl-elem .sv-info span{
+            margin: 0 3px;
+        }
+        #Main .sl-elem .sv-info i{
+            display: block;
+            margin-top: 1px;
+            margin-right: 5px;
+            float: left;
+            font-size: 16px;
+        }
+    #Main .sl-elem .sl-sub{
+        width: 100px;
+        float: left;
+        color: #CCC;
+        text-align: right;
+        }
+        #Main .sl-elem .sl-sub .sv-time{
+            margin-bottom: 26px;
+        }
+
+#Main .search-list.user .user-photo{
+    width: 60px;
+    float: left;
+    }
+    #Main .search-list.user .user-photo>img{
+        width: 60px;
+        height: 60px;
+    }
+#Main .search-list.user .user-info{
+    width: 630px;
+    float: right;
+    }
+    #Main .search-list.user .user-info>div{
+        width: 100%;
+        overflow: hidden;
+        float: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    #Main .search-list.user .user-nick>a{
+        font: 17px "微软雅黑",Tahoma;
+    }
+    #Main .search-list.user .user-accout>div{
+        margin-right: 30px;
+        float: left;
+        color: #999;
+    }
+    #Main .search-list.user .user-action>div{
+        float: left;
+        color: #666;
+        }
+        #Main .search-list.user .user-action .ua-left{
+            width: 130px;
+        }
+        #Main .search-list.user .user-action .ua-right{
+            width: 500px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        #Main .search-list.user .user-action a{
+            margin-left: 5px;
+        }
+#Main .search-body .more-list{
+    margin-top: 30px;
+}
+
+#Main .filter-res>div{
+    width: 100%;
+    margin-bottom: 30px;
+    overflow: hidden;
+    }
+    #Main .filter-res .fr-header{
+        width: 100%;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #CCC;
+        font: 19px "宋体",Tahoma;
+    }
+    .filter-res .vf-elem-option{
+        width: 100%;
+        margin-bottom: 5px;
+        overflow: hidden;
+        color: #999;
+    }
+    .filter-res .vf-elem-option:hover{
+        color: #333;
+    }
+    .filter-res .vf-elem-option>div{
+        margin-right: 10px;
+        margin-top: 2px;
+        float: left;
+    }
+    .filter-res .fr-option-elem-sub{
+        display: none;
+        width: 100%;
+        margin-top: 5px;
+        margin-left: 30px;
+        margin-bottom: 0;
+        overflow: hidden;
+        float: left;
+        font: 19px "宋体",Tahoma;
+    }
+    .filter-res .fr-option-elem-sub>div{
+        margin-top: 3px;
+        margin-right: 10px;
+    }
+    .filter-res .vf-elem-option>span{
+        display: block;
+        float: left;
+    }
+    .filter-res .fr-num{
+        margin-top: -1px;
+        margin-left: 10px;
+        color: #336699;
+        font: 16px Tahoma;
+        float: left;
+    }
+    .filter-res .sv-type.fr-txt:hover{
+        cursor: pointer;
+        text-decoration: underline;
+    }
+    .filter-res .vf-elem-option.open{
+        margin-bottom: 10px;
+    }
+.filter-res .vf-elem-option.open .fr-option-elem-sub{display: inline;}
+#Main .search-filter, 
+#Main .order-res, 
+#Main .search-body>div, 
+#Main.list-ok .order-res.user,
+#Main.list-ok[data-search-type='user'] .order-res.survey{display: none;}
+#Main.list-ok .search-filter, #Main.list-ok .search-body>.search-ok, #Main.list-ok .order-res{display: block;}
+#Main.list-no .search-body>.search-no{display: block; margin-bottom: 200px;}
+#Main.list-ok[data-search-type='user'] .order-res.user{display: block;}

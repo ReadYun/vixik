@@ -7,17 +7,20 @@
 </head>
 <body>
     <div id="Header">
-        <include file="Public:topBar" survey="current" nav-type="main" need-login="0"/>
+        <include file="Public:topBar" page='调查中心' nav-type="main" nav-cur="survey"/>
     </div>
     <div id="Main">
         <div id="headerBox">
             <div class="sv-recomm left-box">
-                <div class="sr-main">sr-main</div>
+                <div class="sr-main">
+                    <a class="tpl" href=""><img></a>
+                </div>
                 <div class="sr-sub">
-                    <div class="sr-sub-elem">sr-sub-elem</div>
-                    <div class="sr-sub-elem">sr-sub-elem</div>
-                    <div class="sr-sub-elem">sr-sub-elem</div>
-                    <div class="sr-sub-elem">sr-sub-elem</div>
+                    <volist name="sv_recomm" id="sr">
+                    <a class="sr-sub-elem" href="{:U('survey/visit')}?code={$sr.survey_code}" data-sr="{$sr.survey_code}">
+                        <span>{$sr.survey_name}</span>
+                    </a>
+                    </volist>
                 </div>
             </div>
             <div class="sv-action right-box">
@@ -37,315 +40,92 @@
             </div>
         </div>
         <div id="surveyBox">
-            <div class="sv-nav-box">
-                <div class="sv-nav left-box">
-                    <div class="sv-type"><i class="icon-globe"></i>民意调查</div>
-                    <div class="sv-type"><i class="icon-briefcase"></i>商业调查</div>
-                    <div class="sv-type"><i class="icon-flag"></i>品牌调查</div>
-                    <div class="sv-type"><i class="icon-magic"></i>个性调查</div>
-                </div>
-                <div class="sv-search right-box">
-                    <input id="svSearch" class="search-input" type="text" placeholder="搜索您感兴趣的调查">
-                    <i class="icon-search"></i>
-                </div>
-            </div>
             <div class="sv-box-main left-box">
                 <div class="sv-list-main">
-                    <div class="sl-elem">
-                        <div class="sv-title">
-                            <a class="sv-name" href="">的撒酒疯圣诞节发生的纠纷isdo</a>
-                            <div class="sv-time">2小时前发布</div>
-                        </div>
-                        <div class="sv-desc">上的飞机螺丝钉解放螺丝钉解放i诶哦</div>
-                        <div class="sv-prop">
-                            <div class="user-name"><a href=""><img src="__JMVC__/public/image/user/10000000.jpg">艾泽拉斯</a></div>
-                            <div class="sv-type">
-                                <i class="icon-tint"></i>
-                                <a class="sv-type-main" href="">民意调查</a><span>/</span><a class="sv-type-sub" href="">文教</a>
-                            </div>
-                            <div class="sv-class"><i class="icon-leaf"></i><a class="sv-type-sub" href="">信息行业</a></div>
-                            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i>99</div>
-                        </div>
-                    </div>
-                    <div class="sl-elem">
-                        <div class="sv-title">
-                            <a class="sv-name" href="">的撒酒疯圣诞节发生的纠纷isdo</a>
-                            <div class="sv-time">2小时前发布</div>
-                        </div>
-                        <div class="sv-desc">上的飞机螺丝钉解放螺丝钉解放i诶哦</div>
-                        <div class="sv-prop">
-                            <div class="user-name"><a href=""><img src="__JMVC__/public/image/user/10000000.jpg">艾泽拉斯</a></div>
-                            <div class="sv-type">
-                                <i class="icon-tint"></i>
-                                <a class="sv-type-main" href="">民意调查</a><span>/</span><a class="sv-type-sub" href="">文教</a>
-                            </div>
-                            <div class="sv-class"><i class="icon-leaf"></i><a class="sv-type-sub" href="">信息行业</a></div>
-                            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i>99</div>
-                        </div>
-                    </div>
-                    <div class="sl-elem">
-                        <div class="sv-title">
-                            <a class="sv-name" href="">的撒酒疯圣诞节发生的纠纷isdo</a>
-                            <div class="sv-time">2小时前发布</div>
-                        </div>
-                        <div class="sv-desc">上的飞机螺丝钉解放螺丝钉解放i诶哦</div>
-                        <div class="sv-prop">
-                            <div class="user-name"><a href=""><img src="__JMVC__/public/image/user/10000000.jpg">艾泽拉斯</a></div>
-                            <div class="sv-type">
-                                <i class="icon-tint"></i>
-                                <a class="sv-type-main" href="">民意调查</a><span>/</span><a class="sv-type-sub" href="">文教</a>
-                            </div>
-                            <div class="sv-class"><i class="icon-leaf"></i><a class="sv-type-sub" href="">信息行业</a></div>
-                            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i>99</div>
-                        </div>
-                    </div>
-                    <div class="sl-elem">
-                        <div class="sv-title">
-                            <a class="sv-name" href="">的撒酒疯圣诞节发生的纠纷isdo</a>
-                            <div class="sv-time">2小时前发布</div>
-                        </div>
-                        <div class="sv-desc">上的飞机螺丝钉解放螺丝钉解放i诶哦</div>
-                        <div class="sv-prop">
-                            <div class="user-name"><a href=""><img src="__JMVC__/public/image/user/10000000.jpg">艾泽拉斯</a></div>
-                            <div class="sv-type">
-                                <i class="icon-tint"></i>
-                                <a class="sv-type-main" href="">民意调查</a><span>/</span><a class="sv-type-sub" href="">文教</a>
-                            </div>
-                            <div class="sv-class"><i class="icon-leaf"></i><a class="sv-type-sub" href="">信息行业</a></div>
-                            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i>99</div>
-                        </div>
-                    </div>
-                    <div class="sl-elem">
-                        <div class="sv-title">
-                            <a class="sv-name" href="">的撒酒疯圣诞节发生的纠纷isdo</a>
-                            <div class="sv-time">2小时前发布</div>
-                        </div>
-                        <div class="sv-desc">上的飞机螺丝钉解放螺丝钉解放i诶哦</div>
-                        <div class="sv-prop">
-                            <div class="user-name"><a href=""><img src="__JMVC__/public/image/user/10000000.jpg">艾泽拉斯</a></div>
-                            <div class="sv-type">
-                                <i class="icon-tint"></i>
-                                <a class="sv-type-main" href="">民意调查</a><span>/</span><a class="sv-type-sub" href="">文教</a>
-                            </div>
-                            <div class="sv-class"><i class="icon-leaf"></i><a class="sv-type-sub" href="">信息行业</a></div>
-                            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i>99</div>
-                        </div>
-                    </div>
-                    <div class="sl-elem">
-                        <div class="sv-title">
-                            <a class="sv-name" href="">的撒酒疯圣诞节发生的纠纷isdo</a>
-                            <div class="sv-time">2小时前发布</div>
-                        </div>
-                        <div class="sv-desc">上的飞机螺丝钉解放螺丝钉解放i诶哦</div>
-                        <div class="sv-prop">
-                            <div class="user-name"><a href=""><img src="__JMVC__/public/image/user/10000000.jpg">艾泽拉斯</a></div>
-                            <div class="sv-type">
-                                <i class="icon-tint"></i>
-                                <a class="sv-type-main" href="">民意调查</a><span>/</span><a class="sv-type-sub" href="">文教</a>
-                            </div>
-                            <div class="sv-class"><i class="icon-leaf"></i><a class="sv-type-sub" href="">信息行业</a></div>
-                            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i>99</div>
-                        </div>
-                    </div>
-                    <div class="sl-elem">
-                        <div class="sv-title">
-                            <a class="sv-name" href="">的撒酒疯圣诞节发生的纠纷isdo</a>
-                            <div class="sv-time">2小时前发布</div>
-                        </div>
-                        <div class="sv-desc">上的飞机螺丝钉解放螺丝钉解放i诶哦</div>
-                        <div class="sv-prop">
-                            <div class="user-name"><a href=""><img src="__JMVC__/public/image/user/10000000.jpg">艾泽拉斯</a></div>
-                            <div class="sv-type">
-                                <i class="icon-tint"></i>
-                                <a class="sv-type-main" href="">民意调查</a><span>/</span><a class="sv-type-sub" href="">文教</a>
-                            </div>
-                            <div class="sv-class"><i class="icon-leaf"></i><a class="sv-type-sub" href="">信息行业</a></div>
-                            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i>99</div>
-                        </div>
-                    </div>
-                    <div class="sl-elem">
-                        <div class="sv-title">
-                            <a class="sv-name" href="">的撒酒疯圣诞节发生的纠纷isdo</a>
-                            <div class="sv-time">2小时前发布</div>
-                        </div>
-                        <div class="sv-desc">上的飞机螺丝钉解放螺丝钉解放i诶哦</div>
-                        <div class="sv-prop">
-                            <div class="user-name"><a href=""><img src="__JMVC__/public/image/user/10000000.jpg">艾泽拉斯</a></div>
-                            <div class="sv-type">
-                                <i class="icon-tint"></i>
-                                <a class="sv-type-main" href="">民意调查</a><span>/</span><a class="sv-type-sub" href="">文教</a>
-                            </div>
-                            <div class="sv-class"><i class="icon-leaf"></i><a class="sv-type-sub" href="">信息行业</a></div>
-                            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i>99</div>
-                        </div>
-                    </div>
-                    <div class="sl-elem">
-                        <div class="sv-title">
-                            <a class="sv-name" href="">的撒酒疯圣诞节发生的纠纷isdo</a>
-                            <div class="sv-time">2小时前发布</div>
-                        </div>
-                        <div class="sv-desc">上的飞机螺丝钉解放螺丝钉解放i诶哦</div>
-                        <div class="sv-prop">
-                            <div class="user-name"><a href=""><img src="__JMVC__/public/image/user/10000000.jpg">艾泽拉斯</a></div>
-                            <div class="sv-type">
-                                <i class="icon-tint"></i>
-                                <a class="sv-type-main" href="">民意调查</a><span>/</span><a class="sv-type-sub" href="">文教</a>
-                            </div>
-                            <div class="sv-class"><i class="icon-leaf"></i><a class="sv-type-sub" href="">信息行业</a></div>
-                            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i>99</div>
-                        </div>
-                    </div>
-                    <div class="sl-elem">
-                        <div class="sv-title">
-                            <a class="sv-name" href="">的撒酒疯圣诞节发生的纠纷isdo</a>
-                            <div class="sv-time">2小时前发布</div>
-                        </div>
-                        <div class="sv-desc">上的飞机螺丝钉解放螺丝钉解放i诶哦</div>
-                        <div class="sv-prop">
-                            <div class="user-name"><a href=""><img src="__JMVC__/public/image/user/10000000.jpg">艾泽拉斯</a></div>
-                            <div class="sv-type">
-                                <i class="icon-tint"></i>
-                                <a class="sv-type-main" href="">民意调查</a><span>/</span><a class="sv-type-sub" href="">文教</a>
-                            </div>
-                            <div class="sv-class"><i class="icon-leaf"></i><a class="sv-type-sub" href="">信息行业</a></div>
-                            <div class="sv-item" title="题目数量"><i class="icon-list-alt"></i>99</div>
-                        </div>
-                    </div>
                 </div>
                 <div class="sv-list-more"><button class="vkbutton vbtn-default block large">更多调查</button></div>
             </div>
             <div class="sv-box-sub right-box">
+                <div class="ss-menu sv-type">
+                    <volist name="survey_type" id="st">
+                    <div class="sv-type-elem">
+                        <div class="sv-type-main"><a href="{:U('survey/type')}?type={$st.survey_type_code}">{$st.survey_type_name}</a></div>
+                        <div class="sv-type-sub">
+                            <volist name="survey_type_sub" id="sts">
+                                <eq name="st.survey_type_code" value="$sts.survey_type_code">
+                                <a href="{:U('survey/type')}?type={$sts.survey_type_sub_code}">{$sts.survey_type_sub_name}</a>
+                                </eq>
+                            </volist>
+                        </div>
+                    </div>
+                    </volist> 
+                </div>
+                <div class="ss-menu sv-trade">
+                    <volist name="survey_trade" id="sd">
+                    <a class="sv-trade" href="{:U('survey/trade')}?trade={$sd.survey_trade_code}">{$sd.survey_trade_name}</a>
+                    </volist> 
+                </div>
                 <div class="sv-hot sv-list-sub">
                     <div class="ss-header">热门调查</div>
                     <div class="ss-body">
+                        <volist name="survey_hot" id="sh">
                         <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
+                            <div class="sv-name"><a href="{$sh.url_sv_visit}">{$sh.survey_name}</a></div>
+                            <div class="answer-num">{$sh.answer_num}人参与</div>
                         </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
+                        </volist>
                     </div>
                 </div>
                 <div class="sv-rec sv-list-sub">
                     <div class="ss-header">猜你喜欢</div>
                     <div class="ss-body">
+                        <volist name="survey_hot" id="sh">
                         <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
+                            <div class="sv-name"><a href="{$sh.url_sv_visit}">{$sh.survey_name}</a></div>
+                            <div class="answer-num">{$sh.answer_num}人参与</div>
                         </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
-                        <div class="sl-elem">
-                            <div class="sv-name"><a href="">的第三方的方法</a></div>
-                            <div class="answer-num">134人参与</div>
-                        </div>
+                        </volist>
                     </div>
                 </div>
-                <div class="sv-class">
-                    <div class="ss-header">热门行业</div>
-                    <div class="ss-body">
-                        <div class="sc-elem">
-                            <div class="sc-title"><a href="">信息产业</a></div>
-                            <div class="sc-value"><a>123123</a>个调查</div>
-                        </div>
-                        <div class="sc-elem">
-                            <div class="sc-title"><a href="">信息产业</a></div>
-                            <div class="sc-value"><a>123123</a>个调查</div>
-                        </div>
-                        <div class="sc-elem">
-                            <div class="sc-title"><a href="">信息产业</a></div>
-                            <div class="sc-value"><a>123123</a>个调查</div>
-                        </div>
-                        <div class="sc-elem">
-                            <div class="sc-title"><a href="">信息产业</a></div>
-                            <div class="sc-value"><a>123123</a>个调查</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="sv-tag">
+                <div class="tag-hot">
                     <div class="ss-header">热门标签</div>
+                    <div class="ss-body" style="height: 250px; margin-top: 0;">
+                    </div>
+                </div>
+                <div class="user-hot">
+                    <div class="ss-header">活跃用户</div>
                     <div class="ss-body">
-                        <div class="sv-tag-elem"><a href="">撒旦解放了</a>,</div>
-                        <div class="sv-tag-elem"><a href="">dfaf了</a>,</div>
-                        <div class="sv-tag-elem"><a href="">raejref</a>,</div>
-                        <div class="sv-tag-elem"><a href="">阿杜里斯解放了地方</a>,</div>
+                        <volist name="user" id="user">
+                        <div class="user-hot-elem" data-code="{$user.user_code}" data-photo="{$user.user_photo}" data-sex="{$user.user_sex}">
+                            <div class="user-photo"><img src=""></div>
+                            <div class="user-info">
+                                <div class="user-nick"><a href="{$user.user_visit}">{$user.user_nick}</a></div>
+                                <div class="user-action">
+                                    <div class="user-publish">发布了<span>{$user.cnt}</span>个调查</div>
+                                    <button class="vkbutton vbtn-default user-follow">关注</button>
+                                </div>
+                            </div>
+                        </div>
+                        </volist>
                     </div>
                 </div>
             </div>
         </div>
         <div id="rewardBox">
             <div class="award-box left-box">
-                <div class="award-elem">奖品xxx</div>
-                <div class="award-elem">奖品xxx</div>
-                <div class="award-elem">奖品xxx</div>
-                <div class="award-elem">奖品xxx</div>
-                <div class="award-elem">奖品xxx</div>
-                <div class="award-elem">奖品xxx</div>
-                <div class="award-elem">奖品xxx</div>
+                <div class="award-header">热门奖品</div>
+                <div class="award-body">
+                    <div class="award-elem"><img src="" data-img="10001"></div>
+                    <div class="award-elem"><img src="" data-img="10002"></div>
+                    <div class="award-elem"><img src="" data-img="10003"></div>
+                    <div class="award-elem"><img src="" data-img="10004"></div>
+                    <div class="award-elem"><img src="" data-img="10005"></div>
+                    <div class="award-elem"><img src="" data-img="10006"></div>
+                    <div class="award-elem"><img src="" data-img="10007"></div>
+                    <div class="award-elem"><img src="" data-img="10008"></div>
+                    <div class="award-elem"><img src="" data-img="10009"></div>
+                    <div class="award-elem"><img src="" data-img="10010"></div>
+                </div>
             </div>
             <div class="rank-box right-box">
                 <div class="rank-header">金币排行</div>
@@ -372,12 +152,15 @@
                         <div class="list-rank">7</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
                     </div>
                     <div class="rank-list-elem">
-                        <div class="list-rank">8</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">989898</div>
+                        <div class="list-rank">8</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">489898</div>
+                    </div>
+                    <div class="rank-list-elem">
+                        <div class="list-rank">9</div><div class="user-nick"><a href="">readyundsafdsf</a></div><div class="rank-value">98998</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="footBox">
+        <div id="footBox" style="display:none">
             底部内容完善。。
         </div>
     </div>

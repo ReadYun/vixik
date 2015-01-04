@@ -229,7 +229,7 @@
             width: 100%;
             float: left;
         }
-        div.sv-content>.svc-header{
+        .sv-content>.svc-header{
             box-sizing: border-box;
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
@@ -240,23 +240,23 @@
             color: #FFF;
             background: #6BB130;
         }
-        div.sv-content>.svc-body{
+        .sv-content>.svc-body{
             box-sizing: border-box;
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
             width: 100%;
-            padding-top: 10px; 
             float: left;
             font: 14px "宋体",Tahoma;
             border: 1px solid #CCC;
             border-top: none;
             }
-            div.svc-body>div.cs-item{
+            .svc-body>.cs-item{
                 width: 100%;
-                padding: 8px 0;
+                padding: 15px 0;
                 float: left;
+                border-bottom: 1px solid #EEE;
                 }
-                div.svc-body div.cs-item div.cs-label{
+                .svc-body .cs-item .cs-label{
                     box-sizing: border-box;
                     -moz-box-sizing: border-box;
                     -webkit-box-sizing: border-box;
@@ -269,21 +269,23 @@
                     color: #333;
                     border-left: 10px solid #6BB130;
                     }
-                    div.cs-item div.cs-label>i.icon-angle-down{
+                    div.cs-item .cs-label>i.icon-angle-down{
                         padding-left: 5px;
                         color: #999;
                     }
-                div.svc-body div.cs-item div.cs-content{
-                    width: 700px;
-                    padding: 5px 0;  
-                    margin-left: 20px;
+                .svc-body .cs-item .cs-content{
+                    box-sizing: border-box;
+                    -moz-box-sizing: border-box;
+                    -webkit-box-sizing: border-box;
+                    width: 100%;
+                    padding: 5px 20px;
                     float: left;
                     color: #555555;
                     }
                     div.svc-body div.cs-item div.cs-content>label{
                         font: 17px "宋体",Tahoma;  
                     }
-                div.svc-body div.cs-item div.cs-content-item{
+                .svc-body .cs-item .cs-content-item{
                     width: 100%;
                     padding: 3px  0;  
                     margin: 0;
@@ -298,49 +300,40 @@
     font: 19px "宋体",Tahoma;  
     height: 30px;
     color: #999;
+    margin: 0
 }
 #surveyTitle input:focus{color: #666;}
 
-#surveyTag ul{
+#surveyDesc .vk-input{
+    min-height: 80px;
+    _width: expression((documentElement.clientWidth < 80) ? "80px" : "auto");
+    font: 12px "微软雅黑",Tahoma;
+    color: #999;
+}
+#surveyDesc .vk-input:focus{
+    color: #666;
+}
+.svc-body #surveyItem .cs-content{
+    width: 100%;
+    padding: 0;
+}
+#surveyItem #itemBody{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     width: 100%;
-    padding: 0 5px;
-    margin: 0;
-    font: 19px "宋体",Tahoma;
-    }
-    #surveyTag ul li{
-        margin-top: 2px;
-        padding: 1px 20px 3px 5px;
-    }
-    #surveyTag ul input{
-        width: 350px;
-        padding-top: 2px;
-        font: 19px "宋体",Tahoma;
-    }
-#surveyDesc .vk-input{
-    min-height: 82px;
-    _height: 82px;
+    padding: 0 20px;
 }
-#surveyItem{
-    border: 0;
-    margin-bottom: 0;
-    }
-    #surveyItem .cs-content{
-        border: 0;
-        margin-bottom: 0;
-    }
-
 #itemBody>.item{
     width: 700px;
     min-height: 120px;
     padding-top: 5px;   
     margin-bottom: 10px;
     overflow: hidden;
+    border-bottom: 1px dotted #CCC;
     }
     #itemBody>.item>.item-main{
-        width: 660px;
+        width: 635px;
         margin-right: 5px;
         float: left;
         overflow: hidden;
@@ -363,7 +356,7 @@
                 color: #6BB130;
             }
             #itemBody>.item .item-title>.vk-input{
-                width: 625px;
+                width: 600px;
                 float: left;
                 overflow: hidden;
             }
@@ -372,14 +365,14 @@
             overflow: hidden;
             }
     #itemBody>.item>.item-sub{
-        width: 35px;
+        width: 60px;
         float: right;
         overflow: hidden;
         }
         #itemBody>.item .item-type{
             width: 100%;
             margin-top: 2px;
-            float: left;
+            float: right;
             font: 19px "宋体",Tahoma;
             text-align: right;
             overflow: hidden;
@@ -404,9 +397,6 @@
                 line-height: 0;
                 cursor: pointer;
                 opacity: 0.7;
-            }
-            #itemBody>.item .item-cog:hover{
-                opacity: 1;
             }
             #itemBody>.item .item-cog.disable, #itemBody>.item .item-cog.disable:hover{
                 color: #CCC;
@@ -610,11 +600,23 @@
                     font: 12px "微软雅黑",Tahoma;  
                     color: #666;
                 }
-                div.item-option>div.textarea>textarea{
+                div.item-option>textarea{
                     width: 435px;
                     height: 60px;
                     margin: 5px 0 10px 35px;
                     background-color: #FCFCFC;
+                    box-shadow: none;
+                    -moz-box-shadow: none;
+                    -webkit-box-shadow: none;
+                }
+                div.item-option>input{
+                    min-width: 436px;
+                    height: 20px;
+                    margin: 5px 0 10px 35px;
+                    background-color: #FCFCFC;
+                    box-shadow: none;
+                    -moz-box-shadow: none;
+                    -webkit-box-shadow: none;
                 }
         #itemBody>div.item div.option-button{
             width: 640px;
@@ -632,7 +634,7 @@
         overflow: hidden;
         float: left;
     }
-    #itemBody .item:hover .option-alter{
+    #itemBody .item.active .option-alter, #itemBody .item:hover .option-alter{
         display: inline;
         }
         #itemBody .option-alter>div.alter{
@@ -664,7 +666,7 @@
             opacity: 0.3;
         }
         div.item .option-alter>.popover{
-            width: 600px;
+            min-width: 400px;
             padding: 0;
             border-radius: 0;
             box-shadow: none;
@@ -678,6 +680,7 @@
                 padding: 5px 0 5px 13px;
                 font: 12px "微软雅黑",Tahoma;
                 border-radius: 0;
+                color: #666;
             }
             div.item .option-alter.popover .add-option{
                 width: 100%;
@@ -693,17 +696,21 @@
                     margin: 10px 0;
                     float: left;
                     }
-                    div.item .option-alter .add-option button{
-                        width: 40px;
+                    div.item .option-alter .add-option button.submit{
+                        width: 100px;
                         margin-left: 20px;
                         float: right;
                     }
+                    div.item .option-alter .add-option button.cancel{
+                        width: 40px;
+                        float: right;
+                    }
 #itemButton{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     width: 100%;
-    padding-top: 15px;
-    margin-top: 15px;
-    border-top: 1px dotted #CFCFCF;
-    overflow: hidden;
+    padding: 5px 20px 15px 20px;
     }
     #itemButton>.add-item{
         float: left;
@@ -712,6 +719,36 @@
             float: left;
             margin-right: 20px;
         }
+        #itemButton>.add-item>div{
+            float: left;
+            margin-right: 20px;
+        }
+        #itemButton>.add-item .dropdown-menu{
+            top: -55px;
+            min-width: 0;
+            width: 70px;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            border-radius: 0;
+            box-shadow: none;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            border-top: none;
+            border-bottom: none;
+            }
+            #itemButton>.add-item .dropdown-menu li{
+                width: 100%;
+                padding: 5px 0;
+                color: #999;
+                text-align: center;
+                border-top: 1px solid #CCC;
+                font: 12px "微软雅黑",Tahoma;
+                cursor: pointer;
+                }
+                #itemButton>.add-item .dropdown-menu li:hover{
+                    background: #EEE;
+                }
     #itemButton>.preview-item{
         float: right;
     }
@@ -719,9 +756,8 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    width: 170px;
+    width: 180px;
     height: 100px;
-    margin: 0 30px;
     float: left;
     color: #999;
     text-align: center;
@@ -864,9 +900,9 @@
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
-        width: 170px;
+        width: 180px;
         height: 100px;
-        margin: 0 30px;
+        padding: 0 20px;
         float: left;
         color: #6699FF;
         text-align: center;
@@ -875,13 +911,35 @@
         font-weight: 900;      
         border: 1px solid #6699FF;
     }
+    #surveySetting .survey-type-sub, #surveySetting .end-value{margin: 0 70px;}
+    #surveySetting .survey-type, #surveySetting .survey-end{margin-left: 5px;}
+
 #surveySetting .survey-range select{
-    width: 630px;
+    width: 680px;
     height: 35px;
-    margin-left: 30px;
+    margin: 0;
+    margin-left: 5px;
     padding: 5px;
     font: 19px "宋体",Tahoma;
 }
+#surveySetting .survey-tag ul{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 680px;
+    padding: 0 5px;
+    margin: 0 0 0 5px;
+    font: 19px "宋体",Tahoma;
+    }
+    #surveySetting .survey-tag ul li{
+        margin-top: 2px;
+        padding: 1px 20px 3px 5px;
+    }
+    #surveySetting .survey-tag ul input{
+        width: 350px;
+        padding-top: 2px;
+        font: 19px "宋体",Tahoma;
+    }
 #surveyRecommend .svc-body{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -889,6 +947,9 @@
     padding: 20px 25px;
     }
     #surveyRecommend .recomm-elem{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
         width: 180px;
         height: 160px;
         border: 1px solid #CCC;
@@ -896,7 +957,6 @@
         cursor: pointer;
     }
     #surveyRecommend .recomm-elem.auto{margin: 0 70px}
-    #surveyRecommend .recomm-elem.none{float: right}
     #surveyRecommend .re-title{
         width: 100%;
         padding: 10px 0;
@@ -1169,7 +1229,7 @@
             }
 #surveyButton{
     width: 100%;
-    padding-top: 50px;
+    padding-top: 20px;
     overflow: hidden;
     }
     #surveyButton>button{
@@ -1206,4 +1266,4 @@
         margin-bottom: 10px;
         float: left;
         font: 25px "宋体",Tahoma;
-        }   
+        }

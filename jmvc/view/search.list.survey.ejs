@@ -1,19 +1,26 @@
 <%for(var i = 0; i < data.length; i++){%>
-    <div class="search-list">
-        <div class="content-title">
-            <span class="label label-success">问卷</span>
-            <a class="survey-name" href="<%= data[i].url_survey_visit %>"><%= data[i].survey_name %></a>
-        </div>
-        <div class="content-body survey">
-            <div title="问卷描述" class="content-desc"><%= data[i].survey_desc %></div>
-            <div class="content-stats">
-                <div title="发布用户" class="publish-user"><i class="icon-user"></i>
-                	<a href="<%= data[i].url_user_visit %>"><%= data[i].user_nick %></a>
-                </div>
-                <div title="问题数量" class="question-num"><i class="icon-list"></i><%= data[i].question_num %></div>
-                <div title="开始日期" class="start-date"><i class="icon-time"></i><%= data[i].start_date %></div>
-                <div title="问卷状态" class="survey-state"><i class="icon-bookmark"></i><%= data[i].survey_state %></div>
+<div class="sl-elem" title="参与人数">
+    <div class="sl-stats"><%= data[i].answer_num %></div>
+    <div class="sl-main">
+        <a class="sv-name search-text" href="<%= data[i].url_sv_visit %>"><%= data[i].survey_name %></a>
+        <div class="sv-desc"><%= data[i].survey_desc %></div>
+        <div class="sv-info">
+            <div class="sv-user"><img src="<%= data[i].user_photo %>"><a href="<%= data[i].url_us_visit %>"><%= data[i].user_nick %></a></div>
+            <div class="sv-item"><i class="icon-book"></i><%= data[i].question_num %></div>
+            <div class="sv-type">
+                <i class="icon-sitemap"></i>
+                <a href="<%= data[i].url_sv_type %>"><%= data[i].survey_type %></a><span>/</span><a href="<%= data[i].url_sv_type_sub %>"><%= data[i].survey_type_sub %></a>
+            </div>
+            <div class="sv-trade">
+                <%if(data[i]['survey_trade'] != null){%>
+                <i class="icon-beaker"></i><a href="<%= data[i].url_sv_trade %>"><%= data[i].survey_trade %></a>
+                <%}%>
             </div>
         </div>
     </div>
+    <div class="sl-sub">
+        <div class="sv-time"><%= data[i].start_date %>发布</div>
+        <div class="sv-state"><%= data[i].survey_state %></div>
+    </div>
+</div>
 <%}%>

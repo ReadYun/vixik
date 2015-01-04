@@ -24,7 +24,7 @@ class UserAction extends Action {
     /* 用户管理首页
      * ---------------------------------------- */
     public function index(){
-        $group = 'user/index' ;
+        $page = '个人中心' ;
 
         // 取用户各种属性
         $UserCareer    = M(TB_DET_USER_CAREER   )  -> select() ;  // 用户职业
@@ -59,6 +59,8 @@ class UserAction extends Action {
         $this -> assign('province',   $AreaProvince ) ;
         $this -> assign('svtype',     $surveyType   ) ;
         $this -> assign('svtype_sub', $surveyTypeSub) ;
+        $this -> assign('page',         $page) ;
+        $this -> assign('path',         vkPath($page)) ;
 
         $this -> display() ;
 
@@ -67,13 +69,18 @@ class UserAction extends Action {
     /* 访问查看用户信息
      * ---------------------------------------- */
     public function visit(){
+        $page        = '用户访问' ;
+        $user_code = $_GET['code'] ;
+
+        $this -> assign('page', $page) ;
+        $this -> assign('path', vkPath($page, $user_code)) ;
+
         if($user = userInfoFind(array('user_code'=>$_GET['code']))){
             $this -> assign('user', $user) ;
             $this -> display() ;
         }else{
             $this -> error("无法访问该用户，返回个人中心", U('user/index')) ;
         }
-
     }
 
     /* 用户注册页面

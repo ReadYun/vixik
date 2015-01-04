@@ -14,6 +14,7 @@ steal('init.js')
 })
 .then('script/public.header.js')
 .then('script/survey.analyse.model.js')
+.then('script/survey.analyse.ctrl.sub.js')
 .then('script/survey.analyse.ctrl.stats.js')
 .then(function($){
 
@@ -340,43 +341,6 @@ steal('init.js')
         },
     }) ;
 
-
-    /*
-     * 页面总控制器
-     *
-     **/
-    $.Controller('Survey.Analyse.Ctrl.Sv.Setting', {
-        defaults : {
-            models$ : {}                     // 页面总模型
-        },
-        listensTo : ["hint"]
-    }, {
-        init : function(){
-            var $this = this ;
-        },
-
-        item_fix : function(){
-
-        },
-    }) ;
-
-
-    /*
-     * 页面总控制器
-     *
-     **/
-    $.Controller('Survey.Analyse.Ctrl.Sv.Comment', {
-        defaults : {
-            models$ : {}                     // 页面总模型
-        },
-        listensTo : ["hint"]
-    }, {
-        init : function(){
-            var $question,
-                $this = this ;
-        }
-    }) ;
-
     /*
      * 页面总控制器
      *
@@ -440,6 +404,8 @@ steal('init.js')
 
             // 需要模型trigger的最后初始化
             this.options.models$.survey_list(user_code) ;
+            
+            $('body').show() ;
         },
     }) ;
 

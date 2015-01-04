@@ -52,6 +52,11 @@ function api_param_check($param){
                         $data[$para['param_name']] = json_decode($param[$para['param_name']], true) ;
                         break ;
 
+                    case 'number' : 
+                        // number格式解析
+                        $data[$para['param_name']] = strval($param[$para['param_name']]) ;
+                        break ;
+
                     default :
                         $data[$para['param_name']] = $param[$para['param_name']] ;
                         break ;
@@ -205,13 +210,13 @@ function api_user_info_find(){
 * @Desc   : 用户行为验证（验证用户对某个目标行为是否进行过）
 * @Param  : number  user_code   用户编码（必选）
 * @Param  : number  target      目标编码（必选）
-* @Param  : string  action      用户行为（必选）
+* @Param  : json    action      用户行为（必选）
 * @Return : json    user        查询结果
 */
 function api_user_action_verify(){
     $user_code = func_get_args()[0]['user_code'] ;  // 取参数：用户编码
-    $action    = func_get_args()[0]['action'] ;     // 取参数：用户行为
     $target    = func_get_args()[0]['target'] ;     // 取参数：目标编码
+    $action    = func_get_args()[0]['action'] ;     // 取参数：用户行为
 
     $cfg = array(
         // 创建调查
@@ -230,26 +235,25 @@ function api_user_action_verify(){
             'cond'  => "user_code = $user_code and follow_code = $target",
         ),
         // 发布的调查
-        'answer_user' => array(
+        'follow_user' => array(
             'table' => TB_BAS_USER_FOLLOW_USER,
             'cond'  => "user_code = $user_code and follow_code = $target",
         ),
     ) ;
 
-    // 返回查询结果
-    if(M($cfg[$action]['table']) -> where($cfg[$action]['cond']) -> count()){
-        return array (
-            'data'   => 1                                 ,// 调查信息
-            'info'   => "success:api_user_action_verify"  ,// 成功信息
-            'status' => 1                                 ,// 返回状态
-        ) ;
-    }else{
-        return array (
-            'data'   => 0                                ,// 错误代码
-            'info'   => "failed:api_user_action_verify"  ,// 错误信息
-            'status' => 0                                ,// 返回状态
-        ) ;
+    for($i = 0; $i < count($action); $i++){
+        if($cfg[$action[$i]]){
+            $data[$action[$i]] = M($cfg[$action[$i]]['table']) -> where($cfg[$action[$i]]['cond']) -> count() ;
+        }else{
+            $data[$action[$i]] = false ;
+        }
     }
+
+    return array (
+        'data'   => $data                             ,// 调查信息
+        'info'   => "success:api_user_action_verify"  ,// 成功信息
+        'status' => 1                                 ,// 返回状态
+    ) ;
 }
 
 /*
@@ -490,7 +494,7 @@ function api_user_action_log_select(){
         $data = $cfg ;
     }
     
-    foreach ($data as $key => $value) {
+    foreach($data as $key => $value){
         // 取用户行为日志信息
         $sql =  "select a.* , b.action_desc, concat('$url_visit?code=', a.action_value) url_visit ".
                 "from $tbBasUserActionLog a , $tbDetUserActionConfig b ".
@@ -551,33 +555,82 @@ function api_user_follow_update(){
 }
 
 /*
-* @Name   : api_user_follow_svtype_query
-* @Desc   : 用户关注调查分类查询接口
-* @Params : number   $user_code    用户编码（可选）
-* @Params : string   $query_type   查询方式（可选）| select/count/stats 
-* @Params : string   $condition    查询条件（可选）
-* @Return : json     $data         查询结果
+* @Name   : api_user_follow_svprop_select
+* @Desc   : 用户关注调查属性查询接口
+* @Params : number   $user_code     用户编码（可选）
+* @Params : string   $svprop_type   关注调查属性类型（survey_type/survey_type_sub/survey_trade）（可选）
+* @Params : number   $svprop_value  关注调查属性值（可选）
+* @Return : json     $data          查询结果
 */
-function api_user_follow_svtype_query(){
-    $user_code  = func_get_args()[0]['user_code'] ;    // 取参数：用户编码
-    $query_type = func_get_args()[0]['query_type'] ;   // 取参数：查询方式
-    $condition  = func_get_args()[0]['condition'] ;    // 取参数：查询条件
+function api_user_follow_svprop_select(){
+    $cond  = func_get_args()[0] ;    // 取参数：用户编码
 
-    if($data = M(TB_BAS_USER_FOLLOW_SVTYPE) -> where("user_code = $user_code") -> select()){
+    if($data = M(TB_BAS_USER_FOLLOW_SVPROP) -> where($cond) -> select()){
         return array (
             'data'   => $data                                   ,// 查询结果
-            'info'   => "success:api_user_follow_svtype_query"  ,// 成功信息
+            'info'   => "success:api_user_follow_svprop_select" ,// 成功信息
             'status' => 1                                       ,// 返回状态
 
         ) ;
     }else{
         return array (
             'data'   => 0                                       ,// 错误代码
-            'info'   => "failed:api_user_follow_svtype_query"   ,// 错误信息
+            'info'   => "failed:api_user_follow_svprop_select"  ,// 错误信息
             'status' => 0                                       ,// 返回状态
         ) ;
     }
-}
+}   
+
+/*
+ * @Name   : api_user_follow_svprop_update
+ * @Desc   : 用户关注调查属性更新接口
+ * @Params : string   $update_type   更新方式（必选）
+ * @Params : number   $user_code     用户编码（必选）
+ * @Params : string   $svprop_type   调查属性类型（必选）
+ * @Params : number   $svprop_value  调查属性值（必选）
+ * @Return : boolean  true/false     更新结果
+ */
+function api_user_follow_svprop_update(){
+    $data   = func_get_args()[0] ;
+    $action = $data['update_type'] ;
+
+    unset($data['update_type']) ;
+
+    switch($action){
+        case 'add' :
+            // dump(M(TB_BAS_USER_FOLLOW_SVPROP) -> data($data) -> count()) ;
+            if(!M(TB_BAS_USER_FOLLOW_SVPROP) -> where($data) -> count()){
+                $data['follow_time'] =  date('Y-m-d H:i:s') ;
+                $res = M(TB_BAS_USER_FOLLOW_SVPROP) -> data($data) -> add() ;
+            }
+            break ;
+
+        case 'del' :
+            $res = M(TB_BAS_USER_FOLLOW_SVPROP) -> where($data) -> delete() ;
+            break ;
+
+        default :
+            $res = false ;
+            break ;
+    }
+
+    if($res){
+        return array (
+            'data'   => true                                     ,// 更新结果
+            'info'   => "success:api_user_follow_svprop_update"  ,// 成功信息
+            'status' => 1                                        ,// 返回状态
+
+        ) ;
+    }else{
+        return array (
+            'data'   => false                                   ,// 更新结果
+            'info'   => "failde:api_user_follow_svprop_update"  ,// 失败信息
+            'status' => 0                                       ,// 返回状态
+
+        ) ;
+    }
+
+}   
 
 /*
 * @Name   : api_user_follow_svtype_update
@@ -697,29 +750,21 @@ function api_survey_create(){
 
         // 更新调查基本信息
         if($info){
-            // 活动时间处理  因为活动结束方式调整，要重新设计活动结束处理方式
-            // if($info['length_day']){
-            //     $length_day       = $info['length_day'] ;
-            //     $start_time       = $data['start_time'] = date('Y-m-d H:i:s') ;
-            //     $data['end_time'] = date('Y-m-d H:i:s', strtotime("$start_time + $length_day day")) ;
-            //     unset($info['length_day']) ;
-            // }
-
-            // start_time : 活动正式开始的方式
-            // end_time   : 活动正式结束的方式（也就是survey_state=4时的时间）、而不是计划结束的方式
-
+            surveyDelete($survey_code, 'undo') ;  // 更新前清理调查
 
             // 调查标签处理
             if($info['survey_tag']){
-                M(TB_BAS_SURVEY_TAG) -> where("survey_code = '$survey_code'") -> delete() ;
-
                 for($t = 0; $t < count($info['survey_tag']); $t++){
                     $tag = array(
-                        'survey_tag' => $info['survey_tag'][$t], 'survey_code' => $survey_code, 'survey_type' => $info['survey_type'], 
-                        'survey_type_sub' => $info['survey_type_sub'], 'survey_class' => $info['survey_class'], 
+                        'tag_name'        => $info['survey_tag'][$t], 
+                        'survey_code'     => $survey_code, 
+                        'survey_type'     => $info['survey_type'], 
+                        'survey_type_sub' => $info['survey_type_sub'], 
+                        'survey_trade'    => $info['survey_trade'], 
                     ) ;
 
-                    if(!insertTable(TB_BAS_SURVEY_TAG, $tag)){
+                    if(!insertTable(TB_BAS_TAG_INFO, $tag)){
+                        surveyDelete($survey_code, 'clean') ;  // 更新失败删除所有调查相关信息
                         return array (
                             'data'   => false                   ,// 错误编码
                             'info'   => "更新调查标签信息失败"  ,// 错误信息
@@ -735,6 +780,7 @@ function api_survey_create(){
             }
 
             if(!surveyInfoAlter($survey_code, $info)){
+                surveyDelete($survey_code, 'clean') ;  // 更新失败删除所有调查相关信息
                 return array (
                     'data'   => false                   ,// 错误编码
                     'info'   => "更新调查基本信息失败"  ,// 错误信息
@@ -745,9 +791,10 @@ function api_survey_create(){
 
         // 更新调查题目信息
         if($question){
-            if(!surveyQuestionDelete($survey_code) || !surveyQuestionAlter($user_code, $survey_code, $question)){
+            if(!surveyQuestionAlter($user_code, $survey_code, $question)){
+                surveyDelete($survey_code, 'clean') ;  // 更新失败删除所有调查相关信息
                 return array (
-                    'data'   => false               ,// 错误编码
+                    'data'   => false               ,// 错误编码（没有传入任何有效参数）
                     'info'   => "更新题目信息失败"  ,// 错误信息
                     'status' => 0                   ,// 返回状态
                 ) ;
@@ -757,6 +804,7 @@ function api_survey_create(){
         // 如果调查状态是发布状态，还要更新用户账户相关信息
         if(intval($info['survey_state']) == 2){
             if(!userActionUpdate($user_code, 1002, $survey_code)){
+                surveyDelete($survey_code, 'clean') ;  // 更新失败删除所有调查相关信息
                 return array (
                     'data'   => false                   ,// 错误编码
                     'info'   => "更新用户账户信息失败"  ,// 错误信息
@@ -796,8 +844,6 @@ function api_survey_create(){
             'status' => 0               ,// 返回状态
         ) ;
     }
-
-
 }
 
 /*
@@ -907,97 +953,119 @@ function api_survey_info_update(){
 * @Param  : number  pnum    数据量（可选）
 * @Return : json    survey  调查清单
 */
-function api_survey_type_list_select(){
-    $type = func_get_args()[0]['type'] ;  // 取参数：调查类型
-    $mode = func_get_args()[0]['mode'] ;  // 取参数：调查模式
-    $page = func_get_args()[0]['page'] ;  // 取参数：查询页码
-    $pnum = func_get_args()[0]['pnum'] ;  // 取参数：数据量
+// function api_survey_type_list_select1(){
+//     $type = func_get_args()[0]['type'] ;  // 取参数：调查类型
+//     $mode = func_get_args()[0]['mode'] ;  // 取参数：调查模式
+//     $page = func_get_args()[0]['page'] ;  // 取参数：查询页码
+//     $pnum = func_get_args()[0]['pnum'] ;  // 取参数：数据量
 
-    $data               = array() ;
-    $url_user           = U('user/user/visit') ;
-    $url_visit          = U('survey/survey/visit') ;
-    $url_type           = U('survey/survey/type') ;
-    $url_trade          = U('survey/survey/trade') ;
-    $tbBasUserInfo      = M(TB_BAS_USER_INFO)       -> getTableName() ;
-    $tbBasSurveyInfo    = M(TB_BAS_SURVEY_INFO)     -> getTableName() ;
-    $tbDetSurveyTypeSub = M(TB_DET_SURVEY_TYPE_SUB) -> getTableName() ;
-    $tbDetSurveyTrade   = M(TB_DET_SURVEY_TRADE)    -> getTableName() ;
+//     $data               = array() ;
+//     $url_user           = U('user/user/visit') ;
+//     $url_visit          = U('survey/survey/visit') ;
+//     $url_type           = U('survey/survey/type') ;
+//     $url_trade          = U('survey/survey/trade') ;
+//     $tbBasUserInfo      = M(TB_BAS_USER_INFO)       -> getTableName() ;
+//     $tbBasSurveyInfo    = M(TB_BAS_SURVEY_INFO)     -> getTableName() ;
+//     $tbDetSurveyTypeSub = M(TB_DET_SURVEY_TYPE_SUB) -> getTableName() ;
+//     $tbDetSurveyTrade   = M(TB_DET_SURVEY_TRADE)    -> getTableName() ;
 
-    // 判断调查类型设计调查类型条件（默认第一个调查类型1001）
-    switch(strlen($type)){
-        case 4 :
-            if(M(TB_DET_SURVEY_TYPE_SUB) -> where("survey_type_code = $type") -> find()){
-                $and = "and a.survey_type = $type " ;
-            }else{
-                $and = "and a.survey_type = 1001 " ; 
-            }
-            break ;
+//     // 判断调查类型设计调查类型条件（默认第一个调查类型1001）
+//     switch(strlen($type)){
+//         case 4 :
+//             if(M(TB_DET_SURVEY_TYPE_SUB) -> where("survey_type_code = $type") -> find()){
+//                 $and = "and a.survey_type = $type " ;
+//             }else{
+//                 $and = "and a.survey_type = 1001 " ; 
+//             }
+//             break ;
 
-        case 5 :
-            if(M(TB_DET_SURVEY_TYPE_SUB) -> where("survey_type_sub_code = $type") -> find()){
-                $and = "and a.survey_type_sub = $type " ;
-            }else{
-                $and = "and a.survey_type = 1001 " ; 
-            }
-            break ;
+//         case 5 :
+//             if(M(TB_DET_SURVEY_TYPE_SUB) -> where("survey_type_sub_code = $type") -> find()){
+//                 $and = "and a.survey_type_sub = $type " ;
+//             }else{
+//                 $and = "and a.survey_type = 1001 " ; 
+//             }
+//             break ;
 
-        default :
-            $and = "and a.survey_type = 1001 " ;
-            break ;
-    }
+//         default :
+//             $and = "and a.survey_type = 1001 " ;
+//             break ;
+//     }
 
-    $modes = array(
-        // 最新问卷：开始时间.DESC -> 推荐等级.ASC -> 参与次数.ASC
-        'new' => array(
-            'order' => "order by a.start_time desc, a.recomm_grade, a.answer_num "
-        ),
-        // 参与人数.DESC -> 结束时间.DESC -> 开始时间.DESC
-        'hot' => array(
-            'order' => "order by a.answer_num desc, a.end_time desc, a.start_time desc "
-        ),
-        // 推荐等级.ASC -> 结束时间.DESC -> 参与人数.ASC
-        'rec' => array(
-            'order' => "order by a.recomm_grade, a.end_time desc, a.answer_num "
-        ),
-    ) ;
+//     $modes = array(
+//         // 最新问卷：开始时间.DESC -> 推荐等级.ASC -> 参与次数.ASC
+//         'new' => array(
+//             'order' => "order by a.start_time desc, a.recomm_grade, a.answer_num "
+//         ),
+//         // 参与人数.DESC -> 结束时间.DESC -> 开始时间.DESC
+//         'hot' => array(
+//             'order' => "order by a.answer_num desc, a.end_time desc, a.start_time desc "
+//         ),
+//         // 推荐等级.ASC -> 结束时间.DESC -> 参与人数.ASC
+//         'rec' => array(
+//             'order' => "order by a.recomm_grade, a.end_time desc, a.answer_num "
+//         ),
+//     ) ;
 
-    $mode ? $data[$mode] = $modes[$type] : $data = $modes  ;
-    $page ? $page : $page = 1  ;
-    $pnum ? $pnum : $pnum = 10 ;
-    $limit = "limit " . strval(($page - 1) * $pnum + 1) . ", $pnum" ;  // 计算页码
+//     $mode ? $data[$mode] = $modes[$type] : $data = $modes  ;
+//     $page ? $page : $page = 1  ;
+//     $pnum ? $pnum : $pnum = 10 ;
+//     $limit = "limit " . strval(($page - 1) * $pnum) . ", $pnum" ;  // 计算页码
     
-    foreach ($data as $key => $cond) {
-        $sql =  "select distinct a.survey_code, a.survey_name, a.survey_desc, a.user_code, a.user_nick, b.user_photo, a.question_num, ".
-                "c.survey_type_name, c.survey_type_code, c.survey_type_sub_code, c.survey_type_sub_name, ".
-                "d.survey_trade_code, d.survey_trade_name, date_relative_now(a.start_time) start_date, ".
-                "concat('$url_user?code=', a.user_code) url_user, concat('$url_visit?code=', a.survey_code) url_visit, ". 
-                "concat('$url_type?type=', a.survey_type) url_type, concat('$url_type?type=', a.survey_type_sub) url_type_sub, ". 
-                "concat('$url_trade?trade=', a.survey_trade) url_trade ". 
-                "from $tbBasSurveyInfo a, $tbBasUserInfo b, $tbDetSurveyTypeSub c, $tbDetSurveyTrade d ".
-                "where a.user_code = b.user_code and a.survey_type_sub = c.survey_type_sub_code and a.survey_trade = d.survey_trade_code ".
-                "and survey_state > 0 ". $and. $cond['order']. $limit ;  // 开发时用这个
-                // "and survey_state > 1, a.start_time is not null ". $and. $order. $limit ;  // 正式时用这个
-        if($query = M() -> query($sql)){
-            $survey[$key] = $query ;
-        }
-    }
+//     foreach ($data as $key => $cond) {
+//         $sql =  "select distinct a.survey_code, a.survey_name, a.survey_desc, a.user_code, a.user_nick, b.user_photo, a.question_num, ".
+//                 "c.survey_type_name, c.survey_type_code, c.survey_type_sub_code, c.survey_type_sub_name, ".
+//                 "d.survey_trade_code, d.survey_trade_name, date_relative_now(a.start_time) start_date, ".
+//                 "concat('$url_user?code=', a.user_code) url_user, concat('$url_visit?code=', a.survey_code) url_visit, ". 
+//                 "concat('$url_type?type=', a.survey_type) url_type, concat('$url_type?type=', a.survey_type_sub) url_type_sub, ". 
+//                 "concat('$url_trade?trade=', a.survey_trade) url_trade ". 
+//                 "from $tbBasSurveyInfo a, $tbBasUserInfo b, $tbDetSurveyTypeSub c, $tbDetSurveyTrade d ".
+//                 "where a.user_code = b.user_code and a.survey_type_sub = c.survey_type_sub_code and a.survey_trade = d.survey_trade_code ".
+//                 "and survey_state > 0 ". $and. $cond['order']. $limit ;  // 开发时用这个
+//                 // "and survey_state > 1, a.start_time is not null ". $and. $order. $limit ;  // 正式时用这个
+//         if($query = M() -> query($sql)){
+//             $survey[$key] = $query ;
+//         }
+//     }
 
-    // 返回查询结果
-    if(count($survey)){
-        return array (
-            'data'   => $survey                                ,// 调查信息
-            'info'   => "success:api_survey_type_list_select"  ,// 成功信息
-            'status' => 1                                      ,// 返回状态
-            'type'   => 'json'                                 ,// 数据类型
-        ) ;
-    }else{
-        return array (
-            'data'   => 0                                     ,// 错误代码
-            'info'   => "failed:api_survey_type_list_select"  ,// 错误信息
-            'status' => 0                                     ,// 返回状态
-        ) ;
-    }
-}
+//     // 返回查询结果
+//     if(count($survey)){
+//         return array (
+//             'data'   => $survey                                ,// 调查信息
+//             'info'   => "success:api_survey_type_list_select"  ,// 成功信息
+//             'status' => 1                                      ,// 返回状态
+//             'type'   => 'json'                                 ,// 数据类型
+//         ) ;
+//     }else{
+//         return array (
+//             'data'   => 0                                     ,// 错误代码
+//             'info'   => "failed:api_survey_type_list_select"  ,// 错误信息
+//             'status' => 0                                     ,// 返回状态
+//         ) ;
+//     }
+// }
+
+// function api_survey_list_select(){
+//     $param['filter'] = func_get_args()[0]['filter'] ;  // 取参数：查询条件
+//     $param['order']  = func_get_args()[0]['order'] ;   // 取参数：查询排序
+//     $param['page']   = func_get_args()[0]['page'] ;    // 取参数：查询页码
+//     $param['pages']  = func_get_args()[0]['pages'] ;   // 取参数：查询页码
+//     $param['pnum']   = func_get_args()[0]['pnum'] ;    // 取参数：数据量
+
+//     if($survey = surveyListSelect($param)){
+//         return array (
+//             'data'   => $survey                           ,// 返回数据
+//             'info'   => "success:api_survey_list_select"  ,// 成功信息
+//             'status' => 1                                 ,// 返回状态
+//         ) ;
+//     }else{
+//         return array (
+//             'data'   => false                            ,// 错误代码
+//             'info'   => "failed:api_survey_list_select"  ,// 错误信息
+//             'status' => 0                                ,// 返回状态
+//         ) ;
+//     }
+// }
 
 /*
 * @Name   : api_survey_action_list_select
@@ -1347,6 +1415,85 @@ function api_survey_recomm_create(){
 }
 
 /*
+* @Name   : api_survey_comment_submit
+* @Desc   : 调查评论提交
+* @Param  : number  user_code     用户编码（必选）
+* @Param  : number  survey_code   调查编码（必选）
+* @Param  : string  comment_txt   评论内容（必选）
+* @Return : bool    true/flase    更新结果标志
+*/
+function api_survey_comment_submit(){
+    $data                 = func_get_args()[0] ;
+    $data['comment_time'] = date('Y-m-d H:i:s') ;  // 选项创建时间
+
+
+    if(M(TB_BAS_SURVEY_COMMENT) -> add($data)){
+        return array (
+            'data'   => true                                 ,// 数据信息
+            'info'   => "success:api_survey_comment_submit"  ,// 成功信息
+            'status' => 1                                    ,// 返回状态
+        ) ;
+    }else{
+        return array (
+            'data'   => false                               ,// 错误信息
+            'info'   => "failed:api_survey_comment_submit"  ,// 错误信息
+            'status' => 0                                   ,// 返回状态
+        ) ;
+    }
+}
+
+/*
+* @Name   : api_survey_comment_list_select
+* @Desc   : 调查评论查询
+* @Param  : number  survey_code   调查编码（必选）
+* @Param  : number  page          查询页码（可选）
+* @Param  : number  pnum          数据量（可选）
+* @Return : json    list          查询结果
+*/
+function api_survey_comment_list_select(){
+    $survey_code = func_get_args()[0]['survey_code'] ;  // 取参数：调查编码
+    $page        = func_get_args()[0]['page'] ;         // 取参数：查询页码
+    $pnum        = func_get_args()[0]['pnum'] ;         // 取参数：数据量
+
+    $page ? $page : $page = 1  ;
+    $pnum ? $pnum : $pnum = 10 ;
+    $limit = "limit " . strval(($page - 1) * $pnum) . ", $pnum" ;  // 计算页码
+
+    $tbBasSurveyComment = M(TB_BAS_SURVEY_COMMENT) -> getTableName() ;
+    $tbBasUserInfo      = M(TB_BAS_USER_INFO)      -> getTableName() ;
+    $user_visit         = U('user/user/visit') ;
+
+    // Ta的其他调查
+    $sql = "select a.user_code, b.user_nick, b.user_photo, concat('$user_visit?code=', a.user_code) url_user, 
+            date_relative_now(a.comment_time) comment_time, a.comment_txt
+            from $tbBasSurveyComment a, $tbBasUserInfo b
+            where a.user_code = b.user_code 
+            and a.survey_code = $survey_code 
+            order by a.comment_time desc $limit" ;
+    $list = M() -> query($sql) ;
+
+    if($list){
+        return array (
+            'data'   => $list                                     ,// 数据信息
+            'info'   => "success:api_survey_comment_list_select"  ,// 成功信息
+            'status' => 1                                         ,// 返回状态
+        ) ;
+    }else{
+        return array (
+            'data'   => false                                    ,// 错误信息
+            'info'   => "failed:api_survey_comment_list_select"  ,// 错误信息
+            'status' => 0                                        ,// 返回状态
+        ) ;
+    }
+
+// "select survey_code, replace(replace(replace(survey_name, '&nbsp;', ' '), '<br>' ,' '), '  ', ' ')  survey_name,
+//             concat('$sv_visit?code=', survey_code) survey_visit 
+//             from $tbBasSurveyInfo where user_code = $sv_user and survey_code <> $survey_code and survey_state = 3 
+//             order by start_time desc limit 10 " ;
+
+}
+
+/*
 * @Name   : api_follow_list_select
 * @Desc   : 关注信息查询
 * @Param  : string  type     查询类型（必选）
@@ -1496,22 +1643,6 @@ function api_stats_survey_type_cnt(){
         'status' => 1                                   ,// 返回状态
         'type'   => 'json'                              ,// 数据类型
     ) ;
-
-    // 返回结果
-    // if(count($stats)){
-    //     return array (
-    //         'data'   => $statss                              ,// 数据信息
-    //         'info'   => "success:api_stats_survey_type_cnt"  ,// 成功信息
-    //         'status' => 1                                   ,// 返回状态
-    //         'type'   => 'json'                              ,// 数据类型
-    //     ) ;
-    // }else{
-    //     return array (
-    //         'data'   => false                               ,// 错误编码
-    //         'info'   => "failed:api_stats_survey_type_cnt"  ,// 错误信息
-    //         'status' => 0                                   ,// 返回状态
-    //     ) ;
-    // }
 }
 
 /*
@@ -1851,6 +1982,42 @@ function api_stats_qt_group_item(){
 }
 
 /*
+ * @Name   : api_stats_tag_hot
+ * @Desc   : 热门标签统计
+ * @Param  : string  cond          查询条件（可选）
+ * @Return : json    $survey_info  调查基本信息
+ */
+function api_stats_tag_hot(){
+    $cond = func_get_args()[0]['cond'] ;  // 取参数：调查编码
+
+    $tbBasTagInfo = M(TB_BAS_TAG_INFO) -> getTableName() ;
+    $url_tag      = U('survey/survey/tag') ;
+
+    if(func_get_args()[0]['cond']){
+        // $where = "where ". func_get_args()[0]['cond'] ;
+    }
+
+    // 热门标签统计
+    $sql = "select tag_name, count(1) cnt, concat('$url_tag?tag=', tag_name) url_tag
+            from $tbBasTagInfo $where group by tag_name, url_tag order by cnt desc limit 20" ;
+
+    if($tag = M() -> query($sql)){
+        return array (
+            'data'   => $tag                        ,// 调查信息
+            'info'   => "success:api_stats_tag_hot" ,// 成功信息
+            'status' => 1                           ,// 返回状态
+            'type'   => 'json'                      ,// 数据类型
+        ) ;
+    }else{
+        return array (
+            'data'   => 0                          ,// 错误代码
+            'info'   => "failed:api_stats_tag_hot" ,// 错误信息
+            'status' => 0                          ,// 返回状态
+        ) ;
+    }
+}
+
+/*
 * @Name   : api_text_content
 * @Desc   : 主观题参与内容查询
 * @Param  : number  $survey_code    调查编码（可选）
@@ -1943,6 +2110,432 @@ function api_det_data_select(){
             'data'   => false                         ,// 错误编码
             'info'   => "failed:api_det_data_select"  ,// 失败信息
             'status' => 0                             ,// 返回状态
+        ) ;
+    }
+}
+
+/*
+* @Name   : api_search_survey
+* @Desc   : 搜索调查接口
+* @Param  : string  $words   搜索关键字（必选）
+* @Param  : string  $filter  条件筛选（可选）
+* @Param  : string  $order   结果排序（可选）
+* @Param  : number  $page    数据页码（可选）
+* @Param  : number  $pages   数据全量页码（可选）
+* @Param  : number  $pnum    数据量（可选）
+* @Return : json    $data    查询到的数据
+*/   
+function api_search_survey(){
+    $param['order'] = func_get_args()[0]['order'] ;   // 取参数：搜索类型
+    $param['pages'] = func_get_args()[0]['pages'] ;   // 取参数：查询页码
+    $param['page']  = func_get_args()[0]['page'] ;    // 取参数：查询页码
+    $param['pnum']  = func_get_args()[0]['pnum'] ;    // 取参数：数据量
+
+    // 筛选方式整理
+    if(func_get_args()[0]['words']){
+        $param['cond'] = "survey_state in(3,4) and survey_name like '%" . str_replace(' ', '%', func_get_args()[0]['words']) . "%' " ;
+    }else{
+        $param['cond'] = "1 = 1" ;
+    }
+
+    // 筛选方式整理
+    if(func_get_args()[0]['filter']){
+        $param['cond'] = $param['cond'] . " and " . func_get_args()[0]['filter'] ;
+    }
+
+    if($search = surveyListSelect($param)){
+        return array (
+            'data'   => $search                      ,// 返回数据
+            'info'   => "success:api_search_survey"  ,// 成功信息
+            'status' => 1                            ,// 返回状态
+        ) ;
+    }else{
+        return array (
+            'data'   => false                       ,// 错误代码
+            'info'   => "failed:api_search_survey"  ,// 错误信息
+            'status' => 0                           ,// 返回状态
+        ) ;
+    }
+}
+
+/*
+* @Name   : api_search_question
+* @Desc   : 搜索问题接口
+* @Param  : string  $words   搜索关键字（必选）
+* @Param  : string  $filter  条件筛选（可选）
+* @Param  : string  $order   结果排序（可选）
+* @Param  : number  $page    数据页码（可选）
+* @Param  : number  $pages   数据全量页码（可选）
+* @Param  : number  $pnum    数据量（可选）
+* @Return : json    $data    查询到的数据
+*/   
+function api_search_question(){
+    $words  = func_get_args()[0]['words'] ;   // 取参数：搜索字符
+    $filter = func_get_args()[0]['filter'] ;  // 取参数：搜索筛选
+    $order  = func_get_args()[0]['order'] ;   // 取参数：搜索排序
+    $page   = func_get_args()[0]['page'] ;    // 取参数：查询页码
+    $pages  = func_get_args()[0]['pages'] ;   // 取参数：查询全页码
+    $pnum   = func_get_args()[0]['pnum'] ;    // 取参数：数据量
+
+    // 搜索筛选排序相关信息    
+    $filter ? $filter = " and $filter "     : $filter = "" ;
+    $order  ? $order  = " order by $order " : $order  = " order by start_time desc " ;
+
+    // 默认数据量设置
+    $pnum ? $pnum : $pnum = 20 ;
+
+    // 计算要查询的数据量
+    if($page){
+        // 分页查询
+        $search['page'] = $page ;
+        $limit          = "limit " . $page * $pnum . ", $pnum" ;
+        $next           = "limit " . ($page + 1) * $pnum . ", 1" ;
+    }elseif($pages){
+        // 全页查询
+        $search['page'] = $pages ;
+        $limit          = "limit " . ($pages + 1) * $pnum ;
+        $next           = "limit " . ($pages + 1) * $pnum . ", 1" ;
+    }else{
+        // 默认查询
+        $search['page'] = 0 ;
+        $limit          = "limit $pnum"  ;
+        $next           = "limit $pnum, 1" ;
+    }
+
+    $url_us_visit = U('user/visit') ;
+    $url_sv_visit = U('survey/survey/visit') ;
+    $url_sv_type  = U('survey/survey/type')  ;
+    $url_sv_trade = U('survey/survey/trade') ;
+
+    $tbBasSurveyInfo       = M(TB_BAS_SURVEY_INFO)        -> getTableName() ;
+    $tbBasUserInfo         = M(TB_BAS_USER_INFO)          -> getTableName() ;
+    $tbDetSurveyType       = M(TB_DET_SURVEY_TYPE)        -> getTableName() ;
+    $tbDetSurveyTypeSub    = M(TB_DET_SURVEY_TYPE_SUB)    -> getTableName() ;
+    $tbDetSurveyTrade      = M(TB_DET_SURVEY_TRADE)       -> getTableName() ;
+    $tbDetSurveyState      = M(TB_DET_SURVEY_STATE)       -> getTableName() ;
+    $tbBasQuestionInfo     = M(TB_BAS_QUESTION_INFO)      -> getTableName() ;
+    $tbDetQuestionType     = M(TB_DET_QUESTION_TYPE)      -> getTableName() ;
+
+    $cond = "and question_name like '%".str_replace(' ', '%', $words)."%' " ;
+
+    $sql = array(
+        'list' =>
+            "select a.survey_name, a.question_num, a.survey_name, t.question_name, f.question_type_desc question_type, 
+                b.state_desc_sketch survey_state, date_relative_now(a.start_time) start_date, 
+                ifnull(t.answer_num, 0) answer_num, e.user_code, e.user_photo, e.user_nick, 
+                c.survey_type_name survey_type, c.survey_type_sub_name survey_type_sub, d.survey_trade_name survey_trade, 
+                concat('$url_us_visit?code=',  e.user_code)       url_us_visit,
+                concat('$url_sv_visit?code=',  a.survey_code)     url_sv_visit,
+                concat('$url_sv_type?type=',   a.survey_type)     url_sv_type,
+                concat('$url_sv_type?type=',   a.survey_type_sub) url_sv_type_sub,
+                concat('$url_sv_trade?trade=', a.survey_code)     url_sv_trade
+            from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyTypeSub c, 
+                 $tbDetSurveyTrade d, $tbBasUserInfo e, $tbDetQuestionType f, $tbBasQuestionInfo t
+            where a.survey_state = b.survey_state_code and a.survey_type_sub = c.survey_type_sub_code
+            and a.survey_trade = d.survey_trade_code and a.user_code = e.user_code 
+            and a.survey_code = t.survey_code and t.question_type = f.question_type_code and a.survey_state in(3,4) 
+            $cond $filter $order $limit",
+        'next' =>
+            "select a.survey_name
+            from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyTypeSub c, $tbDetSurveyTrade d, $tbBasUserInfo e
+            where a.survey_state = b.survey_state_code and a.survey_type_sub = c.survey_type_sub_code
+            and a.survey_trade = d.survey_trade_code and a.user_code = e.user_code and a.survey_state in(3,4) 
+            $cond $filter $order $next",
+    ) ;
+
+    $search['list'] = M() -> query($sql['list']) ;
+
+    if(!$search['list'] && !$search['page']){
+        return array (
+            'data'   => false                         ,// 错误代码
+            'info'   => "failed:api_search_question"  ,// 错误信息
+            'status' => 0                             ,// 返回状态
+        ) ;
+    }else{
+        $search['next'] = M() -> query($sql['next']) ;
+
+        return array (
+            'data'   => $search                        ,// 返回数据
+            'info'   => "success:api_search_question"  ,// 成功信息
+            'status' => 1                              ,// 返回状态
+        ) ;
+    }
+}
+
+/*
+* @Name   : api_search_user
+* @Desc   : 搜索用户接口
+* @Param  : string  $words   搜索关键字（必选）
+* @Param  : string  $filter  条件筛选（可选）
+* @Param  : string  $order   结果排序（可选）
+* @Param  : number  $page    数据页码（可选）
+* @Param  : number  $pages   数据全量页码（可选）
+* @Param  : number  $pnum    数据量（可选）
+* @Return : json    $data    查询到的数据
+*/   
+function api_search_user(){
+    $words  = func_get_args()[0]['words'] ;   // 取参数：搜索字符
+    $filter = func_get_args()[0]['filter'] ;  // 取参数：搜索筛选
+    $order  = func_get_args()[0]['order'] ;   // 取参数：搜索排序
+    $page   = func_get_args()[0]['page'] ;    // 取参数：查询页码
+    $pages  = func_get_args()[0]['pages'] ;   // 取参数：查询全页码
+    $pnum   = func_get_args()[0]['pnum'] ;    // 取参数：数据量
+
+    // 搜索筛选排序相关信息    
+    $filter ? $filter = " and $filter "     : $filter = "" ;
+    $order  ? $order  = " order by $order " : $order  = " order by user_score desc " ;
+
+    // 默认数据量设置
+    $pnum ? $pnum : $pnum = 20 ;
+
+    // 计算要查询的数据量
+    if($page){
+        // 分页查询
+        $search['page'] = $page ;
+        $limit          = "limit " . $page * $pnum . ", $pnum" ;
+        $next           = "limit " . ($page + 1) * $pnum . ", 1" ;
+    }elseif($pages){
+        // 全页查询
+        $search['page'] = $pages ;
+        $limit          = "limit " . ($pages + 1) * $pnum ;
+        $next           = "limit " . ($pages + 1) * $pnum . ", 1" ;
+    }else{
+        // 默认查询
+        $search['page'] = 0 ;
+        $limit          = "limit $pnum"  ;
+        $next           = "limit $pnum, 1" ;
+    }
+
+    $url_us_visit = U('user/visit') ;
+    $url_sv_visit = U('survey/survey/visit') ;
+    $url_sv_type  = U('survey/survey/type')  ;
+    $url_sv_trade = U('survey/survey/trade') ;
+
+    $tbBasUserInfo         = M(TB_BAS_USER_INFO)          -> getTableName() ;
+    $tbBasUserAccout       = M(TB_BAS_USER_ACCOUT)        -> getTableName() ;
+    $tbDetUserLevel        = M(TB_DET_USER_LEVEL)         -> getTableName() ;
+    $tbBasUserActionLog    = M(TB_BAS_USER_ACTION_LOG)    -> getTableName() ;
+    $tbDetUserActionConfig = M(TB_DET_USER_ACTION_CONFIG) -> getTableName() ;
+
+    $cond = "and user_nick like '%".str_replace(' ', '%', $words)."%' " ;
+
+    $sql = array(
+        'list' =>
+            "select a.user_code, a.user_nick, a.user_photo, b.publish_times, b.answer_times, user_level_desc user_level
+            from $tbBasUserInfo a, $tbBasUserAccout b, $tbDetUserLevel c
+            where a.user_code = b.user_code and b.user_level = c.user_level_value $cond $filter $order $limit",
+        'next' =>
+            "select a.user_code from $tbBasUserInfo a, $tbBasUserAccout b where a.user_code = b.user_code $cond $filter $order $next",
+    ) ;
+
+    $search['list'] = M() -> query($sql['list']) ;
+
+    if(!$search['list'] && !$search['page']){
+        return array (
+            'data'   => false                     ,// 错误代码
+            'info'   => "failed:api_search_user"  ,// 错误信息
+            'status' => 0                         ,// 返回状态
+        ) ;
+    }else{
+        $search['next'] = M() -> query($sql['next']) ;
+
+        for($i = 0; $i < count($search['list']); $i++){
+            $user_code = $search['list'][$i]['user_code'] ;
+
+            $sql = "select 
+                        date_relative_now(a.action_time) action_time, a.action_name, b.action_desc, 
+                        concat('$url_sv_visit?code=', a.action_value) url_sv_action
+                    from $tbBasUserActionLog a , $tbDetUserActionConfig b
+                    where a.action_code = b.action_code and a.user_code = $user_code
+                    order by a.action_time desc limit 1" ;
+
+            if($action = M() -> query($sql)[0]){
+                $search['list'][$i] = array_merge($search['list'][$i], $action) ;
+            }else{
+                $search['list'][$i]['action_time'] = '暂无任何动态...' ;
+            }
+        }
+
+        return array (
+            'data'   => $search                    ,// 返回数据
+            'info'   => "success:api_search_user"  ,// 成功信息
+            'status' => 1                          ,// 返回状态
+        ) ;
+    }
+}
+
+/*
+* @Name   : api_search_main
+* @Desc   : 问题调查接口
+* @Param  : string  $words   搜索关键字（必选）
+* @Param  : string  $type    搜索类型（必选）
+* @Param  : string  $filter  条件筛选（可选）
+* @Param  : string  $order   结果排序（可选）
+* @Param  : number  $page    数据页码（可选）
+* @Param  : number  $pages   数据全量页码（可选）
+* @Param  : number  $pnum    数据量（可选）
+* @Return : json    $data    查询到的数据
+*/   
+function api_search_main(){
+    $words  = func_get_args()[0]['words'] ;   // 取参数：搜索字符
+    $type   = func_get_args()[0]['type'] ;    // 取参数：搜索类型
+    $filter = func_get_args()[0]['filter'] ;  // 取参数：搜索类型
+    $order  = func_get_args()[0]['order'] ;   // 取参数：搜索类型
+    $page   = func_get_args()[0]['page'] ;    // 取参数：查询页码
+    $pages  = func_get_args()[0]['pages'] ;   // 取参数：查询页码
+    $pnum   = func_get_args()[0]['pnum'] ;    // 取参数：数据量
+
+    // 搜索筛选排序相关信息
+    if($type == 'user'){
+
+    }else{
+        $filter ? $filter = " and $filter "     : $filter = "" ;
+        $order  ? $order  = " order by $order " : $order  = " order by start_time desc " ;
+    }
+
+    // 默认数据量设置
+    $pnum ? $pnum : $pnum = 20 ;
+
+    // 计算要查询的数据量
+    if($page){
+        // 分页查询
+        $search['page'] = $page ;
+        $limit          = "limit " . $page * $pnum . ", $pnum" ;
+        $next           = "limit " . ($page + 1) * $pnum . ", 1" ;
+    }elseif($pages){
+        // 全页查询
+        $search['page'] = $pages ;
+        $limit          = "limit " . ($pages + 1) * $pnum ;
+        $next           = "limit " . ($pages + 1) * $pnum . ", 1" ;
+    }else{
+        // 默认查询
+        $search['page'] = 0 ;
+        $limit          = "limit $pnum"  ;
+        $next           = "limit $pnum, 1" ;
+    }
+
+    $url_us_visit = U('user/visit') ;
+    $url_sv_visit = U('survey/survey/visit') ;
+    $url_sv_type  = U('survey/survey/type')  ;
+    $url_sv_trade = U('survey/survey/trade') ;
+    
+    $tbBasSurveyInfo       = M(TB_BAS_SURVEY_INFO)        -> getTableName() ;
+    $tbBasQuestionInfo     = M(TB_BAS_QUESTION_INFO)      -> getTableName() ;
+    $tbDetQuestionType     = M(TB_DET_QUESTION_TYPE)      -> getTableName() ;
+    $tbBasTagInfo          = M(TB_BAS_TAG_INFO)           -> getTableName() ;
+    $tbBasUserInfo         = M(TB_BAS_USER_INFO)          -> getTableName() ;
+    $tbBasUserAccout       = M(TB_BAS_USER_ACCOUT)        -> getTableName() ;
+    $tbDetSurveyType       = M(TB_DET_SURVEY_TYPE)        -> getTableName() ;
+    $tbDetSurveyTypeSub    = M(TB_DET_SURVEY_TYPE_SUB)    -> getTableName() ;
+    $tbDetSurveyTrade      = M(TB_DET_SURVEY_TRADE)       -> getTableName() ;
+    $tbDetUserLevel        = M(TB_DET_USER_LEVEL)         -> getTableName() ;
+    $tbDetSurveyState      = M(TB_DET_SURVEY_STATE)       -> getTableName() ;
+    $tbBasUserActionLog    = M(TB_BAS_USER_ACTION_LOG)    -> getTableName() ;
+    $tbDetUserActionConfig = M(TB_DET_USER_ACTION_CONFIG) -> getTableName() ;
+
+    // if($type == 'user'){
+    //     $cond = "and user_nick like '%".str_replace(' ', '%', $words)."%' " ;
+    // }else{
+    //     $cond = "and " . $type . "_name like '%".str_replace(' ', '%', $words)."%' " ;
+    // }
+
+
+    $cfg = array(
+        'survey' => array(  // 搜索调查
+            'list' =>
+                "select a.survey_name, a.question_num, b.state_desc_sketch survey_state, date_relative_now(a.start_time) start_date, 
+                    ifnull(a.answer_num, 0) answer_num, e.user_code, e.user_photo, e.user_nick, 
+                    replace(replace(replace(a.survey_desc, '&nbsp;', ' '), '<br>' ,' '), '  ', ' ') survey_desc,
+                    c.survey_type_name survey_type, c.survey_type_sub_name survey_type_sub, d.survey_trade_name survey_trade, 
+                    concat('$url_us_visit?code=',  e.user_code)       url_us_visit,
+                    concat('$url_sv_visit?code=',  a.survey_code)     url_sv_visit,
+                    concat('$url_sv_type?type=',   a.survey_type)     url_sv_type,
+                    concat('$url_sv_type?type=',   a.survey_type_sub) url_sv_type_sub,
+                    concat('$url_sv_trade?trade=', a.survey_code)     url_sv_trade
+                from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyTypeSub c, 
+                     $tbDetSurveyTrade d, $tbBasUserInfo e
+                where a.survey_state = b.survey_state_code and a.survey_type_sub = c.survey_type_sub_code
+                and a.survey_trade = d.survey_trade_code and a.user_code = e.user_code and a.survey_state in(3,4) 
+                $cond $filter $order $limit",
+            'next' =>
+                "select a.survey_name
+                from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyTypeSub c, $tbDetSurveyTrade d, $tbBasUserInfo e
+                where a.survey_state = b.survey_state_code and a.survey_type_sub = c.survey_type_sub_code
+                and a.survey_trade = d.survey_trade_code and a.user_code = e.user_code and a.survey_state in(3,4) 
+                $cond $filter $order $next",
+        ),
+
+        'question' => array(  // 搜索问题
+            'list' =>
+                "select a.survey_name, a.question_num, a.survey_name, t.question_name, f.question_type_desc question_type, 
+                    b.state_desc_sketch survey_state, date_relative_now(a.start_time) start_date, 
+                    ifnull(t.answer_num, 0) answer_num, e.user_code, e.user_photo, e.user_nick, 
+                    c.survey_type_name survey_type, c.survey_type_sub_name survey_type_sub, d.survey_trade_name survey_trade, 
+                    concat('$url_us_visit?code=',  e.user_code)       url_us_visit,
+                    concat('$url_sv_visit?code=',  a.survey_code)     url_sv_visit,
+                    concat('$url_sv_type?type=',   a.survey_type)     url_sv_type,
+                    concat('$url_sv_type?type=',   a.survey_type_sub) url_sv_type_sub,
+                    concat('$url_sv_trade?trade=', a.survey_code)     url_sv_trade
+                from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyTypeSub c, 
+                     $tbDetSurveyTrade d, $tbBasUserInfo e, $tbDetQuestionType f, $tbBasQuestionInfo t
+                where a.survey_state = b.survey_state_code and a.survey_type_sub = c.survey_type_sub_code
+                and a.survey_trade = d.survey_trade_code and a.user_code = e.user_code 
+                and a.survey_code = t.survey_code and t.question_type = f.question_type_code and a.survey_state in(3,4) 
+                $cond $filter $order $limit",
+            'next' =>
+                "select a.survey_name
+                from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyTypeSub c, $tbDetSurveyTrade d, $tbBasUserInfo e
+                where a.survey_state = b.survey_state_code and a.survey_type_sub = c.survey_type_sub_code
+                and a.survey_trade = d.survey_trade_code and a.user_code = e.user_code and a.survey_state in(3,4) 
+                $cond $filter $order $next",
+        ),
+
+        'user' => array(  // 搜索用户
+            'list' =>
+                "select a.user_code, a.user_nick, a.user_photo, b.publish_times, b.answer_times, user_level_desc user_level
+                from $tbBasUserInfo a, $tbBasUserAccout b, $tbDetUserLevel c
+                where a.user_code = b.user_code and b.user_level = c.user_level_value $cond $filter $order $limit",
+            'next' =>
+                "select a.user_code from $tbBasUserInfo a, $tbBasUserAccout b 
+                where a.user_code = b.user_code $cond $filter $order $next",
+        ),
+    ) ;
+
+    $search['list'] = M() -> query($cfg[$type]['list']) ;
+
+    if(!$search['list'] && !$search['page']){
+        return array (
+            'data'   => false                     ,// 错误代码
+            'info'   => "failed:api_search_main"  ,// 错误信息
+            'status' => 0                         ,// 返回状态
+        ) ;
+    }else{
+        $search['next'] = M() -> query($cfg[$type]['next']) ;
+
+        // 搜索用户单独处理：取用户最新动态
+        if($type == 'user'){
+            for($i = 0; $i < count($search['list']); $i++){
+                $user_code = $search['list'][$i]['user_code'] ;
+
+                $sql = "select 
+                            date_relative_now(a.action_time) action_time, a.action_name, b.action_desc, 
+                            concat('$url_sv_visit?code=', a.action_value) url_sv_action
+                        from $tbBasUserActionLog a , $tbDetUserActionConfig b
+                        where a.action_code = b.action_code and a.user_code = $user_code
+                        order by a.action_time desc limit 1" ;
+
+                if($action = M() -> query($sql)[0]){
+                    $search['list'][$i] = array_merge($search['list'][$i], $action) ;
+                }else{
+                    $search['list'][$i]['action_time'] = '暂无任何动态...' ;
+                }
+            }
+        }
+
+        return array (
+            'data'   => $search                    ,// 返回数据
+            'info'   => "success:api_search_main"  ,// 成功信息
+            'status' => 1                          ,// 返回状态
         ) ;
     }
 }
@@ -2073,76 +2666,6 @@ function api_search(){
     }
 }
 
-
-/*
-* @Name   : api_search_main
-* @Desc   : 搜索接口
-* @Param  : string  $word      搜索关键字
-* @Return : json    $jsonData  搜索结果数据
-*/   
-function api_search_main(){
-    $type = $_POST['search_type'] ;
-    if($_POST['search_words']){
-        $word = $_POST['search_words'] ;
-    }else{
-        $word = cookie('search_words') ;   
-    }
-    
-    $url_us_visit   = U('user/visit') ;
-    $url_sv_action  = U('survey/survey/action') ;
-    $url_sv_analyse = U('survey/survey/analyse') ;
-
-    $table               = M(constant('TB_BAS_' . strtoupper($type) . '_INFO')) -> getTableName() ;
-    $tbDetSurveyState    = M(TB_DET_SURVEY_STATE)     -> getTableName() ;
-    $tbBasUserAccout     = M(TB_BAS_USER_ACCOUT)      -> getTableName() ;
-    $tbBasSurveyInfo     = M(TB_BAS_SURVEY_INFO)      -> getTableName() ;
-    $tbBasUserExtendInfo = M(TB_BAS_USER_EXTEND_INFO) -> getTableName() ;
-    $tbDetUserLevel      = M(TB_DET_USER_LEVEL)       -> getTableName() ;
-    $tbDetQuestionType   = M(TB_DET_QUESTION_TYPE)    -> getTableName() ;
-    $tbDetSurveyState    = M(TB_DET_SURVEY_STATE)     -> getTableName() ;
-
-    // 按照不同的搜索类型查询数据
-    switch($type){
-        case 'survey' :
-            $condition = "survey_name like '%". $word . "%'" ;
-            $sql =  "select a.survey_name, a.user_nick, a.question_num, date(a.start_time) start_date, ".
-                    "       concat('$url_sv_action?code=', a.survey_code) url_survey_action, b.state_desc_sketch survey_state, ".
-                    "       concat('$url_us_visit?code=', a.user_code) url_user_action, a.survey_desc ".
-                    "from $table a, $tbDetSurveyState b ".
-                    "where a.survey_state = b.survey_state_code and a.survey_state >= 3 and $condition ".
-                    "order by start_date desc " ;
-            break ;
-        case 'question' :
-            $condition = "question_name like '%". $word . "%'" ;
-            $sql =  "select a.question_name, a.question_option, date(a.create_time) create_date, ".
-                    "       b.survey_name, c.state_desc_sketch survey_state, d.question_type_desc question_desc, ".
-                    "       concat('$url_sv_analyse?code=', b.survey_code) url_survey_analyse, ".
-                    "       concat('$url_sv_action?code=', b.survey_code) url_survey_action ".
-                    "from $table a, $tbBasSurveyInfo b, $tbDetSurveyState c, $tbDetQuestionType d ".
-                    "where a.survey_code = b.survey_code and b.survey_state = c.survey_state_code ".
-                    "and a.question_type = d.question_type_code and b.survey_state >= 3 and $condition ".
-                    "order by create_date desc " ; 
-            break ;
-        case 'user' :
-        $condition = "user_nick like '%". $words . "%'" ;
-        $sql =  "select a.user_nick, b.user_desc, c.publish_times, c.answer_times, d.user_level_desc user_level, ".
-                "       concat('$url_us_visit?code=', a.user_code) url_user_action ".
-                "from $table a, $tbBasUserExtendInfo b, $tbBasUserAccout c, $tbDetUserLevel d ".
-                "where a.user_code = b.user_code and a.user_code = c.user_code ".
-                "and c.user_level = d.user_level_value and $condition ".
-                "order by c.user_level desc " ;
-            break ;
-    }
-
-    $data = M() -> query($sql) ;
-
-    //  echo json_encode($data) ;
-    if(count($data) > 0){
-        $this -> ajaxReturn($data, 'success:api_search_main', 1, 'json') ;
-    }else{
-        $this -> ajaxReturn(0, 'failed:api_search_main', 0);
-    }
-}
 
 /*
 * @Name   : api_area_city_select

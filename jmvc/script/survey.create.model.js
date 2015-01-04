@@ -60,17 +60,22 @@ steal('init.js')
                         // 取调查相关信息成功，更新模型并匹配页面数据
                         if(data$.status){
                             if(data$.data.info){
-                                $this.info$ = data$.data.info ;
+                                // console.dir(data$.data.info) ;
+                                $this.info$       = data$.data.info ;
+                                $this.survey_code = $this.info$.survey_code ;
+
                                 $this.trigger('sv_info') ;
                             }
 
                             if(data$.data.question){
                                 $this.question$ = data$.data.question ;
+
                                 $this.trigger('sv_question') ;
                             }
 
                             if(data$.data.recommend){
                                 $this.recommend$ = data$.data.recommend ;
+
                                 $this.trigger('sv_recommend') ;
                             }
 

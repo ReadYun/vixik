@@ -11,7 +11,7 @@
 steal('init.js')
 .then('script/public.header.js')
 .then(function($){  
-    loadPlugin('vkHighChart', 'vkData', 'iCheck', 'vkForm', 'vkPaging') ;  // 加载所需插件
+    loadPlugin('vkData', 'jQCloud') ;  // 加载所需插件
 })
 .then(function($){
 
@@ -19,7 +19,7 @@ steal('init.js')
      * 页面总模型
      *
      **/
-    $.Model('Survey.Type.Model', {
+    $.Model('Survey.Trade.Model', {
         defaults : {
             dataAction$ : {}  ,// 参与问卷用户统计数据
             dataArea$   : {}   // 用户来源统计数据
@@ -32,17 +32,27 @@ steal('init.js')
         trigger : function(prop){    
             eval("this.attr('" + prop + "', Math.random())") ;
         },
-		
-		// 生成一定范围内随机数
-        random_array : function(num, value_bas, value_ext){
-        	var data$ = [] ;
 
-        	// 生成31个一定范围内随机数
-        	for(i = 0; i < num; i++){
-        		data$.push(value_bas + Math.ceil(Math.random() * value_ext + Math.random() * value_ext)) ;
-        	}
+        get_data : function(data$){
+            var trigger, 
+                $this = this,
+                api$  = $.extend({api:'search_survey'}, data$ || {}) ;
 
-        	return data$ ;
+            // 访问问卷参与情况统计接口
+            $.ajax({
+                type    : 'post',
+                url     : __API__, 
+                data    : api$,
+                success : function(data$){
+                    if(data$.status){
+                        $this.data$ = data$.data ;    // 搜索数据
+                        $this.trigger('list_more') ;
+                    }else{
+                        console.log('没有符合条件的数据。。') ;
+                        $this.trigger('list_no') ;
+                    }
+                }
+            });
         },
     }) ;
 
@@ -50,57 +60,68 @@ steal('init.js')
      * 调查列表模块控制器
      *
      **/
-    $.Controller('Survey.Type.Ctrl.List', {
+    $.Controller('Survey.Trade.Ctrl.List', {
         defaults : {
             models$ : {}                       ,// 页面总模型
             $button : $('button.survey-more')  ,// 加载更多调查按钮
         }
     }, {
         init : function(){
-            this.survey_list() ;
+            this.list_more() ;
         },
 
-        // 调查列表加载
-        survey_list : function(){
-        	var list$,
-                $this = this,
-        	    $body = $('#surveyList .sv-list-body') ;
-        	    page  = parseInt($body.children().size() / 10) + 1 ;  // 计算页数
+        "{models$} list_more" : function(){
+            this.survey_list(this.options.models$.data$) ;
+        },
 
-        	$this.options.$button.text('更多调查加载中...') ;
+        list_more : function(){
+            var data$ = {} ;
 
-            $.ajax({
-                type    : 'post',
-                url     : __API__,
-                data    : {api:'survey_type_list_select', type:$this.options.models$.sv_type, mode:$this.options.models$.sv_mode, page:page},
-                async   : false,
-                success : function(data$){
-                	if(data$.status){
-                        list$ = data$.data[$this.options.models$.sv_mode] ;
-                        
-                        for(var i = 0; i < list$.length; i++){
-                            list$[i].user_photo == 1 ? 
-                                list$[i].user_photo =  __JMVC_IMG__ + 'user/' + list$[i].user_code + '_60.jpg' :
-                                list$[i].user_photo =  __JMVC_IMG__ + 'user/user.jpg' ;
-                        }
+            data$.page   = parseInt(this.element.attr('data-page')) ;
+            data$.pnum   = parseInt(this.element.attr('data-pnum')) ;
+            data$.filter = "survey_state in(3,4) and survey_trade = " + this.options.models$.sv_trade ;
 
-			            $body.append(
-			                __JMVC_VIEW__ + 'survey.type.list.ejs',
-			                {data:list$}
-			            ) ;
+            switch(this.options.models$.sv_mode){
+                case 'new' :
+                    data$.order = "survey_state, start_time desc, recomm_grade, answer_num" ;
+                    break ;
 
-			            if(list$.length == 10){
-			            	$this.options.$button.text('更多调查') ;
-			            }else{
-                			$this.options.$button.text('已列出所有调查').addClass('disabled') ;
-			            }
-                	}else if(page == 1){
-                			$this.options.$button.text('无此类型调查').addClass('disabled') ;
-                	}else{
-                		$this.options.$button.text('已列出所有调查').addClass('disabled') ;
-                	}
+                case 'hot' :
+                    data$.order = "survey_state, answer_num desc, start_time, recomm_grade" ;
+                    break ;
+
+                case 'rec' :
+                    data$.order = "survey_state, recomm_grade, start_time desc, answer_num" ;
+                    break ;
+            }
+
+            this.options.models$.get_data(data$) ;
+        },
+
+        // 调查列表
+        survey_list : function(data$){
+            var $this = this,
+                list$ = data$.list,
+                next$ = data$.next,
+                page  = data$.page ;
+
+            for(var i = 0; i < list$.length; i++){
+                if(parseInt(list$[i].user_photo)){
+                    list$[i].user_photo = __JMVC_IMG__ + 'user/' + list$[i].user_code + '_60.jpg' ;
+                }else{
+                    list$[i].user_photo = __JMVC_IMG__ + 'user/user.jpg' ;
                 }
-            });
+            }
+
+            // 题目状态列表栏生成
+            $this.element.attr('data-page', parseInt(page) + 1).find('.sv-list-body').append(
+                __JMVC_VIEW__ + 'search.list.survey.ejs',  // 题目状态列表模板路径
+                {data: list$}                              // 调用快速序列生成满足题目数量序列
+            ) ;
+
+            if(!next$.length){
+                $this.element.find('.sv-list-footer').hide() ;
+            }
         },
 
         // 点击加载更多调查按钮
@@ -118,38 +139,53 @@ steal('init.js')
     $.Controller('Survey.Trade.Ctrl.Main', {
         defaults : {
             models$     : {}                ,// 页面总模型
-            $rankBox    : $('#rankBox')     ,// 活跃用户模块
             $surveyList : $('#surveyList')  ,// 调查列表
 
         }
     }, {
         init : function(){
+            var $this = this ;
+
             // 新建模型实例并初始化
-            this.options.models$ = new Survey.Type.Model({
-	            sv_type : this.element.attr('data-type') ,// 调查类型
-	            sv_mode : this.element.attr('data-mode') ,// 查询模式
+            this.options.models$ = new Survey.Trade.Model({
+	            sv_trade : this.element.attr('data-trade') ,// 调查行业
+	            sv_mode  : this.element.attr('data-mode')  ,// 查询模式
             }) ;
 
             // 调查列表模块控制器
-            this.options.$surveyList.survey_type_ctrl_list({    
+            this.options.$surveyList.survey_trade_ctrl_list({    
                 models$ : this.options.models$,
                 $main   : this.element,
             }) ;
+
+            this.element.find('.sh-main>img').attr('src', __JMVC_IMG__ + 'svtrade/' + this.element.attr('data-trade') + '.jpg') ;
 
             // 调查类型和模式显示定位
             this.element.find(".st-sub[data-type='" + this.options.models$.sv_type + "']").addClass('active') ;
             this.element.find(".sv-mode[data-mode='" + this.options.models$.sv_mode + "']").addClass('active') ;
 
+            // 热门行业显示初始化
+            this.element.find('.type-hot .th-elem').each(function(){
+                $(this).find('img').attr('src', __JMVC_IMG__ + 'svtype/' + $(this).attr('data-code') + '.jpg') ;
+            }) ;
+
             // 活跃用户排行榜显示初始化
-            this.options.$rankBox.find('.rank-elem').each(function(){
+            $this.element.find('.rank-elem').each(function(){
                 if($(this).attr('data-photo')){
                     $(this).find('img').attr('src', __JMVC_IMG__ + 'user/' + $(this).attr('data-code') + '.jpg') ;
-                }else if($(this).attr('data-photo')){
-                    $(this).find('img').attr('src', __JMVC_IMG__ + 'user/man.png') ;
                 }else{
-                    $(this).find('img').attr('src', __JMVC_IMG__ + 'user/woman.png') ;
+                    $(this).find('img').attr('src', __JMVC_IMG__ + 'user/user.jpg') ;
                 }
             }) ;
+
+            $this.tag_hot() ;
+            $this.trade_follow() ;
+            $('body').show() ;
+        },
+
+        // 总模型用户信息更新
+        "{vixik$} user" : function(){
+            this.trade_follow() ;
         },
 
         // 鼠标进入用户头像打开用户信息菜单
@@ -172,16 +208,35 @@ steal('init.js')
             ) ;
         },
 
-        // 切换调查类型
-        ".st-sub click" : function(el){
-            if(!el.hasClass('active')){
-                var type = el.attr('data-type'),
-                    mode = this.element.find('.sv-mode.active').attr('data-mode') ;
+        // 调查行业关注与取消关注
+        ".follow-button>button click" : function(el){
+            var $this = this,
+                $desc = el.parents('.sv-trade-follow').find('.follow-desc'),
+                api$  = $.extend({api:'user_follow_svprop_update'}, {}) ;
 
-                $.post(__API__, {api:'get_server_url', name:'survey/type'}, 
+            if(vixik$.user_verify({trigger$:{false:['login_open']}})){
+                api$.update_type  = el.attr('data-action') ;
+                api$.user_code    = vixik$.user$.user_code ;
+                api$.svprop_type  = 'survey_trade' ;
+                api$.svprop_value = $this.options.models$.sv_trade ;
+
+                // 访问接口更新关注状态
+                $.post(__API__, api$, 
                     function(data$){
                         if(data$.status){
-                            window.location.href = data$.data + '?type=' + type + '&mode=' + mode ;
+                            // 更新成功后处理
+                            switch(el.attr('data-action')){
+                                case 'add' :
+                                    el.parent().removeClass('unfollow').addClass('followed') ;
+                                    $desc.find('span').text(parseInt($desc.find('span').text()) + 1) ;
+                                    break ;
+
+                                case 'del' :
+                                    el.parent().removeClass('followed').addClass('unfollow') ;
+                                    $desc.find('span').text(parseInt($desc.find('span').text()) - 1) ;
+                                    break ;
+                            }
+                            
                         }
                     }
                 ) ;
@@ -204,7 +259,7 @@ steal('init.js')
             }
         },
 
-        // 切换调查模式
+        // 创建或参与该行业调查
         ".action-now>button click" : function(el){
             var str,
                 type = this.element.find('.st-sub.active').attr('data-type') ;
@@ -225,6 +280,73 @@ steal('init.js')
                     }
                 }
             ) ;
+        },
+
+        // 调查类型关注
+        trade_follow : function(){
+            var $this   = this,
+                $follow = $this.element.find('.follow-button'),
+                api$    = $.extend({api:'user_follow_svprop_select'}, {}) ;
+
+            if(vixik$.user$ && vixik$.user$.user_code){
+                api$.user_code    = vixik$.user$.user_code ;
+                api$.svprop_value = $this.options.models$.sv_trade ;
+                api$.svprop_type  = 'survey_trade' ;
+
+                $.post(__API__, api$, 
+                    function(data$){
+                        if(data$.status){
+                            $follow.removeClass('unfollow').addClass('followed') ;
+                        }else{
+                            $follow.removeClass('followed').addClass('unfollow') ;
+                        }
+                    }
+                ) ;
+            }else{
+                $follow.removeClass('followed').addClass('unfollow') ;
+            }
+        },
+
+        // 热门标签
+        tag_hot : function(){
+            var cond, 
+                tags$   = [],
+                $this   = this,
+                $target = $this.element.find('.tag-hot .sb-body') ;
+
+
+            switch(this.options.models$.sv_trade.length){
+                case 4 :
+                    cond = "survey_type = " + this.options.models$.sv_trade ;
+                    break ;
+
+                case 5 :
+                    cond = "survey_type_sub = " + this.options.models$.sv_trade ;
+                    break ;
+            }
+
+            // 访问问卷参与情况统计接口
+            $.ajax({
+                type    : 'post',
+                url     : __API__, 
+                data    : {api:'stats_tag_hot', cond: cond},
+                success : function(data$){
+                    if(data$.status){
+                        for(var i = 0; i < data$.data.length; i++){
+                            var tag$ = {} ;
+
+                            tag$.text      = data$.data[i].tag_name ;
+                            tag$.weight    = parseInt(data$.data[i].cnt) / 2 ;
+                            tag$.link      = {} ;
+                            tag$.link.href = data$.data[i].url_tag ;
+
+                            tags$.push(tag$) ;
+                        }
+
+                        $target.jQCloud(tags$) ;
+                    }
+                }
+            });
         },
     }) ;
 

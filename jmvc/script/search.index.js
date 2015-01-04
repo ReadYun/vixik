@@ -101,7 +101,7 @@ steal('init.js')
      *  页面总控制器
      *
      **/
-    $.Controller('Search.Index.Ctrl.Init', {
+    $.Controller('Search.Index.Ctrl.Main', {
         defaults : {
             models$     : {}                ,//页面总模型
             $searchBtn  : $('.search-btn')  ,//搜索按钮
@@ -133,6 +133,7 @@ steal('init.js')
 
             //通过总模型取搜索数据
             this.options.models$.get_data(urlPara$.type, urlPara$.words) ;
+            $('body').show() ;
         },
 
         //搜索请求
@@ -152,7 +153,7 @@ steal('init.js')
         }
     }) ;
 
-    $('#Main').search_index_ctrl_init() ;
+    $('#Main').search_index_ctrl_main() ;
 }) ;
 
 

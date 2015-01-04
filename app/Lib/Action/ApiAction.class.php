@@ -1379,42 +1379,45 @@ class ApiAction extends Action{
     */
     public function test(){
 
-    $survey_code = 10000451 ;
+    $survey_code = 10000011 ;    
 
-    $survey = M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> find() ;
-    $data['survey_state'] = $survey['survey_state'] ;
+    $stats['question_count'] = $stats['qt_cnt_xz'] = $stats['qt_cnt_zg'] = $stats['qt_cnt_pf'] = 0 ;
 
-    if($survey['survey_state'] == 3){
-        switch($survey['end_type']){
-            // 按人数结束
+    $tbBasQuestionInfo = M(TB_BAS_QUESTION_INFO) -> getTableName() ;
+
+    $sql = "select survey_code, question_class, count(question_code) count from $tbBasQuestionInfo
+            where survey_code = $survey_code group by survey_code, question_class" ;
+    $question = M() -> query($sql) ;
+
+    for($i = 0; $i < count($question); $i++){
+        switch(intval($question[$i]['question_class'])){
             case 1 :
-                // 统计如已参与调查人数大于（或等于）设定人数，活动结束
-                if(M(TB_BAS_SURVEY_ACTION) -> where("survey_code = '$survey_code'") -> count() >= $survey['end_value']){
-                    $data['survey_state'] = 4 ;
-                    $data['state_time']   = $data['end_time'] = date('Y-m-d H:i:s') ;
-
-                    M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> setField($data) ;
-                }
+                $stats['qt_cnt_xz'] += $question[$i]['count'] ;
                 break ;
 
-            case 2 :  // 按日期结束
-                $now        = date('Y-m-d H:i:s') ;
-                $length_day = $survey['end_value'] ;
-                $start_time = $survey['start_time'] ;
-                $end_time   = date('Y-m-d H:i:s', strtotime("$start_time + $length_day day")) ;
+            case 2 :
+                $stats['qt_cnt_zg'] += $question[$i]['count'] ;
+                break ;
 
-                // 计算如已当前时间超出（或等于）设定的结束时间，活动结束
-                if($now >= $end_time){
-                    $data['survey_state'] = 4 ;
-                    $data['state_time']   = $data['end_time'] = date('Y-m-d H:i:s') ;
-
-                    M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> setField($data) ;
-                }
+            case 3 :
+                $stats['qt_cnt_pf'] += $question[$i]['count'] ;
                 break ;
         }
+
+        $stats['question_count'] += $question[$i]['count'] ;
     }
 
-    return $data['survey_state'] ;
+    // if($question){
+    //     for($i = 0; $i < count($question); $i++){
+    //         $type_num = $question[$i]['question_type'] . '_num' ;
+    //         $qt_statist["$type_num"] = $question[$i]['count'] ;
+    //     } ;
+
+    //     $qt_statist['question_num'] = $qt_statist['radio_num'] + $qt_statist['checkbox_num'] + $qt_statist['textarea_num'] ;        
+    // } ;
+
+    dump($stats)  ;
+
 
     }   
 }

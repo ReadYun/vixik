@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
+<head>
+    <include file="Public:meta" title="维新调研 · 倾听观点，发现价值"/>
+    <link rel="stylesheet" href="__JMVC__/style/search.main.css" type="text/css"/>
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/search.main.js"></script>
+</head>
+<body>
+    <div id="Header">
+        <include file="Public:topBar" nav-type="sub" nav-cur="none"/>
+    </div>
+    <div id="Main" data-search-type="{$type['en']}" data-search-words="{$words}" data-page="{$page}">
+        <div class="search-header">
+            <div class="sh-main">
+                <div class="left-box vkform">
+                    <input type="text" name="search-main" class="search-input vk-input green xlarge">
+                    <button class="search-submit vkbutton vbtn-success">搜索</button>
+                </div>
+                <div class="right-box">
+                    <div class="search-res">为您找到相关{$type['cn']}<span>{$stats['cnt']}</span>个</div>
+                </div>
+            </div>
+            <div class="sh-sub">
+                <div class="left-box">
+                    <ul class="search-nav">
+                        <li class="nav-elem" data-type="survey"><a href="{:U('search/main')}?type=survey&words={$words}">调查</a></li>
+                        <li class="nav-elem" data-type="question"><a href="{:U('search/main')}?type=question&words={$words}">问题</a></li>
+                        <li class="nav-elem" data-type="tag" style="display:none"><a href="{:U('search/main')}?type=tag&words={$words}">标签</a></li>
+                        <li class="nav-elem" data-type="user"><a href="{:U('search/main')}?type=user&words={$words}">用户</a></li>
+                    </ul>
+                    <div class="order-res dropdown survey">
+                        <button class="vkbutton vbtn-default vbtn-border dropdown-toggle" data-toggle="dropdown">
+                            <span>按发布时间由近到远排序</span>
+                            <b class="caret"></b>
+                        </button>
+                        <ul class="order-menu dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li data-order="start_time desc">按发布时间由近到远排序</li>
+                            <li data-order="start_time asc">按发布时间由远到近排序</li>
+                            <li data-order="answer_num desc">按参与人数由多到少排序</li>
+                            <li data-order="answer_num asc">按参与人数由少到多排序</li>
+                        </ul>
+                    </div>
+                    <div class="order-res dropdown user">
+                        <button class="vkbutton vbtn-default vbtn-border dropdown-toggle" data-toggle="dropdown">
+                            <span>按用户等级由高到低排序</span>
+                            <b class="caret"></b>
+                        </button>
+                        <ul class="order-menu dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li data-order="user_score desc">按用户等级由高到低排序</li>
+                            <li data-order="user_score asc">按用户等级由低到高排序</li>
+                            <li data-order="publish_times desc">按发布调查由多到少排序</li>
+                            <li data-order="publish_times asc">按发布调查由少到多排序</li>
+                            <li data-order="answer_times desc">按参与调查由多到少排序</li>
+                            <li data-order="answer_times asc">按参与调查由少到多排序</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="filter-res right-box" style="display:none">
+                    <div class="fr-desc">结果筛选：<span></span></div>
+                    <i class="icon-remove"></i>
+                </div>
+            </div>
+        </div>
+        <div class="search-main">
+            <div class="search-body left-box">
+                <div class="search-no">
+                    <div class="sn-desc">很抱歉，没有找到与<span class="swords">{$words}</span>相关的{$type['cn']}...</div>
+                    <div class="sn-hint">
+                        <div class="sn-hint-desc">建议您：</div>
+                        <ul class="sn-hint-next">
+                            <li class="sn-elem">检查您的搜索输入是否正确</li>
+                            <li class="sn-elem">试试搜索其他类似的关键词</li>
+                            <li class="sn-elem">创建一个关于<a href="{:U('survey/create')}" class="swords">{$words}</a>的调查</li>
+                            <li class="sn-elem other">试试搜索与<span class="swords">{$words}</span>相关的
+                                <a class="survey" href="{:U('search/main')}?type=survey&words={$words}">调查</a>
+                                <a class="question" href="{:U('search/main')}?type=question&words={$words}">问题</a>
+                                <a class="tag" href="{:U('search/main')}?type=tag&words={$words}" style="display:none">标签</a>
+                                <a class="user" href="{:U('search/main')}?type=user&words={$words}">用户</a>
+                            </li>
+                            <li class="sn-elem">如有任何意见或建议，请及时<a href="">反馈给我们</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="search-ok">
+                    <div class="search-list">
+                    </div>
+                    <div class="more-list">
+                        <button class="vkbutton vbtn-default large block">更多{$type['cn']}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="search-filter right-box">
+                <div class="filter-res vk-form">
+                    <?php
+                    if($stats['user_level']){
+                        echo "<div class='filter-res-elem user-level'>
+                            <div class='fr-header'>按等级筛选</div>
+                            <div class='fr-body'>" ;
+                            for($i = 0; $i < count($stats['user_level']); $i++){
+                                echo
+                                "<label class='fr-option-elem vf-elem'>
+                                    <div class='vf-elem-option inline'>
+                                    <input type='radio' class='filter' name='user_filter' value=".$stats['user_level'][$i]['user_level_value'].">
+                                    <span class='fr-txt' data-key='user_level'>".$stats['user_level'][$i]['user_level_desc']."</span>
+                                    <span class='fr-num'>(".$stats['user_level'][$i]['cnt'].")</span>
+                                    </div>
+                                </label>" ;
+                            }
+                            echo "</div>
+                        </div>" ;
+                    }
+
+                    if($stats['sv_state']){
+                        echo "<div class='filter-res-elem sv-state'>
+                            <div class='fr-header'>按状态筛选</div>
+                            <div class='fr-body'>" ;
+                            for($i = 0; $i < count($stats['sv_state']); $i++){
+                                echo
+                                "<label class='fr-option-elem vf-elem'>
+                                    <div class='vf-elem-option inline'>
+                                    <input type='radio' class='filter' name='sv_filter' value=".$stats['sv_state'][$i]['state_code'].">
+                                    <span class='fr-txt' data-key='survey_state'>".$stats['sv_state'][$i]['state_desc']."</span>
+                                    <span class='fr-num'>(".$stats['sv_state'][$i]['cnt'].")</span>
+                                    </div>
+                                </label>" ;
+                            }
+                            echo "</div>
+                        </div>" ;
+                    }
+
+                    if($stats['sv_type']){
+                        echo "<div class='filter-res-elem sv-class'>
+                            <div class='fr-header'>按分类筛选</div>
+                            <div class='fr-body'>" ;
+                            for($i = 0; $i < count($stats['sv_type']); $i++){
+                                echo
+                                "<div class='fr-option-elem vf-elem' data-key='survey_type'>
+                                    <div class='vf-elem-option inline'>
+                                    <input type='radio' class='filter' name='sv_filter' class='survey-type' value=".$stats['sv_type'][$i]['type_code'].">
+                                    <span class='sv-type fr-txt' data-key='survey_type'>".$stats['sv_type'][$i]['type_name']."</span>
+                                    <span class='fr-num'>(".$stats['sv_type'][$i]['cnt'].")</span>" ;
+                                    for($t = 0; $t < count($stats['sv_type_sub']); $t++){
+                                        if($stats['sv_type'][$i]['type_code'] == $stats['sv_type_sub'][$t]['type_code']){
+                                        echo
+                                        "<label class='vf-elem-option fr-option-elem-sub vf-elem' data-key='survey_type_sub'>
+                                            <input type='radio' class='filter' name='sv_filter' class='survey-type-sub' value=".$stats['sv_type_sub'][$t]['type_sub_code'].">
+                                            <span class='fr-txt' data-key='survey_type_sub'>".$stats['sv_type_sub'][$t]['type_sub_name']."</span>
+                                            <span class='fr-num'>(".$stats['sv_type_sub'][$t]['cnt'].")</span>" ;
+
+                                        echo "</label>" ;
+                                        }
+
+                                    }
+                                    echo "</div>" ;
+                                echo "</div>" ;
+                            }
+                            echo "</div>
+                        </div>" ;
+                    }
+
+                    if($stats['sv_trade']){
+                        echo "<div class='filter-res-elem'>
+                            <div class='fr-header'>按行业筛选</div>
+                            <div class='fr-body'>" ;
+                            for($i = 0; $i < count($stats['sv_trade']); $i++){
+                                echo
+                                "<label class='fr-option-elem vf-elem' data-key='survey_trade'>
+                                    <div class='vf-elem-option inline'>
+                                    <input type='radio' class='filter' name='sv_filter' value=".$stats['sv_trade'][$i]['trade_code'].">
+                                    <span class='fr-txt' data-key='survey_trade'>".$stats['sv_trade'][$i]['trade_name']."</span>
+                                    <span class='fr-num'>(".$stats['sv_trade'][$i]['cnt'].")</span>
+                                    </div>
+                                </label>" ;
+                            }
+                            echo "</div></div>
+                        </div>" ;
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="Footer"><include file="Public:footer" type="main"/></div>
+</body>
+</html>

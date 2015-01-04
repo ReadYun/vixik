@@ -1,24 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//CN" "http://www.w3.org//TR/xhtml//DTD//xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
 <head>
-    <include file="Public:meta" title="{$target} | 维新调研 · 倾听观点，发现价值"/>
+    <include file="Public:meta" title="{$target['type_name']} | 维新调研 · 倾听观点，发现价值"/>
     <link rel="stylesheet" href="__JMVC__/style/survey.type.css" type="text/css"/>
     <script type="text/javascript" src="__JMVC__/steal/steal.js?script/survey.type.js"></script>
 </head>
 <body>
     <div id="Header">
-        <include file="Public:topBar" survey="current" nav-type="main" need-login="0"/>
+        <include file="Public:topBar" page='调查分类' nav-type="main" nav-cur="survey"/>
     </div>
-    <div id="Main" data-type="{$type}" data-mode="{$mode}">
+    <div id="Main" data-type="{$svtype}" data-mode="{$mode}">
         <div id="mainLeft">
             <div id="surveyHeader">
-                <div class="sh-main">{$name}</div>
+                <div class="sh-main"><img src=""></div>
                 <div class="sh-sub">
                     <div class="sv-type-sub">
-                        <div class="st-sub all" data-type="{$type_code}">全部调查</div>
-                        <volist name="stype" id="st">
-                            <div class="st-sub" data-type="{$st.survey_type_sub_code}">{$st.survey_type_sub_name}</div>
-                        </volist>
+                        <div class="sv-type-name">{$target['type_name']}</div>
+                        <div class="sv-type-follow">
+                            <div class="follow-button">
+                                <button class="vkbutton vbtn-border vbtn-success" data-action="add">关注</button>
+                                <button class="vkbutton vbtn-border vbtn-success" data-action="del" data-hover="取消关注">已关注</button>
+                            </div>
+                            <div class="follow-desc"><span>{$follow}</span>人关注此类型调查</div>
+                        </div>
                     </div>
                     <div class="sv-list-nav">
                         <ul class="nav nav-tabs">
@@ -29,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div id="surveyList">
+            <div id="surveyList" data-page="0" data-pnum="20">
                 <div class="sv-list-body">
                 </div>
                 <div class="sv-list-footer">
@@ -38,7 +42,7 @@
             </div>
         </div>
         <div id="mainRight">
-            <div id="typeBox">
+            <div id="switchBox">
                 <div class="switch-type dropdown">
                     <button class="vkbutton vbtn-border vbtn-default dropdown-toggle large" data-toggle="dropdown">查看其他类型调查</button>
                     <div class="switch-content dropdown-menu pull-right tabbable" role="menu" aria-labelledby="dLabel">
@@ -55,10 +59,6 @@
                         </div>
                         </volist> 
                     </div>
-                </div>
-                <div class="type-follow">
-                    <div class="follow-desc"><span>892839</span>人关注此类调查</div>
-                    <button class="vkbutton vbtn-border vbtn-default">关注</button>
                 </div>
             </div>
             <div id="actionBox">
@@ -78,42 +78,31 @@
                     <div class="action-now"><button class="vkbutton vbtn-primary block" data-action="answer">参与此类调查</button></div>
                 </div>
             </div>
-            <div id="typeSearch" class="st-box-elem">
-                <div class="sb-header">精确搜索</div>
-                <div class="sb-body"><input type="text" placeholder="在{$target}中搜索..."></div>
-            </div>
-            <div id="classBox" class="st-box-elem">
+            <div class="st-box-elem trade-hot">
                 <div class="sb-header">热门行业</div>
                 <div class="sb-body">
-                    <div class="sc-elem">
-                        <div class="sc-title"><a href="">信息产业</a></div>
-                        <div class="sc-value"><a>123123</a>个调查</div>
+                    <volist name="stats_trade" id="strade">
+                    <div class="th-elem unfollow" data-code="{$strade.trade_code}">
+                        <a class="sh-img" href="{:U('survey/trade')}?trade={$strade.trade_code}"><img></a>
+                        <div class="sh-info">
+                            <div class="si-top">
+                                <a href="{:U('survey/trade')}?trade={$strade.trade_code}">{$strade.trade_name}</a>
+                                <button class="vkbutton vbtn-border vbtn-default" data-action="add">关注</button>
+                                <button class="vkbutton vbtn-border vbtn-default" data-action="del" data-hover="取消关注">已关注</button>
+                            </div>
+                            <div class="si-bottom"></div>
+                            <span>{$strade.cnt}个调查</span><span class="follow-cnt">1232人关注</span>
+                        </div>
                     </div>
-                    <div class="sc-elem">
-                        <div class="sc-title"><a href="">信息产业</a></div>
-                        <div class="sc-value"><a>123123</a>个调查</div>
-                    </div>
-                    <div class="sc-elem">
-                        <div class="sc-title"><a href="">信息产业</a></div>
-                        <div class="sc-value"><a>123123</a>个调查</div>
-                    </div>
-                    <div class="sc-elem">
-                        <div class="sc-title"><a href="">信息产业</a></div>
-                        <div class="sc-value"><a>123123</a>个调查</div>
-                    </div>
+                    </volist>
                 </div>
             </div>
-            <div id="tagBox" class="st-box-elem">
+            <div class="st-box-elem tag-hot">
                 <div class="sb-header">热门标签</div>
-                <div class="sb-body">
-                    <div class="sv-tag-elem"><a href="">撒旦解放了</a>,</div>
-                    <div class="sv-tag-elem"><a href="">dfaf了</a>,</div>
-                    <div class="sv-tag-elem"><a href="">raejref</a>,</div>
-                    <div class="sv-tag-elem"><a href="">阿杜里斯解放了地方</a>,</div>
+                <div class="sb-body" style="height: 200px; margin-top: 0;">
                 </div>
             </div>
-
-            <div id="rankBox" class="st-box-elem">
+            <div class="st-box-elem user-brisk">
                 <div class="sb-header">活跃用户</div>
                 <div class="sb-body">
                     <volist name="user" id="user">

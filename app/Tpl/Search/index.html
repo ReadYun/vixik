@@ -2,52 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="utf-8">
 <head>
     <include file="Public:meta" title="搜索：{$title} | 维新调研 · 倾听观点，发现价值"/>
-    <link rel="stylesheet" href="__JMVC__/style/search.index.css" type="text/css" />
-    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/search.index.js"></script>
+    <link rel="stylesheet" href="__JMVC__/style/search.main.css" type="text/css" />
+    <script type="text/javascript" src="__JMVC__/steal/steal.js?script/search.main.js"></script>
 </head>
 <body>
     <div id="Header">
-        <include file="Public:topBar" nav-type="sub" nav-name="全站搜索" min-search="hide"/>
+        <include file="Public:topBar" nav-type="sub" nav-cur="none"/>
     </div>
-    <div id="Main">
-        <div id="searchBarBox">
-            <div id="mainSearchBar">
-                <div id="search">
-                    <div class="input-append">
-                        <input type="text" class="search-input-main" placeholder="在这里搜索您感兴趣的：问卷/问题/用户" value="{$words}">
-                        <button type="button" class="search-btn btn btn-success action">搜索一下</button>
-                    </div>
-                </div>
-            </div>
-            <div id="navSearchBar">
-                <div class="nav-bar">
-                    <ul class="nav nav-tabs">
-                      <li class="survey" data-type="survey"><a href="?type=survey">问卷</a></li>
-                      <li class="question" data-type="question"><a href="?type=question">问题</a></li>
-                      <li class="user" data-type="user"><a href="?type=user">用户</a></li>
-                    </ul>
-                    <div class="ext-toggle">
-                        <span><i class="icon-filter"></i></span>
-                        <div class="ext-desc">筛选/排序</div>
-                    </div>
-                </div>
-            </div>
-            <div id="extSearchBar" style="display:none">
-            </div>
+    <div id="Main" data-page="{$page}">
+        <div class="search-index vkform">
+            <div class="search-title">维新搜索</div>
+            <input type="text" name="search-main" class="search-input vk-input green xlarge">
+            <button class="search-submit vkbutton vbtn-success">搜索</button>
         </div>
-        <div id="searchBody">
-            <div id="noSearch">没有搜索到满足条件的内容。。请重新搜索。。</div>
-            <div id="searchList">
-                <div class="list-body pag-content">
-                </div>
-                <div class="list-footer">
-                    <div class="pag-nav pagination pagination-left"></div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="Footer">
-        <include file="Public:footer" type="simple"/>
+        <include file="Public:footer" type="main"/>
     </div>
 </body>
 </html>

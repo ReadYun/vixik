@@ -681,6 +681,7 @@
 			}else{
 				data$.data = [] ;
 			}
+			
 			$vfelem.each(function(){
 				if(!$(this).attr('data-not-get')){    // 排除有不取数据标识的元素
 					$vfele       = $(this) ;

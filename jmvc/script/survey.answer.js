@@ -546,6 +546,7 @@ steal('init.js')
             }) ;
 
             this.answer_judage() ;
+            $('body').show() ;
         },
 
         // VixiK总对象更新后操作
@@ -569,17 +570,19 @@ steal('init.js')
                     $.ajax({
                         type    : 'post',
                         url     : __API__,
-                        data    : {api:'user_action_verify', user_code:user_code, target:survey_code, action:'answer_survey'},
+                        data    : {api:'user_action_verify', user_code:user_code, target:survey_code, action:$.toJSON(['answer_survey'])},
                         async   : false,
                         success : function(data$){
                             if(data$.status){
-                                // 已参与此调查
-                                alert('您已经参与完成本次调查') ;
-                                $this.options.$answerBox.hide() ;
-                                $this.options.$afterBox.show() ;
-                            }else{
-                                // 未参与此调查
-                                $this.options.$submit.text('提交结果') ;
+                                if(parseInt(data$.data.answer_survey)){
+                                    // 已参与此调查
+                                    alert('您已经参与完成本次调查') ;
+                                    $this.options.$answerBox.hide() ;
+                                    $this.options.$afterBox.show() ;
+                                }else{
+                                    // 未参与此调查
+                                    $this.options.$submit.text('提交结果') ;
+                                }
                             }
                         }
                     });

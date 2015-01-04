@@ -80,8 +80,8 @@ function arraySwap(srcData$){
  * @Return : array  newData$    清洗后的新数据，格式和原始数据一样，但key已经被替换为new_key
  */
 function dataWash(srcData$, map$, type){
-    var newData$ = [] ;
-    var i , tmpData$ ;
+    var i, tmpData$,
+        newData$ = [] ;
 
     for(i = 0; i < srcData$.length; i ++){
         tmpData$ = {} ;
@@ -105,8 +105,8 @@ function dataWash(srcData$, map$, type){
  * @Return : array    pagdata$  分页处理后的数据
  */
 function pagingData(data$, limit){
-    var pagdata$ = [] ;
-    var i = 0 ;
+    var pagdata$ = [],
+        i        = 0 ;
 
     while(data$.length){
         pagdata$[i] = data$.splice(0, limit) ;
@@ -144,8 +144,8 @@ function inArray(array$, value){
  * @Return : array  seqData$  按要求生成的连续数列数组
  */
 function seqArray(seq_start, seq_end){
-    var seqData$ = [] ;
-    var n = seq_start ;
+    var seqData$ = [],
+        n = seq_start ;
 
     for(var i = 0; i < seq_end; i++){
         seqData$[i] = n++ ;
@@ -161,8 +161,9 @@ function seqArray(seq_start, seq_end){
  * @Return : array  arrayData$  去重后的新数组
  */
 function arrayValOnly(arrayData$){
-    arrayData$.sort() ;
     var value ;
+
+    arrayData$.sort() ;
 
     for(i = 0; i < arrayData$.length; i++){
         if(arrayData$[i] !== value){
@@ -220,8 +221,8 @@ function arrayTrans(src_array$){
  * @Return : array   new_array$  抽取后的新数组
  */
 function arrayFilter(src_array$, filter_key){
-    var new_array$ = {} ;
-    var f_key ;
+    var f_key,
+        new_array$ = {} ;
     
     for(var i = 0; i < src_array$.length; i++){
         f_key = src_array$[i][filter_key] ;
@@ -242,8 +243,8 @@ function arrayFilter(src_array$, filter_key){
  * @Return : array  new_array$  抽取后的新数组
  */
 function arrayShine(src_array$, map$){
-    var new_array$ = {} ;
-    var n_key ;
+    var n_key,
+        new_array$ = {} ;
     
     $.each(map$, function(key, value){
         n_key = map$[key] ;
@@ -280,8 +281,8 @@ function arrayMaxVal(src_array$){
  * @Return : object  maxData$  最大值对象
  */
 function arrayMaxObj(srcData$){
-    var maxData$ = {} ;
-        maxData$.val = 0 ;
+    var maxData$     = {} ;
+        maxData$.val = 0  ;
 
     $.each(srcData$, function(key, value){
         if(maxData$.val < value){
@@ -321,8 +322,8 @@ function arrayKeySum(srcData$, sum_key){
  * @Return : object  sumData$  分类求和后的数据
  */
 function arrayKeySumGroup(srcData$, group_key, sum_key){
-    var sumData$ = {} ;
-    var group_value ;
+    var group_value,
+        sumData$ = {} ;
 
     for(var i = 0; i < srcData$.length; i++){
         if(srcData$[i][sum_key]){
@@ -347,8 +348,8 @@ function arrayKeySumGroup(srcData$, group_key, sum_key){
  * @Return : number  count_value  求和的值
  */
 function arrayKeyCount(srcData$, count_key, count_type){
-    var count = 0 ;
-    var key_array = [] ;
+    var count     = 0,
+        key_array = [] ;
 
     for(var i = 0; i < srcData$.length; i++){
         if(srcData$[i][count_key]){
@@ -377,9 +378,9 @@ function arrayKeyCount(srcData$, count_key, count_type){
  * @Return : array  newData$  汇总后数据
  */
 function optionSumGroup(srcData$, key_group, key_count){
-    var newData$ = {} ;
-    var value$ = [] ;
-    var option , key , value , str_eval ;
+    var option, key, value, str_eval,
+        newData$ = {},
+        value$   = [] ;
     
     for(i = 0; i < srcData$.length; i++){
         key    = srcData$[i][key_group] ;
@@ -407,20 +408,21 @@ function optionSumGroup(srcData$, key_group, key_count){
  */
 
 function url_search_to_array(search_str){
-    var data_str , data_arr , i ;
-    var search_arr = {} ;
+    var data_str, data_arr, i, 
+        search_arr = {} ;
 
     //先分解参数序列为参数数组
     search_str.indexOf('?') == 0 ? data_str = search_str.substring(1) : data_str = search_str ;
-    data_arr = data_str.split('&') ;
+    data_arr = decodeURI(data_str).split('&') ;  //解码并分割参数
 
     //再分别提取各数组元素键值对
     for(i = 0; i < data_arr.length; i++){
-        search_arr[data_arr[i].split('=')[0]] = data_arr[i].split('=')[1] ;
+        search_arr[data_arr[i].split('=')[0]] = data_arr[i].split('=')[1].replace("%20", ' ') ;
     }
     
     return search_arr ;
 }
+
 /*
  * @Name   : 函数名称
  * @Desc   : 函数说明描述

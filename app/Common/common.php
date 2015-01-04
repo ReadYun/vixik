@@ -215,7 +215,7 @@ function updateTable($tabName, $data, $condition, $type){
                         $sql2 = $sql2 . $k . "='" . $v . "'," ;
                         break ;
                     case 'add' :  // 追加更新（只对数值类型）
-                        $sql2 = $sql2 . $k . "=" . $k . "+" . $v . "," ;
+                        $sql2 = $sql2 . $k . "=ifnull(" . $k . ", 0)+" . $v . "," ;
                         break ;
                 }
             }
@@ -387,16 +387,20 @@ function vkPath($page, $target){
         do{
             $data = M(TB_SYS_PAGE_PATH_CONFIG) -> where("path_code = $code") -> find() ;
 
-            // 目标页面URL全写
-            $target && $data['url_param'] ? 
-                $data['url'] = U($data['path_value']) . '?' . $data['url_param'] . '=' . $target : $data['url'] = U($data['path_value']) ;
+            if($target){
+                // 目标页面URL全写
+                $data['url_param'] ? 
+                    $data['url'] = U($data['path_value']) . '?' . $data['url_param'] . '=' . $target : $data['url'] = U($data['path_value']) ;
+                    
+                if($data['table_name']){
+                    $cond           = $data['key_input'] . '=' . $target ;
+                    $data['target'] = M(constant($data['table_name'])) -> where($cond) -> getField($data['key_output']) ;
 
-            if($target && $data['table_name']){
-                $cond = $data['key_input'] . '=' . $target ;
-                $data['target'] = M(constant($data['table_name'])) -> where($cond) -> getField($data['key_output']) ;
-
-                // 替换换行符和占位符为空格字符串
-                $data['target'] = str_replace(array('<br>', '&nbsp;'), ' ', $data['target']) ;
+                    // 替换换行符和占位符为空格字符串
+                    $data['target'] = str_replace(array('<br>', '&nbsp;'), ' ', $data['target']) ;
+                }else{
+                    $data['target'] = $target ;
+                }
             }
 
             // 删除不需要的字段

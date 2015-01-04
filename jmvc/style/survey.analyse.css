@@ -192,33 +192,43 @@
                     }
 #Main{
     width: 960px;
-    min-height: 500px;
     padding: 0;  
     margin: 20px auto;
     overflow: hidden;
 }    
 #sideBar{
-    width: 140px;
-    float: right;
-    overflow: hidden; 
+    width: 100%;
+    position: fixed;
+    left: 0;
+    overflow: hidden;
     }   
-    #sideBar ul.nav{
-        width: 95%;
-        padding-bottom: 20px;
-        font: 19px "宋体",Tahoma;
-        }
-        #sideBar ul.nav>li>a{
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            padding-left: 30px;
-            border-radius: 0;
-            color: #666;
-        }
+    #sideBar>.side-bar{
+        width: 960px;
+        margin: 0 auto;
+        overflow: hidden;
+        }   
+        #sideBar>.side-bar>ul.nav{
+            width: 135px;
+            float: right;
+            font: 19px "宋体",Tahoma;          
+            }
+            #sideBar ul.nav>li>a{
+                width: 100%;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                padding-top: 12px;
+                padding-bottom: 12px;
+                border-radius: 0;
+                color: #999;
+                text-align: center;
+            }
 #statistContent{
     width: 800px;
     float: left;
     overflow: hidden;
+    z-index: 20;
+    position: relative;
     }    
     #statistContent>div.tab-pane{
         width: 100%;
@@ -900,53 +910,53 @@
     overflow: hidden;
     }
     #surveyComment .comment-main .comment-no{
-        display: none;
         width: 100%;
+        margin-bottom: 100px;
         overflow: hidden;
-        font: 19px "宋体",Tahoma;
+        font: 12px "微软雅黑",Tahoma;
         color: #999;
     }
+    #surveyComment .sc-sub{
+        width: 40px;
+        float: left;
+    }
+    #surveyComment .sc-main{
+        width: 750px;
+        float: right;
+    }
+#surveyComment.list .comment-no{display:none;}
+#surveyComment.list .comment-list{display:block;}
+
     #surveyComment .comment-main .comment-ok{
         width: 100%;
         overflow: hidden;
         color: #999;
         }
-        #surveyComment .comment-main .comment-ok .comment-list{
-            width: 760px;
-            padding-top: 10px;
-            margin: 50px 0 30px 0;
+        #surveyComment .comment-list{
+            display: none;
+            width: 100%;
+            margin: 30px 0;
             overflow: hidden;
-            border-top: 1px dotted #CCC;
             }
             #surveyComment .comment-ok .comment-list>.cl-elem{
                 width: 100%;
                 overflow: hidden;
                 padding: 10px 0;
-                margin-bottom: 5px;
-                border-bottom: 1px dotted #CCC;
+                border-top: 1px dotted #CCC;
                 }
-                #surveyComment .comment-ok .cl-elem .cl-elem-sub{
-                    width: 40px;
-                    margin-right: 20px;
-                    float: left;
-                }
-                #surveyComment .comment-ok .cl-elem .cl-elem-main{
-                    width: 700px;
-                    float: left;
-                    }
-                    #surveyComment .comment-ok .cl-elem .cm-user>.nick{
+                    #surveyComment .sc-user>.nick{
                         width: 600px;
                         text-align: left;
                         float: left;
                     }
-                    #surveyComment .comment-ok .cl-elem .cm-user>.time{
+                    #surveyComment .sc-user>.time{
                         width: 80px;
                         float: right;
                         text-align: right;
                     }
-                    #surveyComment .comment-ok .cl-elem .cm-body{
+                    #surveyComment .comment-ok .sc-body{
                         width: 100%;
-                        margin-top: 3px;
+                        margin-top: 5px;
                         float: left;
                         text-align: left;
                         color: #666;
@@ -954,49 +964,36 @@
             #surveyComment .comment-ok .comment-list>.cl-elem-more{
                 width: 100%;
                 overflow: hidden;
-                margin-top: 30px;
+                margin-top: 10px;
             }
     #surveyComment .comment-my{
         width: 100%;
+        margin-bottom: 10px;
         overflow: hidden;
         }
-        #surveyComment .comment-my .cm-sub{
-            width: 40px;
-            float: left;
-            margin-right: 20px;
-            }
-            #surveyComment .comment-my .cm-sub>img{
-                width: 100%;
-                height: 40px;
-                float: left;
-            }
-        #surveyComment .comment-my .cm-main{
-            width: 700px;
-            float: left;
+        #surveyComment .comment-my .need-login{
+            width: 100%;
             overflow: hidden;
             }
-            #surveyComment .comment-my .cm-input{
-                box-sizing: border-box;
-                -moz-box-sizing: border-box;
-                -webkit-box-sizing: border-box;
-                width: 100%;
-                min-height: 100px;
-                _height: 100px;
-                padding: 3px;
-                margin-bottom: 20px;
-                float: left;
-                overflow-x: hidden;
-                overflow-y: auto;
-                _overflow-y: visible;
-                border: 1px solid #CCC;
-            }
-            #surveyComment .comment-my .cm-input:focus, #surveyComment .comment-my .cm-input:hover{
-                border-color: #66CC66;
-            }
-            #surveyComment .comment-my .cm-submit>button{
-                padding: 5px 20px;
+            #surveyComment .comment-my .need-login>button{
                 float: right;
+                padding: 5px 10px;
             }
+        #surveyComment .comment-my .cm-input{
+            width: 100%;
+            min-height: 100px;
+            _height: 100px;
+            margin-bottom: 20px;
+            float: left;
+            font: 12px "微软雅黑",Tahoma;
+            color: #666;
+        }
+        #surveyComment .comment-my .cm-submit>button{
+            padding: 5px 20px;
+            float: right;
+        }
+        .comment-my .sc-sub, .comment-my .sc-main, body.logined .comment-my .need-login{display: none;}
+        body.logined .comment-my .sc-sub, body.logined .comment-my .sc-main{display: block;}
 
 
 #Footer{

@@ -56,41 +56,6 @@ steal('init.js')
             }) ;
         },
 
-        // 保存草稿
-        save_draft : function(){
-            var $this   = this,
-                models$ = $this.options.models$ ;
-
-            // 保存草稿相关参数配置
-            models$.collect$.state = 'draft' ;
-            models$.collect$.check = false ;
-            models$.collect$.flag  = true ;
-            models$.draft$.flag    = true ;
-
-            // 遍历各模块收集数据
-            $this.options.$surveyElement.each(function(){
-                if(models$.collect$.flag){
-                    $(this).trigger('data_collect') ;
-                }else{
-                    return false ;
-                }
-            }) ;
-
-            // 如果能顺利收集数据，提交数据
-            if(models$.collect$.flag && $this.submit_data(1)){
-                // 草稿更新成功，重置草稿倒计时
-                models$.draft$.last = moment() ;
-                models$.draft$.next = moment(models$.draft$.last).add('m', models$.draft$.length) ;
-                $('#syncBox').attr('data-state', 1) ;
-            }else{
-                // 草稿更新失败，只重置草稿倒计时对象的next值（+length）
-                models$.draft$.next = moment().add('m', models$.draft$.length) ;
-                $('#syncBox').attr('data-state', 1) ;
-            }
-
-            return true ;
-        },
-
         "{$surveyElement} click" : function(el){
             this.options.models$.step$.action = el.attr('data-step') ;
             this.options.models$.trigger('flag_step') ;
@@ -137,6 +102,41 @@ steal('init.js')
             }
         },
 
+        // 保存草稿
+        save_draft : function(){
+            var $this   = this,
+                models$ = $this.options.models$ ;
+
+            // 保存草稿相关参数配置
+            models$.collect$.state = 'draft' ;
+            models$.collect$.check = false ;
+            models$.collect$.flag  = true ;
+            models$.draft$.flag    = true ;
+
+            // 遍历各模块收集数据
+            $this.options.$surveyElement.each(function(){
+                if(models$.collect$.flag){
+                    $(this).trigger('data_collect') ;
+                }else{
+                    return false ;
+                }
+            }) ;
+
+            // 如果能顺利收集数据，提交数据
+            if(models$.collect$.flag && $this.submit_data(1)){
+                // 草稿更新成功，重置草稿倒计时
+                models$.draft$.last = moment() ;
+                models$.draft$.next = moment(models$.draft$.last).add('m', models$.draft$.length) ;
+                $('#syncBox').attr('data-state', 1) ;
+            }else{
+                // 草稿更新失败，重置草稿倒计时对象的next值（+length）
+                models$.draft$.next = moment().add('m', models$.draft$.length) ;
+                $('#syncBox').attr('data-state', 1) ;
+            }
+
+            return true ;
+        },
+
         // 提交数据
         submit_data : function(survey_state){
             var $this   = this,
@@ -146,8 +146,11 @@ steal('init.js')
             // 更新汇总数据中的调查状态值
             models$.info$.survey_state = survey_state ;
 
+            console.dir(models$.info$) ;
+            console.dir(models$.question$) ;
+
             // 发布调查需要先进行账户金币判定
-            if(survey_state == 2){
+            if(survey_state == 2 && 1==2){
                 // 访问用信息查询接口取出用户当前金币数
                 $.ajax({
                     type    : 'post',
@@ -165,6 +168,7 @@ steal('init.js')
                                 models$.info$.survey_state = 1 ;
                             }
                         }else{
+                            console.log(data$.info) ;
                             alert('核实用户信息失败，请重新点击提交') ;
                         }
                     }
@@ -172,48 +176,49 @@ steal('init.js')
             }
 
             // 先提交调查基本信息信息和题目信息（访问调查创建接口）
-            $.ajax({
-                type    : 'post',
-                url     : __API__,
-                data    : { api         : 'survey_create'              ,// 调查创建接口
-                            user_code   : models$.user_code            ,// 用户编码
-                            survey_code : models$.survey_code          ,// 调查编码
-                            info        : $.toJSON(models$.info$)      ,// 调查基本信息
-                            question    : $.toJSON(models$.question$)  ,// 调查题目信息
-                          },
-                async   : false,
-                success : function(data$){
-                    if(data$.status){
-                        // 新调查创建成功更新调查编码到模型中
-                        models$.survey_code = data$.data ;
+            // $.ajax({
+            //     type    : 'post',
+            //     url     : __API__,
+            //     data    : { api         : 'survey_create'              ,// 调查创建接口
+            //                 user_code   : models$.user_code            ,// 用户编码
+            //                 survey_code : models$.survey_code          ,// 调查编码
+            //                 info        : $.toJSON(models$.info$)      ,// 调查基本信息
+            //                 question    : $.toJSON(models$.question$)  ,// 调查题目信息
+            //               },
+            //     async   : false,
+            //     success : function(data$){
+            //         if(data$.status){
+            //             // 新调查创建成功更新调查编码到模型中
+            //             models$.survey_code = data$.data ;
 
-                        // 如果选择主动推荐并且自定义推荐规则，取设置的推荐规则
-                        if(models$.info$.recomm_type == 2 && models$.recommend$){
-                            $.ajax({
-                                type    : 'post',
-                                url     : __API__,
-                                data    : {api:'survey_recomm_create', survey_code:models$.survey_code, rule:$.toJSON(models$.recommend$)},
-                                async   : false,
-                                success : function(data$){
-                                    if(data$.status){
-                                        flag = true ;
-                                    }else{
-                                        flag = false ;
-                                        if(models$.collect$.check){
-                                            alert('推荐规则设置不成功，请检查设置') ;
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                    }else{
-                        if(models$.collect$.check){
-                            alert('调查发布不成功！') ;
-                        }
-                        flag = false ;
-                    }
-                }
-            });
+            //             // 如果选择主动推荐并且自定义推荐规则，取设置的推荐规则
+            //             if(models$.info$.recomm_type == 2 && models$.recommend$){
+            //                 $.ajax({
+            //                     type    : 'post',
+            //                     url     : __API__,
+            //                     data    : {api:'survey_recomm_create', survey_code:models$.survey_code, rule:$.toJSON(models$.recommend$)},
+            //                     async   : false,
+            //                     success : function(data$){
+            //                         if(data$.status){
+            //                             flag = true ;
+            //                         }else{
+            //                             flag = false ;
+            //                             if(models$.collect$.check){
+            //                                 alert('推荐规则设置不成功，请检查设置') ;
+            //                             }
+            //                         }
+            //                     }
+            //                 });
+            //             }
+            //         }else{
+            //             console.log(data$.info) ;
+            //             if(models$.collect$.check){
+            //                 alert('调查发布不成功！') ;
+            //             }
+            //             flag = false ;
+            //         }
+            //     }
+            // });
 
             return flag ;
         }
@@ -345,7 +350,6 @@ steal('init.js')
                                 }
                             }
                         }else{
-                            console.log('bbb') ;
                             clearInterval(cd$) ;
                         }
 
@@ -377,6 +381,8 @@ steal('init.js')
         listensTo : ['data_refresh', 'success']
     }, {
         init : function(){
+            var $this = this ;
+
             // 新建模型实例并初始化
             this.options.models$ = new Survey.Create.Model({
                 survey_code     : this.element.attr('data-sv-code')     ,// 调查编码
@@ -401,8 +407,10 @@ steal('init.js')
 
             // 初始先刷新一次数据
             this.data_refresh() ;
+            this.element.find('input[type=text]').attr('value', '') ;
 
             window.scrollTo(0, 0) ;
+            $('body').show() ;
         },
 
         // 总模型用户信息更新

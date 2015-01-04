@@ -21,11 +21,14 @@
             </div>
             <div class="ans-box-main">
                 <div id="svHeader">
+                    <div class="sh-sub"><i class="icon-list-alt"></i></div>
                     <div class="sh-main">
-                        <div class="sv-title">{$survey['info']['survey_name']}</div>
+                        <div class="sv-title">
+                            <a href="{:U('/survey/visit')}?code={$survey['info']['survey_code']}" target="_blank">{$survey['info']['survey_name']}</a>
+                        </div>
                         <div class="sv-desc">{$survey['info']['survey_desc']}</div>
                     </div>
-                    <div class="sh-sub">
+                    <div class="sh-icon">
                         <i class="icon-double-angle-up"></i>
                         <i class="icon-double-angle-down"></i>
                     </div>

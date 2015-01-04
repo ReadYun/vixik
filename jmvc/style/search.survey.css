@@ -1,0 +1,199 @@
+/*
+* Document    : search.main.css
+* Description : css for search.main.html
+*
+* Created on  : 2014-12-1, 14:18:34
+* Author      : ReadYun
+* Copyright   : VixiK
+*/
+
+#Header .topbar-sub, #Header .search-box{display: none;}
+body.topbar-open #Header .search-box{display:block;}
+
+#Main{
+    width: 100%;
+    margin: 20px auto;
+    overflow: hidden;
+}
+
+.left-box{
+    width: 700px;
+    float: left;
+    overflow: hidden;
+}
+.right-box{
+    width: 200px;
+    float: right;
+    overflow: hidden;
+}
+
+#Main .search-header{
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 1px solid #CCC;
+    }
+    #Main .search-header>div{
+        width: 960px;
+        margin: 0 auto;
+        overflow: hidden;
+    }
+    #Main .search-header .sh-main input{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 580px;
+        height: 40px;
+        float: left;
+    }
+    #Main .search-header .sh-main button{
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 120px;
+        height: 40px;
+        float: left;
+        font: 19px "宋体",Tahoma;
+    }
+    #Main .search-header .search-nav{
+        margin: 0;
+        float: left;
+        overflow: hidden;
+        }
+        #Main .search-header .search-nav>li{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 60px;
+            height: 40px;
+            float: left;
+            font: 19px "宋体",Tahoma;
+            text-align: center;
+            list-style: none;
+            line-height: 40px;
+            border-bottom: 2px solid #FFF;
+        }
+        #Main .search-header .search-nav>li.active{
+            border-color: #6BB130;
+        }
+    #Main .search-header .search-res{
+        margin-top: 10px;
+        float: right;
+        color: #999;
+        }
+        #Main .search-header .search-res span{
+            margin: 0 5px;
+            color: red;
+        }
+    #Main .search-header .order-res{
+        margin-top: 10px;
+        color: #999;
+        }
+        #Main .search-header .order-res>i{
+            float: left;
+            margin-top: 3px;
+            margin-right: 5px;
+        }
+#Main .search-body{
+    width: 960px;
+    margin: 30px auto;
+    overflow: hidden;
+    }
+    #Main .search-body .sl-elem{
+        width: 100%;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        border-bottom: 1px dotted #CCC;
+        overflow: hidden;
+    }
+    #Main .sl-elem .sl-stats{
+        width: 45px;
+        height: 25px;
+        margin-right: 5px;
+        float: left;
+        color: #FFF;
+        line-height: 25px;
+        background: #9999FF;
+        text-align: center;
+    }
+    #Main .sl-elem .sl-main{
+        width: 550px;
+        float: left;
+        text-align: left;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        }
+        #Main .sl-elem .sl-main .sv-name{
+            width: 100%;
+            font: 14px "微软雅黑",Tahoma;
+            line-height: 0;
+            cursor: pointer;
+        }
+        #Main .sl-elem .sl-main .sv-desc{
+            width: 100%;
+            margin-bottom: 5px;
+            font: 12px "微软雅黑",Tahoma;
+            color: #666;
+        }
+        #Main .sl-elem .sl-main .sv-info>div{
+            margin-right: 30px;
+            float: left;
+            color: #666;
+            margin-top: 3px;
+        }
+        #Main .sl-elem .sv-info .sv-user{
+            width: 100px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        #Main .sl-elem .sv-info img{
+            width: 18px;
+            height: 18px;
+            margin-right: 5px;
+            margin-top: -3px;
+        }
+        #Main .sl-elem .sv-info a{
+            color: #666;
+        }
+        #Main .sl-elem .sv-info i{
+            display: block;
+            margin-top: 1px;
+            margin-right: 5px;
+            float: left;
+            font-size: 16px;
+        }
+    #Main .sl-elem .sl-sub{
+        width: 100px;
+        float: left;
+        color: #CCC;
+        text-align: right;
+        }
+        #Main .sl-elem .sl-sub .sv-time{
+            margin-bottom: 26px;
+        }
+
+
+
+
+
+#Main .search-body .filter-res>div{
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden;
+    }
+    #Main .search-body .filter-res .fr-header{
+        width: 100%;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        border-bottom: 3px solid #CCC;
+        font: 19px "宋体",Tahoma;
+    }
+
+
+
+
+
+
+
+
