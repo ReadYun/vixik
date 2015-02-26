@@ -7,7 +7,8 @@
  * Copyright   : VixiK
  */
 
-body{display:none;}
+#Main{opacity:0;}
+#Main.active{opacity:1;}
 #topBar{
     width: 100%;
     background: #FFF;
@@ -196,14 +197,14 @@ body.topbar-hover .topbar-main{
         border-top: 1px solid #FFF;
     }
     #topBar div.action-box li>a{
-        padding: 10px 1px;  
+        padding: 8px 1px;  
         font: 12px "微软雅黑",Tahoma;
         color: #FFF;
         background: #6699FF;
     }
     #topBar div.action-box li>a:hover{
         color: #333;
-        background: #0099FF;
+        background: #3388FF;
     }
     #topBar .action-box:hover{
         cursor: pointer;
@@ -466,6 +467,16 @@ body.topbar-hover .topbar-main{
             border: none;
             padding-top: 5px;
         }
+        #topBar .signup-box .dm-footer{
+            width: 100%;
+            }
+            #topBar .signup-box .dm-footer .user-agreement{
+                float: left;
+                }
+                #topBar .signup-box .dm-footer .user-agreement>.icheck{
+                    float: left;
+                    margin-right: 5px;
+                }
 
         #topBar .login-signup.ed .login-box{display: none;}
         #topBar .login-signup.ed .signup-box .dm-body.before{display: none;}
@@ -570,8 +581,10 @@ body.topbar-hover .topbar-main{
                 border-right: 1px solid #6699FF;
                 border-left: 1px solid #6699FF;
             }
-body.logined #topBar .user-box .user-info{display: block;}
-body.logined #topBar .user-box .login-signup{display: none;}
+body.login #topBar .user-box .user-info{display: block;}
+body.login #topBar .user-box .login-signup{display: none;}
+body #topBar .action-box .my-survey{display: none;}
+body.login #topBar .action-box .my-survey{display: block;}
   
 
 #topBar .topbar-sub{

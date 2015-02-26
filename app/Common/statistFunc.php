@@ -49,7 +49,7 @@ function surveyTrendStats($survey_code){
     $sql = "select sum(cnt) cnt_sum, count(1) cnt_count, round(avg(cnt)) cnt_avg, max(cnt) cnt_max, min(cnt) cnt_min
             from (
               select date(end_time) end_date , count(1) cnt 
-              from tb_bas_survey_action where survey_code = 10000303 
+              from tb_bas_survey_action where survey_code = $survey_code 
               group by end_date order by end_date ) t " ;
     $res['stats'] = M() -> query($sql)[0] ;
 
@@ -100,11 +100,11 @@ function surveyPropStats($param){
     if($target != 'survey'){
         $table = ", " . M(constant('TB_BAS_' . strtoupper($target) . '_INFO')) -> getTableName() . " t " ;
         $cond  = "a.survey_code = t.survey_code and $cond " ;
-
-        // 基本数量统计
-        $sql   = "select count(1) cnt from $tbBasSurveyInfo a $table where $cond" ;
-        $stats = M() -> query($sql)[0] ;
     } 
+    
+    // 基本数量统计
+    $sql   = "select count(1) cnt from $tbBasSurveyInfo a $table where $cond" ;
+    $stats = M() -> query($sql)[0] ;
 
     switch($param['order']){
         case 'cnt' :

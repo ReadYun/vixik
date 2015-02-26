@@ -28,8 +28,11 @@
     position: fixed;
     left: 0;
     border-right: 1px solid #CCC;
+}
+#mainSider>.main-sider{
+    width: 100%;
     }
-    #mainSider>div{
+    #mainSider>.main-sider>div{
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
@@ -326,15 +329,21 @@
 }
 #itemBody>.item{
     width: 700px;
-    min-height: 120px;
-    padding-top: 5px;   
-    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     overflow: hidden;
-    border-bottom: 1px dotted #CCC;
+    border-bottom: 1px solid #FFF;
+    }
+#itemBody>.item.active{
+    border-color: #CCC;
     }
     #itemBody>.item>.item-main{
-        width: 635px;
-        margin-right: 5px;
+        width: 100%;
+        float: left;
+        overflow: hidden;
+        }
+    #itemBody>.item.active>.item-main, #itemBody>.item:hover>.item-main{
+        width: 670px;
         float: left;
         overflow: hidden;
         }
@@ -342,43 +351,50 @@
             width: 100%;
             margin-bottom: 5px;
             overflow: hidden;
+            color: #666;
+            border-bottom: 1px solid #EEE;
             }
             #itemBody>.item .item-seq{
-                width: 30px;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                width: 25px;
                 margin-right: 5px;
                 float: left;
                 overflow: hidden;
                 font: 21px "宋体",Tahoma;
-                color: #666;
                 font-weight: 900;
-            }
-            #itemBody>.item:hover .item-seq{
-                color: #6BB130;
+                text-align: right;
             }
             #itemBody>.item .item-title>.vk-input{
-                width: 600px;
+                width: 635px;
                 float: left;
                 overflow: hidden;
+                border-color: #FFF;
             }
-        #itemBody>.item .item-option{
+            #itemBody>.item:hover .item-title, #itemBody>.item.active .item-title{
+                border-color: #FFF;
+            }
+            #itemBody>.item:hover .item-title>.vk-input, #itemBody>.item.active .item-title>.vk-input{
+                border-color: #CCC;
+            }
+        #itemBody>.item .item-body{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
             width: 100%;
+            padding-left: 35px;
+            margin-bottom: 5px;
             overflow: hidden;
-            }
+            color: #666;
+        }
     #itemBody>.item>.item-sub{
-        width: 60px;
+        display: none;
+        width: 30px;
         float: right;
         overflow: hidden;
         }
-        #itemBody>.item .item-type{
-            width: 100%;
-            margin-top: 2px;
-            float: right;
-            font: 19px "宋体",Tahoma;
-            text-align: right;
-            overflow: hidden;
-        }
         #itemBody>.item .item-config{
-            display: none;
             width: 100%;
             float: left;
             overflow: hidden;
@@ -410,15 +426,15 @@
                 -moz-box-sizing: border-box;
                 -webkit-box-sizing: border-box;
                 width: 100%;
-                padding: 5px;
+                font-size: 18px;
                 float: left;
                 overflow: hidden;
                 text-align: center;
                 color: #999;
             }
             #itemBody>.item .item-alter>div{
-                width: 22px;
-                height: 22px;
+                width: 16px;
+                height: 16px;
                 padding: 1px;
                 margin: 2px auto;
                 text-align: center;
@@ -426,13 +442,13 @@
                 cursor: pointer;
             }
             #itemBody>.item .item-alter>div:hover{
-                color: #FFF;
-                background: #66CC66;
+                color: #66CC66;
             }
             #itemBody>.item .item-alter>div.disable, #itemBody>.item .item-alter>div.disable:hover{
                 background: #FFF;
                 cursor: auto;
                 opacity: 0.3;
+                color: #CCC;
             }
             #itemBody>.item .item-config>.popover{
                 width: 200px;
@@ -460,6 +476,24 @@
                         margin: 10px auto;
                         font: 12px "微软雅黑",Tahoma;
                         text-align: center;
+                    }
+                    #itemBody .item-config .item-setting .item-setting-header{
+                        height: 20px;
+                        }
+                        #itemBody .item-config .item-setting .ish-title{
+                            float: left;
+                            font: 12px "微软雅黑",Tahoma;
+                            text-align: left;
+                        }
+                        #itemBody .item-config .item-setting .icon-remove{
+                            float: right;
+                            text-align: left;
+                            font-size: 16px;
+                            color: #CCC;
+                        }
+                        #itemBody .item-config .item-setting .icon-remove:hover{
+                            color: #999;
+                            cursor: pointer;
                         }
                         #itemBody .item-config .item-setting>div>a{
                             box-sizing: border-box;
@@ -473,6 +507,35 @@
                             text-decoration: none;
                             border: 1px solid #CCC;
                         }
+                        #itemBody .item-config .item-setting>.answer-must{
+                            border: 1px solid #CCC;
+                            overflow: hidden;
+                            }
+                            #itemBody .item-config .item-setting>.answer-must>a{
+                                width: 50%;
+                                color: #666;
+                                text-align: center;
+                                float: left;
+                                border: none;
+                            }
+                            #itemBody .item-config .item-setting>.answer-must>a:hover{color: #333;}
+                            #itemBody .item[data-answer-must='1'] .item-config .item-setting>.answer-must>a[data-must='1'],
+                            #itemBody .item[data-answer-must='1'] .item-config .item-setting>.answer-must>a[data-must='1']:hover{
+                                color: #FFF;
+                                background: #CCC;
+                            }
+                            #itemBody .item[data-answer-must='0'] .item-config .item-setting>.answer-must>a[data-must='0'],
+                            #itemBody .item[data-answer-must='0'] .item-config .item-setting>.answer-must>a[data-must='0']:hover{
+                                color: #FFF;
+                                background: #CCC;
+                            }
+                        #itemBody .item .item-setting>.type-change>a{display:none;}
+                        #itemBody .item[data-type='11'] .item-setting>.type-change>a[data-type='12'],
+                        #itemBody .item[data-type='12'] .item-setting>.type-change>a[data-type='11'],
+                        #itemBody .item[data-type='21'] .item-setting>.type-change>a[data-type='22'],
+                        #itemBody .item[data-type='22'] .item-setting>.type-change>a[data-type='21'],
+                        #itemBody .item[data-type='31'] .item-setting>.type-change>a[data-type='32'],
+                        #itemBody .item[data-type='32'] .item-setting>.type-change>a[data-type='31']{display:block;}
                     #itemBody .item-config .item-setting>div>a:hover{
                         cursor: pointer;
                         border-color: #666;
@@ -487,6 +550,8 @@
                         border-color: #999;
                         border-bottom: none;
                     }
+                    #itemBody .item .item-setting>.opt-custom{display:none;}
+                    #itemBody .item[data-class='1'] .item-setting>.opt-custom{display:block;}
                     #itemBody .item-config .item-setting .dropdown-menu{
                         width: 550px;
                         padding: 0;
@@ -562,71 +627,136 @@
                                 overflow: hidden;
                             }
         #itemBody .item-setting .dropdown-menu .oc-elem:hover .custom-user-lvl{display: block;}
-        #itemBody>.item:hover .item-type{display: none;}
-        #itemBody>.item:hover .item-config{display: block;}
+        #itemBody>.item:hover .item-sub{display: block;}
+        #itemBody>.item .item-xz, #itemBody>.item .item-zg, #itemBody>.item .item-pf{display:none;}
+        #itemBody>.item[data-class='1'] .item-xz{display:block;}
+        #itemBody>.item[data-class='2'] .item-zg{display:block;}
+        #itemBody>.item[data-class='3'] .item-pf{display:block;}
+        #itemBody>.item[data-type='21'] .item-zg>input{display:block;}
+        #itemBody>.item[data-type='22'] .item-zg>textarea{display:block;}
 
-        #itemBody>div.item div.item-option{
+        #itemBody>.item .xz-option{
             width: 650px;
-            margin: 5px 0;
             float: left;
             overflow: hidden;
             }
-            div.item div.item-option>div.option{
+            .item .option{
                 width: 100%;
-                margin: 5px 0;
+                margin: 1px 0;
                 float: left;
                 overflow: hidden;
+                padding: 0;
                 }
-                div.item-option>div.option>div{
-                    padding: 0;   
-                    margin-right: 10px;
-                    float: left;
-                }
-                div.item-option div.option-content>div.option-seq{
-                    width: 20px;
-                    padding: 1px 5px;
+                .item .option>div{
+                    padding: 0;
                     margin-right: 5px;
                     float: left;
-                    font-size: 19px;
-                    text-align: right;
-                    color: #999;
-                    text-decoration: underline;
                 }
-                div.item-option>div.option>div>input[type="text"]{
-                    width: 450px;
-                    padding: 2px;
-                    padding-left: 5px;
+                .item .option .option-content>.oc-sub{
+                    height: 25px;
+                    float: left;
+                    padding: 0;
                     margin: 0;
-                    font: 12px "微软雅黑",Tahoma;  
-                    color: #666;
-                }
-                div.item-option>textarea{
-                    width: 435px;
-                    height: 60px;
-                    margin: 5px 0 10px 35px;
-                    background-color: #FCFCFC;
-                    box-shadow: none;
-                    -moz-box-shadow: none;
-                    -webkit-box-shadow: none;
-                }
-                div.item-option>input{
-                    min-width: 436px;
-                    height: 20px;
-                    margin: 5px 0 10px 35px;
-                    background-color: #FCFCFC;
-                    box-shadow: none;
-                    -moz-box-shadow: none;
-                    -webkit-box-shadow: none;
-                }
-        #itemBody>div.item div.option-button{
+                    }
+                    .item .option .option-seq{
+                        display: none;
+                        box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        -webkit-box-sizing: border-box;
+                        width: 100%;
+                        margin-top: 3px;
+                        padding-right: 5px;
+                        float: left;
+                        font-size: 17px;
+                        text-align: center;
+                        color: #999;
+                        text-decoration: underline;
+                    }
+                    .item[data-type='32'] .option .option-seq{display:block;}
+                    .item .option .option-content>.oc-sub>.icheck{
+                        display: none;
+                        margin-top: 5px;
+                        margin-right: 5px;
+                        float: left;
+                    }
+                    .item[data-class='1'] .option .option-content>.oc-sub>.icheck{display: block;}
+                    .item .option .option-content>.oc-sub>.icheck>div{
+                        display: none;
+                    }
+            .item .val-select{
+                display: none;
+                margin-top: 6px;
+                float: left;
+                cursor: pointer;
+                overflow: hidden;
+                color: #666;
+            }
+            .item[data-type='32'] .val-select{display:block;}
+            .item.active .val-select, .item:hover .val-select{display:none;}
+            .item .pf-option .val-select span{
+                float: left;
+                text-align: center;
+            }
+            .item .pf-option .val-select span.vs-txt{
+                width: 20px;
+                float: left;
+                text-align: center;
+            }
+            .item[data-type='11'] .option .option-content>.oc-sub .iradio_minimal-grey{display: block;}
+            .item[data-type='12'] .option .option-content>.oc-sub .icheckbox_minimal-grey{display: block;}
+            .item[data-class='1'] .option-content>.oc-sub{width:20px;}
+            .item[data-type='32'] .option-content>.oc-sub{width:30px;}
+            .item .option-content>.oc-main{
+                width: 450px;
+                float: left;
+            }
+            .item[data-type='32'] .option-content>.oc-main{width: 440px;}
+            .item .option input{
+                width: 100%;
+                margin: 0;
+                font: 12px "微软雅黑",Tahoma;  
+                color: #666;
+                border-color: #FFF;
+            }
+            .item.active .option input, .item:hover .option input.vk-input{
+                border-color: #CCC;
+            }
+            .item.active[data-class='1'] .option .option-content .icheck, 
+            .item[data-class='1']:hover .option .option-content .icheck{
+                display: none;
+            }
+            .item.active .option .option-seq, .item:hover .option .option-seq{display: block;}
+            .item-zg>textarea[disabled='disabled']{
+                display: none;
+                width: 457px;
+                min-width: 457px;
+                _width: expression((documentElement.clientWidth < 457) ? "457px" : "auto");
+                height: 60px;
+                margin-top: 5px;
+                background-color: #FFF;
+                box-shadow: none;
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+            }
+            .item-zg>input[disabled='disabled']{
+                display: none;
+                width: 457px;
+                min-width: 457px;
+                _width: expression((documentElement.clientWidth < 457) ? "457px" : "auto");
+                height: 20px;
+                margin-top: 5px;
+                margin-bottom: 20px;
+                background-color: #FFF;
+                box-shadow: none;
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+            }
+        #itemBody>.item div.option-button{
             width: 640px;
             padding-left: 30px;
             margin-top: 5px;
             float: left;
             overflow: hidden;
-        }
-        #itemBody>div.item[data-item-type='textarea']:hover div.option-button{
-            display: none;
         }
     #itemBody .option-alter{
         display: none;
@@ -641,28 +771,24 @@
             box-sizing: border-box;
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
-            width: 22px;
+            width: 18px;
             height: 22px;
             padding: 2px 0;
             margin-top: 2px;
             margin-left: 5px;
             float: left;
-            font-size: 15px;
+            font-size: 14px;
             color: #999;
             text-align: center;
             overflow: hidden;
-            border: 1px solid #CCC;
         }
         #itemBody .option-alter>div.alter:hover{
             cursor: pointer;
-            color: #FFF;
-            border-color: #66CC66;
-            background: #66CC66;
+            color: #66CC66;
         }
         #itemBody div.alter>div.disable, #itemBody div.alter>div.disable:hover{
             cursor: auto;
-            border-color: #FFF;
-            background: none;
+            color: #CCC;
             opacity: 0.3;
         }
         div.item .option-alter>.popover{
@@ -682,35 +808,175 @@
                 border-radius: 0;
                 color: #666;
             }
-            div.item .option-alter.popover .add-option{
-                width: 100%;
-                font: 12px "微软雅黑",Tahoma;
-                }
-                div.item .option-alter .add-option>.vk-input{
-                    width: 100%;
-                    min-height: 75px;
-                    overflow: hidden;
-                }
-                div.item .option-alter .add-option-button{
-                    width: 100%;
-                    margin: 10px 0;
-                    float: left;
-                    }
-                    div.item .option-alter .add-option button.submit{
-                        width: 100px;
-                        margin-left: 20px;
-                        float: right;
-                    }
-                    div.item .option-alter .add-option button.cancel{
-                        width: 40px;
-                        float: right;
-                    }
+.option .option-add{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 450px;
+    margin: 5px 0 5px 20px;
+    border: 1px solid #CCC;
+    overflow: hidden;
+    }
+    .option .option-add>.vk-input{
+        width: 100%;
+        min-height: 60px;
+        float: left;
+        color: #999;
+        border: none;
+    }
+    .option .option-add>.option-add-button{
+        width: 100%;
+        float: right;
+        border-top: 1px solid #CCC;
+        }
+        .option .option-add>.option-add-button>div{
+            margin-top: 3px;
+            margin-left: 5px;
+            float: left;
+            font: 12px "微软雅黑",Tahoma;
+            color: #999;
+        }
+        .option .option-add>.option-add-button>button{
+            float: right;
+            border: none;
+            border-left: 1px solid #CCC;
+        }
+        .option .option-add>.option-add-button>button.submit{
+            width: 100px;
+            float: right;
+        }
+        .option .option-add>.option-add-button>button.cancel{
+            width: 70px;
+            float: right;
+        }
+
+.item-pf>div{
+    display: none;
+}
+.item-pf .pf-item>div{
+    width: 100%;
+    margin-top: 10px;
+    overflow: hidden;
+    }
+    .item-pf .pf-item .pf-body>div{
+        margin: 10px 10px 10px 0;
+        float: left;
+        overflow: hidden;
+        font: 19px "宋体",Tahoma;
+        }
+        .item-pf .pf-item .pf-body .pr-desc{
+            padding-top: 1px;
+        }
+        .item-pf .pf-item .pf-body .pr-mid>span{
+            min-width: 25px;
+            _width: expression((documentElement.clientWidth < 25) ? "25px" : "auto");
+            height: 23px;
+            display: block;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            margin: 0;
+            float: left;
+            color: #666;
+            text-align: center;
+            border: 1px solid #999;
+            border-right: none;
+            cursor: pointer;
+        }
+        .item-pf .pf-item .pf-body .pr-mid>span:last-child{
+            border-right: 1px solid #999;
+        }
+        .item-pf .pf-item .pf-body .pr-mid>span:hover{
+            color: #FFF;
+            background: #CCC;
+        }
+    .item-pf .pf-item .pf-setting>div{
+        width: 100%;
+        margin-top: 5px;
+        float: left;
+        overflow: hidden;
+        }
+        .item-pf .pf-item .pf-setting .ps-elem-desc{
+            width: 300px;
+            margin-right: 50px;
+            float: left;
+            overflow: hidden;
+            }
+            .item-pf .pf-item .pf-setting .ps-elem-desc input{
+                width: 190px;
+                float: left;
+                overflow: hidden;
+            }
+        .item-pf .pf-item .pf-setting label{
+            margin-top: 3px;
+            margin-right: 10px;
+            float: left;
+            font: 19px "宋体",Tahoma;
+            color: #999;
+        }
+        .item-pf .pf-setting>div{
+            width: 258px;
+            margin-top: 20px;
+            margin-right: 10px;
+            float: left;
+        }
+        .item-pf .pf-setting label{
+            height: 18px;
+            margin-top: 3px;
+            margin-right: 10px;
+            float: left;
+            font: 19px "宋体",Tahoma;
+            color: #999;
+        }
+        .item-pf .val-input{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            height: 27px;
+            float: left;
+            font-size: 20px;
+            color: #999;
+            border: 1px solid #CCC;
+            cursor: pointer;
+        }
+        .item-pf .val-input span{
+            padding: 0.5px 8px;
+            height: 100%;
+            float: left;
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+        }
+        .item-pf .val-input span:hover{
+            color: #333;
+            border-color: #999;
+        }
+        .item-pf .val-input input{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 30px;
+            min-height: 24px;
+            margin-top: 0;
+            float: left;
+            border: none;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+        }
+        .item-pf .val-input input:focus, .item-pf .val-input input:hover{
+            border-color: #CCC;
+        }
+.item-pf .pf-setting{display:none;}
+.item.active .pf-setting{display:block;}
+.item[data-type='31'] .item-pf>.pf-item, .item[data-type='32'] .item-pf>.pf-option{display: block;}
+
 #itemButton{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     width: 100%;
-    padding: 5px 20px 15px 20px;
+    padding: 15px 20px 15px 20px;
     }
     #itemButton>.add-item{
         float: left;
@@ -752,6 +1018,70 @@
     #itemButton>.preview-item{
         float: right;
     }
+    #surveyItem .question-bank{
+        display: none;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        width: 100%;
+        padding: 15px 20px 0 20px;
+        float: right;
+        overflow: hidden;
+    }
+    #surveyItem .question-bank.active{display: block;}
+    #surveyItem .question-bank>div{
+        width: 100%;
+        overflow: hidden;
+        margin-bottom: 15px;
+        }
+        #surveyItem .qt-header>.nav{
+            margin-bottom: 0;
+        }
+        #surveyItem .qt-header>.nav a{
+            border-radius: 0;
+            padding: 7px 15px;
+            color: #999;
+            font: 12px "微软雅黑",Tahoma;
+            cursor: pointer;
+        }
+        #surveyItem .qt-header>.nav .bank-search{
+            width: 300px;
+            color: #999;
+            float: right;
+            font: 12px "微软雅黑",Tahoma;
+            margin: 0;
+        }
+        #surveyItem .qt-select>select.qb-type{
+            width: 200px;
+            margin: 0;
+            float: left;
+        }
+        #surveyItem .qt-select>select.qb-item{
+            width: 450px;
+            margin: 0;
+            float: right;
+        }
+        #surveyItem .qb-body{
+            display: none;
+            width: 100%;
+            overflow: hidden;
+            }
+            #surveyItem .qb-body>.qbb-main{
+                width: 600px;
+                height: 100px;
+                overflow: hidden;
+                float: left;
+                background: red;
+            }
+            #surveyItem .qb-body>.qbb-sub{
+                width: 80px;
+                overflow: hidden;
+                float: right;
+                }
+                #surveyItem .qb-body>.qbb-sub>button{
+                    float: right;
+                }
+        #surveyItem .qb-body.active{display: block;}
 #surveySetting .cs-content>div{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -912,13 +1242,11 @@
         border: 1px solid #6699FF;
     }
     #surveySetting .survey-type-sub, #surveySetting .end-value{margin: 0 70px;}
-    #surveySetting .survey-type, #surveySetting .survey-end{margin-left: 5px;}
 
 #surveySetting .survey-range select{
-    width: 680px;
+    width: 685px;
     height: 35px;
     margin: 0;
-    margin-left: 5px;
     padding: 5px;
     font: 19px "宋体",Tahoma;
 }
@@ -926,10 +1254,10 @@
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    width: 680px;
-    padding: 0 5px;
-    margin: 0 0 0 5px;
+    width: 685px;
+    padding: 0 4px;
     font: 19px "宋体",Tahoma;
+    margin: 0;
     }
     #surveySetting .survey-tag ul li{
         margin-top: 2px;
@@ -937,9 +1265,17 @@
     }
     #surveySetting .survey-tag ul input{
         width: 350px;
-        padding-top: 2px;
+        padding-top: 1px;
         font: 19px "宋体",Tahoma;
     }
+#surveySetting .answer-end-desc .vk-input{
+    width: 685px;
+    height: 60px;
+    font: 12px "微软雅黑",Tahoma;
+    color: #999;
+    text-align: left;
+    }
+
 #surveyRecommend .svc-body{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -1234,8 +1570,13 @@
     }
     #surveyButton>button{
         padding: 8px 0;
-        font: 25px "宋体",Tahoma;
-        font-weight: 900;
+        font: 23px "宋体",Tahoma;
+    }
+    #surveyButton>button.submit, body.login #surveyButton>button.login{
+        display: none;
+    }
+    body.login #surveyButton>button.submit{
+        display: block;
     }
 #footerBox{
     width: 100%;
@@ -1266,4 +1607,4 @@
         margin-bottom: 10px;
         float: left;
         font: 25px "宋体",Tahoma;
-        }
+        }    

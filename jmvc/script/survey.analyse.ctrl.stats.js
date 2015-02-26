@@ -1,3 +1,4 @@
+
 /**
  * Name        : survey.analyse.svstats.js
  * Description : js for survey/analyse.html
@@ -17,7 +18,7 @@ steal('init.js')
     /*
      * 整体分析模块控制器
      *
-     **/
+     */
     $.Controller('Survey.Analyse.Ctrl.Sv.Stats', {
         defaults : {
             models$     : {}                ,// 页面总模型
@@ -28,16 +29,10 @@ steal('init.js')
         }
     }, {
         init : function(){
-            // 考虑到同步加载的时差问题，初始就做一次统计功能
-            if(this.options.models$.svsTrend$){
-                this.stats_trend() ;
-            }
-            if(this.options.models$.svsUser$){
-                this.stats_user() ;
-            }
-            if(this.options.models$.question$){
-                this.stats_item() ;
-            }
+            this.stats_item() ;
+
+            // 取调查整体分析数据
+            this.options.models$.survey_stats() ;
 
             this.element.find('#userStats .ssb-side>div').first().addClass('active') ;
             this.element.find('#userStats .stats-graphs>div').first().addClass('active') ;
@@ -45,54 +40,9 @@ steal('init.js')
 
         // 调查趋势统计模型更新触发
         "{models$} svs_trend" : function(){
-            this.stats_trend() ;
-        },
-
-        // 用户属性统计模型更新触发
-        "{models$} svs_user" : function(){
-            this.stats_user() ;
-        },
-
-        // 用户属性分布分析
-        ".ssb-side>div.user-prop-elem mouseover" : function(el){
-            var prop = el.addClass('active').attr('data-prop') ;
-
-            // 侧边导航刷新
-            this.element.find('.ssb-side>div').removeClass('active') ;
-            this.element.find('.stats-graphs>div').removeClass('active') ;
-            this.element.find('.stats-graphs>.sg-' + prop).addClass('active') ;
-        },
-
-        // 调查题目统计
-        stats_item : function(){
-            var elem_num, ratio, title,
-                $itemGraphs  = this.options.$itemStats.find('div.stats-graphs'),
-                $line        = $itemGraphs.find('div.graphs-line') ;
-                question_num = parseInt($itemGraphs.attr('data-question-num')),
-
-            $.each($line, function(){
-                elem_num = parseInt($(this).attr('data-elem-num')) ;
-
-                if(elem_num > 0){
-                    ratio = Math.round((elem_num * 1000 / question_num)) / 10 + '%';
-                    $(this).css('width', ratio) ;
-                }else{
-                    ratio = '0%' ;
-                    $(this).css('width', '3px') ;
-                }
-
-                title = $(this).attr('title') + ' ' + ratio ;
-                $(this).attr('title', title) ;
-            }) ;
-
-            $itemGraphs.css('background','#FFD700') ;
-        }, 
-
-        // 参与趋势概述统计
-        stats_trend : function(){
-            var $this  = this,
-                date$  = [],
-                data$  = [],
+            var $this     = this,
+                date$     = [],
+                data$     = [],
                 svsTrend$ = $this.options.models$.svsTrend$ ;
 
             if(svsTrend$){
@@ -102,7 +52,7 @@ steal('init.js')
                 $this.options.$trendStats.find('.avg>.stats-value').text(svsTrend$.stats.cnt_avg) ;
 
                 // 整理数据
-                if(svsTrend$.length){
+                if(svsTrend$.data.length){
                     for(var i = 0; i < svsTrend$.data.length; i++){
                         date$.push(svsTrend$.data[i].end_date.substr(6)) ;
                         data$.push(parseInt(svsTrend$.data[i].cnt)) ;
@@ -160,7 +110,48 @@ steal('init.js')
                             }]
                     }) ;
                 }
-            }            
+            }
+        },
+
+        // 用户属性统计模型更新触发
+        "{models$} svs_group" : function(){
+            this.stats_user() ;
+            // this.stats_area() ;  // 需要Echart插件
+        },
+
+        // 用户属性分布分析
+        ".ssb-side>div.user-prop-elem mouseover" : function(el){
+            var prop = el.addClass('active').attr('data-prop') ;
+
+            // 侧边导航刷新
+            this.element.find('.ssb-side>div').removeClass('active') ;
+            this.element.find('.stats-graphs>div').removeClass('active') ;
+            this.element.find('.stats-graphs>.sg-' + prop).addClass('active') ;
+        },
+
+        // 调查题目统计
+        stats_item : function(){
+            var elem_cnt, ratio, title,
+                $itemGraphs  = this.options.$itemStats.find('.stats-graphs'),
+                $line        = $itemGraphs.find('.graphs-line'),
+                question_cnt = parseInt($itemGraphs.attr('data-question-cnt')) ;
+
+            $.each($line, function(){
+                elem_cnt = parseInt($(this).attr('data-elem-cnt')) ;
+
+                if(elem_cnt > 0){
+                    ratio = Math.round((elem_cnt * 1000 / question_cnt)) / 10 + '%';
+                    $(this).css('width', ratio) ;
+                }else{
+                    ratio = '0%' ;
+                    $(this).css('width', '3px') ;
+                }
+
+                title = $(this).attr('title') + ' ' + ratio ;
+                $(this).attr('title', title) ;
+            }) ;
+
+            $itemGraphs.css('background','#FFD700') ;
         },
 
         // 用户地域分布分析
@@ -306,51 +297,51 @@ steal('init.js')
     /*
      * 题目分析模块控制器
      *
-     **/
+     */
     $.Controller('Survey.Analyse.Ctrl.Qt.Stats', {
         defaults : {
-            models$      : {}                       ,// 页面总模型
-            $question    : $('div.question')        ,// 调查所有题目DOM
+            models$   : {}              ,// 页面总模型
+            $question : $('.question')  ,// 调查所有题目DOM
         },
         // listensTo : ["question_stats"]
     }, {
         init : function(){
             var $this = this ;
 
-            // 调查题目显示select初始化
-            $this.element.find('select').attr('value', 0) ;
+            this.element.vkForm('reset') ;  // 分析相关功能表单初始化
 
-            // 初始化用户属性分析的两个select选项
-            $.each(this.options.$question, function(){
-                if($(this).hasClass('qt-stats')){
-                    var $selectProp   = $(this).find('select.prop-select'),
-                        $selectOption = $(this).find('select.option-select'),
-                        prop          = $selectProp.find('option').eq(0).val(),
-                        option        = $selectOption.find('option').eq(0).val() ;
-
-                    $selectProp.attr('value', prop) ;
-                    $selectOption.attr('value', option) ;
-
-                    // 图表初始化
-                    $this.stats_sx($(this)) ;
-                    $this.stats_jx($(this)) ;
-                }
+            // 对每个题目进行选项整体分析
+            $.each($this.options.$question, function(){
+                $.each($(this).find('.stats-line'), function(){
+                    $(this).progressbar({value:parseFloat($(this).attr('data-value'))}) ;
+                }) ;
             }) ;
-        }, 
+        },
 
         // 取到调查题目参与数据触发题目分析报表
-        "{models$} stats_qt_group_prop" : function(){
-            var quesiton_code,
-                $this = this ;
+        "{models$} stats_tx" : function(){
+            var $this = this ;
 
-            // 分别对每个题目进行分析
-            $.each($this.options.$question, function(){
-                if($(this).attr('data-question-type') == 'textarea'){
-                    question_code = $(this).attr('data-question-code') ;
-                }else{
-                    $this.stats_opt($(this)) ;  // 先完成各题目选项整体分析报表
-                    $this.stats_sx($(this)) ;   // 然后初始化用户属性分析报表
-                }
+            $.each(this.options.models$.stats$.prop$, function(question_code, data$){
+                $this.stats_tx($this.options.$question.filter('[data-question-code=' + question_code + ']')) ;
+            }) ;
+        },
+
+        // 取到调查题目参与数据触发题目分析报表
+        "{models$} stats_sx" : function(){
+            var $this = this ;
+
+            $.each(this.options.models$.stats$.prop$, function(question_code, data$){
+                $this.stats_sx($this.options.$question.filter('[data-question-code=' + question_code + ']')) ;
+            }) ;
+        },
+
+        // 取到调查题目参与数据触发题目分析报表
+        "{models$} stats_jx" : function(){
+            var $this = this ;
+
+            $.each(this.options.models$.stats$.item$, function(question_code, data$){
+                $this.stats_jx($this.options.$question.filter('[data-question-code=' + question_code + ']')) ;
             }) ;
         },
 
@@ -391,6 +382,7 @@ steal('init.js')
 
             // 滚动页面到头
             window.scrollTo(0, 0) ;
+            el.blur() ;
         },
 
         // 点击查看主观题详情
@@ -402,11 +394,20 @@ steal('init.js')
 
         // 分析类型切换
         ".item-graphs-header>.tab click" : function(el){
-            el.parents('.item-graphs').find('.item-graphs-body>div').removeClass('active') ;
-            el.parents('.item-graphs').find('.item-graphs-body>.item-graphs-' + el.attr('data-type')).addClass('active') ;
+            el.parents('.item-graphs').find('.graphs-sub>div').removeClass('active') ;
+            el.parents('.item-graphs').find('.graphs-sub>.gs-' + el.attr('data-type')).addClass('active') ;
         },
 
-        // 目标选项变更
+        // 分析目标和维度置换
+        ".exchange click" : function(el){
+            $prev = el.prev().removeClass('graphs-x').addClass('graphs-y') ;
+            $next = el.next().removeClass('graphs-y').addClass('graphs-x') ;
+
+            $prev.insertAfter(el) ;
+            $next.insertBefore(el) ;
+        },
+
+        // 目标选项变更（废弃）
         "li.option-select>select change" : function(el){
             this.stats_sx(el.parents('.question.qt-stats')) ;
             this.stats_jx(el.parents('.question.qt-stats')) ;
@@ -431,103 +432,155 @@ steal('init.js')
             this.textarea_list(question_code, idx) ;
         },
 
+        // 分析类型菜单点击切换
+        ".item-graphs-header>li click" : function(el){
+            el.prevAll().removeClass('stats') ;
+            el.addClass('stats').parents('.question').attr('data-stats', el.attr('data-type')) ;
+        },
+
+        // 题目选项分析切换用户属性
+        ".user-prop-main.tx>select change" : function(el){
+            var option_txt, 
+                prop    = el.val(),
+                $target = el.parent().siblings('.user-prop-sub.tx').show().find('select'),
+                $tpl    = $target.find('option.tpl'),
+                prop$   = this.options.models$.prop$[prop],
+                data$   = $.vkData('data_select_sum', {
+                    data$ : this.options.models$.stats$.prop$[el.parents('.question').attr('data-question-code')],
+                    key   : 'stats', 
+                    group : prop,
+                }) ;
+
+            el.children('.init').remove() ;
+            $target.find('option').not('.tpl').remove() ;
+
+            for(var i = 0; i < prop$.length; i++){
+                if(data$[prop$[i][prop + '_desc']]){
+                    option_txt = prop$[i][prop + '_desc'] + '(' + data$[prop$[i][prop + '_desc']] + ')' ;
+                }else{
+                    option_txt = prop$[i][prop + '_desc'] + '(0)' ;
+                }
+                $target.append($tpl.clone().removeClass('tpl').show().attr('value', prop$[i][prop + '_desc']).text(option_txt)) ;
+            }
+
+            $target.attr('value', $target.find('option').not('.tpl').first().val()) ;
+            this.stats_main(el.parents('.question')) ;
+        },
+
+        // 题目选项分析切换用户属性值
+        ".user-prop-sub.tx>select change" : function(el){
+            this.stats_main(el.parents('.question')) ;
+        },
+
+        // 题目选项分析切换用户属性值
+        ".item-opt.sx>select change" : function(el){
+            this.stats_main(el.parents('.question')) ;
+        },
+
+        // 用户属性分析切换用户属性
+        ".user-prop.sx>select change" : function(el){
+            this.stats_main(el.parents('.question')) ;
+        },
+
+        ".item-opt.jx>select change" : function(el){
+            this.stats_main(el.parents('.question')) ;
+        },
+
+        ".item-list.jx>select change" : function(el){
+            this.stats_main(el.parents('.question')) ;
+        },
+
+        // 题目分析总控制
+        stats_main : function($question){
+            eval("this.stats_" + $question.find('.item-graphs-header>li.active').attr('data-type') + "($question)") ;
+        },
+
         // 题目选项分析
-        stats_opt : function($question){
-            $.each($question.find('div.stats-line'), function(){
-                $(this).progressbar({value:parseFloat($(this).attr('data-value'))}) ;
-            }) ;
+        stats_tx : function($question){
+            var chart$, where$, title
+                $this         = this,
+                question_code = $question.attr('data-question-code'),
+                $graphs       = $question.find('.graphs-tx'),
+                $highchart    = $graphs.find('.highchart'),
+                $nochart      = $graphs.find('.nochart'),
+
+                param$ = {
+                    data$ : $this.options.models$.stats$.prop$[question_code],
+                    key   : 'stats', 
+                    group : 'option_name'
+                } ;
+
+            if($graphs.find("select.user-prop").val() != 0){
+                where$ = {} ;
+                where$[$graphs.find("select.user-prop").val()] = $graphs.find("select.user-prop-value").val() ;
+                param$.where$ = [where$] ;
+
+                title = $this.options.models$.question$[question_code].question_name + '(' + $graphs.find("select.user-prop-value").val() + ')' ;
+            }else{
+                title = $this.options.models$.question$[question_code].question_name ;
+            }
+
+            chart$ = $.vkData('data_select_sum', param$) ;
+
+            if(!isEmptyObject(chart$)){
+                $highchart.show().vkHighChart($this.options.models$.data_format_hchart(chart$, title)) ;
+                $nochart.hide() ;
+            }else{
+                $nochart.show() ;
+                $highchart.hide() ;
+            }
         },
 
         // 用户属性分析
         stats_sx : function($question){
-            var models$ = this.options.models$ ;
+            var $this         = this,
+                question_code = $question.attr('data-question-code'),
+                $graphs       = $question.find('.graphs-sx'),
+                $highchart    = $graphs.find('.highchart'),
+                $nochart      = $graphs.find('.nochart'),
+                title         = $graphs.find(".item-opt.sx>select").val(),
 
-            if(models$.question$){
-                var data$,
-                    $graphs       = $question.find('.item-graphs-sx'),
-                    $highchart    = $graphs.find('.highchart'),
-                    $nochart      = $graphs.find('.nochart'),
-                    user_prop     = $graphs.find('select').val(),
-                    option        = $question.find('select.option-select').val(),
-                    question_code = $question.attr('data-question-code'),
-                    question_name = $question.attr('data-question-name'),
-                    option_num    = parseInt($question.find('td.choose-num[data-option=' + option + ']').text()) ;
+                chart$ = $.vkData('data_select_sum', {
+                    data$  : $this.options.models$.stats$.prop$[question_code],
+                    key    : 'stats', 
+                    where$ : [{option_name: $graphs.find(".item-opt.sx>select").val()}],
+                    group  : $graphs.find(".user-prop.sx>select").val(),
+                }) ;
 
-                // 根据目标选项是否有选择数据决定处理方式
-                if(option_num > 0 || option == 0){
-                    if(models$.question$[question_code]){
-                        // 按照属性筛选数据
-                        data$ = $.vkData('data_select_sum', {
-                            data$ : models$.question$[question_code], 
-                            key   : 'cnt', 
-                            group : [user_prop, 'option_name']}
-                        ) ;
-                        
-                        // 转换数据并生成图表
-                        $highchart.vkHighChart(models$.data_format_hchart(data$, question_name, option)) ;
-                    }
-
-                    $nochart.hide() ;
-                    $highchart.show() ;
-                }else{
-                    $highchart.hide() ;
-                    $nochart.show() ;
-                }
+            if(!isEmptyObject(chart$)){
+                $highchart.show().vkHighChart($this.options.models$.data_format_hchart(chart$, title)) ;
+                $nochart.hide() ;
+            }else{
+                $nochart.show() ;
+                $highchart.hide() ;
             }
         },
 
         // 交叉题目分析
         stats_jx : function($question){
-            var stats$,
-                $this         = this,
-                models$       = $this.options.models$,
-                survey_code   = $this.options.models$.survey_code,
-                $graphs       = $question.find('.item-graphs-jx'),
+            var $this         = this,
+                $graphs       = $question.find('.graphs-jx'),
                 $highchart    = $graphs.find('.highchart'),
                 $nochart      = $graphs.find('.nochart'),
-                group_item    = $graphs.find('select.item').val(),
-                option        = $question.find('select.option-select').val(),
                 question_code = $question.attr('data-question-code'),
-                question_name = $question.attr('data-question-name') ;
 
-            // 取调查基本数据：调查基本信息查询接口
-            $.ajax({
-                type    : 'post',
-                url     : __API__,
-                data    : { api         : 'stats_qt_group_item',
-                            survey_code : survey_code,
-                            target_qt   : question_code,
-                            group_qt    : group_item,
-                          },
-                success : function(data$){
-                    if(data$.status){
-                        // 按照属性筛选数据
-                        if(option){
-                            stats$ = $.vkData('data_select_sum', {
-                                data$  : data$.data, 
-                                key    : 'cnt', 
-                                where$ : [{tgt_opt_name:option}],
-                                group  : ['grp_opt_name', 'tgt_opt_name']}
-                            ) ;
-                        }else{
-                            stats$ = $.vkData('data_select_sum', {
-                                data$ : data$.data, 
-                                key   : 'cnt', 
-                                group : ['grp_opt_name', 'tgt_opt_name']}
-                            ) ;
-                        }
-                        
-                        // 转换数据并生成图表
-                        $highchart.vkHighChart(models$.data_format_hchart(stats$, question_name, option)) ;
+                chart$ = $.vkData('data_select_sum', {
+                    data$  : $this.options.models$.stats$.item$[question_code],
+                    key    : 'stats', 
+                    where$ : [{tgt_opt_code:$graphs.find(".item-opt.jx>select").val(), grp_qt_code:$graphs.find(".item-list.jx>select").val()}],
+                    group  : 'grp_opt_name',
+                }) ;
 
-                        $nochart.hide() ;
-                        $highchart.show() ;
-                    }else{
-                        $highchart.hide() ;
-                        $nochart.show() ;
-                    }
-                }
-            });
+            if(!isEmptyObject(chart$)){
+                $highchart.show().vkHighChart($this.options.models$.data_format_hchart(
+                    chart$, 
+                    $graphs.find(".item-opt.jx>select>option[value="+$graphs.find(".item-opt.jx>select").val()+"]").attr('data-name')
+                )) ;
+                $nochart.hide() ;
+            }else{
+                $nochart.show() ;
+                $highchart.hide() ;
+            }
         },
 
         // 主观题内容列表加载

@@ -54,13 +54,13 @@ steal('init.js')
         		date = date.add('d', 1) ;
         	}
 
-        	data$ = model$.random_array(31, 50, 200) ;
+        	data$ = model$.random_array(31, 50, 350) ;
 
         	model$.publish$ = {
 	            chart: {
 	                type         : 'area'  ,// 图表类型
 	                width        : 450     ,// 图表长度
-	                height       : 250     ,// 图表宽度
+	                height       : 300     ,// 图表宽度
 	            	marginRight  : 20      ,// 右边距
 	            	borderRadius : 0       ,// 无圆角
 	            },
@@ -122,14 +122,14 @@ steal('init.js')
         	}
 
         	for(var i = 0; i < 5; i++){
-        		data$.push(model$.random_array(31, 400, 300)) ;
+        		data$.push(model$.random_array(31, 600, 300)) ;
         	}
 
         	model$.partake$ = {
 	            chart: {
 	                type         : 'area'  ,// 图表类型
 	                width        : 450     ,// 图表宽度
-	                height       : 250     ,// 图表高度
+	                height       : 300     ,// 图表高度
 	            	marginRight  : 20      ,// 右边距
 	            	borderRadius : 0       ,// 无圆角
 
@@ -402,7 +402,7 @@ steal('init.js')
                 models$ : this.options.models$
             }) ;
             
-            $('body').show() ;
+            this.element.addClass('active') ;
         },
 
         "{$liAllStats} click" : function(){

@@ -6,85 +6,89 @@
  * Author      : ReadYun
  * Copyright   : VixiK
  */
+#Main{
+    width: 100%;
+    overflow: hidden;
+}
 
-#navBar{
+#navBox{
     width: 100%;
     border-bottom: 1px solid #CCC;
     }
-    #navBar>div.nav-bar{
+    #navBox>div.nav-bar{
         width: 960px;
         height: 40px;
         margin: 10px auto;
         }
-        #navBar>div.nav-bar>div{
+        #navBox>div.nav-bar>div{
             box-sizing: border-box;
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
             line-height: auto;
         }
-        #navBar div.nav-bar-left{
+        #navBox div.nav-bar-left{
             min-width: 750px;
             padding-right: 10px;
             float: left;
             overflow: hidden;
             line-height: auto;
             }
-            #navBar div.nav-bar-photo{
+            #navBox div.nav-bar-photo{
                 width: 40px;
                 height: 40px;
                 margin-right: 10px;
                 float: left;
                 overflow: hidden;
                 }
-                #navBar  div.nav-bar-photo>div.user-photo>img{
+                #navBox  div.nav-bar-photo>div.user-photo>img{
                     width: 100%;
                     height: 100%;
                 }
-            #navBar div.nav-bar-info{
+            #navBox div.nav-bar-info{
                 width: 700px;
                 float: left;
                 overflow: hidden;
                 line-height: auto;
                 }
-                #navBar div.nav-bar-info a{
+                #navBox div.nav-bar-info a{
                     cursor: pointer;
                 }
-                #navBar div.nav-bar-title{
+                #navBox div.nav-bar-title{
                     width: 100%;
                     float: left;
                     font: 19px "宋体",Tahoma;
                 }
-                #navBar div.nav-bar-user>div{
+                #navBox div.nav-bar-user>div{
                     margin-top: 3px;
                     margin-left: 2px;
                     float: left;
                     font-size: 12px;
                     }
-                    #navBar div.user-ext>div{
+                    #navBox div.user-ext>div{
                         margin-left: 15px;
                         float: left;
                         font-size: 12px;
                         color: #999;
                     }
-        #navBar div.nav-bar-right{
+        #navBox div.nav-bar-right{
             width: 200px;
             height: 100%;
             float: right;
             }
-            #navBar div.nav-bar-right>div{
+            #navBox div.nav-bar-right>div{
                 height: 100%;
                 box-sizing: border-box;
                 -moz-box-sizing: border-box;
                 -webkit-box-sizing: border-box;
                 float: right;
             }
-            #navBar div.nav-bar-right>div.survey-switch{
+            #navBox div.nav-bar-right>div.survey-switch{
                 height： 100%;
                 float: right;
                 text-align: center;
                 color: #999;
                 }
-                #navBar div.survey-switch>button{
+                #navBox div.survey-switch>button{
                     box-sizing: border-box;
                     -moz-box-sizing: border-box;
                     -webkit-box-sizing: border-box;
@@ -92,11 +96,11 @@
                     height: 32px;
                     margin-top: 4px;
                 }
-                #navBar div.survey-switch.open>button{
+                #navBox div.survey-switch.open>button{
                     color: #FFF;
                     background: #CCC;
                 }
-                #navBar div.survey-switch>div.switch-content{
+                #navBox div.survey-switch>div.switch-content{
                     box-sizing: border-box;
                     -moz-box-sizing: border-box;
                     -webkit-box-sizing: border-box;
@@ -109,7 +113,7 @@
                     -moz-box-shadow: none;
                     -webkit-box-shadow: none;
                     }
-                    #navBar div.switch-content>.sc-header{
+                    #navBox div.switch-content>.sc-header{
                         box-sizing: border-box;
                         -moz-box-sizing: border-box;
                         -webkit-box-sizing: border-box;
@@ -117,38 +121,38 @@
                         padding: 0 10px;
                         overflow: hidden;
                         }
-                        #navBar div.switch-content>.sc-header>div.sc-header-nav{
+                        #navBox div.switch-content>.sc-header>div.sc-header-nav{
                             width: 100%;
                             float: left;
                             overflow: hidden;
                             }
-                            #navBar div.sc-header-nav ul{
+                            #navBox div.sc-header-nav ul{
                                 margin-bottom: 10px;
                             }
-                            #navBar div.sc-header-nav li>a{
+                            #navBox div.sc-header-nav li>a{
                                 padding: 5px 10px;
                                 border-radius: 0;                                
                             }
-                    #navBar div.switch-content .tab-pane>.vkpaging-box{
+                    #navBox div.switch-content .tab-pane>.vkpaging-box{
                         display: none; 
                     }
-                    #navBar div.switch-content .vkpaging.active>.vkpaging-box{
+                    #navBox div.switch-content .vkpaging.active>.vkpaging-box{
                         display: block; 
                     }
-                    #navBar div.switch-content .vkpaging.active>.vkpaging-null{
+                    #navBox div.switch-content .vkpaging.active>.vkpaging-null{
                         display: none; 
                     }
-                    #navBar div.switch-content .vkpaging-null>.scn-desc{
+                    #navBox div.switch-content .vkpaging-null>.scn-desc{
                         margin: 50px 0;
                         padding: 0 25px;
                         overflow: hidden;
                         font: 23px "宋体",Tahoma;
                         text-align: left;
                     }
-                    #navBar div.switch-content .vkpaging-null>.scn-action>button{
+                    #navBox div.switch-content .vkpaging-null>.scn-action>button{
                         width: 280px;
                     }
-                    #navBar div.switch-content .vkpaging-body{
+                    #navBox div.switch-content .vkpaging-body{
                         box-sizing: border-box;
                         -moz-box-sizing: border-box;
                         -webkit-box-sizing: border-box;
@@ -157,7 +161,7 @@
                         padding: 0 10px;
                         overflow: hidden;
                         }
-                        #navBar .vkpaging-body>.sv-list{
+                        #navBox .vkpaging-body>.sv-list{
                             width: 100%;
                             padding: 7px 0;
                             float: left;
@@ -165,37 +169,32 @@
                             color: #666;
                             border-bottom: 1px dotted #CCC;
                             }
-                            #navBar .vkpaging-body>.sv-list>div.sv-name{
+                            #navBox .vkpaging-body>.sv-list>div.sv-name{
                                 float: left;
                             }
-                            #navBar .vkpaging-body>.sv-list>div.sv-name>a{
+                            #navBox .vkpaging-body>.sv-list>div.sv-name>a{
                                 color: #666;
                                 text-decoration: none;
                             }
-                            #navBar .vkpaging-body>.sv-list>div.sv-name>a:hover{
+                            #navBox .vkpaging-body>.sv-list>div.sv-name>a:hover{
                                 color: #0066CC;
                                 text-decoration: underline;
                             }
-                            #navBar .vkpaging-body>.sv-list>div.sv-state{
+                            #navBox .vkpaging-body>.sv-list>div.sv-state{
                                 float: right;
                             }
-                        #navBar .vkpaging-body>.sv-list:hover{
+                        #navBox .vkpaging-body>.sv-list:hover{
                             background: #F9F9F9;
                             cursor: pointer;
                         }
-                        #navBar .vkpaging-body>.sv-list:hover>.sv-name>a{
+                        #navBox .vkpaging-body>.sv-list:hover>.sv-name>a{
                             color: #333;
                         }
-                    #navBar div.switch-content .vkpaging-nav{
+                    #navBox div.switch-content .vkpaging-nav{
                         padding-right: 20px;
                         margin-top: 30px;
                     }
-#Main{
-    width: 960px;
-    padding: 0;  
-    margin: 20px auto;
-    overflow: hidden;
-}    
+    
 #sideBar{
     width: 100%;
     position: fixed;
@@ -283,13 +282,13 @@
             height: 100%;
             float: left;
         }
-        #itemStats>div.stats-graphs>div.line-radio{
+        #itemStats>div.stats-graphs>div.line-xz{
             background: #FF7F50;
         }
-        #itemStats>div.stats-graphs>div.line-checkbox{
+        #itemStats>div.stats-graphs>div.line-zg{
             background: #87CEFA;
         }
-        #itemStats>div.stats-graphs>div.line-textarea{
+        #itemStats>div.stats-graphs>div.line-pf{
             background: #FFD700;
         }
 
@@ -385,6 +384,13 @@
                 display: block;
             }
 
+#mainBox{
+    width: 960px; 
+    min-height: 350px;
+    _height: expression((documentElement.clientHeight < 350) ? "350px" : "auto");
+    margin: 20px auto;
+    overflow: hidden;
+}
 #questionStats{
     width: 800px;
     overflow: hidden;
@@ -557,11 +563,14 @@
             padding-top: 10px;
             margin: 0 auto;
             overflow: hidden;
-        }
+            }
+            div.question div.item-option table{
+                margin-bottom: 10px;
+            }
         table.table-bordered.table-thin th{
             padding: 5px;
             background: #F9F9F9;
-            font: 14px "微软雅黑",Tahoma;  
+            font: 12px "微软雅黑",Tahoma;  
             text-align: center;
             border-radius: 0;
         }    
@@ -583,12 +592,12 @@
         table.table-bordered .option-stats{
             width: 160px;
             }    
-            table.table-bordered .option-stats div.stats-ratio{
+            table.table-bordered .option-stats .stats-ratio{
                 padding: 0;
-                margin-left: 10px;
-                float: left;
+                margin-right: 5px;
+                float: right;
             }
-            table.table-bordered .option-stats div.stats-line{
+            table.table-bordered .option-stats .stats-line{
                 width: 140px;
                 height: 12px;
                 margin-top: 3px;
@@ -598,16 +607,46 @@
                 border-radius: 0;
                 background: #F5F5F5;
                 }
-                table.table-bordered .option-stats div.stats-line div.ui-progressbar-value{
-                    border-color: #6bb130;
+                table.table-bordered .option-stats .stats-line .ui-progressbar-value{
+                    border-color: #6BB130;
                     background: #6bb130;
                 }
-        div.question>div.item-graphs{
+
+        table.pf-option{
+            margin: 0;
+            border: 1px solid #CCC;
+            }
+            table.pf-option .option-pf{
+                width: 41px;
+                text-align: center;
+            }
+            table.pf-option .pf-cnt{
+                width: 50px;
+                text-align: center;
+            }
+            table.pf-option .pf-stats{
+                width: 160px;
+            }
+            table.pf-option .stats-line{
+                width: 110px;
+                height: 12px;
+                margin-top: 3px;
+                margin-left: 5px;
+                margin-right: 5px;
+                float: left;
+                border: 0;
+                border-radius: 0;
+                background: #F5F5F5;
+                }
+                table.pf-option .stats-line .ui-progressbar-value{
+                    border-color: #3399FF;
+                    background: #3399FF;
+                }
+        .question>.item-graphs{
             width: 100%;
-            margin-top: 10px;
             overflow: hidden;
             }
-            div.question>div.item-graphs .item-graphs-header{
+            .question>.item-graphs .item-graphs-header{
                 box-sizing: border-box;
                 -moz-box-sizing: border-box;
                 -webkit-box-sizing: border-box;
@@ -616,55 +655,98 @@
                 padding-right: 10px;
                 margin-bottom: 12px;
                 }
-                div.question>div.item-graphs .item-graphs-header>li{
+                .question>.item-graphs .item-graphs-header>li{
                     overflow: hidden;
                     border-radius: 0;
                     cursor: pointer;
                     }
-                    div.question>div.item-graphs .item-graphs-header>li>a{
-                        padding: 5px 10px 15px 10px;
+                    .question>.item-graphs .item-graphs-header>li>a{
                         border-radius: 0;
-                        font: 19px "宋体",Tahoma;
+                        font: 12px "微软雅黑",Tahoma;
                         color: #666;
                     }
-                div.question>div.item-graphs .item-graphs-header>li.option-select{
-                    float: right;
-                    overflow: hidden;
-                    }
-                div.question>div.item-graphs .item-graphs-header select{
-                    width: 450px;
-                    padding: 4px;
-                    overflow: hidden;
-                    font: 19px "宋体",Tahoma;
-                }
-            div.question>div.item-graphs .item-graphs-body{
+            .question>.item-graphs .item-graphs-body{
                 box-sizing: border-box;
                 -moz-box-sizing: border-box;
                 -webkit-box-sizing: border-box;
                 width: 100%;
-                padding-left: 10px;
-                padding-right: 10px;
                 }
-                div.question>div.item-graphs .item-graphs-body>div{
-                    display: none;
-                }
-                div.question>div.item-graphs .item-graphs-body>div.active{
-                    display: block;
-                }
-                div.question>div.item-graphs .item-graphs-body select{
+                .question>.item-graphs .item-graphs-body select{
                     box-sizing: border-box;
                     -moz-box-sizing: border-box;
                     -webkit-box-sizing: border-box;
                     width: 100%;
-                    font: 19px "宋体",Tahoma;
-                }
-                div.question>div.item-graphs .item-graphs-body .graphs-box{
+                    height: 24px;
+                    padding: 0;
+                    }
+                    .question>.item-graphs .item-graphs-body select>option{
+                        padding-left: 3px;
+                    }
+                .question>.item-graphs .graphs-sub{
                     width: 100%;
-                    min-height: 400px;
-                    padding-top: 5px;
-                    margin-bottom: 10px;
+                    padding: 0 10px;
+                    overflow: hidden;
+                    border-bottom: 1px solid #CCC;
+                    }
+                    .question>.item-graphs .graphs-sub>div{
+                        float: left;
+                    }
+                .question .graphs-tx .user-prop-main{
+                    width: 300px;
+                    margin-right: 20px;
                 }
-            div.question>div.item-graphs .item-graphs-action{
+                .question .graphs-tx .user-prop-sub{
+                    width: 200px;
+                }
+                .question .graphs-sx .item-opt{
+                    width: 500px;
+                    margin-right: 20px;
+                    }
+                    .question .graphs-sx .item-opt>select{
+                        width: 450px;
+                        float: left;
+                    }
+                    .question .graphs-sx .item-opt>button{
+                        width: 35px;
+                        height: 24px;
+                        float: left;
+                        font-size: 12px;
+                        margin: 0;
+                        border-left: none;
+                    }
+                .question .graphs-sx .user-prop{
+                    width: 200px;
+                    margin-right: 20px;
+                }
+                .question .graphs-jx .item-opt{
+                    width: 375px;
+                    margin-right: 20px;
+                }
+                .question .graphs-jx .item-list{
+                    width: 375px;
+                    margin-right: 20px;
+                }
+                .question>.item-graphs .item-graphs-body .graphs-main{
+                    width: 100%;
+                    padding: 5px 10px;
+                }
+                .question .item-graphs-body>div{
+                    display: none;
+                    width: 100%;
+                    overflow: hideen;
+                }
+                .question>.item-graphs .item-graphs-body .highchart{
+                    min-height: 400px;
+                }
+                .question>.item-graphs .item-graphs-body .nochart{
+                    height: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                }
+                .question[data-stats='tx'] .item-graphs-body>div.graphs-tx{display: block;}
+                .question[data-stats='sx'] .item-graphs-body>div.graphs-sx{display: block;}
+                .question[data-stats='jx'] .item-graphs-body>div.graphs-jx{display: block;}
+            .question>.item-graphs .item-graphs-action{
                 box-sizing: border-box;
                 -moz-box-sizing: border-box;
                 -webkit-box-sizing: border-box;
@@ -676,47 +758,37 @@
                 overflow: hidden;
                 border-top: 1px solid #CCC;
                 }
-                div.question .item-graphs-action>.iga-left{
+                .question .item-graphs-action>.iga-left{
                     float: left;
                     }
-                    div.question .item-graphs-action>.iga-left>button{
+                    .question .item-graphs-action>.iga-left>button{
                         float: left;
                         margin-right: 10px;
                     }
-                div.question .item-graphs-action>.iga-right{
+                .question .item-graphs-action>.iga-right{
                     float: right;
                     }
-                    div.question .item-graphs-action>.iga-right>button{
+                    .question .item-graphs-action>.iga-right>button{
                         float: right;
                         margin-left: 10px;
                     }
-            div.question>div.item-graphs>div.action-box{
+            .question>.item-graphs>.action-box{
                 width: 100%;
                 height: 40px;
                 }
-                div.item-graphs>div.action-box>div{
+                .item-graphs>.action-box>{
                     width: 50%;
                     float: left;
                 }
-                div.item-graphs>div.action-box>div.action-prop>select{
+                .item-graphs>.action-box>.action-prop>select{
                     width: 180px;
                     float: left;
                     font: 19px "宋体",Tahoma;
                 }
-                div.item-graphs>div.action-box>div.action-option>select{
+                .item-graphs>.action-box>.action-option>select{
                     width: 400px;
                     float: right;
                     font: 19px "宋体",Tahoma;  
-                }
-            div.question>div.item-graphs>div.graphs-box{
-                width: 720px;
-                margin: 20px 10px;
-                overflow: hidden;
-                }
-                div.question>div.item-graphs>div.graphs-box>div.nochart{
-                    margin: 30px auto;
-                    font: 21px "宋体",Tahoma;  
-                    color: #999999;
                 }
 
 #questionStats.single select.qt-select{
@@ -737,82 +809,258 @@
     -webkit-box-sizing: border-box;
     width: 100%;
     min-height: 400px;
-    padding-top: 20px;
-    padding-bottom: 10px;
+    padding: 20px 10px;
     overflow: hidden;
     border: 1px solid #CCC;
     }
-    div.question-item{
-        box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
+    #surveyContent .question{
         width: 100%;
-        margin-bottom: 5px;
-        padding: 0 0 10px 0;
-        overflow: hidden;
+        margin: 10px 0;
+        float: left;
         }
-        div.question-item>div.qt-title{
+        #surveyContent .question .qt-header{
             width: 100%;
-            margin: 10px 0;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
             overflow: hidden;
-            font: 19px "宋体",Tahoma;  
+            font: 19px "宋体",Tahoma;
+            text-align: center;
             color: #666;
-            opacity: 0.8;
+            border-bottom: 1px dotted #CCC;
             }
-            div.question-item>div.qt-title>div.qt-seq{
-                width: 30px;
-                height: 21px;
+            #surveyContent .question .qt-seq{
+                width: 40px;
+                float: left;
+                text-align: left;
+                }
+                #surveyContent .question .qt-seq>span{
+                    float:right;
+                    font: 16px Tahoma;
+                    color: red;
+                    margin-top: -1px;
+                    margin-right: 1px;
+                }
+            #surveyContent .question .qt-title{
+                width: 738px;
+                float: left;
+                text-align: left;
+            }
+            #surveyContent .question:hover .qt-header{
+                color: #333;
+            }
+        #surveyContent .question .qt-body{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100%;
+            padding-left: 41px;
+            float: left;
+            color: #666;
+            }
+            #surveyContent .question .qt-zg .vk-input{
+                width: 400px;
+                color: #666;
+            }
+            #surveyContent .question .qt-zg div.vk-input{
+                min-height: 78px;
+                _height: expression((documentElement.clientHeight < 78) ? "78px" : "auto");
+            }
+    #surveyContent .question .pf-item>div{
+        margin: 10px 10px 0 0;
+        float: left;
+        overflow: hidden;
+        font: 19px "宋体",Tahoma;
+        }
+        #surveyContent .question .pf-item .pr-desc{
+            padding-top: 1px;
+        }
+        #surveyContent .question .pf-item .pr-mid{
+            margin-top: 9px;
+            border: 1px solid #CCC;
+            border-left: none;
+        }
+        #surveyContent .question .pf-item .pr-mid>span{
+            min-width: 25px;
+            _width: expression((documentElement.clientWidth < 25) ? "25px" : "auto");
+            height: 23px;
+            display: block;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            margin: 0;
+            float: left;
+            color: #666;
+            text-align: center;
+            border-right: none;
+            cursor: pointer;
+            border-left: 1px solid #CCC;
+        }
+        #surveyContent .question .pf-item .pr-mid>span.ok, #surveyContent .question .pf-item .pr-mid>span:hover{
+            color: #FFF;
+            background: #6699FF;
+        }
+        #surveyContent .question .pf-option .vf-elem-option{
+            width: 100%;
+            float: left;
+            margin-bottom: 5px;                
+            font: 12px "微软雅黑",Tahoma;
+            }
+            #surveyContent .question .pf-option .val-select{
+                margin-top: -3px;
                 margin-right: 5px;
-                padding: 2px;
-                padding-right: 5px;
                 float: left;
-                text-align: right;
-                color: #333 ;
-                background: #F3F3F3;
-            }
-            div.question-item>div.qt-title>div.qt-name{
-                width: 630px;
-                float: left;
-                padding: 2px;
-            }
-            div.question-item>div.qt-title>div.qt-type{
-                width: 110px;
-                padding: 2px;
-                font: 19px "宋体",Tahoma;  
-                color: #999;
-                text-align: center;
-                float: right;
-                border-bottom: 1px solid #CCC;                
-            }
-        div.question-item:hover>div.qt-title{
-            opacity: 1;
-            }
-            div.question-item:hover>div.qt-title>div.qt-seq{
-                border-color: #CCC;
-            }
-        div.question-item>div.qt-option{
-            width: 650px;
-            margin-left: 45px;
-            }
-            div.question-item .vf-elem-option{
+                cursor: pointer;
                 font: 19px "宋体",Tahoma;
-                color: #999;
-                overflow: hidden;
-            } 
-            div.qt-option textarea{
-                width: 500px;
-                height: 150px;
-                font: 12px "宋体",Tahoma;
+            }
+            #surveyContent .question .pf-option .val-select span{
+                width: 16px;
+                float: left;
+                text-align: center;
+            }
+            #surveyContent .question .pf-option .val-select span:hover{
+                color: #000;
+            }
+            #surveyContent .question .pf-option .val-select .vs-btn>.dropdown-toggle{
+                width: 25px;
+                margin-top: 2px;
+                float: left;
+                border: none;
+                font-size: 16px;
+                color: #666;
+                text-align: center;
+            }
+            #surveyContent .question .vf-elem-option.ok .val-select .vs-btn>.dropdown-toggle,
+            #surveyContent .question .vf-elem-option.ok .val-select .vs-btn>.dropdown-toggle:hover{
+                color: #6699FF;
+                font-weight: 900;
+            }
+            #surveyContent .question .pf-option .val-select .vs-btn>.dropdown-toggle:hover{
+                color: #333;
+                text-decoration: none;
+            }
+            #surveyContent .question .pf-option .val-select .vs-btn>.dropdown-menu{
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                min-width: 25px;
+                padding: 0;
+                margin: 0;
+                float: left;
+                font-size: 14px;
+                text-align: center;
+                border-radius: 0;
+                border-color: #999;
+                border-top: none;
+                border-bottom: none;
                 box-shadow: none;
                 -moz-box-shadow: none;
                 -webkit-box-shadow: none;
+                }
+                #surveyContent .question .pf-option .val-select .vs-btn .vs-option{
+                    height: 20px;
+                }
+                #surveyContent .question .pf-option .val-select .vs-btn .vs-option:hover{
+                    color: #FFF;
+                    background: #3399FF;
+                }
+        #surveyContent .question .qt-option{
+            width: 100%;
+            overflow: hidden;
             }
-            div.qt-option textarea:hover{
-                border-color: #AFAFAF;
+            .qt-option label.vf-elem-option{
+                width: 100%;
+                margin-bottom: 4px;
+                float: left;
+                font: 12px "微软雅黑",Tahoma;
+                color: #666;
+                }
+                .qt-option .vf-elem-option>div{
+                    top: 0px;
+                    margin-right: 5px;
+                }
             }
-            div.qt-option textarea:focus{
-                border-color: #999;
+        #surveyContent .question .custom-option{
+            display: none;
+            margin-top: 5px;
+            overflow: hidden;
+            font-family: "微软雅黑",Tahoma;
             }
+            .question .custom-option>.custom-opt-header{
+                margin-top: 10px;
+                overflow: hidden;
+                }
+                .question .custom-option button{
+                    height: auto;
+                    margin-right: 20px;
+                    padding: 5px 10px;
+                    cursor: pointer;
+                }
+                .custom-option button.button>i{
+                    margin-right: 5px;
+                    font-size: 12px;
+                }
+            .custom-option>.custom-opt-content{
+                width: 600px;
+                padding: 10px;
+                margin-top: 10px;
+                float: left;
+                border: 1px solid #BBB;
+                }
+                .custom-option .custom-opt-content label{
+                    font-size: 14px;
+                    color: #999;
+                }
+                .custom-option .custom-opt-content input{
+                    width: 550px;
+                    padding: 2px 5px;
+                    font: 12px "微软雅黑",Tahoma;
+                    color: #333;
+                }
+                .custom-option .custom-opt-content select{
+                    width: 563px;
+                    padding: 2px;
+                    font: 12px "微软雅黑",Tahoma;
+                }
+                .custom-option .option-ele{
+                    width: auto;
+                    margin-right: 20px;
+                    float: left;
+                    overflow: hidden;
+                    font-style: italic;
+                    float: left;
+                    }
+                    .custom-option .option-ele>.co-input-name{
+                        float: left;
+                        padding-right: 10px;
+                    }
+            .custom-option>.custom-opt-result{
+                overflow: hidden;
+                }
+                .custom-opt-result>.cor-option .co-input-name{
+                    float: left;
+                }
+                .custom-opt-result>.cor-alter{
+                    float: left;
+                    height: 18px;
+                }
+                .custom-opt-result>.cor-alter>i{
+                    margin-right: 10px;
+                    font-size: 17px;
+                    cursor: pointer;
+                    color: #999;
+                }
+                .custom-opt-result>.cor-alter>i:hover{
+                    color: #666;
+                }
+                .custom-option>.custom-opt-result>div{
+                    margin-right: 30px;
+                    float: left;
+                }
+        .custom-option>div{display: none;}
+        .custom-option[data-state='-1']>.custom-opt-header{display: block;}
+        .custom-option[data-state='0']>.custom-opt-content{display: block;}
+        .custom-option[data-state='1']>.custom-opt-result {display: block;}
+
 
 /********* 调查设置模块样式 *********/
 
@@ -922,7 +1170,7 @@
     }
     #surveyComment .sc-main{
         width: 750px;
-        float: right;
+        float: left;
     }
 #surveyComment.list .comment-no{display:none;}
 #surveyComment.list .comment-list{display:block;}
@@ -944,32 +1192,36 @@
                 padding: 10px 0;
                 border-top: 1px dotted #CCC;
                 }
-                    #surveyComment .sc-user>.nick{
-                        width: 600px;
-                        text-align: left;
-                        float: left;
-                    }
-                    #surveyComment .sc-user>.time{
-                        width: 80px;
-                        float: right;
-                        text-align: right;
-                    }
-                    #surveyComment .comment-ok .sc-body{
-                        width: 100%;
-                        margin-top: 5px;
-                        float: left;
-                        text-align: left;
-                        color: #666;
-                    }
+                #surveyComment .sc-user>.nick{
+                    width: 600px;
+                    text-align: left;
+                    float: left;
+                }
+                #surveyComment .sc-user>.time{
+                    width: 80px;
+                    float: right;
+                    text-align: right;
+                }
+                #surveyComment .comment-ok .sc-body{
+                    width: 100%;
+                    margin-top: 5px;
+                    float: left;
+                    text-align: left;
+                    color: #666;
+                }
             #surveyComment .comment-ok .comment-list>.cl-elem-more{
                 width: 100%;
                 overflow: hidden;
                 margin-top: 10px;
             }
+    #surveyComment .comment-sub{
+        overflow: hidden;
+        }
     #surveyComment .comment-my{
         width: 100%;
         margin-bottom: 10px;
         overflow: hidden;
+        float: left;
         }
         #surveyComment .comment-my .need-login{
             width: 100%;
@@ -992,8 +1244,8 @@
             padding: 5px 20px;
             float: right;
         }
-        .comment-my .sc-sub, .comment-my .sc-main, body.logined .comment-my .need-login{display: none;}
-        body.logined .comment-my .sc-sub, body.logined .comment-my .sc-main{display: block;}
+        .comment-my .sc-sub, .comment-my .sc-main, body.login .comment-my .need-login{display: none;}
+        body.login .comment-my .sc-sub, body.login .comment-my .sc-main{display: block;}
 
 
 #Footer{

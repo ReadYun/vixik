@@ -132,6 +132,10 @@ steal('init.js')
             // 结束方式与状态刷新
             $end_value.find('.se-desc').text($end_value.attr('data-title') + end_name) ;
 
+            if(end_type == '1'){
+                $end_value.find('input').focusEnd() ;
+            }
+
             if(end_type != 0 && end_value != 0){
                 $end_value.find('.end-val-' + end_type).addClass('ok') ;
 
@@ -146,7 +150,7 @@ steal('init.js')
 
                     case 2 :  // 开展时长方式结束
                         if(!end_value == end_val){
-                            $end_value.find('.end-val-' + end_type).attr('data-val', end_value).text(end_value + '天') ;
+                            $end_value.find('.end-val-' + end_type).attr('data-val', end_value).children('a').text(end_value + '天') ;
                         }
 
                         $surveyEnd.find('.end-desc').show().text('活动开展' + end_value + '天后结束') ;
@@ -180,6 +184,7 @@ steal('init.js')
             // 参与用户范围
             this.element.find('.survey-range select').attr('value', info$.target_range) ;
 
+            // 调查结束方式
             if(parseInt(info$.end_type)){
                 $this.options.$surveyEnd.attr('data-sv-end', info$.end_type).attr('data-sv-end-value', info$.end_value)
                     .find('.end-type .se-body').addClass('ok').children('.dropdown-toggle')
@@ -190,6 +195,10 @@ steal('init.js')
                     this.sv_end_refresh(parseInt(info$.end_type), parseInt(info$.end_value)) ;
                 }
             }
+
+            // 调查结束语
+            this.element.find('.answer-end-desc .vk-input').html(info$.answer_end_desc) ;
+            
         },
 
         // 调查类型刷新
@@ -255,61 +264,75 @@ steal('init.js')
             setting$.end_type  = $this.options.$surveyEnd.attr('data-sv-end') ;
             setting$.end_value = $this.options.$surveyEnd.attr('data-sv-end-value') ;
 
-            // 数据校验
-            if($this.options.models$.collect$.flag && $this.options.models$.collect$.state != 'draft'){
+            // 参与结束语
+            setting$.answer_end_desc = $this.element.find('.answer-end-desc .vk-input').html() ;
+
+
+            // 发布调查前要校验数据
+            if($this.options.models$.collect$.flag && $this.options.models$.collect$.type == 'submit'){
                 $.each(setting$, function(sk, sv){
                     if($this.options.models$.collect$.flag){
                         if(sv == '' || sv == 0){
                             switch(sk){
                                 case 'survey_type' :
-                                    $this.options.models$.collect$.flag = false ;
+                                    $this.options.models$.data_collect('failed', 'setting') ;
                                     alert('请选择一个调查归属大类') ;
                                     break ;
 
                                 case 'survey_type_sub' :
-                                    $this.options.models$.collect$.flag = false ;
+                                    $this.options.models$.data_collect('failed', 'setting') ;
                                     alert('请选择一个调查归属小类') ;
                                     break ;
 
                                 case 'survey_trade' :
                                     // 商业调查和满意度调查必须设置行业类型
                                     if(setting$.survey_type == '1002' || setting$.survey_type == '1003'){
-                                        $this.options.models$.collect$.flag = false ;
+                                        $this.options.models$.data_collect('failed', 'setting') ;
                                         alert('请选择一个行业类型') ;
                                     }
                                     break ;
 
                                 case 'end_type' :
-                                    $this.options.models$.collect$.flag = false ;
+                                    $this.options.models$.data_collect('failed', 'setting') ;
                                     alert('请选择活动结束方式') ;
                                     break ;
 
                                 case 'end_value' :
                                     switch(setting$.end_type){
                                         case '1' : 
-                                            $this.options.models$.collect$.flag = false ;
+                                            $this.options.models$.data_collect('failed', 'setting') ;
                                             alert('请输入活动计划参与人数') ;
                                             break ;
 
                                         case '2' : 
-                                            $this.options.models$.collect$.flag = false ;
+                                            $this.options.models$.data_collect('failed', 'setting') ;
                                             alert('请选择活动活动开展时长') ;
                                             break ;
 
                                     }
                                     break ;
+
+                                case 'answer_end_desc' :
+                                    setting$.answer_end_desc = '感谢您参与本次调查' ;
+                                    break ;
                             }
                         }
                     }else{
                         $this.options.models$.elem_refresh($this.element) ;
+                        $this.options.models$.data_collect('failed', 'setting') ;
                         return false ;
                     }
                 }) ;
             }
 
             // 传入数据给总模型
-            $.extend(this.options.models$.info$, setting$) ;
-            return true ;
+            if($this.options.models$.collect$.flag){
+                // 传入数据给总模型
+                $.extend(this.options.models$.info$, setting$) ;
+                $this.options.models$.data_collect('success', 'setting') ;
+            }else{
+                $this.options.models$.data_collect('failed', 'setting') ;
+            }
         },
     }) ;
 }) ;

@@ -48,10 +48,10 @@
             <div class="info-header">{$user['user_nick']}</div>
             <div id="actionInfo">
                 <ul class="nav nav-tabs">
-                    <li class="survey-public active"><a href="#publish-survey" data-toggle="tab">发布的调查</a></li>
-                    <li class="survey-answer"><a href="#answer-survey" data-toggle="tab">参与的调查</a></li>
-                    <li class="survey-follow"><a href="#follow-survey" data-toggle="tab">关注的调查</a></li>
-                    <li class="user-follow"><a href="#follow-user" data-toggle="tab">关注的用户</a></li>
+                    <li class="survey-public active"><a href="#publish-survey" data-toggle="tab" onfocus="this.blur()">发布的调查</a></li>
+                    <li class="survey-answer"><a href="#answer-survey" data-toggle="tab" onfocus="this.blur()">参与的调查</a></li>
+                    <li class="survey-follow"><a href="#follow-survey" data-toggle="tab" onfocus="this.blur()">关注的调查</a></li>
+                    <li class="user-follow"><a href="#follow-user" data-toggle="tab" onfocus="this.blur()">关注的用户</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="publish-survey" class="tab-pane active">
@@ -78,7 +78,7 @@
                     </div>
                     <div id="follow-survey" class="tab-pane">
                         <div class="vkpaging">
-                            <div class="vkpaging-null">未收藏过任何调查...</div>
+                            <div class="vkpaging-null">未关注过任何调查...</div>
                             <div class="vkpaging-box">
                                 <div class="vkpaging-body"></div>
                                 <div class="vkpaging-footer">

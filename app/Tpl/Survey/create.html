@@ -7,10 +7,11 @@
 </head>
 <body>
     <div id="Header" data-verify="1">
-        <include file="Public:topBar" page="{$page}" nav-type="sub" nav-cur="survey" need-login="1"/>
+        <include file="Public:topBar" page="{$page}" nav-type="sub" nav-cur="survey"/>
     </div>
-    <div id="Main" data-sv-code="{$survey_code}" data-sv-type="{$sv_type}" data-sv-type-sub="{$sv_type_sub}">
+    <div id="Main" data-sv-code="{$survey_code}" data-sv-type="{$sv_type}" data-sv-type-sub="{$sv_type_sub}" data-sv-trade="{$sv_trade}">
         <div id="mainSider">
+            <div class="main-sider">
                 <div id="coinsBox">
                     <div class="remain-coins">
                         <div class="coins-value">0</div>
@@ -51,7 +52,8 @@
                         <div>金币使用规则</div>
                         <div>其他常见问题</div>
                     </div>
-            </div>  
+                </div>  
+            </div>
         </div>
         <div id="mainBody">
             <div id="surveyBox">
@@ -61,47 +63,227 @@
                         <div id="surveyTitle" class="cs-item">
                             <div class="cs-label">调查标题</div>
                             <div class="cs-content base-info vf-elem" data-name="survey_name" data-elem-type="required">
-                                <input type="text" name="survey_name" class="vk-input green large block" placeholder="请输入调查标题">
+                                <input type='text' name="survey_name" class="vk-input green large block" placeholder="请输入调查标题" value='{$survey.info.survey_name}'>
                             </div>
                         </div>
                         <div id="surveyDesc" class="cs-item" data-title="调查说明">
                             <div class="cs-label">调查说明</div>
                             <div class="cs-content base-info vf-elem" data-name="survey_desc">
-                                <div class="vk-input green large block" name="survey_desc" contenteditable="true"></div>
+                                <div class="vk-input green large block" name="survey_desc" contenteditable="true">{$survey.info.survey_desc}</div>
                                 <!-- <div class="vk-input green large block" name="survey_desc" contenteditable="true" onpaste="return false"></div> -->
                             </div>
                         </div>
                         <div id="surveyItem" class="cs-item" data-title="调查题目">
                             <div class="cs-label">调查题目</div>
                             <div class="cs-content">
-                                <div id="itemBody"></div>
+                                <div id="itemBody">
+                                    <volist name="survey.question" id="qt">
+                                    <div class="item" data-seq="{$qt.question_seq}" data-class="{$qt.question_class}" data-type="{$qt.question_type}" data-custom-option="{$qt.custom_option}" data-low-value="{$qt.pf_low_value}" data-high-value="{$qt.pf_high_value}" data-low-desc="{$qt.pf_low_desc}" data-high-desc="{$qt.pf_high_desc}" data-answer-must="{$qt.answer_must}">
+                                        <div class="item-main">
+                                            <div class="item-title">
+                                                <div class="item-seq"><span>{$qt.question_seq}</span>.</div>
+                                                <div class="vk-input green" contenteditable="true" data-init="请输入题目名称">{$qt.question_name}</div>
+                                            </div>
+                                            <div class="item-body">
+                                                <div class="item-xz">
+                                                    <div class="xz-option">
+                                                    <if condition="$qt.question_class eq '1'">
+                                                        <volist name="qt.option" id="opt">
+                                                        <div class="option">
+                                                            <div class="option-content">
+                                                                <div class="oc-sub">
+                                                                    <div class="icheck">
+                                                                        <input type="radio" class="xz" style="display:none">
+                                                                        <input type="checkbox" class="xz" style="display:none">
+                                                                    </div>
+                                                                    <div class="option-seq">{$i}</div>
+                                                                </div>
+                                                                <div class="oc-main">
+                                                                    <input type='text' class="option-name vk-input green" placeholder="请输入选项标题" value="{$opt.option_name}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="option-alter alter setting">
+                                                                <div class="up alter" title="上移选项" data-type="up"><i class="icon-arrow-up"></i></div>
+                                                                <div class="down alter" title="下移选项" data-type="down"><i class="icon-arrow-down"></i></div>
+                                                                <div class="del alter" title="删除选项" data-type="delete"><i class="icon-remove"></i></div>
+                                                                <div class="add alter" data-type="add"><i class="icon-plus"></i></div>
+                                                            </div>
+                                                        </div>
+                                                        </volist>
+                                                    </if>
+                                                    </div>
+                                                </div>
+                                                <div class="item-zg">
+                                                    <textarea rows="3" cols="30" disabled="disabled"></textarea>
+                                                    <input type="text" disabled="disabled">
+                                                </div>
+                                                <div class="item-pf">
+                                                    <div class="pf-item">
+                                                        <div class="pf-body">
+                                                            <empty name="qt.pf_low_desc">
+                                                            <div class="pr-low pr-desc"><span>最低分描述</span> <<</div>
+                                                            <else />
+                                                            <div class="pr-low pr-desc"><span>{$qt.pf_low_desc}</span> <<</div>
+                                                            </empty>
+                                                            <div class="pr-mid">
+                                                                <span class="pr-mid-elem tpl" style="display:none"></span>
+                                                                <for start="$qt.pf_low_value" end="$qt['pf_high_value']+1">
+                                                                <span class="pr-mid-elem" data-value="{$i}">{$i}</span>
+                                                                </for>
+                                                            </div>
+                                                            <empty name="qt.pf_high_desc">
+                                                            <div class="pr-high pr-desc">>> <span>最高分描述</span></div>
+                                                            <else />
+                                                            <div class="pr-high pr-desc">>> <span>{$qt.pf_high_desc}</span></div>
+                                                            </empty>
+                                                        </div>
+                                                        <div class="pf-setting" data-pf="item">
+                                                            <div class="ps-low ps-elem">
+                                                                <div class="ps-low-desc ps-elem-desc">
+                                                                    <label>最低分描述</label>
+                                                                    <div class="ps-desc-input">
+                                                                        <input type='text' class="vk-input" data-target="low" value="{$qt.pf_low_desc}"></div>
+                                                                </div>
+                                                                <div class="ps-low-value ps-elem-value">
+                                                                    <label>最低分值</label>
+                                                                    <div class="ps-low-input val-input">
+                                                                        <span class="val-cut"><i class="icon-angle-left"></i></span>
+                                                                        <input type='text' class="vk-input num" value="{$qt.pf_low_value}">
+                                                                        <span class="val-add"><i class="icon-angle-right"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ps-high ps-elem">
+                                                                <div class="ps-high-desc ps-elem-desc">
+                                                                    <label>最高分描述</label>
+                                                                    <div class="ps-desc-input">
+                                                                        <input type='text' class="vk-input" data-target="high" value="{$qt.pf_high_desc}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ps-high-value ps-elem-value">
+                                                                    <label>最高分值</label>
+                                                                    <div class="ps-high-input val-input">
+                                                                        <span class="val-cut"><i class="icon-angle-left"></i></span>
+                                                                        <input type='text' class="vk-input num" value="{$qt.pf_high_value}">
+                                                                        <span class="val-add"><i class="icon-angle-right"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pf-option">
+                                                        <div class="pf-body">
+                                                        <if condition="$qt.question_class eq '3'">
+                                                            <volist name="qt.option" id="opt">
+                                                            <div class="option">
+                                                                <div class="option-content">
+                                                                    <div class="oc-sub">
+                                                                        <div class="val-select">
+                                                                            <span class="vs-cut"><i class="icon-angle-left"></i></span>
+                                                                            <span class="vs-txt">{$qt.pf_low_value}</span>
+                                                                            <span class="vs-add"><i class="icon-angle-right"></i></span>
+                                                                        </div>
+                                                                        <div class="option-seq">{$i}</div>
+                                                                    </div>
+                                                                    <div class="oc-main">
+                                                                        <input type='text' class="option-name vk-input green" placeholder="请输入选项标题" value="{$opt.option_name}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="option-alter alter setting">
+                                                                    <div class="up alter" title="上移选项" data-type="up"><i class="icon-arrow-up"></i></div>
+                                                                    <div class="down alter" title="下移选项" data-type="down"><i class="icon-arrow-down"></i></div>
+                                                                    <div class="del alter" title="删除选项" data-type="delete"><i class="icon-remove"></i></div>
+                                                                    <div class="add alter" data-type="add"><i class="icon-plus"></i></div>
+                                                                </div>
+                                                            </div>
+                                                            </volist>
+                                                        </if>
+                                                        </div>
+                                                        <div class="pf-setting" data-pf="option">
+                                                            <div class="ps-low-value">
+                                                                <label>选项最低分值</label>
+                                                                <div class="ps-low-input val-input">
+                                                                    <span class="val-cut"><i class="icon-angle-left"></i></span>
+                                                                    <input type='text' class="vk-input num" value="{$qt.pf_low_value}">
+                                                                    <span class="val-add"><i class="icon-angle-right"></i></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="ps-high-value">
+                                                                <label>选项最高分值</label>
+                                                                <div class="ps-high-input val-input">
+                                                                    <span class="val-cut"><i class="icon-angle-left"></i></span>
+                                                                    <input type='text' class="vk-input num" value="{$qt.pf_high_value}">
+                                                                    <span class="val-add"><i class="icon-angle-right"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-sub">
+                                            <div class="item-config">
+                                                <div class="item-cog" style="display:block"><i class="icon-cog"></i></div>
+                                                <div class="item-alter">
+                                                    <div class="up" title="上移题目" data-type="up"><i class="icon-arrow-up"></i></div>
+                                                    <div class="del" title="删除题目" data-type="delete"><i class="icon-remove"></i></div>
+                                                    <div class="down" title="下移题目" data-type="down"><i class="icon-arrow-down"></i></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </volist>
+                                </div>
                                 <div id="itemButton">
                                     <div class="add-item">
                                         <div class="dropdown">
                                             <button class="vkbutton vbtn-default dropdown-toggle">新增选择题</button>
                                             <ul class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
-                                                <li class="ai-btn" data-class="1" data-type="11">单项选择</li>
-                                                <li class="ai-btn" data-class="1" data-type="12">多项选择</li>
+                                                <li class="ai-btn" data-class="1" data-type="11" data-must='1'>单项选择</li>
+                                                <li class="ai-btn" data-class="1" data-type="12" data-must='1'>多项选择</li>
                                             </ul>
                                         </div>
                                         <div class="dropdown">
                                             <button class="vkbutton vbtn-default dropdown-toggle">新增主观题</button>
                                             <ul class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
-                                                <li class="ai-btn" data-class="2" data-type="21">单行填空</li>
-                                                <li class="ai-btn" data-class="2" data-type="22">多行填空</li>
+                                                <li class="ai-btn" data-class="2" data-type="21" data-must='0'>单行填空</li>
+                                                <li class="ai-btn" data-class="2" data-type="22" data-must='0'>多行填空</li>
                                             </ul>
                                         </div>
                                         <div class="dropdown">
                                             <button class="vkbutton vbtn-default dropdown-toggle">新增评分题</button>
                                             <ul class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
-                                                <li class="ai-btn" data-class="3" data-type="31">单项评分</li>
-                                                <li class="ai-btn" data-class="3" data-type="32">多项评分</li>
+                                                <li class="ai-btn" data-class="3" data-type="31" data-must='1'>单项评分</li>
+                                                <li class="ai-btn" data-class="3" data-type="32" data-must='1'>多项评分</li>
                                             </ul>
                                         </div>
-                                        <button class="vkbutton vbtn-default bank" data-type="bank">从题库选择题目</button>
+                                        <button class="vkbutton vbtn-default qt-bank" data-bank="open">从题库选择题目</button>
                                     </div>
                                     <div class="preview-item">
-                                        <button class="vkbutton vbtn-default" data-type="textarea">预览调查题目</button>
+                                        <button class="vkbutton vbtn-default">预览调查题目</button>
+                                    </div>
+                                </div>
+                                <div class="question-bank">
+                                    <div class="qt-header">
+                                        <ul class="nav nav-tabs vkform">
+                                            <li class="active"><a>常用题库</a></li>
+                                            <li class=""><a>我的题库</a></li>
+                                            <input type="text" class="bank-search vk-input" placeholder="在题库中搜索">
+                                        </ul>
+                                    </div>
+                                    <div class="qt-select">
+                                        <select class="qb-type">
+                                            <option>用户属性</option>
+                                        </select>
+                                        <select class="qb-item">
+                                            <option>您的性别</option>
+                                        </select>
+                                    </div>
+                                    <div class="qb-body">
+                                        <div class="qbb-main"></div>
+                                        <div class="qbb-sub">
+                                            <button class="vkbutton vbtn-border vbtn-default">添加此问题</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -111,27 +293,6 @@
                 <div id="surveySetting" class="sv-elem sv-content" data-step="step2">
                     <div class="svc-header"><strong>调查属性</strong></div>
                     <div class="svc-body">
-                        <div class="survey-range cs-item">
-                            <div class="cs-label">参与用户范围</div>
-                            <div class="cs-content base-info vf-elem" data-vf-name="target_range">
-                                <select type="select" name="target_range">
-                                    <option value="999">允许所有用户参与</option>
-                                    <volist name="level" id="lvl">
-                                    <option value="{$lvl.user_level_value}">允许{$lvl.user_level_desc}等级以上用户参与</option>
-                                    </volist>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="survey-tag cs-item">
-                            <div class="cs-label">调查标签设置</div>
-                            <div class="cs-content base-info">
-                                <ul class="sv-tag-body" name="survey_tag" style="display:none">
-                                    <volist name="tag" id="tag">
-                                    <li>{$tag.tag_name}</li>
-                                    </volist>
-                                </ul>
-                            </div>
-                        </div>
                         <div class="survey-class cs-item" data-sv-type="0" data-sv-type-sub="0" data-sv-trade="0">
                             <div class="cs-label">调查分类设置</div>
                             <div class="cs-content">
@@ -182,7 +343,7 @@
                                     <div class="se-desc">活动结束方式</div>
                                 </div>
                                 <div class="end-value" data-sv-end="0" data-title="活动">
-                                    <input class="ev-elem end-val-1" data-val="0" onkeyup="value=value.replace(/[^\d]/g,'')">
+                                    <input class="ev-elem end-val-1" data-val="0" onkeyup="value=value.replace(/[^\d]/g,'')" value='0'>
                                     <div class="ev-elem se-body dropdown end-val-2" data-val="0">
                                         <a class="dropdown-toggle" data-toggle="dropdown">点击选择<i class='icon-angle-down'></i></a>
                                         <div class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
@@ -194,6 +355,33 @@
                                     <div class="se-desc">活动开展时长</div>
                                 </div>
                                 <button class="end-desc" style="display:none"></button>
+                            </div>
+                        </div>
+                        <div class="survey-range cs-item">
+                            <div class="cs-label">参与用户范围</div>
+                            <div class="cs-content base-info vf-elem" data-vf-name="target_range">
+                                <select type="select" name="target_range">
+                                    <option value="999">允许所有用户参与</option>
+                                    <volist name="level" id="lvl">
+                                    <option value="{$lvl.user_level_value}">允许{$lvl.user_level_desc}等级以上用户参与</option>
+                                    </volist>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="survey-tag cs-item">
+                            <div class="cs-label">调查标签设置</div>
+                            <div class="cs-content base-info">
+                                <ul class="sv-tag-body" name="survey_tag" style="display:none">
+                                    <volist name="tag" id="tag">
+                                    <li>{$tag.tag_name}</li>
+                                    </volist>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="answer-end-desc cs-item vkform">
+                            <div class="cs-label">调查结束语设置</div>
+                            <div class="cs-content">
+                                <div class="vk-input green large block" name="survey_desc" contenteditable="true" data-init="感谢您参与本次调查...">感谢您参与本次调查...</div>
                             </div>
                         </div>
                     </div>
@@ -250,7 +438,7 @@
                                 </div>
                                 <div class="re-focus">
                                     <div class="re-title">不推荐调查</div>
-                                    <div class="re-desc">不会主动向用户推荐调查但可以被搜索到</div>
+                                    <div class="re-desc">不会主动向用户推荐调查但可被搜索到</div>
                                 </div>
                                 <div class="re-after">
                                     <div class="rea-desc">不推荐调查</div>
@@ -339,7 +527,7 @@
                                     <div class="type-desc-before">
                                         <div class="choose-desc">
                                             <div class="choose-title">不推荐调查</div>
-                                            <div class="choose-detail">本次调查不会主动推荐给参与者，但可以被用户搜索到</div>
+                                            <div class="choose-detail">本次调查不会主动推荐给参与者，但可被用户搜索到</div>
                                         </div>
                                         <div class="choose-coins">
                                             <div class="coins-desc">需消耗金币</div>
@@ -353,7 +541,8 @@
                     </div>
                 </div>
                 <div id="surveyButton">
-                    <button type="button" class="vkbutton vbtn-success vbtn-pure btn-block" title="发布调查">发布调查</button>
+                    <button type="button" class="vkbutton vbtn-default vbtn-border btn-block login">登录后发布调查</button>
+                    <button type="button" class="vkbutton vbtn-success vbtn-pure btn-block submit" title="发布调查">发布调查</button>
                 </div>
                 <div id="footerBox">维新调研 · 技术支持</div>
             </div>
@@ -470,7 +659,22 @@
     <!---------- 各种模板 ---------->
     <div id="tpl" style="display:none">
         <div class="item-setting">
-            <div class="type-change"><a>切换为多选题</a></div>
+            <div class="item-setting-header">
+                <div class="ish-title">题目设置</div>
+                <i class="icon-remove"></i>
+            </div>
+            <div class="answer-must">
+                <a data-must="1">必选答题</a>
+                <a data-must='0'>可选答题</a>
+            </div>
+            <div class="type-change">
+                <a data-type="11">切换为单项选择题</a>
+                <a data-type="12">切换为多项选择题</a>
+                <a data-type="21">切换为单行填空题</a>
+                <a data-type="22">切换为多行填空题</a>
+                <a data-type="31">切换为单项评分题</a>
+                <a data-type="32">切换为多项评分题</a>
+            </div>
             <div class="opt-custom dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">自定义选项设置</a>
                 <div class="dropdown-menu pull-right" role="menu" aria-labelledby="dLabel">
@@ -479,10 +683,10 @@
                         <div class="dw-right"></div>
                     </div>
                     <div class="dropdown-body">
-                        <div class="oc-elem none" data-user="999"><a>不允许任何用户自定义选项</a></div>
-                        <div class="oc-elem all" data-user="-1"><a>允许所有用户自定义选项</a></div>
-                        <div class="oc-elem some" data-user="">
-                            <a>允许<span>部分</span>用户自定义选项</a>
+                        <div class="oc-elem none" data-custom="999" data-txt="任何用户不可自定义选项"><a>任何用户不可自定义选项</a></div>
+                        <div class="oc-elem all" data-custom="-1" data-txt="任何用户可自定义选项"><a>任何用户可自定义选项</a></div>
+                        <div class="oc-elem some" data-custom="">
+                            <a>部分用户可自定义选项</a>
                             <div class="custom-user-lvl">
                                 <div class="cl-title">设定用户等级</div>
                                 <select type="select" class="cl-select">
@@ -496,11 +700,12 @@
                 </div>
             </div>
         </div>
-        <div class="add-option">
+        <div class="option-add">
             <div class="vk-input green" contenteditable="true"></div>
-            <div class="add-option-button">
-                <button type="button" class="vkbutton vbtn-border vbtn-default submit" data-type="submit">确定</button>
-                <button type="button" class="vkbutton vbtn-border vbtn-default cancel" data-type="cancel">取消</button>
+            <div class="option-add-button">
+                <div>请填入多个选项名称，用换行分隔</div>
+                <button type="button" class="vkbutton vbtn-border vbtn-default submit" data-type="submit">确定 Alt+Enter</button>
+                <button type="button" class="vkbutton vbtn-border vbtn-default cancel" data-type="cancel">取消 ESC</button>
             </div>
         </div>
     </div>

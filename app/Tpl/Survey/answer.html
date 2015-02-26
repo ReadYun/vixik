@@ -7,35 +7,111 @@
 </head>
 <body>
     <div id="Header" data-verify="1">
-        <include file="Public:topBar" page="{$page}" nav-type="sub" nav-cur="survey" need-login="1"/>
+        <include file="Public:topBar" page="{$page}" nav-type="sub" nav-cur="survey"/>
     </div>
     <div id="Main" main-state="0" data-survey="{$code}">
         <div id="answerBox">
             <div class="ans-box-sub">
                 <div id="svSider">
                     <div id="hintBar">
-                        <div id="itemFlag"></div>
+                        <div id="itemFlag">
+                            <volist name="survey.question" id="qt">
+                            <div class="item-flag" data-seq="{$qt.question_seq}" data-must="{$qt.answer_must}">{$qt.question_seq}<span></span></div>
+                            </volist>
+                        </div>
                         <div id="aswProgress">0%</div>
                     </div>
                 </div>
             </div>
             <div class="ans-box-main">
                 <div id="svHeader">
-                    <div class="sh-sub"><i class="icon-list-alt"></i></div>
-                    <div class="sh-main">
-                        <div class="sv-title">
-                            <a href="{:U('/survey/visit')}?code={$survey['info']['survey_code']}" target="_blank">{$survey['info']['survey_name']}</a>
-                        </div>
-                        <div class="sv-desc">{$survey['info']['survey_desc']}</div>
-                    </div>
-                    <div class="sh-icon">
-                        <i class="icon-double-angle-up"></i>
-                        <i class="icon-double-angle-down"></i>
-                    </div>
+                    <a class="sv-title" href="{:U('/survey/visit')}?code={$survey['info']['survey_code']}" target="_blank">{$survey['info']['survey_name']}</a>
+                    <notempty name="survey['info']['survey_desc']"><div class="sv-desc">{$survey['info']['survey_desc']}</div></notempty>
                 </div>
                 <div id="svBody">
-                    <div id="question" class="vk-form"></div>
-                    <div id="submit"><button type="button" class="vkbutton vbtn-success large block">提交结果</button></div>
+                    <div id="question" class="vkform vk-form">
+                        <volist name="survey.question" id="qt">
+                        <div class="question vf-elem" data-question_code="{$qt.question_code}" data-question_class="{$qt.question_class}" data-question_type="{$qt.question_type}" data-question_seq="{$qt.question_seq}" data-answer-must="{$qt.answer_must}" data-check-null="{$qt.answer_must}">
+                            <div class="qt-header">
+                                <div class="qt-seq">{$qt.question_seq}.<if condition="$qt.answer_must eq '1'"><span>*</span></if></div>
+                                <div class="qt-title">{$qt.question_name}</div>
+                            </div>
+                            <div class="qt-body">
+                                <if condition="$qt.question_class eq '1'">
+                                <div class="qt-xz">
+                                    <div class="qt-option">
+                                        <volist name="qt.option" id="opt">
+                                        <label class="vf-elem-option">
+                                            <switch name="qt.question_type">
+                                            <case value="11"><input type="radio" name="{$qt.question_code}" value="{$opt.option_code}" data-option_name="{$opt.option_name}"></case>
+                                            <case value="12"><input type="checkbox" name="{$qt.question_code}" value="{$opt.option_code}" data-option_name="{$opt.option_name}"></case>
+                                            </switch>
+                                            {$opt.option_name}
+                                        </label>
+                                        </volist>
+                                    </div>
+                                </div>
+                                </if>
+                                <if condition="$qt.question_class eq '2'">
+                                <div class="qt-zg">
+                                    <switch name="qt.question_type">
+                                    <case value="21"><input class="vk-input green" type="text"></case>
+                                    <case value="22"><div class="vk-input green" contenteditable="true" onpaste="return false"></div></case>
+                                    </switch>
+                                </div>
+                                </if>
+                                <if condition="$qt.question_class eq '3'">
+                                <div class="qt-pf">
+                                    <if condition="$qt.question_type eq '31'">
+                                        <div class="pf-item">
+                                            <div class="pr-low pr-desc"><span>{$qt.pf_low_desc}</span> <<</div>
+                                            <div class="pr-mid">
+                                                <for start="$qt.pf_low_value" end="$qt['pf_high_value']+1">
+                                                <span class="pr-mid-elem" data-value="{$i}">{$i}</span>
+                                                </for>
+                                            </div>
+                                            <div class="pr-high pr-desc">>> <span>{$qt.pf_high_desc}</span></div>
+                                        </div>
+                                    </if>
+                                    <if condition="$qt.question_type eq '32'">
+                                        <div class="pf-option">
+                                            <volist name="qt.option" id="opt">
+                                            <div class="vf-elem-option" data-code="{$opt.option_code}" data-seq="{$opt.option_seq}" data-name="{$opt.option_name}" data-type="{$opt.option_type}">
+                                                <div class="val-select">
+                                                    <span class="vs-cut"><i class="icon-angle-left"></i></span>
+                                                    <div class="vs-btn dropdown">
+                                                        <a class="dropdown-toggle" data-toggle="dropdown">{$qt.pf_low_value}</a>
+                                                        <if condition="($qt['pf_high_value'] - $qt['pf_low_value']) gt 2">
+                                                        <ul class="dropdown-menu pull-left" role="menu" aria-labelledby="dLabel" style="margin-top:-{$qt['pf_high_value']*10-$qt['pf_low_value']*10+10}px">
+                                                        <else />
+                                                        <ul class="dropdown-menu pull-left" role="menu" aria-labelledby="dLabel" style="margin-top:-20px">
+                                                        </if>
+                                                            <for start="$qt.pf_low_value" end="$qt['pf_high_value']+1">
+                                                            <li class="vs-option" data-value="{$i}">{$i}</li>
+                                                            </for>
+                                                        </ul>
+                                                    </div>
+                                                    <span class="vs-add"><i class="icon-angle-right"></i></span>
+                                                </div>
+                                                {$opt.option_name}
+                                            </div>
+                                            </volist>
+                                        </div>
+                                    </if>
+                                </div>
+                                </if>
+                            </div>
+                        </div>
+                        </volist>
+                    </div>
+                    <div id="submit">
+                        <if condition="$code eq 'preview'">
+                        <button type="button" class="vkbutton vbtn-success large block">预览调查 · 模拟提交结果</button>
+                        <else />
+                        <button type="button" class="vkbutton vbtn-default vbtn-border large btn-block login">登录后提交结果</button>
+                        <button type="button" class="vkbutton vbtn-success large btn-block submit">提交结果</button>
+                        </if>
+                    </div>
                 </div>
             </div>
         </div>

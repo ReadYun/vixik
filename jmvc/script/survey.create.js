@@ -33,7 +33,7 @@ steal('init.js')
             $surveyRecommend : $('#surveyRecommend')  ,// 调查发布设置模块
             $successModal    : $('#successModal')     ,// 创建调查成功弹出框对象
         },
-        listensTo : ["save_draft"]
+        listensTo : ["data_submit"]
     }, {
         init : function(){
             $('button').attr("disabled", false) ;
@@ -51,9 +51,90 @@ steal('init.js')
 
             // 调查推荐设置对象控制器
             this.options.$surveyRecommend.survey_create_ctrl_recommend({
-                models$ : this.options.models$ ,
+                models$ : this.options.models$,
                 $Main   : this.options.$Main
             }) ;
+        },
+
+        // 收集数据命令触发
+        "{models$} collect_start" : function(){
+            var $this = this ;
+
+            $this.options.$surveyElement.each(function(){
+                if($this.options.models$.collect$.flag){
+                    $(this).trigger('data_collect') ;
+                }else{
+                    console.log('data_collect_failed') ;
+                    return false ;
+                }
+            }) ;
+        },
+
+        // 调查数据汇总失败触发
+        "{models$} collect_failed" : function(){
+            console.log('collect_failed') ;
+            switch(parseInt(this.options.models$.info$.survey_state)){
+                case 1 :
+                    console.log('保存草稿失败') ;
+                    // 只重置草稿倒计时对象的next值（+length）
+                    this.options.models$.draft$.next = moment().add('m', this.options.models$.draft$.length) ;
+                    $('#syncBox').attr('data-state', 1) ;
+                    break ;
+                case 2 :
+                    $('#surveyButton>button').attr('disabled', false).text($('#surveyButton>button').attr('title')) ;
+                    break ;
+            }
+
+            this.options.models$.draft$.flag = true ;  // 重新启动保存草稿
+        },
+
+        // 调查数据提交成功触发
+        "{models$} submit_success" : function(){
+            switch(this.options.models$.collect$.type){
+                case 'draft' :  // 保存草稿
+                    // 重置草稿倒计时
+                    this.options.models$.draft$.last = moment() ;
+                    this.options.models$.draft$.next = moment(this.options.models$.draft$.last).add('m', this.options.models$.draft$.length) ;
+                    $('#syncBox').attr('data-state', 1) ;
+
+                    this.options.models$.draft$.flag = true ;  // 重新启动保存草稿
+                    break ;
+
+                case 'preview' :  // 预览调查
+                    $.cookie('sv_preview', this.options.models$.survey_code, {path:'/'}) ;
+                    $.vixik('get_url', {name:'survey/answer', tail:'?code=preview', open:'new'}) ;
+
+                    // 重置草稿倒计时
+                    this.options.models$.draft$.last = moment() ;
+                    this.options.models$.draft$.next = moment(this.options.models$.draft$.last).add('m', this.options.models$.draft$.length) ;
+                    $('#syncBox').attr('data-state', 1) ;
+
+                    this.options.models$.draft$.flag = true ;  // 重新启动保存草稿
+                    break ;
+
+                case 'submit' :  // 发布调查
+                    alert('调查发布成功！') ;
+                    this.options.models$.draft$.flag = false ;  // 停止保存草稿
+                    this.options.$Main.trigger('success') ;     // 转入成功模块
+                    break ;
+            }
+        },
+
+        // 调查数据提交失败触发
+        "{models$} submit_failed" : function(){
+            switch(parseInt(this.options.models$.info$.survey_state)){
+                case 1 :
+                    console.log('保存草稿失败') ;
+                    // 只重置草稿倒计时对象的next值（+length）
+                    this.options.models$.draft$.next = moment().add('m', this.options.models$.draft$.length) ;
+                    $('#syncBox').attr('data-state', 1) ;
+                    break ;
+                case 2 :
+                    $('#surveyButton>button').attr('disabled', false).text($('#surveyButton>button').attr('title')) ;
+                    break ;
+            }
+
+            this.options.models$.draft$.flag = true ;  // 重新启动保存草稿
         },
 
         "{$surveyElement} click" : function(el){
@@ -61,167 +142,67 @@ steal('init.js')
             this.options.models$.trigger('flag_step') ;
         },
 
+        // 预览题目
+        ".preview-item>button click" : function(el, ev){
+            this.options.models$.info$.survey_state = 1 ;
+            this.options.models$.data_collect('preview') ;
+        },
+
         // 主按钮点击事件
         "#surveyButton>button click" : function(el){
-            var $this = this ;
-
             if(vixik$.user_verify({trigger$:{false:['login']}})){
-                // 先失效被点击的按钮防止二次点击提交
-                el.attr('disabled', true).text('数据提交中...') ;
-
-                // 确定数据校验标志位
-                $this.options.models$.collect$.state = 'submit' ;
-                $this.options.models$.collect$.flag  = true ;
-
-                // 数据收集
-                $this.options.$surveyElement.each(function(){
-                    if($this.options.models$.collect$.flag){
-                        $(this).trigger('data_collect') ;
-                    }else{
-                        return false ;
-                    }
-                }) ;
-
-                // 如收集校验数据顺利完成，提交数据
-                if($this.options.models$.collect$.flag){
-                    if(this.submit_data(2)){
-                        if(this.options.models$.info$.survey_state == 2){
-                            alert('调查发布成功！') ;
-                            $this.options.models$.draft$.flag = false ;  // 停止保存草稿
-                            $this.options.$Main.trigger('success') ;     // 转入成功模块
-                        }else{
-                            alert('草稿已保存..') ;
-                        }
-                    }else{
-                        alert('调查发布失败！') ;
-                    }
-                }
-
-                // 生效按钮
-                el.attr('disabled', false).text(el.attr('title')) ;
+                el.text('数据提交中...') ;                         // 先失效被点击的按钮防止二次点击提交
+                this.options.models$.info$.survey_state = 2 ;      // 调查状态
+                this.options.models$.data_collect('submit') ;
             }
         },
 
-        // 保存草稿
-        save_draft : function(){
-            var $this   = this,
-                models$ = $this.options.models$ ;
+        // 主按钮点击事件
+        // "#surveyButton1>button click" : function(el){
+        //     var $this = this ;
 
-            // 保存草稿相关参数配置
-            models$.collect$.state = 'draft' ;
-            models$.collect$.check = false ;
-            models$.collect$.flag  = true ;
-            models$.draft$.flag    = true ;
+        //     if(vixik$.user_verify({trigger$:{false:['login']}})){
+        //         // 先失效被点击的按钮防止二次点击提交
+        //         el.attr('disabled', true).text('数据提交中...') ;
 
-            // 遍历各模块收集数据
-            $this.options.$surveyElement.each(function(){
-                if(models$.collect$.flag){
-                    $(this).trigger('data_collect') ;
-                }else{
-                    return false ;
-                }
-            }) ;
+        //         // 确定数据校验标志位
+        //         $this.options.models$.collect$.type = 'submit' ;
+        //         $this.options.models$.collect$.flag = true ;
 
-            // 如果能顺利收集数据，提交数据
-            if(models$.collect$.flag && $this.submit_data(1)){
-                // 草稿更新成功，重置草稿倒计时
-                models$.draft$.last = moment() ;
-                models$.draft$.next = moment(models$.draft$.last).add('m', models$.draft$.length) ;
-                $('#syncBox').attr('data-state', 1) ;
-            }else{
-                // 草稿更新失败，重置草稿倒计时对象的next值（+length）
-                models$.draft$.next = moment().add('m', models$.draft$.length) ;
-                $('#syncBox').attr('data-state', 1) ;
-            }
+        //         // 数据收集
+        //         $this.options.$surveyElement.each(function(){
+        //             if($this.options.models$.collect$.flag){
+        //                 $(this).trigger('data_collect') ;
+        //             }else{
+        //                 return false ;
+        //             }
+        //         }) ;
 
-            return true ;
-        },
+        //         // 如收集校验数据顺利完成，提交数据
+        //         if($this.options.models$.collect$.flag){
+        //             if(this.submit_data(2)){
+        //                 if(this.options.models$.info$.survey_state == 2){
+        //                     alert('调查发布成功！') ;
+        //                     $this.options.models$.draft$.flag = false ;  // 停止保存草稿
+        //                     $this.options.$Main.trigger('success') ;     // 转入成功模块
+        //                 }else{
+        //                     alert('草稿已保存..') ;
+        //                 }
+        //             }else{
+        //                 alert('调查发布失败！') ;
+        //             }
+        //         }
 
-        // 提交数据
-        submit_data : function(survey_state){
-            var $this   = this,
-                flag    = true,
-                models$ = this.options.models$ ;
+        //         // 生效按钮
+        //     }
+        // },
 
-            // 更新汇总数据中的调查状态值
-            models$.info$.survey_state = survey_state ;
+        // 保存数据
+        // data_submit : function(type){  // type: draft/submit
+        //     var $this = this ;
 
-            console.dir(models$.info$) ;
-            console.dir(models$.question$) ;
-
-            // 发布调查需要先进行账户金币判定
-            if(survey_state == 2 && 1==2){
-                // 访问用信息查询接口取出用户当前金币数
-                $.ajax({
-                    type    : 'post',
-                    url     : __API__,    
-                    data    : {api:'user_info_find', user_code:models$.user_code},
-                    async   : false,
-                    success : function(data$){
-                        if(data$.status){
-                            user_coins   = data$.data.user_coins ;
-                            create_coins = $this.options.models$.coins$.coins_publish ;
-
-                            // 用户账户金币余额大于创建调查所需金币才能发布调查，否则只能先保存为草稿
-                            if(user_coins < create_coins){
-                                alert('您的帐号金币数量不够创建本次调查，先为您保存为草稿') ;
-                                models$.info$.survey_state = 1 ;
-                            }
-                        }else{
-                            console.log(data$.info) ;
-                            alert('核实用户信息失败，请重新点击提交') ;
-                        }
-                    }
-                }); 
-            }
-
-            // 先提交调查基本信息信息和题目信息（访问调查创建接口）
-            // $.ajax({
-            //     type    : 'post',
-            //     url     : __API__,
-            //     data    : { api         : 'survey_create'              ,// 调查创建接口
-            //                 user_code   : models$.user_code            ,// 用户编码
-            //                 survey_code : models$.survey_code          ,// 调查编码
-            //                 info        : $.toJSON(models$.info$)      ,// 调查基本信息
-            //                 question    : $.toJSON(models$.question$)  ,// 调查题目信息
-            //               },
-            //     async   : false,
-            //     success : function(data$){
-            //         if(data$.status){
-            //             // 新调查创建成功更新调查编码到模型中
-            //             models$.survey_code = data$.data ;
-
-            //             // 如果选择主动推荐并且自定义推荐规则，取设置的推荐规则
-            //             if(models$.info$.recomm_type == 2 && models$.recommend$){
-            //                 $.ajax({
-            //                     type    : 'post',
-            //                     url     : __API__,
-            //                     data    : {api:'survey_recomm_create', survey_code:models$.survey_code, rule:$.toJSON(models$.recommend$)},
-            //                     async   : false,
-            //                     success : function(data$){
-            //                         if(data$.status){
-            //                             flag = true ;
-            //                         }else{
-            //                             flag = false ;
-            //                             if(models$.collect$.check){
-            //                                 alert('推荐规则设置不成功，请检查设置') ;
-            //                             }
-            //                         }
-            //                     }
-            //                 });
-            //             }
-            //         }else{
-            //             console.log(data$.info) ;
-            //             if(models$.collect$.check){
-            //                 alert('调查发布不成功！') ;
-            //             }
-            //             flag = false ;
-            //         }
-            //     }
-            // });
-
-            return flag ;
-        }
+        //     $this.options.models$.data_collect('init', type) ;
+        // },
     }) ;
 
     /*
@@ -244,6 +225,12 @@ steal('init.js')
 
             // 页面步骤显示初始化
             this.element.find('#stepBox li').first().addClass('active') ;
+
+            // 修改调查模式直接启动保存草稿倒计时
+            if(this.options.models$.survey_code > 10000000){
+                this.options.models$.draft$.flag = true ;
+                this.save_countdown() ;
+            }
         },
 
         // 总对象用户数据更新时触发
@@ -278,12 +265,16 @@ steal('init.js')
                 this.options.$stepOpt.removeClass('active') ;
                 this.options.$stepOpt.filter('.' + step).addClass('active') ;
             }
+
+            // if(this.options.models$.$active.hasClass('item')){
+            //     this.element.find('.item').not(this.options.models$.$active.addClass('active')).removeClass('active') ;
+            // }
         },
 
         // 页面元素定位刷新
         "{models$} location" : function(){
             // 滚动页面定位到目标对象
-            window.scrollTo(0, this.options.models$.$location.offset().top - 60) ;
+            window.scrollTo(0, this.options.models$.$location.offset().top - 100) ;
         },
 
         // 立即保存草稿
@@ -291,7 +282,7 @@ steal('init.js')
             this.options.models$.draft$.flag = true ;
 
             this.options.$syncBox.attr('data-state', 1) ;
-            this.options.$survey.trigger('save_draft') ;
+            this.options.models$.data_collect('draft') ;
         },
 
         // 金币显示功能
@@ -315,7 +306,7 @@ steal('init.js')
                         length = $this.options.models$.draft$.length ;
 
                         // 加一个倒计时标志位以便随时停止
-                        if($this.options.models$.draft$.flag && $this.options.models$.survey_state != 2){
+                        if($this.options.models$.draft$.flag){
                             if(!$this.options.models$.draft$.last || !$this.options.models$.draft$.next){
                                 // 倒计时初始化
                                 $this.options.models$.draft$.last = moment() ;
@@ -334,7 +325,7 @@ steal('init.js')
                                     // 已到保存时间，保存调查（now > next）
                                     if(vixik$.user_verify()){
                                         $this.options.$syncBox.attr('data-state', 2) ;
-                                        $this.options.$survey.trigger('save_draft') ;
+                                        $this.options.models$.data_collect('draft') ;
                                     }else{
                                         clearInterval(cd$) ;    // 用户校验都不通过，当然要停止倒计时咯
                                     }
@@ -388,6 +379,7 @@ steal('init.js')
                 survey_code     : this.element.attr('data-sv-code')     ,// 调查编码
                 survey_type     : this.element.attr('data-sv-type')     ,// 调查大类
                 survey_type_sub : this.element.attr('data-sv-type-sub') ,// 调查小类
+                survey_trade    : this.element.attr('data-sv-trade')    ,// 调查行业
             }) ;
 
             // 调查信息对象控制器
@@ -397,7 +389,7 @@ steal('init.js')
                 $survey : this.options.$survey ,
             }) ;
 
-            // 创建调查主题对象控制器
+            // 创建调查主对象控制器
             this.options.$survey.survey_create_ctrl_survey({    
                 models$    : this.options.models$ ,
                 $Header    : this.options.$Header ,
@@ -407,10 +399,12 @@ steal('init.js')
 
             // 初始先刷新一次数据
             this.data_refresh() ;
-            this.element.find('input[type=text]').attr('value', '') ;
+            if(this.options.models$.survey_code == ''){
+                this.element.find('input[type=text]').attr('value', '') ;
+            }
 
-            window.scrollTo(0, 0) ;
-            $('body').show() ;
+            this.element.addClass('active') ;                                              // 显示主界面
+            vixik$.user_verify({trigger$:{false:['login'], info:'创建调查前请先登录'}}) ;  // 验证用户
         },
 
         // 总模型用户信息更新
@@ -421,6 +415,10 @@ steal('init.js')
         // 各模块元素点击事件刷新侧边栏状态
         "div.sv-elem click" : function(el){
             this.options.models$.elem_refresh(el, 'active') ;
+
+            if(!el.filter('#surveyContent').size()){
+                $('#surveyContent').trigger('item_active') ;
+            }
         },
 
         // 数据刷新

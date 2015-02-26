@@ -83,15 +83,15 @@ steal('init.js')
 
             switch(this.options.models$.sv_mode){
                 case 'new' :
-                    data$.order = "survey_state, start_time desc, recomm_grade, answer_num" ;
+                    data$.order = "survey_state, start_time desc, recomm_grade, answer_count" ;
                     break ;
 
                 case 'hot' :
-                    data$.order = "survey_state, answer_num desc, start_time, recomm_grade" ;
+                    data$.order = "survey_state, answer_count desc, start_time, recomm_grade" ;
                     break ;
 
                 case 'rec' :
-                    data$.order = "survey_state, recomm_grade, start_time desc, answer_num" ;
+                    data$.order = "survey_state, recomm_grade, start_time desc, answer_count" ;
                     break ;
             }
 
@@ -180,7 +180,7 @@ steal('init.js')
 
             $this.tag_hot() ;
             $this.trade_follow() ;
-            $('body').show() ;
+            $('body').addClass('active') ;
         },
 
         // 总模型用户信息更新

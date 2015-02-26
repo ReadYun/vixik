@@ -23,6 +23,20 @@ String.prototype.replaceAll = function(str1, str2){
 }
 
 /*
+ * @Name   : isEmptyObject
+ * @Desc   : 判断一个对象是否为空对象
+ * @Param  : object  obj$        需要检验的对象
+ * @Return : bool    true/false  检验结果
+ */
+function isEmptyObject(obj$){
+  for(var n in obj$){
+    return false
+  } 
+
+  return true ;  
+}
+
+/*
  * @Name   : dataValidCheck（已合并到vkData库中：data_check_null）
  * @Desc   : 轻量级数据有效性校验，检验入参对象所有属性值是否为空
  * @Param  : object  data$      需要检验的数据对象
@@ -422,6 +436,39 @@ function url_search_to_array(search_str){
     
     return search_arr ;
 }
+
+/* ------------------------------------------------- 页面功能函数jQuery ------------------------------------------------- */
+
+$.fn.setCursorPosition = function(position){ 
+  if(this.lengh == 0) return this ; 
+
+  return $(this).setSelection(position, position) ; 
+} 
+
+$.fn.setSelection = function(selectionStart, selectionEnd) { 
+  if(this.lengh == 0) return this; 
+
+  var input = this[0]; 
+
+  if(input.createTextRange){ 
+    var range = input.createTextRange() ;
+
+    range.collapse(true) ; 
+    range.moveEnd('character', selectionEnd) ; 
+    range.moveStart('character', selectionStart) ; 
+    range.select() ;
+  }else if(input.setSelectionRange){ 
+    input.focus() ; 
+    input.setSelectionRange(selectionStart, selectionEnd) ; 
+  } 
+
+  return this; 
+} 
+
+$.fn.focusEnd = function(){ 
+  this.setCursorPosition(this.val().length) ; 
+}
+
 
 /*
  * @Name   : 函数名称

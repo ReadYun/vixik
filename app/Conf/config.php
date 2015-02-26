@@ -23,7 +23,7 @@ return array(
         // '__COM__'    => 'http://readyun.gicp.net/vixik/index.php',  //网站根目录（花生壳）
     ),
 
-    /*项目函数库加载设置*/
+    /*项目函数库加载设置*/   
     'LOAD_EXT_FILE' => 'userFunc,surveyFunc,apiFunc,recommendFunc,statistFunc,',
 
     /* URL设置 */

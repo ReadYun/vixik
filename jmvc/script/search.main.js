@@ -192,7 +192,7 @@ steal('init.js')
                 this.element.find('.search-input').focus().attr('value', '') ;
             }
             
-            $('body').show() ;
+            this.element.addClass('active') ;
         },
 
         // 搜索请求

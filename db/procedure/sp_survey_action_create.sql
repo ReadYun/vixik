@@ -25,7 +25,7 @@ create procedure sp_survey_action_create_random
     * ------------------------------ Info
     * @version      1.0.000
     * @author       cao.zhiyun
-    * @create-date  2014-5-1
+    * @create-date  2015-1-22
     * @copyright    VixiK
     */
 
@@ -41,11 +41,13 @@ begin
     declare pi_sqlcode          integer default 0    ;#过程状态编码
     declare vi_cur_option       integer default 0    ;#变量：游标cur_option标志位
     declare vi_question_code    integer              ;#变量：题目编码
-    declare vc_question_type    varchar(8)           ;#变量：题目类型
+    declare vc_question_class   varchar(8)           ;#变量：题目大类
+    declare vc_question_type    varchar(8)           ;#变量：题目小类
     declare vi_option_code      integer              ;#变量：选项编码
     declare vc_option_name      varchar(32)          ;#变量：选项名称
     declare vi_option_seq       integer              ;#变量：选项序号
     declare vi_option_type      integer              ;#变量：选项类型
+    declare vi_option_value     integer              ;#变量：选项值
     declare vi_limit_a          integer              ;#变量：limit_a
     declare vi_limit_b          integer              ;#变量：limit_b
     declare vi_option_cnt       integer              ;#变量：选项计数器
@@ -53,24 +55,26 @@ begin
     
     /** 
       * 游标定义：
-      * 选择选项最多的一道题目，以其下对应的选项作为游标目标
+      * 从单选题和单项评分题开始，选择选项最多的一道题目，以其下对应的选项作为游标目标
       */    
     declare cur_option cursor for 
     select 
-        question_code  ,#题目编码
-        question_type  ,#题目类型
-        option_code    ,#选项编码
-        option_name    ,#选项名称
-        option_seq     ,#选项序号
-        option_type     #选项类型
+        question_code   ,#题目编码
+        question_class  ,#题目大类
+        question_type   ,#题目小类
+        option_code     ,#选项编码
+        option_name     ,#选项名称
+        option_seq      ,#选项序号
+        option_type     ,#选项类型
+        option_value     #选项值
     from tb_bas_question_option x1 where exists(
         select question_code from (
-            select question_code, count(1) count from tb_bas_question_option
-                where survey_code = ii_survey_code 
-                and question_type = 'radio' 
-                and option_state = 1 
-                group by question_code 
-                order by count desc limit 1) x2
+            select question_code, count(1) count 
+            from tb_bas_question_option
+            where survey_code = ii_survey_code 
+            and option_state = 1 and question_type in('11', '31')
+            group by question_code 
+            order by count desc limit 1) x2
         where x1.question_code = x2.question_code) 
     order by rand() ;
     
@@ -109,12 +113,13 @@ begin
   	  	user_code        integer         ,#参与用户编码
   	  	survey_code      integer         ,#调查编码
   	  	question_code    integer         ,#题目编码
-  	  	question_type    varchar(8)      ,#题目类型(radio:单选题；checkbox:多选题；textarea:主观题)
+  	  	question_type    varchar(8)      ,#题目类型（同调查类型）
   	  	question_seq     integer         ,#题目序号
         option_code      integer         ,#选项编码
   	  	option_name      varchar(256)    ,#选择选项内容
   	  	option_seq       integer         ,#选项序号
-  	  	option_type      integer          #选项类型（1:普通选项；2:自定义选项）
+  	  	option_type      integer         ,#选项类型（0:非选项；1:普通选项；2:自定义选项）
+  	  	option_value     integer          #选项值
 	  ) ;
     **/
       
@@ -125,12 +130,14 @@ begin
         user_code        integer         ,#参与用户编码
         survey_code      integer         ,#调查编码
         question_code    integer         ,#题目编码
-        question_type    varchar(8)      ,#题目类型
+        question_class   varchar(8)      ,#题目大类
+        question_type    varchar(8)      ,#题目小类
         question_seq     integer         ,#题目序号
         option_code      integer         ,#选项编码
         option_name      varchar(256)    ,#选择选项内容
         option_seq       integer         ,#选项序号
-        option_type      integer          #选项类型
+        option_type      integer         ,#选项类型
+        option_value     integer          #选项值
 	  ) ;
 	  create index idx_tb_tmp_question_action__user_code on tb_tmp_question_action(user_code) ;
 	  
@@ -179,15 +186,17 @@ begin
     open cur_option ;
     
     loop_cur: loop
-
+    
         /** 取游标当前数据给变量 **/
         fetch cur_option into
             vi_question_code    ,#变量：题目编码
-            vc_question_type    ,#变量：题目类型
+            vc_question_class   ,#变量：题目大类
+            vc_question_type    ,#变量：题目小类
             vi_option_code      ,#变量：选项编码
             vc_option_name      ,#变量：选项名称
             vi_option_seq       ,#变量：选项序号
-            vi_option_type       #变量：选项类型
+            vi_option_type      ,#变量：选项小类
+            vi_option_value      #变量：选项值
 		    ;
 		
         /** 
@@ -201,28 +210,32 @@ begin
         else 
             select ceil(rand()*vi_limit_a) into vi_limit_b ;
         end if ;
-        
+    
         /** 游标指定的选项和之前定义好的用户数量做笛卡尔积匹配生成数据插入目标表（题目参与详情表） **/
         insert into tb_bas_question_action
         (
             user_code        ,#参与用户编码
             survey_code      ,#调查编码
             question_code    ,#题目编码
-            question_type    ,#题目类型
+            question_class   ,#题目大类
+            question_type    ,#题目小类
             option_code      ,#选项编码
             option_name      ,#选项内容
             option_seq       ,#选项序号
-            option_type       #选项类型
+            option_type      ,#选项类型
+            option_value      #选项值
         )
         select 
             user_code          ,#参与用户编码
             ii_survey_code     ,#调查编码
             vi_question_code   ,#题目编码
-            vc_question_type   ,#题目类型
+            vc_question_class  ,#题目大类
+            vc_question_type   ,#题目小类
             vi_option_code     ,#选项编码
             vc_option_name     ,#选项内容
             vi_option_seq      ,#选项序号
-            vi_option_type      #选项类型
+            vi_option_type     ,#选项类型
+            vi_option_value     #选项值
         from tb_bas_survey_action_build_user 
         where user_code not in (
             select user_code from tb_bas_question_action where survey_code = ii_survey_code)
@@ -238,27 +251,31 @@ begin
             user_code        ,#参与用户编码
             survey_code      ,#调查编码
             question_code    ,#题目编码
-            question_type    ,#题目类型
+            question_class   ,#题目大类
+            question_type    ,#题目小类
             option_code      ,#选项编码
             option_name      ,#选项内容
             option_seq       ,#选项序号
-            option_type       #选项类型
+            option_type      ,#选项类型
+            option_value      #选项值
         )
         select 
             x1.user_code       ,#参与用户编码
             x2.survey_code     ,#调查编码
             x2.question_code   ,#题目编码
-            x2.question_type   ,#题目类型
+            x2.question_class  ,#题目大类
+            x2.question_type   ,#题目小类
             x2.option_code     ,#选项编码
             x2.option_name     ,#选项内容
             x2.option_seq      ,#选项序号
-            x2.option_type      #选项类型
+            x2.option_type     ,#选项类型
+            x2.option_value     #选项值
         from (
             select user_code from tb_bas_question_action where option_code = vi_option_code) x1, (
             select * from (
                select * from tb_bas_question_option
                where survey_code = ii_survey_code
-               and question_type = 'radio' and question_code <> vi_question_code 
+               and option_state = 1 and question_type in('11', '31') and question_code <> vi_question_code 
                order by rand()) a 
             group by question_code) x2 ;
 		
@@ -284,7 +301,7 @@ begin
     from tb_bas_question_option where question_code in (
         select question_code from (
             select question_code, count(1) count from tb_bas_question_option 
-            where survey_code = ii_survey_code and question_type = 'checkbox'
+            where survey_code = ii_survey_code and question_type = '12'
             group by question_code order by count desc limit 1) a) ;
             
     loop_checkbox: loop
@@ -346,26 +363,30 @@ begin
                 user_code        ,#参与用户编码
                 survey_code      ,#调查编码
                 question_code    ,#题目编码
-                question_type    ,#题目类型
+                question_class   ,#题目大类
+                question_type    ,#题目小类
                 option_code      ,#选项编码
                 option_name      ,#选项内容
                 option_seq       ,#选项序号
-                option_type       #选项类型
+                option_type      ,#选项类型
+                option_value      #选项值
             )
             select 
                 x1.user_code       ,#参与用户编码
                 x2.survey_code     ,#调查编码
                 x2.question_code   ,#题目编码
-                x2.question_type   ,#题目类型
+                x2.question_class  ,#题目大类
+                x2.question_type   ,#题目小类
                 x2.option_code     ,#选项编码
                 x2.option_name     ,#选项内容
                 x2.option_seq      ,#选项序号
-                x2.option_type      #选项类型
+                x2.option_type     ,#选项类型
+                x2.option_value     #选项值
             from (
                 select user_code from tb_tmp_user_list) x1, (
                 select * from (
                     select * from tb_bas_question_option 
-                    where survey_code = ii_survey_code and question_type = 'checkbox' and option_state = 1 
+                    where survey_code = ii_survey_code and question_type = '12' and option_state = 1 
                     order by rand()) a group by question_code ) x2 ;
             
             /** 标志位倒计数 **/ 
@@ -376,29 +397,71 @@ begin
                 user_code        ,#参与用户编码
                 survey_code      ,#调查编码
                 question_code    ,#题目编码
-                question_type    ,#题目类型
+                question_class   ,#题目大类
+                question_type    ,#题目小类
                 option_code      ,#选项编码
                 option_name      ,#选项内容
                 option_seq       ,#选项序号
-                option_type       #选项类型
+                option_type      ,#选项类型
+                option_value      #选项值
             )
             select distinct 
                 user_code        ,#参与用户编码
                 survey_code      ,#调查编码
                 question_code    ,#题目编码
-                question_type    ,#题目类型
+                question_class   ,#题目大类
+                question_type    ,#题目小类
                 option_code      ,#选项编码
                 option_name      ,#选项内容
                 option_seq       ,#选项序号
-                option_type       #选项类型
+                option_type      ,#选项类型
+                option_value      #选项值
             from tb_tmp_question_action ;
             
             leave loop_checkbox ;
         end if ;        
         
     end loop ;
-
-    set  pc_log_desc = '4. 调查参与信息生成' ;
+    
+    set  pc_log_desc = '3.0. 多项评分题参与数据生成' ;
+    call sp_proc_write_log(pc_log_proc, pc_log_desc, pc_log_para, pi_flag) ;
+    if pi_flag != 0 then set oi_statuscode = pi_flag ;
+    end if;
+    
+    /** 汇总数据插入到目标表中 **/
+    insert into tb_bas_question_action
+    (
+        user_code        ,#参与用户编码
+        survey_code      ,#调查编码
+        question_code    ,#题目编码
+        question_class   ,#题目大类
+        question_type    ,#题目小类
+        option_code      ,#选项编码
+        option_name      ,#选项内容
+        option_seq       ,#选项序号
+        option_type      ,#选项类型
+        option_value      #选项值
+    )
+		select 
+		    t1.user_code      ,#参与用户编码
+		    t2.survey_code    ,#调查编码    
+		    t2.question_code  ,#题目编码
+		    t2.question_class ,#题目大类
+		    t2.question_type  ,#题目小类
+		    t2.option_code    ,#选项编码    
+		    t2.option_name    ,#选项内容    
+		    t2.option_seq     ,#选项序号    
+		    t2.option_type    ,#选项类型    
+		    pf_low_value+round(rand()*(pf_high_value-pf_low_value)) abc #选项值      
+		from (
+		    select user_code from tb_bas_survey_action_build_user where survey_code = ii_survey_code) t1, (
+		    select a.pf_low_value, a.pf_high_value, a.survey_code, a.question_code, a.question_class,
+               a.question_type, b.option_code, b.option_name, b.option_seq, b.option_type
+		    from tb_bas_question_info a
+		    left outer join tb_bas_question_option b on a.question_code = b.question_code 
+		    where a.survey_code = ii_survey_code and a.question_type = 32) t2 ;
+      
+    set  pc_log_desc = '4.0. 调查参与信息生成' ;
     call sp_proc_write_log(pc_log_proc, pc_log_desc, pc_log_para, pi_flag) ;
     if pi_flag != 0 then set oi_statuscode = pi_flag ;
     end if;
@@ -416,9 +479,9 @@ begin
 	      use_times       #答题花费时间（秒）
 	  )
 	  select 
-	      a.survey_code          ,#调查编码
-	      a.user_code            ,#参与用户编码
-	      date_add(b.start_time, interval ceil(datediff(b.end_time, b.start_time)*rand()) day) action_date     ,#答卷开始时间
+	      a.survey_code               ,#调查编码
+	      a.user_code                 ,#参与用户编码
+	      date_add(b.start_time, interval ceil(20*rand()) day) ,#答卷开始时间
 	      ceil(200 + 300*rand())       #答题花费时间（秒）
     from tb_bas_survey_action_build_user a, (
         select * from tb_bas_survey_info where survey_code = ii_survey_code) b ;
@@ -441,17 +504,17 @@ begin
 end ;
 
 /** 过程调用 数据检查 **/
-call sp_survey_action_create_random(10000303, 1234, @res) ;
+call sp_survey_action_create_random(10000031, 1234, @res) ;
 select @res ;
 
-select * from tb_sys_proc_write_log where proc_name = 'sp_survey_action_create_random' ;
-delete from tb_sys_proc_write_log   where proc_name = 'sp_survey_action_create_random' ;
+select * from tb_sys_proc_write_log where proc_name = 'sp_survey_action_create_random' and main_para = 10000031 ;
+delete from tb_sys_proc_write_log   where proc_name = 'sp_survey_action_create_random' and main_para = 10000031 ;
 
-select * from tb_bas_survey_action   where survey_code = 10000303 ;
-select * from tb_bas_question_option where survey_code = 10000303 ;
+select * from tb_bas_survey_action   where survey_code = 10000031 ;
+select * from tb_bas_question_action where survey_code = 10000031 ;
 
 select question_code, option_code, count(distinct user_code) from tb_bas_question_action 
-where survey_code = 10000303 group by question_code, option_code ;
+where survey_code = 10000031 group by question_code, option_code ;
 
 select question_code, count(distinct user_code) from tb_bas_question_action 
-where survey_code = 10000303 group by question_code ;
+where survey_code = 10000031 group by question_code ;

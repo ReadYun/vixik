@@ -10,6 +10,8 @@
  */
 
 (function($){
+	/*·*·*·*·*·*·*·*·*·*·*·*·*·* vkForm总对象定义 *·*·*·*·*·*·*·*·*·*·*·*·*·*/
+	var vkForm$ = {} ;
 
 	/*·*·*·*·*·*·*·*·*·*·*·*·*·* 内置功能函数定义 *·*·*·*·*·*·*·*·*·*·*·*·*·*/
 
@@ -68,8 +70,41 @@
 		}
 	}
 
-	/*·*·*·*·*·*·*·*·*·*·*·*·*·* vkForm总对象定义 *·*·*·*·*·*·*·*·*·*·*·*·*·*/
-	var vkForm$ = {} ;
+	if($.fn.setCursorPosition instanceof Function){
+	}else{
+		$.fn.setCursorPosition = function(position){ 
+			if(this.lengh == 0) return this ; 
+			return $(this).setSelection(position, position) ; 
+		} 
+	}
+
+	if($.fn.setSelection instanceof Function){
+	}else{
+		$.fn.setSelection = function(selectionStart, selectionEnd) { 
+			if(this.lengh == 0) return this ; 
+			var input = this[0]; 
+
+			if(input.createTextRange){ 
+				var range = input.createTextRange() ;
+
+				range.collapse(true) ; 
+				range.moveEnd('character', selectionEnd) ; 
+				range.moveStart('character', selectionStart) ; 
+				range.select() ;
+			}else if(input.setSelectionRange){ 
+				input.focus() ; 
+				input.setSelectionRange(selectionStart, selectionEnd) ; 
+			} 
+			return this; 
+		} 
+	}
+
+	if($.fn.focusEnd instanceof Function){
+	}else{
+		$.fn.focusEnd = function(){
+			this.setCursorPosition(this.val().length) ; 
+		}
+	}
 
 	/*·*·*·*·*·*·*·*·*·*·*·*·*·* 方法清单 *·*·*·*·*·*·*·*·*·*·*·*·*·*/
 	var methods = {
@@ -171,8 +206,8 @@
 				text   : ''  ,// 默认初始选项值
 				select : ''  ,// 默认初始选项值
 			} ;
-			var option$ = $.extend(default$, option$ || {}) ;    // 合并自定义配置
-			var $vfelem, $vkform, vkform$, form$, name, type, value ;
+			var option$ = $.extend(default$, option$ || {}),    // 合并自定义配置
+			    $vfelem, $vkform, vkform$, form$, name, type, value ;
 
 		 	// 定位目标元素.vf-elem和分对象.vf-elem
 		 	if($(this).hasClass('vf-elem')){
@@ -194,27 +229,37 @@
 					}
 
 					$vfelem.each(function(){
-						$name = $(this).find('input, select, textarea') ;
-						type  = $name.attr('type') ;
-
-						if(type === 'select'){
-							if($name.find('option.init').length){
-								// 如果有初始选项按照初始选项值进行匹配
-								$name.attr('value', $name.find('option.init').val()) ;
-							}else{
-								// 否则按照默认统一初始值进行匹配
-								$name.attr('value', option$.select) ;
-							}
-						}else if(type === 'radio' || type === 'checkbox'){
-							try{
-								if(vkform$.event.uncheck instanceof Function){
-									vkform$.event.uncheck($name) ;
-								}
-							}catch(e){
-								$name.attr('checked', false) ;
-							}
+						if($(this).find('input, select, textarea').size()){
+							$name = $(this).find('input, select, textarea') ;
 						}else{
-							$name.attr('value', option$.text) ;
+							$name = $(this).filter('input, select, textarea') ;
+						}
+
+						if($name.size()){
+							type  = $name.attr('type') ;
+
+							if(type === 'select'){
+								if(option$.select){
+									// 优先按照默认统一初始值进行匹配
+									$name.attr('value', option$.select) ;
+								}else if($name.find('option.init').length){
+									// 如果有初始选项按照初始选项值进行匹配
+									$name.attr('value', $name.find('option.init').val()) ;
+								}else{
+									// 保底按第一个选项值匹配
+									$name.attr('value', $name.find('option').not('.tpl').first().val()) ;
+								}
+							}else if(type === 'radio' || type === 'checkbox'){
+								try{
+									if(vkform$.event.uncheck instanceof Function){
+										vkform$.event.uncheck($name) ;
+									}
+								}catch(e){
+									$name.attr('checked', false) ;
+								}
+							}else{
+								$name.attr('value', option$.text) ;
+							}
 						}
 					}) ;
 			 	}else{
@@ -682,6 +727,7 @@
 				data$.data = [] ;
 			}
 			
+			// console.dir($vfelem)
 			$vfelem.each(function(){
 				if(!$(this).attr('data-not-get')){    // 排除有不取数据标识的元素
 					$vfele       = $(this) ;
@@ -725,7 +771,7 @@
 						switch(parseInt(option$.check_null)){
 							// 只校验必选项；非严格校验，必选项为空剔出，可选项跳过校验
 							case 1 :
-								if($(this).attr('data-elem-type') === 'required'){
+								if(parseInt($(this).attr('data-check-null'))){
 									data$.status = false ;
 									data$.info   = name ;
 
@@ -885,4 +931,41 @@
         }
 	}) ;
 
+	/*·*·*·*·*·*·*·*·*·*·*·*·*·* vk-input相关交互 *·*·*·*·*·*·*·*·*·*·*·*·*·*/
+
+    // vk-input双击清楚当前内容
+    $('html').on('dblclick.vkForm', '.vk-input', function(ev){
+        $(this).text('') ;
+    }) ;
+
+    // vk-input聚焦清除初始内容
+    $('html').on('focus.vkForm', '.vk-input', function(ev){
+        if($(this).attr('data-init') != '' && $(this).attr('data-init') == $(this).text()){
+            $(this).text('') ;
+        }
+
+        if($(this).hasClass('num')){
+        	$(this).focusEnd() ;
+        }
+    }) ;
+
+    // vk-input焦点离开判断是否恢复初始内容
+    $('html').on('focusout.vkForm', '.vk-input', function(ev){
+        if($(this).attr('data-init') != '' &&  $(this).text() == ''){
+            $(this).text($(this).attr('data-init')) ;
+        }
+
+        if($(this).hasClass('num') && $(this).val() == ''){
+        	$(this).attr('value', 0) ;
+        }
+    }) ;
+
+    // vk-input焦点离开判断是否恢复初始内容
+    $('html').on('keyup.vkForm', '.vk-input.num', function(ev){
+		if($(this).val() == ''){
+			$(this).attr('value', 0) ;
+		}else{
+			$(this).attr('value', parseInt($(this).val().replace(/[^\d]/g,''))) ;
+		}
+    }) ;
 })(jQuery) ;

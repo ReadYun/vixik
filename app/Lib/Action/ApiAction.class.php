@@ -66,26 +66,27 @@ class ApiAction extends Action{
             $cond['user_pwd']  = MD5($_POST['user_pwd']) ;
             
             if($user = M(TB_BAS_USER_INFO) -> where($cond) -> find()){
-                if($accout = M(TB_BAS_USER_ACCOUT) -> where("user_code = ".$user['user_code']) -> find()){
-                    $user = array_merge($user, $accout) ;
-                }
+                // if($accout = M(TB_BAS_USER_ACCOUT) -> where("user_code = ".$user['user_code']) -> find()){
+                //     $user = array_merge($user, $accout) ;
+                // }
 
-                // 查询用户等级值对应的等级描述
-                $user['user_level_desc'] = M(TB_DET_USER_LEVEL) -> where("user_level_value=".$user['user_level']) -> getField('user_level_desc') ;
+                // // 查询用户等级值对应的等级描述
+                // $user['user_level_desc'] = M(TB_DET_USER_LEVEL) -> where("user_level_value=".$user['user_level']) -> getField('user_level_desc') ;
 
                 // 用户编码和MD5码可长期保留在cookie中
+                cookie('user_name', $user['user_name'],                        360000) ;
                 cookie('user_code', $user['user_code'],                        360000) ;
                 cookie('user_md5',  MD5($user['user_code'].$user['user_pwd']), 360000) ;
 
-                // 用户隐私属性列表
-                $private = array('user_pwd','user_email','identity_card','sure_name','user_address','mobile_phone','fix_phone') ;
+                // // 用户隐私属性列表
+                // $private = array('user_pwd','user_email','identity_card','sure_name','user_address','mobile_phone','fix_phone') ;
 
-                for($i = 0; $i < count($private); $i++){
-                    unset($user[$private[$i]]) ;        
-                }
+                // for($i = 0; $i < count($private); $i++){
+                //     unset($user[$private[$i]]) ;        
+                // }
 
                 // 再通过接口返回成功信息和用户资料数据
-                cookie('user$', json_encode($user)) ;
+                // cookie('user$', json_encode($user)) ;
                 $this -> ajaxReturn($user, "success:api_user_verify", 1, 'json') ;
             }else{
                 $this -> ajaxReturn(false, "failed:api_user_verify", 0) ;
@@ -117,14 +118,14 @@ class ApiAction extends Action{
                         unset($user[$private[$i]]) ;        
                     }
                     
-                    cookie('user$', json_encode($user)) ;
+                    // cookie('user$', json_encode($user)) ;
                     return true ;
                 }
             }else{
                 // 未通过校验清除目标cookie
                 cookie('user_code', null) ;
                 cookie('user_md5',  null) ;
-                cookie('user$',     null) ;
+                // cookie('user$',     null) ;
                 return false ;            
             }
         }else{
@@ -1379,47 +1380,17 @@ class ApiAction extends Action{
     */
     public function test(){
 
-    $survey_code = 10000011 ;    
+    $tables = array('user_sex', 'user_career', 'user_age', 'user_edu') ;   
+    $data = array() ;
 
-    $stats['question_count'] = $stats['qt_cnt_xz'] = $stats['qt_cnt_zg'] = $stats['qt_cnt_pf'] = 0 ;
-
-    $tbBasQuestionInfo = M(TB_BAS_QUESTION_INFO) -> getTableName() ;
-
-    $sql = "select survey_code, question_class, count(question_code) count from $tbBasQuestionInfo
-            where survey_code = $survey_code group by survey_code, question_class" ;
-    $question = M() -> query($sql) ;
-
-    for($i = 0; $i < count($question); $i++){
-        switch(intval($question[$i]['question_class'])){
-            case 1 :
-                $stats['qt_cnt_xz'] += $question[$i]['count'] ;
-                break ;
-
-            case 2 :
-                $stats['qt_cnt_zg'] += $question[$i]['count'] ;
-                break ;
-
-            case 3 :
-                $stats['qt_cnt_pf'] += $question[$i]['count'] ;
-                break ;
-        }
-
-        $stats['question_count'] += $question[$i]['count'] ;
+    for($i = 0; $i < count($tables); $i++){
+        $data[$tables[$i]] = M(constant('TB_DET_'.strtoupper($tables[$i]))) -> select() ;
     }
+ 
 
-    // if($question){
-    //     for($i = 0; $i < count($question); $i++){
-    //         $type_num = $question[$i]['question_type'] . '_num' ;
-    //         $qt_statist["$type_num"] = $question[$i]['count'] ;
-    //     } ;
+    dump($data) ;
 
-    //     $qt_statist['question_num'] = $qt_statist['radio_num'] + $qt_statist['checkbox_num'] + $qt_statist['textarea_num'] ;        
-    // } ;
-
-    dump($stats)  ;
-
-
-    }   
+    }
 }
 
 ?>

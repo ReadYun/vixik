@@ -26,7 +26,7 @@
                     <i class="icon-sitemap"></i>{$survey['info']['survey_type_name']} / {$survey['info']['survey_type_sub_name']}
                 </div>
                 <notempty name="survey['info']['survey_trade_name']">
-                <div class="sv-trade"><i class="icon-beaker"></i>{survey['info']['survey_trade_name']}</div>
+                <div class="sv-trade"><i class="icon-beaker"></i>{$survey['info']['survey_trade_name']}</div>
                 </notempty>
                 <div class="sv-tags">
                     <i class="icon-tags"></i>
@@ -69,6 +69,7 @@
                     </volist>
                 </div>
             </div>
+            <button class="vkbutton vbtn-border vbtn-success xlarge answer" href="{:U('/survey/answer')}?code={$survey['info']['survey_code']}">参与调查</button>
             <div id="svComment">
                 <div class="sv-label">
                     <div class="sl-title">最新评论</div>
@@ -132,14 +133,8 @@
                     </div>
                 </div>
             </div>
-            <div id="svButton">
-                <div class="sv-button">
-                    <button class="vkbutton vbtn-border vbtn-success block answer" href="{:U('/survey/answer')}?code={$survey['info']['survey_code']}">参与调查</button>
-                </div>
-                <div class="sv-button">
-                    <button class="vkbutton vbtn-border vbtn-success block" href="{:U('/survey/analyse')}?code={$survey['info']['survey_code']}">查看分析</button>
-                </div>
-            </div>
+            <button class="vkbutton vbtn-border vbtn-primary xlarge analyse" href="{:U('/survey/analyse')}?code={$survey['info']['survey_code']}">查看分析</button>
+            <notempty name="survey['list']['user']">
             <div id="svOther">
                 <div class="sv-label">
                     <div class="sl-title">Ta的其他调查</div>
@@ -155,6 +150,8 @@
                     </volist>
                 </div>
             </div>
+            </notempty>
+            <notempty name="survey['list']['type']">
             <div id="svType">
                 <div class="sv-label">
                     <div class="sl-title">同类型调查</div>
@@ -170,6 +167,8 @@
                     </volist>
                 </div>
             </div>
+            </notempty>
+            <notempty name="survey['list']['trade']">
             <div id="svTrade">
                 <div class="sv-label">
                     <div class="sl-title">同行业调查</div>
@@ -185,6 +184,7 @@
                     </volist>
                 </div>
             </div>
+            </notempty>
         </div>
     </div>
     <div id="Footer"><include file="Public:footer" type="main"/></div>

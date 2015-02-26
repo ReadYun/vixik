@@ -76,8 +76,8 @@
     -webkit-box-shadow: none;
 }
 
-.vkform .vk-input:hover{border-color: #999;}
-.vkform .vk-input.vixik:focus,  .vkform .vk-input.vixik:focus:hover {border-color: #6BB130;}
-.vkform .vk-input.blue:focus,   .vkform .vk-input.blue:focus:hover  {border-color: #6699FF;}
-.vkform .vk-input.green:focus,  .vkform .vk-input.green:focus:hover {border-color: #66CC66;}
-.vkform .vk-input.orange:focus, .vkform .vk-input.orange:focus:hover{border-color: #FF9933;}
+.vkform .vk-input:focus,        .vkform .vk-input:hover        {border-color: #999;}
+.vkform .vk-input.vixik:focus,  .vkform .vk-input.vixik:focus: {border-color: #6BB130;}
+.vkform .vk-input.blue:focus,   .vkform .vk-input.blue:focus:  {border-color: #6699FF;}
+.vkform .vk-input.green:focus,  .vkform .vk-input.green:focus: {border-color: #66CC66;}
+.vkform .vk-input.orange:focus, .vkform .vk-input.orange:focus:{border-color: #FF9933;}

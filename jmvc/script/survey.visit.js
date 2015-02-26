@@ -11,7 +11,7 @@
 steal('init.js')
 .then('script/public.header.js')
 .then(function($){
-    loadPlugin('countdown', 'vkForm') ;
+    loadPlugin('countdown', 'vkForm', 'vkButton') ;
 }) 
 .then(function($){
 
@@ -26,9 +26,9 @@ steal('init.js')
         }
     }, {
         init : function(){
-            var $this        = this,
-                user_code    = this.options.user_code   = $.cookie('user_code'),             // 从cookie中取用户编码
-                survey_code  = this.options.survey_code = this.element.attr('data-survey') ; // 取当前访问的问卷编码
+            var $this       = this,
+                user_code   = this.options.user_code   = $.cookie('user_code'),             // 从cookie中取用户编码
+                survey_code = this.options.survey_code = this.element.attr('data-survey') ; // 取当前访问的问卷编码
 
             if(parseInt(survey_code) > 10000000){
                 // 取调查基本数据
@@ -54,15 +54,17 @@ steal('init.js')
                 $this.user_action_verify(user_code) ;
             }
             
-            $('body').show() ;
+            $this.element.addClass('active') ;
         },
 
         // 总对象用户数据更新时触发
         "{vixik$} user" : function(){
-            this.options.user_code = $.cookie('user_code') ;
+            if($.cookie('user_code')){
+                this.options.user_code = $.cookie('user_code') ;
 
-            $this.user_info(vixik$.user$) ;
-            $this.user_action_verify(this.options.user_code) ;
+                this.user_info(vixik$.user$) ;
+                this.user_action_verify(this.options.user_code) ;
+            }
         },
 
         // 调查说明详情切换
@@ -98,12 +100,6 @@ steal('init.js')
                         }
                     }
                 });
-            }
-        },
-
-        ".sv-button>button click" : function(el){
-            if(!el.hasClass('disabled')){
-                window.location.href = el.attr('href') ;
             }
         },
 

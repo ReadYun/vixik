@@ -300,26 +300,37 @@ steal('init.js')
 
         // 这里的实际上就是数据校验
         data_collect : function(){
-            if(this.options.models$.info$.recomm_type == null){
-                if(this.options.models$.collect$.state == 'submit'){
-                    alert('请确定调查推荐方式') ;
+            // if(this.options.models$.info$.recomm_type == null){
+            //     if(this.options.models$.collect$.type == 'submit'){
+            //         alert('请确定调查推荐方式') ;
 
-                    this.options.models$.collect$.flag = false ;
-                    this.options.models$.elem_refresh(this.element) ;
-                    return false ;
-                }
+            //         this.options.models$.collect$.flag = false ;
+            //         this.options.models$.elem_refresh(this.element) ;
+
+            //         return false ;
+            //     }
+            // }else{
+            //     return true ;
+            //     // // 自定义推荐规则校验
+            //     // if(this.options.models$.info$.recomm_type > 1){
+            //     //     if(!$.vkData('data_check_null', this.options.models$.recommend$).status){
+            //     //         alert('自定义推荐规则设置不完整，请检查完善信息') ;
+            //     //         this.options.models$.location(this.element) ;
+            //     //         this.options.models$.collect$.flag = false ;
+
+            //     //         return false ;
+            //     //     }
+            //     // }
+            // }
+
+
+            // 传入数据给总模型
+            if(this.options.models$.collect$.flag){
+                // 传入数据给总模型
+                // $.extend(this.options.models$.info$, setting$) ;
+                this.options.models$.data_collect('success', 'recomm') ;
             }else{
-                return true ;
-                // // 自定义推荐规则校验
-                // if(this.options.models$.info$.recomm_type > 1){
-                //     if(!$.vkData('data_check_null', this.options.models$.recommend$).status){
-                //         alert('自定义推荐规则设置不完整，请检查完善信息') ;
-                //         this.options.models$.location(this.element) ;
-                //         this.options.models$.collect$.flag = false ;
-
-                //         return false ;
-                //     }
-                // }
+                this.options.models$.data_collect('failed', 'recomm') ;
             }
         }
     }) ;

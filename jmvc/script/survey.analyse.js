@@ -30,14 +30,12 @@ steal('init.js')
         }
     }, {
         init : function(){
-            this.user_photo() ;
-            this.sv_list() ;
         },
 
         // 总对象用户数据更新时触发
         "{vixik$} user" : function(){
-            this.options.models$.user_code = $.cookie('user_code') ;
-            this.options.models$.survey_list(this.options.models$.user_code) ;
+            this.options.models$.user_code = vixik$.user$.user_code ;
+            this.options.models$.sv_switch() ;
         },
 
         // 调查信息模型刷新触发操作
@@ -54,31 +52,24 @@ steal('init.js')
                     $photo.attr('src', __JMVC_IMG__ + 'user/' + this.options.models$.survey$.info.user_code + '_60.jpg') :
                     $photo.attr('src', __JMVC_IMG__ + 'user/' + 'user.jpg') ;
             }
-
         },
 
         // 调查清单模型刷新触发操作
-        "{models$} sv_list" : function(){
-            this.sv_list() ;
-        },
-
-        // 调查清单模型刷新触发操作
-        sv_list : function(){
-            var $this = this ;
+        "{models$} sv_switch" : function(){
+            var data$,
+                $this = this ;
 
             if($this.options.models$.list$){
                 this.element.find('.vkpaging').each(function(){
-                    var $list    = $(this),
-                        name     = $list.attr('data-model'),
-                        data$    = $this.options.models$.list$[name] ;
+                    data$ = $this.options.models$.list$[$(this).attr('data-model')] ;
 
                     // 如果有数据才显示调查列表
-                    if(data$.length){
+                    if(data$ && data$ .length){
                         //调用分页插件功能
-                        $list.addClass('active').vkPaging({
+                        $(this).addClass('active').vkPaging({
                             data$     : data$                                             ,//要分页的源数据
-                            $pagBody  : $list.find('.vkpaging-body')                      ,//分页内容的容器对象
-                            $pagNav   : $list.find('.vkpaging-nav')                       ,//分页内容的容器对象
+                            $pagBody  : $(this).find('.vkpaging-body')                    ,//分页内容的容器对象
+                            $pagNav   : $(this).find('.vkpaging-nav')                     ,//分页内容的容器对象
                             view_list : __JMVC_VIEW__ + 'survey.analyse.switch.list.ejs'  ,//列表模板路径
                             num_list  : 10                                                ,//每页数据量
                             num_nav   : 10                                                ,//导航分页数
@@ -90,6 +81,10 @@ steal('init.js')
             }else{
                 this.options.$ssButton.attr('data-toggle', '') ;
             }
+        },
+
+        // 调查清单模型刷新触发操作
+        sv_list : function(){
         },
 
         // 未登录用户点击切换调查按钮弹出登录框
@@ -181,7 +176,7 @@ steal('init.js')
                 switch(type){
                     case 'action' :  // 参与功能
                         if(action > 0){  // 如果是未参与状态转入新建的调查参与页面
-                            $.vixik('get_url', {name:'survey/action', tail:'/s/' + survey_code, open:'new'}) ;
+                            $.vixik('get_url', {name:'survey/answer', tail:'/code/' + survey_code, open:'new'}) ;
                         }else{
                             alert('您已参与过本次调查') ;
                         }
@@ -299,45 +294,21 @@ steal('init.js')
         listensTo : ["hint"]
     }, {
         init : function(){
-            if(this.options.models$.survey$ && this.options.models$.survey$.question.length > 0){
-                this.question_list() ;
-            }
+            this.element.find('.qt-xz input').iCheck({
+                checkboxClass: 'icheckbox_minimal-grey',
+                   radioClass: 'iradio_minimal-grey'
+            }).iCheck('uncheck').parent().addClass('icheck') ;
         },
 
-        // 调查清单模型刷新触发操作
-        "{models$} sv_list" : function(){
-            if(this.options.models$.survey$.question.length > 0){
-                this.question_list() ;
-            }
+        // 单项评分选项评分值选择
+        ".pr-mid-elem click" : function(el){
+            el.parent().children().not(el.addClass('ok')).removeClass('ok') ;
         },
 
-        // 调查清单模型刷新触发操作
-        question_list : function(){
-            var $question,
-                $this        = this,
-                viewQuestion = __JMVC_VIEW__ + 'survey.action.question.ejs',  // 调查题目模板路径
-                question$    = $this.options.models$.survey$.question ;       // 取模型题目数据
-
-            // 调查题目内容生成
-            for(var q = 0; q < question$.length; q++){
-                $this.element.append(
-                    viewQuestion,
-                    {data: question$[q]},
-                    function(){
-                        // 定位最新生成的题目
-                        $question = this.find('.question-item').last() ;
-
-                        //  表单元素使用iCheck样式
-                        $question.find('.vf-elem-option input').iCheck({
-                            checkboxClass : 'icheckbox_minimal-grey',
-                               radioClass : 'iradio_minimal-grey'
-                        }) ;
-
-                        $question.find('.icheckbox_minimal-grey').addClass('icheck') ;
-                        $question.find('.iradio_minimal-grey').addClass('icheck') ;
-                    }
-                ) ;
-            }
+        // 多项评分选项评分值选择
+        ".vs-option click" : function(el){
+            el.parents('.vf-elem-option').addClass('ok').attr('data-value', el.attr('data-value'))
+            .find('.dropdown-toggle').text(el.attr('data-value')) ;
         },
     }) ;
 
@@ -348,7 +319,7 @@ steal('init.js')
     $.Controller('Survey.Analyse.Ctrl.Main', {
         defaults : {
             models$        : {}                   ,// 页面总模型
-            $navBar        : $('#navBar')         ,// 页面副栏模块
+            $navBox        : $('#navBox')         ,// 页面副栏模块
             $surveyStats   : $('#surveyStats')    ,// 整体分析模块
             $questionStats : $('#questionStats')  ,// 题目分析模块
             $surveyContent : $('#surveyContent')  ,// 调查内容模块
@@ -368,12 +339,12 @@ steal('init.js')
 
             // 新建模型实例并初始化
             this.options.models$ = new Survey.Analyse.Model({
-                user_code   : user_code ,
+                user_code   : user_code,
                 survey_code : survey_code
             }) ;
 
             // 页面副栏模块控制器
-            $('#navBar').survey_analyse_ctrl_nav({
+            this.options.$navBox.survey_analyse_ctrl_nav({
                 models$ : this.options.models$
             }) ;
 
@@ -392,20 +363,21 @@ steal('init.js')
                 models$ : this.options.models$
             }) ;
 
-            // 调查设置模块控制器
-            this.options.$surveySetting.survey_analyse_ctrl_sv_setting({
-                models$ : this.options.models$
-            }) ;
+            // // 调查设置模块控制器
+            // this.options.$surveySetting.survey_analyse_ctrl_sv_setting({
+            //     models$ : this.options.models$
+            // }) ;
 
-            // 网友评论模块控制器
-            this.options.$surveyComment.survey_analyse_ctrl_sv_comment({
-                models$ : this.options.models$
-            }) ;
+            // // 网友评论模块控制器
+            // this.options.$surveyComment.survey_analyse_ctrl_sv_comment({
+            //     models$ : this.options.models$
+            // }) ;
 
-            // 需要模型trigger的最后初始化
-            this.options.models$.survey_list(user_code) ;
+            // 开始调用模型去相关数据
+            this.options.models$.survey_info() ;
+            this.options.models$.sv_switch() ;
             
-            $('body').show() ;
+            this.element.addClass('active') ;
         },
     }) ;
 

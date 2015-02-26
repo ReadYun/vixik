@@ -237,9 +237,12 @@
         text-overflow: ellipsis;
         text-decoration: none;
         cursor: pointer;
-    }
+        }
+        #svQuestion .sq-list>.question-name>a{
+            color: #666;
+        }
 #svComment{
-    margin: 10px 0;
+    margin-bottom: 10px;
     }
     #svComment .sc-sub{
         width: 30px;
@@ -317,8 +320,8 @@
         }
     #svComment.list .comment-no, #svComment .sl-ext, #svComment .sc-elem.tpl{display:none;}
     #svComment.list .comment-list, #svComment.list .sl-ext{display:block;}
-    .comment-my .sc-sub, .comment-my .sc-main, body.logined .comment-my .need-login{display:none;}
-    body.logined .comment-my .sc-sub, body.logined .comment-my .sc-main{display:block;}
+    .comment-my .sc-sub, .comment-my .sc-main, body.login .comment-my .need-login{display:none;}
+    body.login .comment-my .sc-sub, body.login .comment-my .sc-main{display:block;}
 
 
 #svStats>div{
@@ -350,25 +353,11 @@
             font: 12px "微软雅黑",Tahoma;
         }
 
-#svButton{
+button.xlarge{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     width: 100%;
     margin: 30px 0;
-    overflow: hidden;
-    }
-    #svButton>div{
-        width: 100%;
-        height: 45px;
-        margin: 10px 0;
-        float: left;
-        }
-        #svButton button{
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            width: 100%;
-            font: 23px "宋体",Tahoma;
-            border: 1px solid #66CC66;
-        }
+}
 
-
-     

@@ -133,7 +133,7 @@ steal('init.js')
 
             //通过总模型取搜索数据
             this.options.models$.get_data(urlPara$.type, urlPara$.words) ;
-            $('body').show() ;
+            $('body').addClass('active') ;
         },
 
         //搜索请求

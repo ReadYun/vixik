@@ -9,7 +9,7 @@
 
 steal('init.js')
 .then(function($){
-    loadPlugin('vkForm', 'vkButton') ;
+    loadPlugin('vkForm', 'vkButton', 'iCheck') ;
 }) 
 .then(function($){
     
@@ -23,12 +23,16 @@ steal('init.js')
         }
     }, {
         init : function(){
-            this.user_verify({func$:{true:['user_info']}}) ;
         },
 
         // 手动触发模型更新事件
-        trigger : function(flag){
-            eval("this.attr('" + flag + "', Math.random())") ;
+        trigger : function(flag, info){
+            if(info){
+                eval("this.attr('" + flag + "', Math.random() + '#' + info)") ;
+            }else{
+                eval("this.attr('" + flag + "', Math.random() + '')") ;
+
+            }
         },
 
         // 用户验证
@@ -37,12 +41,12 @@ steal('init.js')
              * trigger$ = {'true':[t1,t2,..], 'false':[t1,t2,..]} ;  // 要触发的事件
              * func$    = {'true':[f1,f2,..], 'false':[f1,f2,..]} ;  // 要执行的函数
              */
-            if($.cookie('user_code') && $.cookie('user_md5') && $.cookie('user$')){
+            if(this.user$){
                 // 通过验证
                 if(params$ && params$.trigger$ && params$.trigger$.true){
                     // 触发事件
                     for(var i = 0; i < params$.trigger$.true.length; i++){
-                        this.trigger(params$.trigger$.true[i]) ;
+                        this.trigger(params$.trigger$.true[i], params$.trigger$.info) ;
                     }
                 }
 
@@ -60,7 +64,7 @@ steal('init.js')
                 if(params$ && params$.trigger$ && params$.trigger$.false){
                     // 触发事件
                     for(var i = 0; i < params$.trigger$.false.length; i++){
-                        this.trigger(params$.trigger$.false[i]) ;
+                        this.trigger(params$.trigger$.false[i], params$.trigger$.info) ;
                     }
                 }
 
@@ -90,16 +94,15 @@ steal('init.js')
                             $this.user$ = data$.data ;
                             $this.trigger('user') ;
                         }else{
-                            $this.user$ = {} ;
+                            $this.user$ = false ;
                             $this.trigger('user') ;
                         }
                     }
                 });
             }else{
-                $this.user$ = null ;
+                $this.user$ = false ;
                 $this.trigger('user') ;
             }
-
         },
     }) ;
 
@@ -107,7 +110,7 @@ steal('init.js')
     vixik$ = new Vixik.Model() ;
 
     /*
-     * 用户登录框控制器
+     * 用户注册登录模块控制器
      *
      */
     $.Controller('Public.Header.Ctrl.Login',{
@@ -129,26 +132,20 @@ steal('init.js')
     }, {
         init : function(){
             // 表单初始化处理
-            if($.cookie('user_name')){
-                this.options.$loginUser.val($.cookie('user_name')) ;
-                this.options.$loginPswd.focus() ;
-            }
-            else{
-                this.options.$loginUser.val('') ;
-                this.options.$loginPswd.val('') ;
-                this.options.$loginUser.focus() ;
-            } ;
+            this.element.find('.elem-form input').attr('value', '') ;
+            this.element.find('.user-agreement input').iCheck({
+                checkboxClass: 'icheckbox_minimal-grey',
+                   radioClass: 'iradio_minimal-grey'
+            }) ;
         },
 
         // 由总模型触发登录功能
-        "{vixik$} login" : function(){
-            alert('享受服务请先登录！') ;
-            this.login_open() ;
-        },
-
-        // 由总模型触发登录功能（无登录提示）
-        "{vixik$} login_open" : function(){
-            this.login_open() ;
+        "{vixik$} login" : function(obj$){
+            if(obj$.login.indexOf('#') != -1){
+                this.login_open(obj$.login.substring(obj$.login.indexOf('#') + 1)) ;
+            }else{
+                this.login_open() ;
+            }
         },
 
         // 保证在dropdown-menu里正常操作，阻止click事件
@@ -159,6 +156,11 @@ steal('init.js')
         // 登录界面点击【注册新用户】
         ".lg-regist click" : function(){
             this.signup_open() ;
+        },
+
+        // 登录界面点击【注册新用户】
+        ".user-to-login click" : function(){
+            this.login_open() ;
         },
 
         // 单击输入框隐藏告警提示
@@ -349,11 +351,20 @@ steal('init.js')
             this.options.$Signup.addClass('open') ;
         },
 
+        // 点击注册聚焦用户名输入框
+        ".signup-box>.dropdown-toggle click" : function(){
+            this.element.find('input[name=user_name]').focus() ;
+        },
+
         // 打开登录界面
-        login_open : function(){
+        login_open : function(info){
             var $this = this ;
 
-            this.options.$Header.find('.topbar-main').slideDown('fast') ;
+            if(info){
+                alert(info) ;
+            }
+
+            $this.options.$Header.find('.topbar-main').slideDown('fast') ;
 
             setTimeout(function(){
                 $this.element.children().removeClass('open').filter('.login-box').addClass('open') ;
@@ -363,6 +374,7 @@ steal('init.js')
         // 打开注册界面
         signup_open : function(){
             this.element.children().removeClass('open').filter('.signup-box').addClass('open') ;
+            this.element.find('input[name=user_name]').focus() ;
         },
 
         // 警告框操作
@@ -396,40 +408,38 @@ steal('init.js')
                 $User   : this.options.$userBox,
             }) ;
 
-            this.user_refresh() ;
+            // this.user_refresh() ;
         },
 
         // 总模型用户信息获取后触发
         "{vixik$} user" : function(){
-            this.options.$Main.addClass('logined') ;
             this.user_refresh() ;
-
         },
 
         // 鼠标进入用户头像打开用户信息菜单
-        ".user-info mouseover" : function(el){
+        ".user-info mouseover" : function(){
             this.element.find('.user-info').addClass('open') ;
             this.element.parent().addClass('user-info-tmp') ;
         },
 
-        ".user-info mouseout" : function(el){
+        ".user-info mouseout" : function(){
             this.element.find('.user-info').removeClass('open') ;
             this.element.parent().removeClass('user-info-tmp') ;
         },
 
-        // 退出登录
+        // 用户窗口菜单
         ".action>div click" : function(el, ev){
             ev.stopPropagation() ;
 
             if(el.hasClass('exit')){
+                // 退出登录
                 $.cookie('user_code', null, {path:'/'}) ;
                 $.cookie('user_md5',  null, {path:'/'}) ;
-                $.cookie('user$',     null, {path:'/'}) ;
-
-                this.element.removeClass('logined') ;
+                vixik$.user$ = false ;
 
                 vixik$.user_verify({func$:{false:['user_info']}}) ;
             }else{
+                // 其他选项前往目标
                 window.open(el.attr('href')) ;
             }
         },
@@ -437,7 +447,7 @@ steal('init.js')
         // 用户信息刷新
         user_refresh : function(){
             var $this    = this,
-                user$    = $.evalJSON($.cookie('user$')),
+                user$    = vixik$.user$,
                 href     = this.element.attr('data-href'),
                 $menu    = this.element.find('.user-info-menu'),
                 $visit   = $menu.find('.visit'),
@@ -446,7 +456,6 @@ steal('init.js')
 
             // 判断cookie中是否有用户信息
             if(user$){
-                $('body').addClass('logined') ;
                 this.element.find('.user-nick>a').text(user$.user_nick).attr('href', $setting.attr('href') + '/index') ;
 
                 if(user$.user_photo){
@@ -464,8 +473,9 @@ steal('init.js')
 
                 $menu.find('.sv-public>.value').text(user$.publish_times) ;
                 $menu.find('.sv-answer>.value').text(user$.answer_times) ;
+                $('body').addClass('login') ;
             }else{
-                $('body').removeClass('logined') ;
+                $('body').removeClass('login') ;
             }
 
             this.options.$Main.trigger('data_refresh') ;
@@ -502,16 +512,18 @@ steal('init.js')
             // 搜索框初始化
             this.options.$minSearch.val('') ;
 
-            // 初始用户验证，验证失败需要登录
-            if(this.element.attr('data-verify')){
-                vixik$.user_verify({trigger$:{false:['login']}}) ;
-            }
-
             // 显示topBar
             this.options.$topBar.show() ;
 
             // 导航栏目标定位
             this.options.$topBar.find('.nav-box>.' + this.options.$topBar.attr('data-nav')).addClass('active') ;
+
+            setTimeout(function(){
+                window.scrollTo(0, 0) ;
+            }, 500) ;
+
+            // 刷新用户信息
+            vixik$.user_info() ;
         },
 
         // 打开开始菜单

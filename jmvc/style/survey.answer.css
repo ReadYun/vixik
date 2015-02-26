@@ -27,7 +27,7 @@
     }
 #svSider{
     width: 960px;
-    margin: 10px auto;
+    margin: 5px auto;
     overflow: hidden;
     text-align: left;
 }
@@ -35,10 +35,10 @@ body.topbar-open.topbar-hover #svSider{
     margin-top: 40px;
 }
 #hintBar{
-    width: 45px;
+    width: 35px;
     float: left;
     overflow: hidden;
-    font: 15px "宋体",Tahoma;
+    font: 12px "宋体",Tahoma;
     text-align: right;
 }
 #itemFlag{
@@ -62,7 +62,7 @@ body.topbar-open.topbar-hover #svSider{
             margin-left: 5px;
             float: right;
             width: 5px;
-            height: 18px;
+            height: 14px;
             border-right: 1px solid #999;
             border-top: 1px solid #999;
         }
@@ -75,11 +75,12 @@ body.topbar-open.topbar-hover #svSider{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     width: 100%;
-    padding: 5px 10px 5px 5px;
+    padding: 3px 0;
     overflow: hidden;
-    font: 14px Tahoma;
+    font: 12px Tahoma;
     border-right: 1px solid #999;
     border-top: 1px solid #999;
+    text-align: center;
 }
 #answerBox .ans-box-main{
     width: 880px;
@@ -93,76 +94,36 @@ body.topbar-open.topbar-hover #svSider{
     }
 
 #svHeader{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     width: 100%;
-    margin-bottom: 5px;
     float: right;
     overflow: hidden;
     position: relative;
     }
-    #svHeader>.sh-sub{
-        width: 50px;
-        float: left;
-        color: #666;
+    #svHeader a.sv-title{
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+        color: #333;
+        font: 19px "宋体",Tahoma;
+        text-align: center;
     }
-    #svHeader>.sh-sub>i{
-        display: none;
-        font-size: 40px;
+    #svHeader .sh-main>.sv-title>a:hover{
+        color: #0033FF;
     }
-    #svHeader>.sh-main{
+    #svHeader .sv-desc{
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
-        width: 830px;
-        padding-right: 20px;
-        margin-top: 7px;
-        float: left;
-        overflow: hidden;
-        }
-        #svHeader .sh-main>div{
-            width: 100%;
-            color: #666;
-            font: 19px "宋体",Tahoma;
-        }
-        #svHeader .sh-main>.sv-title>a{
-            display: line;
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            color: #666;
-        }
-        #svHeader .sh-main>.sv-title>a:hover{
-            color: #0033FF;
-        }
-        #svHeader .sh-main>.sv-desc{
-            display: none;
-            margin-top: 5px;
-            color: #999;
-            font: 12px "微软雅黑",Tahoma;
-        }
-    #svHeader>.sh-icon{
-        width: 25px;
-        height: 100%;
-        float: right;
-        position: absolute;
-        top: 5px;
-        right: 0;
-        bottom: 0;
-        font-size: 23px;
-        text-align: right;
-        }
-    #svHeader>.sh-icon>i{
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        color: #CCC;
-        cursor: pointer;
-        }
-    #svHeader:hover>.sh-icon>i{color: #999;}
-    #svHeader>.sh-icon:hover>i{color: #666;}
-    #svHeader>.sh-icon>i.icon-double-angle-up{display: none;}
-    #svHeader.desc i.icon-double-angle-down{display: none;}
-    #svHeader.desc i.icon-double-angle-up, #svHeader.desc .sv-desc{display: block;}
-
+        padding: 10px 20px;
+        margin-top: 5px;
+        color: #999;
+        font: 12px "微软雅黑",Tahoma;
+        border-top: 1px solid #CCC;
+        text-align: left;
+    }
 #svBody{
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -178,7 +139,7 @@ body.topbar-open.topbar-hover #svSider{
     width: 100%;
     min-height: 400px;
     _height: expression((documentElement.clientHeight < 400) ? "400px" : "auto");
-    padding: 10px 0;
+    padding: 20px;
     float: left;
     overflow: hidden;
     text-align: left;
@@ -187,52 +148,155 @@ body.topbar-open.topbar-hover #svSider{
     }
     #question .question{
         width: 100%;
-        overflow: hidden;
-        margin: 20px 0;
+        margin: 10px 0;
+        float: left;
         }
-        #question .question .qt-sub{
-            width: 35px;
-            height: 80px;
-            float: left;
-            color: #BBB;
-            font: 12px "微软雅黑",Tahoma;
+        #question .question .qt-header{
+            width: 100%;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            overflow: hidden;
+            font: 19px "宋体",Tahoma;
             text-align: center;
+            color: #666;
+            border-bottom: 1px dotted #CCC;
             }
-            #question .question .qt-sub>.qt-seq{
-                display: block;
-                width: 100%;
-                margin-bottom: 5px;
-                font: 19px "宋体",Tahoma;
-                text-align: right;
-                color: #FFF;
-                background: #CCC;
-            }
-            #question .question .qt-sub>.qt-hint{
-                display: none;
-                width: 30px;
-                padding: 1px 0;
-                margin-top: 5px;
-                color: #FFF;
-                background: #CCC;
-                float: right;
-            }
-            #question .question:hover .qt-sub>div{
-                display: block;
-            }
-        #question .question .qt-main{
-            width: 820px;
-            margin: 0 10px;
-            float: left;
-            }
+            #question .question .qt-seq{
+                width: 40px;
+                float: left;
+                text-align: left;
+                }
+                #question .question .qt-seq>span{
+                    float:right;
+                    font: 16px Tahoma;
+                    color: red;
+                    margin-top: -1px;
+                    margin-right: 1px;
+                }
             #question .question .qt-title{
-                font: 19px "宋体",Tahoma;
-                color: #666;
-                margin-bottom: 10px;
+                width: 798px;
+                float: left;
+                text-align: left;
             }
-            #question .question:hover .qt-title{
+            #question .question:hover .qt-header{
                 color: #333;
             }
-        .question .qt-option{
+        #question .question .qt-body{
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            width: 100%;
+            padding-left: 41px;
+            float: left;
+            color: #666;
+            }
+            #question .question .qt-zg .vk-input{
+                width: 400px;
+                color: #666;
+            }
+            #question .question .qt-zg div.vk-input{
+                min-height: 78px;
+                _height: expression((documentElement.clientHeight < 78) ? "78px" : "auto");
+            }
+    #question .question .pf-item>div{
+        margin: 10px 10px 0 0;
+        float: left;
+        overflow: hidden;
+        font: 19px "宋体",Tahoma;
+        }
+        #question .question .pf-item .pr-desc{
+            padding-top: 1px;
+        }
+        #question .question .pf-item .pr-mid{
+            margin-top: 9px;
+            border: 1px solid #CCC;
+            border-left: none;
+        }
+        #question .question .pf-item .pr-mid>span{
+            min-width: 25px;
+            _width: expression((documentElement.clientWidth < 25) ? "25px" : "auto");
+            height: 23px;
+            display: block;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            margin: 0;
+            float: left;
+            color: #666;
+            text-align: center;
+            border-right: none;
+            cursor: pointer;
+            border-left: 1px solid #CCC;
+        }
+        #question .question .pf-item .pr-mid>span.ok, #question .question .pf-item .pr-mid>span:hover{
+            color: #FFF;
+            background: #6699FF;
+        }
+        #question .question .pf-option .vf-elem-option{
+            width: 100%;
+            float: left;
+            margin-bottom: 5px;                
+            font: 12px "微软雅黑",Tahoma;
+            }
+            #question .question .pf-option .val-select{
+                margin-top: -3px;
+                margin-right: 5px;
+                float: left;
+                cursor: pointer;
+                font: 19px "宋体",Tahoma;
+            }
+            #question .question .pf-option .val-select span{
+                width: 16px;
+                float: left;
+                text-align: center;
+            }
+            #question .question .pf-option .val-select span:hover{
+                color: #000;
+            }
+            #question .question .pf-option .val-select .vs-btn>.dropdown-toggle{
+                width: 25px;
+                margin-top: 2px;
+                float: left;
+                border: none;
+                font-size: 16px;
+                color: #666;
+                text-align: center;
+            }
+            #question .question .vf-elem-option.ok .val-select .vs-btn>.dropdown-toggle,
+            #question .question .vf-elem-option.ok .val-select .vs-btn>.dropdown-toggle:hover{
+                color: #6699FF;
+                font-weight: 900;
+            }
+            #question .question .pf-option .val-select .vs-btn>.dropdown-toggle:hover{
+                color: #333;
+                text-decoration: none;
+            }
+            #question .question .pf-option .val-select .vs-btn>.dropdown-menu{
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                min-width: 25px;
+                padding: 0;
+                margin: 0;
+                float: left;
+                font-size: 14px;
+                text-align: center;
+                border-radius: 0;
+                border-color: #999;
+                border-top: none;
+                border-bottom: none;
+                box-shadow: none;
+                -moz-box-shadow: none;
+                -webkit-box-shadow: none;
+                }
+                #question .question .pf-option .val-select .vs-btn .vs-option{
+                    height: 20px;
+                }
+                #question .question .pf-option .val-select .vs-btn .vs-option:hover{
+                    color: #FFF;
+                    background: #3399FF;
+                }
+        #question .question .qt-option{
             width: 100%;
             overflow: hidden;
             }
@@ -247,21 +311,8 @@ body.topbar-open.topbar-hover #svSider{
                     top: 0px;
                     margin-right: 5px;
                 }
-            .qt-option textarea{
-                width: 600px;
-                height: 150px;
-                font: 12px "宋体",Tahoma;
-                box-shadow: none;
-                -moz-box-shadow: none;
-                -webkit-box-shadow: none;
             }
-            .qt-option textarea:hover{
-                border-color: #AFAFAF;
-            }
-            .qt-option textarea:focus{
-                border-color: #999;
-            }
-        .question .custom-option{
+        #question .question .custom-option{
             display: none;
             margin-top: 5px;
             overflow: hidden;
@@ -349,9 +400,14 @@ body.topbar-open.topbar-hover #svSider{
     overflow: hidden;
     }
     #submit>button{
-        padding: 10px 0;
         font: 23px "宋体",Tahoma;
         letter-spacing: 2px;
+    }
+    #submit>button.submit, body.login #submit>button.login{
+        display: none;
+    }
+    body.login #submit>button.submit{
+        display: block;
     }
     
 #afterBox{
@@ -388,8 +444,8 @@ body.topbar-open.topbar-hover #svSider{
             float: left;
             overflow: hidden;
             box-sizing: border-box;
-            -moz-box-sizing: border-box; /* Firefox */
-            -webkit-box-sizing: border-box; /* Safari */
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
         }
         #afterBox .after-elem-content>.after-elem-content-left>div{
             float: right;

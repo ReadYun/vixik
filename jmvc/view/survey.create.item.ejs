@@ -1,18 +1,107 @@
-<div class="item" data-item-seq="<%=data.question_seq%>" data-item-type="<%=data.question_type%>" data-custom-option="<%=data.custom_option%>">
+<div class="item" data-seq="<%=data.question_seq%>" data-class="<%=data.question_class%>" data-type="<%=data.question_type%>" data-custom-option="<%=data.custom_option%>" data-low-value="<%=data.pf_low_value%>" data-high-value="<%=data.pf_high_value%>" data-low-desc="<%=data.pf_low_desc%>" data-high-desc="<%=data.pf_high_desc%>" data-answer-must="<%=data.answer_must%>">
     <div class="item-main">
         <div class="item-title">
             <div class="item-seq"><span><%= data.question_seq %></span>.</div>
-            <div class="vk-input green" contenteditable="true"><%= data.question_name%></div>
+            <div class="vk-input green" contenteditable="true" data-init="请输入题目名称"><%= data.question_name %></div>
         </div>
-        <div class="item-option">
-            <textarea rows="3" cols="30" disabled="disabled" style="display:none"></textarea>
-            <input type="text" style="display:none" disabled="disabled">
+        <div class="item-body">
+            <div class="item-xz" data-answer-must="1">
+                <div class="xz-option">
+                </div>
+                <div class="xz-setting">
+                </div>
+            </div>
+            <div class="item-zg" data-answer-must="0">
+                <textarea rows="3" cols="30" disabled="disabled"></textarea>
+                <input type="text" disabled="disabled">
+            </div>
+            <div class="item-pf" data-answer-must="1">
+                <div class="pf-item">
+                    <div class="pf-body">
+                        <%if(data['pf_low_desc']){%>
+                        <div class="pr-low pr-desc"><span><%=data.pf_low_desc%></span> <<</div>
+                        <%}else{%>
+                        <div class="pr-low pr-desc"><span>最低分描述</span> <<</div>
+                        <%}%>
+                        <div class="pr-mid">
+                            <%if(data['pf_low_value'] && data['pf_high_value']){%>
+                                <%for(var i = data['pf_low_value']; i <= data['pf_high_value']; i++){%>
+                                <span class="pr-mid-elem"><%=i%></span>
+                                <%}%>
+                            <%}else{%>
+                                <span class="pr-mid-elem tpl" style="display:none"></span>
+                                <span class="pr-mid-elem">0</span>
+                                <span class="pr-mid-elem">1</span>
+                                <span class="pr-mid-elem">2</span>
+                                <span class="pr-mid-elem">3</span>
+                                <span class="pr-mid-elem">4</span>
+                                <span class="pr-mid-elem">5</span>
+                            <%}%>
+                        </div>
+                        <%if(data['pf_high_desc']){%>
+                        <div class="pr-high pr-desc">>> <span><%=data.pf_high_desc%></span></div>
+                        <%}else{%>
+                        <div class="pr-high pr-desc">>> <span>最高分描述</span></div>
+                        <%}%>
+                    </div>
+                    <div class="pf-setting" data-pf="item">
+                        <div class="ps-low ps-elem">
+                            <div class="ps-low-desc ps-elem-desc">
+                                <label>最低分描述</label>
+                                <div class="ps-desc-input"><input type="text" class="vk-input" data-target="low" value="<%=data.pf_low_desc%>"></div>
+                            </div>
+                            <div class="ps-low-value ps-elem-value">
+                                <label>最低分值</label>
+                                <div class="ps-low-input val-input">
+                                    <span class="val-cut"><i class="icon-angle-left"></i></span>
+                                    <input type="text" class="vk-input num" value=<%=data.pf_low_value%>>
+                                    <span class="val-add"><i class="icon-angle-right"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ps-high ps-elem">
+                            <div class="ps-high-desc ps-elem-desc">
+                                <label>最高分描述</label>
+                                <div class="ps-desc-input"><input type="text" class="vk-input" data-target="high" value="<%=data.pf_high_desc%>"></div>
+                            </div>
+                            <div class="ps-high-value ps-elem-value">
+                                <label>最高分值</label>
+                                <div class="ps-high-input val-input">
+                                    <span class="val-cut"><i class="icon-angle-left"></i></span>
+                                    <input type="text" class="vk-input num" value=<%=data.pf_high_value%>>
+                                    <span class="val-add"><i class="icon-angle-right"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pf-option">
+                    <div class="pf-body"></div>
+                    <div class="pf-setting" data-pf="option">
+                        <div class="ps-low-value">
+                            <label>选项最低分值</label>
+                            <div class="ps-low-input val-input">
+                                <span class="val-cut"><i class="icon-angle-left"></i></span>
+                                <input type="text" class="vk-input num" value=<%=data.pf_low_value%>>
+                                <span class="val-add"><i class="icon-angle-right"></i></span>
+                            </div>
+                        </div>
+                        <div class="ps-high-value">
+                            <label>选项最高分值</label>
+                            <div class="ps-high-input val-input">
+                                <span class="val-cut"><i class="icon-angle-left"></i></span>
+                                <input type="text" class="vk-input num" value=<%=data.pf_high_value%>>
+                                <span class="val-add"><i class="icon-angle-right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="item-sub">
-        <div class="item-type">[<span></span>]</div>
         <div class="item-config">
-            <div class="item-cog"><i class="icon-cog"></i></div>
+            <div class="item-cog" style="display:block"><i class="icon-cog"></i></div>
             <div class="item-alter">
                 <div class="up" title="上移题目" data-type="up"><i class="icon-arrow-up"></i></div>
                 <div class="del" title="删除题目" data-type="delete"><i class="icon-remove"></i></div>

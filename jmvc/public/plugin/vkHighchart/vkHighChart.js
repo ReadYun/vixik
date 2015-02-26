@@ -17,6 +17,7 @@ steal('init.js')
     // 定义命名空间vkHighChart直接调用方法
     $.fn.vkHighChart = function(data$, themes){
         var $this = this ;
+        var $aa ;
 
         // 对HightCharts图表设置默认统一样式
         var theme_default = {
@@ -176,7 +177,7 @@ steal('init.js')
                     // 外部已经设置好皮肤参数，直接应用
                     case 'object' :
                         Highcharts.setOptions(themes[i]);
-                        $this.highcharts(data$) ;  // 加载外部数据生成图表
+                        $aa = $this.highcharts(data$) ;  // 加载外部数据生成图表
                         break ;
 
                     // 应用插件提供的皮肤（根据入参皮肤名称加载对应的皮肤文件）
@@ -185,14 +186,14 @@ steal('init.js')
                             .then(
                                 function(){
                                     Highcharts.setOptions(themes[i]) ;
-                                    $this.highcharts(data$) ;  // 加载外部数据生成图表
+                                    $aa = $this.highcharts(data$) ;  // 加载外部数据生成图表
                                 }) ;
                         break ;
                 }
             }
         }else{
-            $this.highcharts(data$) ;  // 加载外部数据生成图表
-        }            
+            $aa = $this.highcharts(data$) ;  // 加载外部数据生成图表
+        }
     }
 }) ;
 

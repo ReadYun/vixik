@@ -470,7 +470,7 @@
 
 		        		for(var w = 0; w < param$.where$.length; w++){
 					        $.each(param$.where$[w], function(wk, wv){
-			        			if(isArray(wv)){
+			        			if($.isArray(wv)){
 			        				vflag = false ;
 			        				
 			        				for(var v = 0; v < wv.length; v++){
@@ -516,7 +516,7 @@
 		 * @Return : mix     value$  求和的值
 		 */
 		data_select_sum : function(param$){
-		    var value$, flag, group, group_main, group_sub ;
+		    var value$, flag, group, group_main, group_sub, wflag ;
 
 			if(param$.group){
 				value$ = {} ;
@@ -524,16 +524,36 @@
 				value$ = 0 ;				
 			}
 
+
 		    for(var i = 0; i < param$.data$.length; i++){
 	        	flag = true ;
 
 	        	// 如果有条件参数，做条件判断处理
 	        	if(param$.where$){
 	        		for(var w = 0; w < param$.where$.length; w++){
-	        			if(param$.data$[i][param$.where$[w]['k']] != param$.where$[w]['v']){
-	        				flag = false ;
-	        				break ;
-	        			}
+
+				        $.each(param$.where$[w], function(wk, wv){
+		        			if($.isArray(wv)){
+		        				wflag = false ;
+		        				
+		        				for(var v = 0; v < wv.length; v++){
+		        					if(param$.data$[i][wk] == wv[v]){
+		        						wflag = true ;
+		        						break ;
+		        					}
+		        				}
+
+		        				if(wflag){
+		        					flag = true ;
+		        				}else{
+		        					flag = false ;
+		        				}
+		        			}else{
+			        			if(param$.data$[i][wk] != wv){
+			        				flag = false ;
+			        			}	
+		        			}
+				        }) ;
 	        		}
 	        	}
 

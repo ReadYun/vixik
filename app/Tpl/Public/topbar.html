@@ -17,10 +17,10 @@
                         <div class="search-btn"><i class="icon-search"></i></div>
                     </div>
                     <div class="nav-box">
-                        <div class="home"><a href="{:U('/')}">首页</a></div>
+                        <div class="home"><a href="{:U('/')}">发现</a></div>
                         <div class="survey"><a href="{:U('/survey')}">调查</a></div>
-                        <div class="brand"><a href="{:U('/brand')}">品牌</a></div>
-                        <div class="shop"><a href="{:U('/shop')}">积分</a></div>
+                        <div class="brand"><a href="">品牌</a></div>
+                        <div class="shop"><a href="">积分</a></div>
                     </div>
                 </div>
                 <div class="topbar-right">
@@ -29,6 +29,7 @@
                         <ul class="menu dropdown-menu pull-left" role="menu" aria-labelledby="dLabel">
                             <li><a tabindex="-1" href="{:U('survey/answer')}">参与调查</a></li>
                             <li><a tabindex="-1" href="{:U('survey/create')}">创建调查</a></li>
+                            <li class="my-survey"><a tabindex="-1" href="{:U('user/index')}">我的调查</a></li>
                         </ul>
                     </div>
                     <div class="user-box">
@@ -84,6 +85,13 @@
                                             </div>
                                         </div>
                                         <button type="button" class="si-submit vkbutton vbtn-primary large block">提交注册</button>
+                                        <div class="dm-footer">
+                                            <div class="user-agreement">
+                                                <div class="icheck"><input type="checkbox"></div>
+                                                <a href="{:U('survey/index')}" target="_blank">我已阅读并接受服务条款</a>
+                                            </div>
+                                            <a class="user-to-login">已有帐号直接登录</a>
+                                        </div>
                                     </div>
                                     <div class="dm-body vk-form after">                                        
                                         <div class="dm-recstep">推荐您现在去：</div>
@@ -189,10 +197,10 @@
                     <div class="search-btn"><i class="icon-search"></i></div>
                 </div>
                 <div class="nav-box">
-                    <div class="home"><a href="__COM__">首页</a></div>
+                    <div class="home"><a href="__COM__">发现</a></div>
                     <div class="survey"><a href="__COM__/survey">调查</a></div>
-                    <div class="brand"><a href="__COM__/brand">品牌</a></div>
-                    <div class="shop"><a href="__COM__/shop">积分</a></div>
+                    <div class="brand"><a href="">品牌</a></div>
+                    <div class="shop"><a href="">积分</a></div>
                 </div>
             </div>
         </div>

@@ -822,6 +822,11 @@ function api_survey_create(){
         if(intval($data['survey_state'])  == 2){
             $data['survey_state'] = 3 ;
             $data['start_time']   = $data['state_time'] = date('Y-m-d H:i:s') ;
+
+            // 如更新调查题目信息成功则更新调查统计信息
+            if(!surveyStatistUpdate($survey_code)){
+                return false ;
+            }
         }
 
         if(M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'")-> save($data)){
@@ -995,15 +1000,15 @@ function api_survey_info_update(){
 //     $modes = array(
 //         // 最新问卷：开始时间.DESC -> 推荐等级.ASC -> 参与次数.ASC
 //         'new' => array(
-//             'order' => "order by a.start_time desc, a.recomm_grade, a.answer_num "
+//             'order' => "order by a.start_time desc, a.recomm_grade, a.answer_count "
 //         ),
 //         // 参与人数.DESC -> 结束时间.DESC -> 开始时间.DESC
 //         'hot' => array(
-//             'order' => "order by a.answer_num desc, a.end_time desc, a.start_time desc "
+//             'order' => "order by a.answer_count desc, a.end_time desc, a.start_time desc "
 //         ),
 //         // 推荐等级.ASC -> 结束时间.DESC -> 参与人数.ASC
 //         'rec' => array(
-//             'order' => "order by a.recomm_grade, a.end_time desc, a.answer_num "
+//             'order' => "order by a.recomm_grade, a.end_time desc, a.answer_count "
 //         ),
 //     ) ;
 
@@ -1013,7 +1018,7 @@ function api_survey_info_update(){
 //     $limit = "limit " . strval(($page - 1) * $pnum) . ", $pnum" ;  // 计算页码
     
 //     foreach ($data as $key => $cond) {
-//         $sql =  "select distinct a.survey_code, a.survey_name, a.survey_desc, a.user_code, a.user_nick, b.user_photo, a.question_num, ".
+//         $sql =  "select distinct a.survey_code, a.survey_name, a.survey_desc, a.user_code, a.user_nick, b.user_photo, a.question_count, ".
 //                 "c.survey_type_name, c.survey_type_code, c.survey_type_sub_code, c.survey_type_sub_name, ".
 //                 "d.survey_trade_code, d.survey_trade_name, date_relative_now(a.start_time) start_date, ".
 //                 "concat('$url_user?code=', a.user_code) url_user, concat('$url_visit?code=', a.survey_code) url_visit, ". 
@@ -1086,6 +1091,7 @@ function api_survey_action_list_select(){
     $url_answer            = U('survey/survey/answer') ;
     $url_create            = U('survey/survey/create') ;
     $url_analyse           = U('survey/survey/analyse') ;
+    $tbBasUserInfo         = M(TB_BAS_USER_INFO)          -> getTableName() ;
     $tbBasSurveyInfo       = M(TB_BAS_SURVEY_INFO)        -> getTableName() ;
     $tbDetSurveyType       = M(TB_DET_SURVEY_TYPE)        -> getTableName() ;
     $tbDetSurveyState      = M(TB_DET_SURVEY_STATE)       -> getTableName() ;
@@ -1107,15 +1113,15 @@ function api_survey_action_list_select(){
         ),
         // 参与的调查
         'answer' => array(
-            'table' => "," . $tbBasSurveyAction . " d",
-            'cond'  => "and a.survey_code = d.survey_code and a.survey_state > 1 and d.user_code = $user ",
-            'order' => 'd.end_time desc ',
+            'table' => "," . $tbBasSurveyAction . " t",
+            'cond'  => "and a.survey_code = t.survey_code and a.survey_state > 1 and t.user_code = $user ",
+            'order' => 't.end_time desc ',
         ),
         // 关注的调查
         'follow' => array(
-            'table' => "," . $tbBasUserFollowSurvey . " d",
-            'cond'  => "and a.survey_code = d.follow_code and a.survey_state > 1 and d.user_code = $user ",
-            'order' => 'd.follow_time desc ',
+            'table' => "," . $tbBasUserFollowSurvey . " t",
+            'cond'  => "and a.survey_code = t.follow_code and a.survey_state > 1 and t.user_code = $user ",
+            'order' => 't.follow_time desc ',
         ),
     ) ;
 
@@ -1123,14 +1129,14 @@ function api_survey_action_list_select(){
     $type ? $data[$type] = $action[$type] : $data = $action  ;
     
     foreach ($data as $key => $value) {
-        $sql =  "select distinct a.survey_code, a.survey_name, a.survey_desc, a.user_code, a.user_nick, a.question_num, c.survey_type_name, ".
-                "a.survey_state, b.state_desc_sketch survey_state_desc, date(a.create_time) create_date, date(a.start_time) start_date, ".
-                "concat('$url_user?code=', a.user_code) url_user, concat('$url_create?code=', a.survey_code) url_create, ". 
-                "concat('$url_visit?code=', a.survey_code) url_visit, concat('$url_answer?code=', a.survey_code) url_answer, ".
-                "concat('$url_analyse?code=', a.survey_code) url_analyse, concat('$url_type?type=', a.survey_type) url_type ".
-                "from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyType c" . $value['table'] . " ".
-                "where a.survey_state = b.survey_state_code and a.survey_type = c.survey_type_code " . $value['cond'].
-                "order by " . $value['order'] ;
+        $sql = "select distinct a.survey_code, a.survey_name, a.survey_desc, a.user_code, b.user_nick, a.question_count, d.survey_type_name, 
+                a.survey_state, c.state_desc_sketch survey_state_desc, date(a.create_time) create_date, date(a.start_time) start_date, 
+                concat('$url_user?code=', a.user_code) url_user, concat('$url_create?code=', a.survey_code) url_create, 
+                concat('$url_visit?code=', a.survey_code) url_visit, concat('$url_answer?code=', a.survey_code) url_answer, 
+                concat('$url_analyse?code=', a.survey_code) url_analyse, concat('$url_type?type=', a.survey_type) url_type 
+                from $tbBasSurveyInfo a, $tbBasUserInfo b, $tbDetSurveyState c, $tbDetSurveyType d". $value['table'].
+                " where a.user_code = b.user_code and a.survey_state = c.survey_state_code and a.survey_type = d.survey_type_code ". $value['cond'].
+                " order by " . $value['order'] ;
         if($query = M() -> query($sql)){
             $survey[$key] = $query ;
         }
@@ -1206,16 +1212,13 @@ function api_survey_action_select(){
                     $condition_sv = "b.survey_code = $survey_code " ;
                 } ;
 
-                $sql =  "select ".
-                        "    a.survey_code, a.survey_name, a.state_time, a.survey_state, c.state_desc_sketch survey_state_desc, ".
-                        "    date(a.start_time) start_date, concat('$url_action?code=', a.survey_code) url_action, ".
-                        "    concat('$url_alter?code=', a.survey_code) url_alter, concat('$url_analyse?code=', a.survey_code) url_analyse ".
-                        "from $tbBasSurveyInfo a , $tbBasSurveyAction b , $tbDetSurveyState c ".
-                        "where a.survey_code = b.survey_code ".
-                        "and a.survey_state = c.survey_state_code ".
-                        "and $condition_us ".
-                        "and $condition_sv ". 
-                        "order by a.end_time desc" ;
+                $sql = "select 
+                            a.survey_code, a.survey_name, a.state_time, a.survey_state, d.state_desc_sketch survey_state_desc, 
+                            date(a.start_time) start_date, concat('$url_action?code=', a.survey_code) url_action, 
+                            concat('$url_alter?code=', a.survey_code) url_alter, concat('$url_analyse?code=', a.survey_code) url_analyse 
+                        from $tbBasSurveyInfo a, $tbBasUserInfo b, $tbBasSurveyAction c, $tbDetSurveyState d 
+                        where a.user_code = b.user_code and a.survey_code = c.survey_code and a.survey_state = d.survey_state_code 
+                        and $condition_us and $condition_sv order by a.end_time desc" ;
                 $data = M() -> query($sql) ;
 
                 if($data){
@@ -1538,7 +1541,7 @@ function api_follow_list_select(){
             break ;
 
         case 'survey' :
-            $sql =  "select distinct a.survey_code, a.survey_name, a.survey_desc, a.user_code, a.user_nick, a.question_num, c.survey_type_desc, ".
+            $sql =  "select distinct a.survey_code, a.survey_name, a.survey_desc, a.user_code, a.user_nick, a.question_count, c.survey_type_desc, ".
                     "a.survey_state, b.state_desc_sketch survey_state_desc, date(a.create_time) create_date, date(a.start_time) start_date, ".
                     "       concat('$url_user_visit?code=', a.user_code) url_user, concat('$url_survey_visit?code=', a.survey_code) url_visit, ". 
                     "       concat('$url_survey_answer?code=', a.survey_code) url_answer, concat('$url_survey_analyse?code=', a.survey_code) url_analyse ".
@@ -1877,50 +1880,110 @@ function api_stats_sv_group_cnt1(){
  * @Param  : array   $prop           用户属性（必选）
  * @Return : json    $data           统计结果
  */
-function api_stats_qt_group_prop(){
+function api_stats_qt_group1(){
     $survey_code   = func_get_args()[0]['survey_code'] ;    // 取参数：调查编码
+
     $question_code = func_get_args()[0]['question_code'] ;  // 取参数：题目编码
-    $prop          = func_get_args()[0]['prop'] ;           // 取参数：用户属性
-    $props         = $table = $group = array() ;
+    $option_code   = func_get_args()[0]['option_code'] ;  // 取参数：题目编码
+    $prop_code     = func_get_args()[0]['prop_code'] ; 
+    $type          = func_get_args()[0]['type'] ; 
 
     $tbBasUserInfo       = M(TB_BAS_USER_INFO)       -> getTableName() ;
     $tbBasQuestionAction = M(TB_BAS_QUESTION_ACTION) -> getTableName() ;
 
-    for($i = 0; $i < count($prop); $i++){
-        $prop_name      = $prop[$i] ;
-        $relation       = M(TB_BAS_PROP_DET_RELATION) -> where("bas_table_name = 'BasUserInfo' and prop_name = '$prop_name'") -> find() ;
-        $det_table_name = $relation['det_table_name'] ;
-        $bas_prop_name  = $relation['bas_prop_name'] ;
-        $det_prop_name  = $relation['det_prop_name'] ;
-        $det_prop_desc  = $relation['det_prop_desc'] ;
-        $tbDetName      = M($det_table_name) -> getTableName() ;
+    if($type == 'option'){
+        $prop_name = $type ;
+        $relation  = M(TB_BAS_PROP_DET_RELATION) -> where("bas_table_name = 'BasUserInfo' and prop_name = '$prop_name'") -> find() ;
+        $prop_bas  = $relation['bas_prop_name'] ;
+        $prop_det  = $relation['det_prop_name'] ;
+        $prop_desc = $relation['det_prop_desc'] ;
+        $table     = M($relation['det_table_name']) -> getTableName() ;
 
         array_push($props, "t$i.".$det_prop_desc." $prop_name") ;      // 生成目标字段数组
         array_push($group, "t$i.".$det_prop_desc) ;                    // 生成分组字段数组
         array_push($table, $tbDetName . " t$i") ;                      // 生成维表表名数组
         $and = " and a.$bas_prop_name = t$i.$det_prop_name". $and ;    // 生成条件字符串
+
+        $sql = "select b.question_code, b.option_code, b.option_name, t.$prop_bas, t.$prop_desc, 
+                case when question_type = '32' then sum(option_value) else count(1) end stats
+                from $tbBasUserInfo a , $tbBasQuestionAction b, $table t 
+                where a.user_code = b.user_code and a.$prop_bas = t.$prop_det and b.survey_code = $survey_code 
+                group by b.question_code, b.option_code, b.option_name, t.$prop_bas, t.$prop_desc 
+                order by b.option_code" ;
+    }else{
+
+    }
+
+    $data = M() -> query($sql) ;
+    dump($data) ;
+}
+
+/*
+ * @Name   : api_stats_qt_group_prop
+ * @Desc   : 调查答题情况分组统计（用户属性分析）
+ * @Param  : number  $survey_code    调查编码（必选）
+ * @Param  : number  $question_code  题目编码（可选）
+ * @Param  : json    $prop           用户属性（可选）
+ * @Return : json    $data           统计结果
+ */
+function api_stats_qt_group_prop(){
+    $survey_code   = func_get_args()[0]['survey_code'] ;    // 取参数：调查编码
+    $question_code = func_get_args()[0]['question_code'] ;  // 取参数：题目编码
+    $prop          = func_get_args()[0]['prop'] ;           // 取参数：用户属性
+
+    $tbBasUserInfo       = M(TB_BAS_USER_INFO)       -> getTableName() ;
+    $tbBasQuestionAction = M(TB_BAS_QUESTION_ACTION) -> getTableName() ;
+
+    if($prop){
+        $props = $table = $group = array() ;
+
+        for($i = 0; $i < count($prop); $i++){
+            $prop_name      = $prop[$i] ;
+            $relation       = M(TB_BAS_PROP_DET_RELATION) -> where("bas_table_name = 'BasUserInfo' and prop_name = '$prop_name'") -> find() ;
+            $det_table_name = $relation['det_table_name'] ;
+            $bas_prop_name  = $relation['bas_prop_name'] ;
+            $det_prop_name  = $relation['det_prop_name'] ;
+            $det_prop_desc  = $relation['det_prop_desc'] ;
+            $tbDetName      = M($det_table_name) -> getTableName() ;
+
+            array_push($props, "t$i.".$det_prop_desc." $prop_name") ;      // 生成目标字段数组
+            array_push($group, "t$i.".$det_prop_desc) ;                    // 生成分组字段数组
+            array_push($table, $tbDetName . " t$i") ;                      // 生成维表表名数组
+            $and = " and a.$bas_prop_name = t$i.$det_prop_name". $and ;    // 生成条件字符串
+        }
+
+        $props = implode(',', $props).', ' ;  // 连接数组生成目标字段字符串
+        $group = ','. implode(',', $group) ;  // 连接数组生成分组字段字符串
+        $table = ','. implode(',', $table) ;  // 连接数组生成维表表名字符串
     }
 
     // 题目编码是可选项，如果指定编码就统计目标题目，如果没指定，统计目标调查的所有题目
     if($question_code){
         $and = "and b.question_code = $question_code". $and ;
+    }else{
+        $and = "and b.survey_code = $survey_code". $and ;
     }
 
-    $props = implode(',', $props) ;  // 连接数组生成目标字段字符串
-    $group = implode(',', $group) ;  // 连接数组生成分组字段字符串
-    $table = implode(',', $table) ;  // 连接数组生成维表表名字符串
-
-    $sql =  "select b.question_code, b.option_code, b.option_name, $props , count(1) cnt ". 
-            "from $tbBasUserInfo a , $tbBasQuestionAction b , $table ".
-            "where a.user_code = b.user_code and b.survey_code = $survey_code $and ".
-            "group by b.option_code, $group ".
-            "order by b.option_code" ;
+    $sql = "select b.question_code, b.option_code, b.option_name, $props 
+            case when question_type = '32' then sum(option_value) else count(1) end stats
+            from $tbBasUserInfo a , $tbBasQuestionAction b $table 
+            where a.user_code = b.user_code and b.survey_code = $survey_code $and 
+            group by b.question_code, b.option_code, b.option_name $group 
+            order by b.option_code" ;
     $data = M() -> query($sql) ;
 
-    // 返回结果
-    if($data && count($data) > 0){
+    if($data){
+        $stats = array() ;
+        for($i = 0; $i < count($data); $i++){
+            if($stats[$data[$i]['question_code']] == null){
+                $stats[$data[$i]['question_code']] = array() ;
+            }
+
+            array_push($stats[$data[$i]['question_code']], $data[$i]) ;
+        }
+
         return array (
-            'data'   => $data                              ,// 数据信息
+            'data'   => $stats                             ,// 数据信息
             'info'   => "success:api_stats_qt_group_prop"  ,// 成功信息
             'status' => 1                                  ,// 返回状态
             'type'   => 'json'                             ,// 数据类型
@@ -1937,16 +2000,68 @@ function api_stats_qt_group_prop(){
 /*
  * @Name   : api_stats_qt_group_item
  * @Desc   : 调查答题情况分组统计（交叉题目分析）
+ * @Param  : number  $survey_code    调查编码（必选）
+ * @Param  : number  $question_code  问题编码（可选）
+ * @Return : json    $stats          统计结果
+ */
+function api_stats_qt_group_item(){
+    $survey_code   = func_get_args()[0]['survey_code'] ;    // 取参数：调查编码
+    $question_code = func_get_args()[0]['question_code'] ;  // 取参数：题目编码
+
+    $tbBasQuestionAction = M(TB_BAS_QUESTION_ACTION) -> getTableName() ;
+
+    if($question_code){
+        $and = " and a.question_code = $question_code and b.survey_code = $survey_code " ;
+    }else{
+        $and = " and a.survey_code = $survey_code and b.survey_code = $survey_code " ;
+    }
+
+    $sql = "select a.question_code tgt_qt_code, a.option_code tgt_opt_code, a.option_name tgt_opt_name, 
+                   b.question_code grp_qt_code, b.option_code grp_opt_code, b.option_name grp_opt_name, 
+                   case when a.question_type = '32' then sum(a.option_value) else count(1) end stats
+            from $tbBasQuestionAction a , $tbBasQuestionAction b
+            where a.user_code = b.user_code $and 
+            group by a.question_code, a.option_code, a.option_name, b.question_code, b.option_code, b.option_name" ;
+    $data = M() -> query($sql) ;
+
+    if($data){
+        $stats = array() ;
+        for($i = 0; $i < count($data); $i++){
+            if($stats[$data[$i]['tgt_qt_code']] == null){
+                $stats[$data[$i]['tgt_qt_code']] = array() ;
+            }
+
+            array_push($stats[$data[$i]['tgt_qt_code']], $data[$i]) ;
+        }
+
+        return array (
+            'data'   => $stats                             ,// 数据信息
+            'info'   => "success:api_stats_qt_group_item"  ,// 成功信息
+            'status' => 1                                  ,// 返回状态
+            'type'   => 'json'                             ,// 数据类型
+        ) ;
+    }else{
+        return array (
+            'data'   => false                             ,// 错误编码
+            'info'   => "failed:api_stats_qt_group_item"  ,// 错误信息
+            'status' => 0                                 ,// 返回状态
+        ) ;
+    }
+}
+
+/*
+ * @Name   : api_stats_qt_group_item
+ * @Desc   : 调查答题情况分组统计（交叉题目分析）
  * @Param  : number  $survey_code   调查编码（必选）
  * @Param  : number  $target_qt     目标题目编码（必选）
  * @Param  : number  $target_opt    目标选项编码（可选）
  * @Param  : number  $group_qt      交叉题目编码（必选）
  * @Return : json    $data          统计结果
  */
-function api_stats_qt_group_item(){
+function api_stats_qt_group_item1(){
     $survey_code = func_get_args()[0]['survey_code'] ;  // 取参数：调查编码
     $target_qt   = func_get_args()[0]['target_qt'] ;    // 取参数：目标题目编码
-    $target_opt  = func_get_args()[0]['target_opt'] ;   // 取参数：目标题目编码
+    $target_opt  = func_get_args()[0]['target_opt'] ;   // 取参数：目标选项编码
     $group_qt    = func_get_args()[0]['group_qt'] ;     // 取参数：交叉题目编码
 
     $tbBasQuestionAction = M(TB_BAS_QUESTION_ACTION) -> getTableName() ;    
@@ -1958,11 +2073,25 @@ function api_stats_qt_group_item(){
                    b.question_code grp_qt_code, b.option_code grp_opt_code, b.option_name grp_opt_name, 
                    count(1) cnt 
             from $tbBasQuestionAction a , $tbBasQuestionAction b
-            where a.user_code = b.user_code " . $and . "
+            where a.user_code = b.user_code ". $and. "
             and a.survey_code = $survey_code and a.question_code = $target_qt 
             and b.survey_code = $survey_code and b.question_code = $group_qt 
             group by a.question_code, a.option_code, a.option_name, b.question_code, b.option_code, b.option_name" ;
     $data = M() -> query($sql) ;
+
+    if($data){
+        $stats = array() ;
+
+        for($i = 0; $i < count($data); $i++){
+            if($stats[$data[$i]['tgt_qt_code']]){
+                $stats[$data[$i]['tgt_qt_code']][0] = $data[$i] ;
+            }else{
+                array_push($stats[$data[$i]['tgt_qt_code']], $data[$i]) ;
+                
+            }
+        }
+    }
+
 
     // 返回结果
     if($data && count($data) > 0){
@@ -2114,6 +2243,30 @@ function api_det_data_select(){
     }
 }
 
+function api_det_table_view(){
+    $tables = func_get_args()[0]['tables'] ;  // 取参数：参数表简称
+    $data   = array() ;
+
+    for($i = 0; $i < count($tables); $i++){
+        $data[$tables[$i]] = M(constant('TB_DET_'.strtoupper($tables[$i]))) -> select() ;
+    }
+
+    if(count($data)){
+        return array (
+            'data'   => $data                          ,// 维表数据
+            'info'   => "success:api_det_table_view"  ,// 成功信息
+            'status' => 1                              ,// 返回状态
+            'type'   => 'json'                         ,// 数据类型
+        ) ;
+    }else{
+        return array (
+            'data'   => false                         ,// 错误编码
+            'info'   => "failed:api_det_table_view"  ,// 失败信息
+            'status' => 0                             ,// 返回状态
+        ) ;
+    }
+}
+
 /*
 * @Name   : api_search_survey
 * @Desc   : 搜索调查接口
@@ -2207,30 +2360,30 @@ function api_search_question(){
     $url_sv_type  = U('survey/survey/type')  ;
     $url_sv_trade = U('survey/survey/trade') ;
 
-    $tbBasSurveyInfo       = M(TB_BAS_SURVEY_INFO)        -> getTableName() ;
-    $tbBasUserInfo         = M(TB_BAS_USER_INFO)          -> getTableName() ;
-    $tbDetSurveyType       = M(TB_DET_SURVEY_TYPE)        -> getTableName() ;
-    $tbDetSurveyTypeSub    = M(TB_DET_SURVEY_TYPE_SUB)    -> getTableName() ;
-    $tbDetSurveyTrade      = M(TB_DET_SURVEY_TRADE)       -> getTableName() ;
-    $tbDetSurveyState      = M(TB_DET_SURVEY_STATE)       -> getTableName() ;
-    $tbBasQuestionInfo     = M(TB_BAS_QUESTION_INFO)      -> getTableName() ;
-    $tbDetQuestionType     = M(TB_DET_QUESTION_TYPE)      -> getTableName() ;
+    $tbBasSurveyInfo        = M(TB_BAS_SURVEY_INFO)         -> getTableName() ;
+    $tbBasUserInfo          = M(TB_BAS_USER_INFO)           -> getTableName() ;
+    $tbDetSurveyType        = M(TB_DET_SURVEY_TYPE)         -> getTableName() ;
+    $tbDetSurveyTypeSub     = M(TB_DET_SURVEY_TYPE_SUB)     -> getTableName() ;
+    $tbDetSurveyTrade       = M(TB_DET_SURVEY_TRADE)        -> getTableName() ;
+    $tbDetSurveyState       = M(TB_DET_SURVEY_STATE)        -> getTableName() ;
+    $tbBasQuestionInfo      = M(TB_BAS_QUESTION_INFO)       -> getTableName() ;
+    $tbDetQuestionClassType = M(TB_DET_QUESTION_CLASS_TYPE) -> getTableName() ;
 
     $cond = "and question_name like '%".str_replace(' ', '%', $words)."%' " ;
 
     $sql = array(
         'list' =>
-            "select a.survey_name, a.question_num, a.survey_name, t.question_name, f.question_type_desc question_type, 
-                b.state_desc_sketch survey_state, date_relative_now(a.start_time) start_date, 
-                ifnull(t.answer_num, 0) answer_num, e.user_code, e.user_photo, e.user_nick, 
+            "select a.survey_name, a.question_count, a.survey_name, t.question_name, b.state_desc_sketch survey_state, 
+                f.question_class_desc question_class, f.question_type_desc question_type, date_relative_now(a.start_time) start_date, 
+                ifnull(t.answer_count, 0) answer_count, e.user_code, e.user_photo, e.user_nick, 
                 c.survey_type_name survey_type, c.survey_type_sub_name survey_type_sub, d.survey_trade_name survey_trade, 
                 concat('$url_us_visit?code=',  e.user_code)       url_us_visit,
                 concat('$url_sv_visit?code=',  a.survey_code)     url_sv_visit,
                 concat('$url_sv_type?type=',   a.survey_type)     url_sv_type,
                 concat('$url_sv_type?type=',   a.survey_type_sub) url_sv_type_sub,
-                concat('$url_sv_trade?trade=', a.survey_code)     url_sv_trade
+                concat('$url_sv_trade?trade=', a.survey_trade)     url_sv_trade
             from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyTypeSub c, 
-                 $tbDetSurveyTrade d, $tbBasUserInfo e, $tbDetQuestionType f, $tbBasQuestionInfo t
+                 $tbDetSurveyTrade d, $tbBasUserInfo e, $tbDetQuestionClassType f, $tbBasQuestionInfo t
             where a.survey_state = b.survey_state_code and a.survey_type_sub = c.survey_type_sub_code
             and a.survey_trade = d.survey_trade_code and a.user_code = e.user_code 
             and a.survey_code = t.survey_code and t.question_type = f.question_type_code and a.survey_state in(3,4) 
@@ -2419,19 +2572,19 @@ function api_search_main(){
     $url_sv_type  = U('survey/survey/type')  ;
     $url_sv_trade = U('survey/survey/trade') ;
     
-    $tbBasSurveyInfo       = M(TB_BAS_SURVEY_INFO)        -> getTableName() ;
-    $tbBasQuestionInfo     = M(TB_BAS_QUESTION_INFO)      -> getTableName() ;
-    $tbDetQuestionType     = M(TB_DET_QUESTION_TYPE)      -> getTableName() ;
-    $tbBasTagInfo          = M(TB_BAS_TAG_INFO)           -> getTableName() ;
-    $tbBasUserInfo         = M(TB_BAS_USER_INFO)          -> getTableName() ;
-    $tbBasUserAccout       = M(TB_BAS_USER_ACCOUT)        -> getTableName() ;
-    $tbDetSurveyType       = M(TB_DET_SURVEY_TYPE)        -> getTableName() ;
-    $tbDetSurveyTypeSub    = M(TB_DET_SURVEY_TYPE_SUB)    -> getTableName() ;
-    $tbDetSurveyTrade      = M(TB_DET_SURVEY_TRADE)       -> getTableName() ;
-    $tbDetUserLevel        = M(TB_DET_USER_LEVEL)         -> getTableName() ;
-    $tbDetSurveyState      = M(TB_DET_SURVEY_STATE)       -> getTableName() ;
-    $tbBasUserActionLog    = M(TB_BAS_USER_ACTION_LOG)    -> getTableName() ;
-    $tbDetUserActionConfig = M(TB_DET_USER_ACTION_CONFIG) -> getTableName() ;
+    $tbBasSurveyInfo        = M(TB_BAS_SURVEY_INFO)         -> getTableName() ;
+    $tbBasQuestionInfo      = M(TB_BAS_QUESTION_INFO)       -> getTableName() ;
+    $tbDetQuestionClassType = M(TB_DET_QUESTION_CLASS_TYPE) -> getTableName() ;
+    $tbBasTagInfo           = M(TB_BAS_TAG_INFO)            -> getTableName() ;
+    $tbBasUserInfo          = M(TB_BAS_USER_INFO)           -> getTableName() ;
+    $tbBasUserAccout        = M(TB_BAS_USER_ACCOUT)         -> getTableName() ;
+    $tbDetSurveyType        = M(TB_DET_SURVEY_TYPE)         -> getTableName() ;
+    $tbDetSurveyTypeSub     = M(TB_DET_SURVEY_TYPE_SUB)     -> getTableName() ;
+    $tbDetSurveyTrade       = M(TB_DET_SURVEY_TRADE)        -> getTableName() ;
+    $tbDetUserLevel         = M(TB_DET_USER_LEVEL)          -> getTableName() ;
+    $tbDetSurveyState       = M(TB_DET_SURVEY_STATE)        -> getTableName() ;
+    $tbBasUserActionLog     = M(TB_BAS_USER_ACTION_LOG)     -> getTableName() ;
+    $tbDetUserActionConfig  = M(TB_DET_USER_ACTION_CONFIG)  -> getTableName() ;
 
     // if($type == 'user'){
     //     $cond = "and user_nick like '%".str_replace(' ', '%', $words)."%' " ;
@@ -2443,8 +2596,8 @@ function api_search_main(){
     $cfg = array(
         'survey' => array(  // 搜索调查
             'list' =>
-                "select a.survey_name, a.question_num, b.state_desc_sketch survey_state, date_relative_now(a.start_time) start_date, 
-                    ifnull(a.answer_num, 0) answer_num, e.user_code, e.user_photo, e.user_nick, 
+                "select a.survey_name, a.question_count, b.state_desc_sketch survey_state, date_relative_now(a.start_time) start_date, 
+                    ifnull(a.answer_count, 0) answer_count, e.user_code, e.user_photo, e.user_nick, 
                     replace(replace(replace(a.survey_desc, '&nbsp;', ' '), '<br>' ,' '), '  ', ' ') survey_desc,
                     c.survey_type_name survey_type, c.survey_type_sub_name survey_type_sub, d.survey_trade_name survey_trade, 
                     concat('$url_us_visit?code=',  e.user_code)       url_us_visit,
@@ -2467,9 +2620,9 @@ function api_search_main(){
 
         'question' => array(  // 搜索问题
             'list' =>
-                "select a.survey_name, a.question_num, a.survey_name, t.question_name, f.question_type_desc question_type, 
-                    b.state_desc_sketch survey_state, date_relative_now(a.start_time) start_date, 
-                    ifnull(t.answer_num, 0) answer_num, e.user_code, e.user_photo, e.user_nick, 
+                "select a.survey_name, a.question_count, a.survey_name, t.question_name, b.state_desc_sketch survey_state, 
+                    f.question_class_desc question_class, f.question_type_desc question_type, date_relative_now(a.start_time) start_date, 
+                    ifnull(t.answer_count, 0) answer_count, e.user_code, e.user_photo, e.user_nick, 
                     c.survey_type_name survey_type, c.survey_type_sub_name survey_type_sub, d.survey_trade_name survey_trade, 
                     concat('$url_us_visit?code=',  e.user_code)       url_us_visit,
                     concat('$url_sv_visit?code=',  a.survey_code)     url_sv_visit,
@@ -2477,7 +2630,7 @@ function api_search_main(){
                     concat('$url_sv_type?type=',   a.survey_type_sub) url_sv_type_sub,
                     concat('$url_sv_trade?trade=', a.survey_code)     url_sv_trade
                 from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyTypeSub c, 
-                     $tbDetSurveyTrade d, $tbBasUserInfo e, $tbDetQuestionType f, $tbBasQuestionInfo t
+                     $tbDetSurveyTrade d, $tbBasUserInfo e, $tbDetQuestionClassType f, $tbBasQuestionInfo t
                 where a.survey_state = b.survey_state_code and a.survey_type_sub = c.survey_type_sub_code
                 and a.survey_trade = d.survey_trade_code and a.user_code = e.user_code 
                 and a.survey_code = t.survey_code and t.question_type = f.question_type_code and a.survey_state in(3,4) 

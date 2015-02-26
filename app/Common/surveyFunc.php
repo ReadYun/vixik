@@ -82,45 +82,51 @@ function surveyInfoSelect($survey_code, $base){
                 left outer join $tbDetSurveyTypeSub t1 on t0.survey_type_sub = t1.survey_type_sub_code
                 left outer join $tbDetSurveyTrade   t2 on t0.survey_trade    = t2.survey_trade_code " ;
         $survey['info'] = M() -> query($sql)[0] ;
-    }
 
-    if($survey['info']){
-        // $survey['info']['survey_descs']  = str_replace("\n", "<br/>", $survey['info']['survey_desc']) ;                   // 调查说明输出前换行符转换
-        $survey['url']['url_user']       = U('user/user/visit')       . '?code='  . $survey['info']['user_code'] ;        // 调查创建者访问地址
-        $survey['url']['url_create']     = U('survey/survey/create')  . '?code='  . $survey['info']['survey_code'] ;      // 调查创建地址
-        $survey['url']['url_visit']      = U('survey/survey/visit')   . '?code='  . $survey['info']['survey_code'] ;      // 调查访问地址
-        $survey['url']['url_answer']     = U('survey/survey/answer')  . '?code='  . $survey['info']['survey_code'] ;      // 调查参与地址
-        $survey['url']['url_analyse']    = U('survey/survey/analyse') . '?code='  . $survey['info']['survey_code'] ;      // 调查分析地址
-        $survey['url']['url_type']       = U('survey/survey/type')    . '?type='  . $survey['info']['survey_type'] ;      // 调查归属大类地址
-        $survey['url']['url_type_sub']   = U('survey/survey/type')    . '?type='  . $survey['info']['survey_type_sub'] ;  // 调查归属小类地址
-        $survey['url']['url_trade']      = U('survey/survey/trade')   . '?trade=' . $survey['info']['survey_type'] ;      // 调查行业地址
-        
-        $survey['stats']['answer_count'] = M(TB_BAS_SURVEY_ACTION)      -> where("survey_code = '$survey_code'") -> count() ;  // 参与统计
-        $survey['stats']['follow_count'] = M(TB_BAS_USER_FOLLOW_SURVEY) -> where("follow_code = '$survey_code'") -> count() ;  // 收藏统计
-        $survey['stats']['share_count']  = M(TB_BAS_USER_SHARE_SURVEY)  -> where("share_code = '$survey_code'")  -> count() ;  // 分享统计
+        if($survey['info']){
+            // $survey['info']['survey_descs']  = str_replace("\n", "<br/>", $survey['info']['survey_desc']) ;                   // 调查说明输出前换行符转换
+            $survey['url']['url_user']       = U('user/user/visit')       . '?code='  . $survey['info']['user_code'] ;        // 调查创建者访问地址
+            $survey['url']['url_create']     = U('survey/survey/create')  . '?code='  . $survey['info']['survey_code'] ;      // 调查创建地址
+            $survey['url']['url_visit']      = U('survey/survey/visit')   . '?code='  . $survey['info']['survey_code'] ;      // 调查访问地址
+            $survey['url']['url_answer']     = U('survey/survey/answer')  . '?code='  . $survey['info']['survey_code'] ;      // 调查参与地址
+            $survey['url']['url_analyse']    = U('survey/survey/analyse') . '?code='  . $survey['info']['survey_code'] ;      // 调查分析地址
+            $survey['url']['url_type']       = U('survey/survey/type')    . '?type='  . $survey['info']['survey_type'] ;      // 调查归属大类地址
+            $survey['url']['url_type_sub']   = U('survey/survey/type')    . '?type='  . $survey['info']['survey_type_sub'] ;  // 调查归属小类地址
+            $survey['url']['url_trade']      = U('survey/survey/trade')   . '?trade=' . $survey['info']['survey_type'] ;      // 调查行业地址
+            
+            $survey['stats']['answer_count'] = $survey['info']['answer_count'] ;  // 参与统计
+            $survey['stats']['follow_count'] = M(TB_BAS_USER_FOLLOW_SURVEY) -> where("follow_code = '$survey_code'") -> count() ;  // 收藏统计
+            $survey['stats']['share_count']  = M(TB_BAS_USER_SHARE_SURVEY)  -> where("share_code = '$survey_code'")  -> count() ;  // 分享统计
 
-        $option   = optionInfoSelect($survey_code) ;
-        $question = M(TB_BAS_QUESTION_INFO) -> where("survey_code = '$survey_code'") -> order('question_code') -> select() ; 
+            $option   = optionInfoSelect($survey_code) ;
+            $question = M(TB_BAS_QUESTION_INFO) -> where("survey_code = '$survey_code'") -> order('question_code') -> select() ; 
 
-        // 自定义推荐规则查询
-        if($survey['info']['recomm_type'] == 2){
-            $survey['recommend'] = M(TB_BAS_SURVEY_RECOMMEND_RULE) -> where("survey_code = '$survey_code'") -> select() ;
-        }
+            // 自定义推荐规则查询
+            if($survey['info']['recomm_type'] == 2){
+                $survey['recommend'] = M(TB_BAS_SURVEY_RECOMMEND_RULE) -> where("survey_code = '$survey_code'") -> select() ;
+            }
 
-        for($q = 0; $q < count($question); $q++){
-            $survey['question'][$q] = $question[$q] ;
+            for($q = 0; $q < count($question); $q++){
+                $survey['question'][$q] = $question[$q] ;
 
-            if($question[$q]['question_type'] != 'textarea'){
-                for($o = 0, $i = 0; $o < count($option); $o++){
-                    if($question[$q]['question_code'] == $option[$o]['question_code']){
-                        $survey['question'][$q]['option'][$i] = 
-                            arrayExtract($option[$o], array('option_code','option_name','option_seq','option_type')) ;
-                        $i++ ;
+                if($question[$q]['question_type'] != 'textarea'){
+                    for($o = 0, $i = 0; $o < count($option); $o++){
+                        if($question[$q]['question_code'] == $option[$o]['question_code']){
+                            $survey['question'][$q]['option'][$i] = 
+                                arrayExtract($option[$o], array('option_code','option_name','option_seq','option_type')) ;
+                            $i++ ;
+                        }
                     }
                 }
             }
+            
+            return $survey ;
+        }else{
+            return false ;
         }
-        
+    }
+
+    if($survey['info']){
         return $survey ;
     }else{
         return false ;
@@ -260,54 +266,54 @@ function surveyQuestionSum($survey_code){
  */
 function surveyQuestionAlter($user_code, $survey_code, $question){
     $state_time   = date('Y-m-d H:i:s') ;    // 状态更新时间
-    $question_num = count($question) ;       // 题目数量
 
-    for($i_question = 0; $i_question < $question_num; $i_question++){
-        if($question[$i_question]['option']){
-            $qt_info['survey_code']     = $survey_code ;
-            $qt_info['question_code']   = M(TB_BAS_QUESTION_INFO) -> max('question_code') + 1 ;    // 题目编码
-            $qt_info['question_seq']    = $question[$i_question]['question_seq'] ;      // 题目序号
-            $qt_info['question_name']   = $question[$i_question]['question_name'] ;     // 题目题目
-            $qt_info['question_type']   = $question[$i_question]['question_type'] ;     // 题目类型
-            $qt_info['question_option'] = $question[$i_question]['question_option'] ;   // 题目选项
-            $qt_info['custom_option']   = $question[$i_question]['custom_option'] ;     // 自定义选项标志位
-            $qt_info['create_time']     = date('Y-m-d H:i:s') ;                         // 创建时间
-            // $qt_info['is_bank']         = 0 ;    // 暂时默认不属于题库等加入题库功能再改造此接口
+    for($i_question = 0; $i_question < count($question); $i_question++){
+        $qt_info['survey_code']     = $survey_code ;
+        $qt_info['question_code']   = M(TB_BAS_QUESTION_INFO) -> max('question_code') + 1 ;    // 题目编码
+        $qt_info['question_seq']    = $question[$i_question]['question_seq'] ;      // 题目序号
+        $qt_info['question_name']   = $question[$i_question]['question_name'] ;     // 题目题目
+        $qt_info['question_class']  = $question[$i_question]['question_class'] ;    // 题目大类
+        $qt_info['question_type']   = $question[$i_question]['question_type'] ;     // 题目小类
+        $qt_info['question_option'] = $question[$i_question]['question_option'] ;   // 题目选项汇总
+        $qt_info['answer_must']     = $question[$i_question]['answer_must'] ;       // 是否是必选题
+        $qt_info['custom_option']   = $question[$i_question]['custom_option'] ;     // 自定义选项标志位
+        $qt_info['pf_low_value']    = $question[$i_question]['pf_low_value'] ;      // 评分最低分值
+        $qt_info['pf_high_value']   = $question[$i_question]['pf_high_value'] ;     // 评分最高分值
+        $qt_info['pf_low_desc']     = $question[$i_question]['pf_low_desc'] ;       // 评分最低分描述
+        $qt_info['pf_high_desc']    = $question[$i_question]['pf_high_desc'] ;      // 自定义选项标志位
+        $qt_info['create_time']     = date('Y-m-d H:i:s') ;                         // 创建时间
+        // $qt_info['is_bank']         = 0 ;    // 暂时默认不属于题库等加入题库功能再改造此接口
 
-
-            // 插入题目信息表
-            if(insertTable(TB_BAS_QUESTION_INFO, $qt_info)){
+        // 插入题目信息表
+        if(insertTable(TB_BAS_QUESTION_INFO, $qt_info)){
+            if($question[$i_question]['option']){
                 for($i_option = 0; $i_option < count($question[$i_question]['option']); $i_option ++){
-                    $qt_opt['survey_code']   = $qt_info['survey_code'] ;                                     // 调查编码
-                    $qt_opt['question_code'] = $qt_info['question_code'] ;                                   // 题目编码
-                    $qt_opt['question_type'] = $qt_info['question_type'] ;                                   // 题目类型
-                    $qt_opt['option_name']   = $question[$i_question]['option'][$i_option]['option_name'] ;  // 选项名称
-                    $qt_opt['option_seq']    = $question[$i_question]['option'][$i_option]['option_seq'] ;   // 选项排序
-                    $qt_opt['option_type']   = 1 ;                                                           // 选项类型（默认为1:普通选项）
-                    $qt_opt['option_state']  = 1 ;                                                           // 选项状态（默认为1:有效）
-                    $qt_opt['create_user']   = $user_code ;                                                  // 选项创建用户
-                    $qt_opt['create_time']   = date('Y-m-d H:i:s') ;                                         // 选项创建时间
+                    $option['survey_code']    = $qt_info['survey_code'] ;                                     // 调查编码
+                    $option['question_code']  = $qt_info['question_code'] ;                                   // 题目编码
+                    $option['question_class'] = $qt_info['question_class'] ;                                  // 题目大类
+                    $option['question_type']  = $qt_info['question_type'] ;                                   // 题目小类
+                    $option['option_name']    = $question[$i_question]['option'][$i_option]['option_name'] ;  // 选项名称
+                    $option['option_seq']     = $question[$i_question]['option'][$i_option]['option_seq'] ;   // 选项排序
+                    $option['option_type']    = 1 ;                                                           // 选项类型（默认为1:普通选项）
+                    $option['option_state']   = 1 ;                                                           // 选项状态（默认为1:有效）
+                    $option['create_user']    = $user_code ;                                                  // 选项创建用户
+                    $option['create_time']    = date('Y-m-d H:i:s') ;                                         // 选项创建时间
 
                     // 选项编码：（题目编码.选项类型.选项序号）
-                    $qt_opt['option_code']   = strval($qt_opt['question_code']).strval($qt_opt['option_type']).strval($qt_opt['option_seq']) ;
+                    $option['option_code']   = strval($option['question_code']).strval($option['option_type']).strval($option['option_seq']) ;
 
                     // 插入题目选项内容
-                    $res = insertTable(TB_BAS_QUESTION_OPTION, $qt_opt) ;
+                    if(!insertTable(TB_BAS_QUESTION_OPTION, $option)){
+                        return false ;
+                    }
                 } ;
-            }else{
-                return false ;
             }
+        }else{
+            return false ;
         }
     } ;
 
-    // 如更新调查题目信息成功则更新调查统计信息
-    if($res){    
-        if(surveyStatistUpdate($survey_code)){
-            return true ;
-        }
-    }else{
-        return false ;
-    }
+    return true ;
 }
 
 /*
@@ -352,8 +358,8 @@ function surveyQuestionAlter($user_code, $survey_code, $question){
  * @Return : bool     true/false    信息更新结果标志
  */
 function surveyStatistUpdate($survey_code){
-    $data   = surveyQuestionSum($survey_code) ;
-    $survey = M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> find() ;
+    // $data   = surveyQuestionSum($survey_code) ;
+    $question_count = M(TB_BAS_SURVEY_INFO) -> where("survey_code = '$survey_code'") -> getField('question_count') ;
 
     // 取创建调查相关行为需要的金币值
     $action_1003 =  M(TB_DET_USER_ACTION_CONFIG) -> where("action_code=1003 and update_type='user_coins'") -> find() ;
@@ -366,7 +372,7 @@ function surveyStatistUpdate($survey_code){
     }
 
     // 创建调查所需金币数
-    $data['create_coins'] = $action_1003['update_value'] + $action_1004['update_value'] * $data['question_count'] + $action_1005['update_value'] ;
+    $data['create_coins'] = $action_1003['update_value'] + $action_1004['update_value'] * question_count + $action_1005['update_value'] ;
     $data['answer_coins'] = $data['create_coins'] / 10 ;
 
     // 参与调查可获得金币数
@@ -447,46 +453,57 @@ function surveyActionAdd($survey, $question){
         // 调查参与详情
         if(insertTable(TB_BAS_SURVEY_ACTION, $survey)){
             // 更新调查信息参与次数+1
-            updateTable(TB_BAS_SURVEY_INFO, array('answer_num'=>1), array('survey_code'=>$survey['survey_code']), 'add') ;
+            updateTable(TB_BAS_SURVEY_INFO, array('answer_count'=>1), array('survey_code'=>$survey['survey_code']), 'add') ;
         }else{
             return false ;
         }
 
         // 调查答题详情
-        for($i_question = 0; $i_question < count($question); $i_question++){
-            if($question[$i_question]['option']){
-                $qt_action['question_code'] = $question[$i_question]['question_code'] ;
-                $qt_action['question_type'] = $question[$i_question]['question_type'] ;
-                $qt_action['question_seq']  = $question[$i_question]['question_seq'] ;
+        for($i_qt = 0; $i_qt < count($question); $i_qt++){
+            $qt_action['question_code']  = $question[$i_qt]['question_code'] ;
+            $qt_action['question_type']  = $question[$i_qt]['question_type'] ;
+            $qt_action['question_seq']   = $question[$i_qt]['question_seq'] ;
 
-                for($i_option = 0; $i_option < count($question[$i_question]['option']); $i_option++){
-                    $option = $qt_action['option_code'] = $question[$i_question]['option'][$i_option] ;
-
-                    // 不同的题目类型不同的处理方式
-                    if($qt_action['question_type'] === 'textarea'){
-                        // 主观题参与去除选项个性信息，只保留option_name即填写的内容
-                        unset($qt_action['option_code']) ;
-                        unset($qt_action['option_type']) ;
-                        unset($qt_action['option_seq']) ;
-                        $qt_action['option_name'] = $option ;  // 选项名称
+            // 有选项数据优先处理选项数据
+            if($question[$i_qt]['option']){
+                for($i_opt = 0; $i_opt < count($question[$i_qt]['option']); $i_opt++){
+                    if($qt_action['question_type'] == 32){
+                        $option = $question[$i_qt]['option'][$i_opt] ;
                     }else{
-                        // 非主观题（单选、多选）正常处理
-                        // 取选项其他相关数据
-                        $option = M(TB_BAS_QUESTION_OPTION) -> where("option_code = '$option'") -> find() ;
-                        $qt_action['option_name'] = $option['option_name'] ;  // 选项名称
-                        $qt_action['option_seq']  = $option['option_seq'] ;   // 选项序号
-                        $qt_action['option_type'] = $option['option_type'] ;  // 选项类型
+                        $option = M(TB_BAS_QUESTION_OPTION) -> where("option_code = ". $question[$i_qt]['option'][$i_opt]) -> find() ;
                     }
+
+                    $qt_action['option_code']  = $option['option_code'] ;   // 选项编码
+                    $qt_action['option_type']  = $option['option_type'] ;   // 选项类型
+                    $qt_action['option_name']  = $option['option_name'] ;   // 选项名称
+                    $qt_action['option_value'] = $option['option_value'] ;  // 选项值
+                    $qt_action['option_seq']   = $option['option_seq'] ;    // 选项序号
 
                     // 插入用户答题详情表
-                    if(!$qt_action['option_name'] || !insertTable(TB_BAS_QUESTION_ACTION, $qt_action)){
+                    if(!insertTable(TB_BAS_QUESTION_ACTION, $qt_action)){
                         return false ;
                     }
+                }
+            }else{
+                $qt_action['option_type'] = $qt_action['option_seq'] = '0' ;
 
+                if($qt_action['question_type'] == 31){
+                    $qt_action['option_code']  = $question[$i_qt]['question_code']. $qt_action['option_type']. $question[$i_qt]['option_value'] ;
+                }else{
+                    // 无选项数据
+                    unset($qt_action['option_code']) ;
                 }
 
-                updateTable(TB_BAS_QUESTION_INFO, array('answer_num'=>1), array('question_code'=>$qt_action['question_code']), 'add') ;
+                $qt_action['option_name']  = $question[$i_qt]['option_name'] ;   // 选项名称
+                $qt_action['option_value'] = $question[$i_qt]['option_value'] ;  // 选项值
+
+                // 插入用户答题详情表
+                if(!$qt_action['option_name'] || !insertTable(TB_BAS_QUESTION_ACTION, $qt_action)){
+                    return false ;
+                }                
             }
+
+            updateTable(TB_BAS_QUESTION_INFO, array('answer_count'=>1), array('question_code'=>$qt_action['question_code']), 'add') ;
         }
 
         return true ;
@@ -552,8 +569,8 @@ function surveyListSelect($param){
     $sql = array(
         'list' =>
            "select t1.* , t2.survey_trade_name survey_trade from (
-            select a.survey_name, a.question_num, b.state_desc_sketch survey_state, date_relative_now(a.start_time) start_date, 
-                ifnull(a.answer_num, 0) answer_num, d.user_code, d.user_photo, d.user_nick, 
+            select a.survey_name, a.question_count, b.state_desc_sketch survey_state, date_relative_now(a.start_time) start_date, 
+                answer_count, d.user_code, d.user_photo, d.user_nick, 
                 ifnull(replace(replace(replace(a.survey_desc, '&nbsp;', ' '), '<br>' ,' '), '  ', ' '), '无调查说明')  survey_desc,
                 c.survey_type_name survey_type, c.survey_type_sub_name survey_type_sub, a.survey_trade, 
                 concat('$url_us_visit?code=',  d.user_code)       url_us_visit,
@@ -566,19 +583,6 @@ function surveyListSelect($param){
             and a.user_code = d.user_code and $cond $order $limit) t1
             left outer join  $tbDetSurveyTrade t2
             on t1.survey_trade = t2.survey_trade_code",
-        'list1' =>
-           "select a.survey_name, a.question_num, b.state_desc_sketch survey_state, date_relative_now(a.start_time) start_date, 
-                ifnull(a.answer_num, 0) answer_num, e.user_code, e.user_photo, e.user_nick, 
-                ifnull(replace(replace(replace(a.survey_desc, '&nbsp;', ' '), '<br>' ,' '), '  ', ' '), '无调查说明')  survey_desc,
-                c.survey_type_name survey_type, c.survey_type_sub_name survey_type_sub, d.survey_trade_name survey_trade, 
-                concat('$url_us_visit?code=',  e.user_code)       url_us_visit,
-                concat('$url_sv_visit?code=',  a.survey_code)     url_sv_visit,
-                concat('$url_sv_type?type=',   a.survey_type)     url_sv_type,
-                concat('$url_sv_type?type=',   a.survey_type_sub) url_sv_type_sub,
-                concat('$url_sv_trade?trade=', a.survey_code)     url_sv_trade
-            from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyTypeSub c, $tbDetSurveyTrade d, $tbBasUserInfo e
-            where a.survey_state = b.survey_state_code and a.survey_type_sub = c.survey_type_sub_code
-            and a.survey_trade = d.survey_trade_code and a.user_code = e.user_code and $cond $order $limit",
         'next' =>
            "select a.survey_name
             from $tbBasSurveyInfo a, $tbDetSurveyState b, $tbDetSurveyTypeSub c, $tbDetSurveyTrade d, $tbBasUserInfo e

@@ -111,12 +111,11 @@
             }
         div.tab-pane .vkpaging-body{
             width: 100%;
-            min-height: 350px;
+            min-height: 300px;
             }
             div.pane-content-box div.sv-list{
                 width: 100%;
-                padding: 7px 0;
-                margin-bottom: 5px;  
+                margin-bottom: 5px;
                 float: left;
                 border-bottom: 1px dashed #CCC;
                 font: 12px "宋体",Tahoma;  

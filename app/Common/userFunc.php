@@ -245,7 +245,6 @@ function userActionUpdate($user_code, $action_code, $action_value){
 
     // 更新用户账户信息表中的金币积分等级
     if(userAccoutUpdate($user_code, $data)){
-
         // 写日志必要字段赋值
         $log['user_code']    = $user_code ;             // 用户编码
         $log['action_time']  = date('Y-m-d H:i:s') ;    // 行为发生时间

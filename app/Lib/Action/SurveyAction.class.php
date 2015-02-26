@@ -32,7 +32,7 @@ class surveyAction extends Action{
         $tbBasSurveyInfo = M(TB_BAS_SURVEY_INFO)     -> getTableName() ;
         $tbBasUserInfo   = M(TB_BAS_USER_INFO)       -> getTableName() ;
 
-        $sv_recomm = M(TB_BAS_SURVEY_INFO) -> where("recomm_grade = 2") -> select() ;
+        $sv_recomm = M(TB_BAS_SURVEY_INFO) -> where("survey_code in(10000001,10000002,10000003,10000031)") -> select() ;
 
         for($i = 0; $i < count($survey_type); $i++){
             $sv_type_code = $survey_type[$i]['survey_type_code'] ;
@@ -40,8 +40,8 @@ class surveyAction extends Action{
             $survey_type[$i]['survey_type_sub'] = M(TB_DET_SURVEY_TYPE_SUB) -> where("survey_type_code = $sv_type_code") -> select() ;
         }
 
-        $sql = "select survey_name, ifnull(answer_num, 0) answer_num, concat('$url_sv_visit?code=', survey_code) url_sv_visit
-                from $tbBasSurveyInfo where survey_state = 3 order by answer_num desc, start_time limit 10" ;
+        $sql = "select survey_name, ifnull(answer_count, 0) answer_count, concat('$url_sv_visit?code=', survey_code) url_sv_visit
+                from $tbBasSurveyInfo where survey_state = 3 order by answer_count desc, start_time limit 10" ;
         $survey_hot = M() -> query($sql) ;
 
 
@@ -84,12 +84,12 @@ class surveyAction extends Action{
                 // 调查大类
                 if($type_code = M(TB_DET_SURVEY_TYPE) -> where("survey_type_code = $type") -> getField('survey_type_code')){
                     $stype               = M(TB_DET_SURVEY_TYPE) -> where("survey_type_code = $type_code") -> find() ;
-                    $target['type_code'] = $stype['survey_type_code']  ;
-                    $target['type_name'] = $stype['survey_type_name']  ;
+                    $target['type_code'] = $stype['survey_type_code'] ;
+                    $target['type_name'] = $stype['survey_type_name'] ;
                 }else{
                     $stype               = M(TB_DET_SURVEY_TYPE) -> where("survey_type_code = 1001") -> find() ;
-                    $target['type_code'] = $type = $stype['survey_type_code']  ;
-                    $target['type_name'] = $stype['survey_type_name']  ;
+                    $target['type_code'] = $type = $stype['survey_type_code'] ;
+                    $target['type_name'] = $stype['survey_type_name'] ;
                 }
 
                 $cond = "survey_state in(3,4) and survey_type = ". $target['type_code'] ;
@@ -99,12 +99,12 @@ class surveyAction extends Action{
                 // 调查小类
                 if($type_code = M(TB_DET_SURVEY_TYPE_SUB) -> where("survey_type_sub_code = $type") -> getField('survey_type_sub_code')){
                     $stype               = M(TB_DET_SURVEY_TYPE_SUB) -> where("survey_type_sub_code = $type_code") -> find() ;
-                    $target['type_code'] = $stype['survey_type_sub_code']  ;
-                    $target['type_name'] = $stype['survey_type_sub_desc']  ;
+                    $target['type_code'] = $stype['survey_type_sub_code'] ;
+                    $target['type_name'] = $stype['survey_type_sub_desc'] ;
                 }else{
                     $stype               = M(TB_DET_SURVEY_TYPE_SUB) -> where("survey_type_sub_code = $type_code") -> find() ;
-                    $target['type_code'] = $type = $stype['survey_type_sub_code']  ;
-                    $target['type_name'] = $stype['survey_type_sub_desc']  ;
+                    $target['type_code'] = $type = $stype['survey_type_sub_code'] ;
+                    $target['type_name'] = $stype['survey_type_sub_desc'] ;
                 }
 
                 $cond = "survey_state in(3,4) and survey_type_sub = ". $target['type_code'] ;
@@ -168,7 +168,10 @@ class surveyAction extends Action{
         $tbBasSurveyInfo = M(TB_BAS_SURVEY_INFO)     -> getTableName() ;
         $tbBasUserInfo   = M(TB_BAS_USER_INFO)       -> getTableName() ;
 
-        $trade  = M(TB_DET_SURVEY_TRADE) -> where("survey_trade_code = $trade") -> find() ;
+        // 要确保行业编码正确
+        if(!$trade = M(TB_DET_SURVEY_TRADE) -> where("survey_trade_code = $trade") -> find()){
+            redirect(U() . '?trade=1001') ;
+        }
 
         // 热门行业
         $cond  = "survey_state in(3,4) and survey_trade = ". $trade['survey_trade_code'] ;
@@ -206,14 +209,15 @@ class surveyAction extends Action{
 
         $_GET['type']    ? $sv_type     = $_GET['type']    : $sv_type     = 0  ;// 调查大类
         $_GET['typesub'] ? $sv_type_sub = $_GET['typesub'] : $sv_type_sub = 0  ;// 调查小类
+        $_GET['trade']   ? $sv_trade    = $_GET['trade']   : $sv_trade    = 0  ;// 调查行业
 
         // 先判断是否有调查编码参数
         if($survey_code){
             // 查询调查基本信息
-            if($survey = surveyInfoFind($survey_code)){
-                switch($survey['survey_state']){
+            if($survey = surveyInfoSelect($survey_code)){
+                switch($survey['info']['survey_state']){
                     case 2 :  // 活动已发布
-                        if($user_code == $survey['user_code']){
+                        if($user_code == $survey['info']['user_code']){
                             // 调查发布者
                             $this -> error('已发布的活动不能修改，帮您转入调查分析页面', U('survey/analyse?code='. $survey_code)) ;
                         }else{
@@ -222,7 +226,7 @@ class surveyAction extends Action{
                         break ;
 
                     case 3 :  // 活动进行中
-                        if($user_code == $survey['user_code']){
+                        if($user_code == $survey['info']['user_code']){
                             // 调查发布者
                             $this -> error('进行中的活动不能修改，帮您转入调查分析页面', U('survey/analyse?code='. $survey_code)) ;
                         }else{
@@ -236,16 +240,8 @@ class surveyAction extends Action{
                         
                     default :
                         // 用户权限判断
-                        if($user_code == $survey['user_code']){
-                            // 取调查问题相关信息
-                            $question = questionInfoSelect($survey_code) ;
-                            $option   = optionInfoSelect($survey_code) ;
-
-                            cookie('survey_code', $survey_code, 3600) ;
-
+                        if($user_code == $survey['info']['user_code']){
                             $this -> assign('survey',   $survey) ;
-                            $this -> assign('question', $question) ;
-                            $this -> assign('option',   $option) ;
                         }else{
                             $this -> error('此调查不存在，返回前一页') ;
                         }       
@@ -269,6 +265,7 @@ class surveyAction extends Action{
         $this -> assign('survey_code',  $survey_code) ;
         $this -> assign('sv_type',      $sv_type) ;
         $this -> assign('sv_type_sub',  $sv_type_sub) ; 
+        $this -> assign('sv_trade',     $sv_trade) ; 
         $this -> assign('survey_type',  $survey_type) ;
         $this -> assign('survey_trade', $survey_trade) ;
         $this -> assign('province',     $province) ;
@@ -314,7 +311,7 @@ class surveyAction extends Action{
                         switch($info['survey_state']){
                             case 0 :
                                 // 活动无效，不能打开
-                                $this -> error('此调查活动不存在或已删除，返回调查中心！', U('index')) ;
+                                $this -> error('此调查活动不存在或已删除，帮您返回调查中心！', U('index')) ;
                                 return false ;
                                 break ;
                             case 1 :
@@ -358,6 +355,7 @@ class surveyAction extends Action{
             $this -> assign('path',        vkPath($page, $survey_code)) ;
 
             $this -> display() ;
+            // dump($survey['question']) ;
         }
     }
 
@@ -370,74 +368,89 @@ class surveyAction extends Action{
     /* 调查访问页面
      * ---------------------------------------- */
     public function visit(){
-        $survey_code = $_GET['code'] ;
-
+        $survey_code       = $_GET['code'] ;
+        $user_code         = cookie('user_code') ;
         $tbBasSurveyInfo   = M(TB_BAS_SURVEY_INFO)   -> getTableName() ;
         $tbBasSurveyAction = M(TB_BAS_SURVEY_ACTION) -> getTableName() ;
 
         if(!$survey_code){
             // 如果URL没有传入调查编码，随机生成一个推荐调查页面并跳转
-            $user_code   = cookie('user_code') ;
             $survey_code = userRecommendSurvey($user_code, 1, 1) ;
             redirect(U() . '?code=' . $survey_code) ;
         }else{
-            // 取获得的调查编码生成调查相关信息
             $page     = '调查访问' ;
             $survey   = surveyInfoSelect($survey_code) ;
-            $sv_user  = $survey['info']['user_code'] ;
-            $sv_type  = $survey['info']['survey_type'] ;
-            $sv_trade = $survey['info']['survey_trade'] ;
-            $sv_visit = U('survey/visit') ;
 
-            $question = $survey['question'] ;
-            for($i = 0; $i < count($question); $i++){
-                $question[$i]['question_name'] = str_replace("&nbsp;", " ", $question[$i]['question_name']) ;
-                $question[$i]['question_name'] = str_replace("<br>",   " ", $question[$i]['question_name']) ;
-
-                switch($question[$i]['question_type']){
-                    case 'radio' :
-                        $question[$i]['question_type'] = '单选题' ;
-                        break ;
-
-                    case 'checkbox' :
-                        $question[$i]['question_type'] = '多选题' ;
-                        break ;
-
-                    case 'textarea' :
-                        $question[$i]['question_type'] = '主观题' ;
-                        break ;
+            if($survey['info']['survey_state'] == 1){
+                if($user_code == $survey['info']['user_code']){
+                    $this -> error('您的调查还未发布，帮您前往调查编辑页面', U('survey/create?code='. $survey_code)) ;
+                    return false ;
+                }else{
+                    $this -> error('该调查还未发布，帮你返回调查中心', U('index')) ;
+                    return false ;
                 }
+            }else{
+                // 取获得的调查编码生成调查相关信息
+                $sv_user  = $survey['info']['user_code'] ;
+                $sv_type  = $survey['info']['survey_type'] ;
+                $sv_trade = $survey['info']['survey_trade'] ;
+                $sv_visit = U('survey/visit') ;
+
+                $question = $survey['question'] ;
+                for($i = 0; $i < count($question); $i++){
+                    $question[$i]['question_name'] = str_replace("&nbsp;", " ", $question[$i]['question_name']) ;
+                    $question[$i]['question_name'] = str_replace("<br>",   " ", $question[$i]['question_name']) ;
+
+                    switch(intval($question[$i]['question_type'])){
+                        case 11 :
+                            $question[$i]['question_type'] = '单项选择' ;
+                            break ;
+                        case 12 :
+                            $question[$i]['question_type'] = '多项选择' ;
+                            break ;
+                        case 21 :
+                            $question[$i]['question_type'] = '单行填空' ;
+                            break ;
+                        case 22 :
+                            $question[$i]['question_type'] = '多行填空' ;
+                            break ;
+                        case 31 :
+                            $question[$i]['question_type'] = '单项评分' ;
+                            break ;
+                        case 32 :
+                            $question[$i]['question_type'] = '多项评分' ;
+                            break ;
+                    }
+                }
+
+                // Ta的其他调查
+                $sql = "select survey_code, survey_name, concat('$sv_visit?code=', survey_code) survey_visit 
+                        from $tbBasSurveyInfo where user_code = $sv_user and survey_code <> $survey_code and survey_state = 3 
+                        order by start_time desc limit 10 " ;
+                $survey['list']['user'] = M() -> query($sql) ;
+
+                // 同类型调查
+                $sql = "select a.survey_code, survey_name, concat('$sv_visit?code=', a.survey_code) survey_visit 
+                        from $tbBasSurveyInfo a where a.survey_code <> $survey_code and a.survey_state = 3 and a.survey_type = $sv_type
+                        and not exists (select survey_code from tb_bas_survey_action b where a.survey_code = b.survey_code and b.user_code = $sv_user) 
+                        order by start_time desc limit 10 " ;
+                $survey['list']['type'] = M() -> query($sql) ;
+
+                // 同类型调查
+                // $sql = "select a.survey_code, replace(replace(replace(a.survey_name, '&nbsp;', ' '), '<br>' ,' '), '  ', ' ')  survey_name,
+                $sql = "select a.survey_code, survey_name, concat('$sv_visit?code=', a.survey_code) survey_visit 
+                        from $tbBasSurveyInfo a where a.survey_code <> $survey_code and a.survey_state = 3 and a.survey_trade = $sv_trade
+                        and not exists (select survey_code from tb_bas_survey_action b where a.survey_code = b.survey_code and b.user_code = $sv_user) 
+                        order by start_time desc limit 10 " ;
+                $survey['list']['trade'] = M() -> query($sql) ;
+
+                cookie('survey', json_encode($survey)) ;
+                $this -> assign('page',     $page) ;
+                $this -> assign('survey',   $survey) ;
+                $this -> assign('question', $question) ;
+                $this -> assign('path',     vkPath($page, $survey_code)) ;
             }
-
-            // Ta的其他调查
-            $sql = "select survey_code, replace(replace(replace(survey_name, '&nbsp;', ' '), '<br>' ,' '), '  ', ' ')  survey_name,
-                    concat('$sv_visit?code=', survey_code) survey_visit 
-                    from $tbBasSurveyInfo where user_code = $sv_user and survey_code <> $survey_code and survey_state = 3 
-                    order by start_time desc limit 10 " ;
-            $survey['list']['user'] = M() -> query($sql) ;
-
-            // 同类型调查
-            $sql = "select a.survey_code, replace(replace(replace(a.survey_name, '&nbsp;', ' '), '<br>' ,' '), '  ', ' ')  survey_name,
-                    concat('$sv_visit?code=', a.survey_code) survey_visit 
-                    from $tbBasSurveyInfo a where a.survey_code <> $survey_code and a.survey_state = 3 and a.survey_type = $sv_type
-                    and not exists (select survey_code from tb_bas_survey_action b where a.survey_code = b.survey_code and b.user_code = $sv_user) 
-                    order by start_time desc limit 10 " ;
-            $survey['list']['type'] = M() -> query($sql) ;
-
-            // 同类型调查
-            $sql = "select a.survey_code, replace(replace(replace(a.survey_name, '&nbsp;', ' '), '<br>' ,' '), '  ', ' ')  survey_name,
-                    concat('$sv_visit?code=', a.survey_code) survey_visit 
-                    from $tbBasSurveyInfo a where a.survey_code <> $survey_code and a.survey_state = 3 and a.survey_trade = $sv_trade
-                    and not exists (select survey_code from tb_bas_survey_action b where a.survey_code = b.survey_code and b.user_code = $sv_user) 
-                    order by start_time desc limit 10 " ;
-            $survey['list']['trade'] = M() -> query($sql) ;
-
-            cookie('survey', json_encode($survey)) ;
-            $this -> assign('page',     $page) ;
-            $this -> assign('survey',   $survey) ;
-            $this -> assign('question', $question) ;
-            $this -> assign('path',     vkPath($page, $survey_code)) ;
-
+                    
             $this -> display() ;
         }
     }
@@ -448,8 +461,8 @@ class surveyAction extends Action{
         $survey_code = $_GET['code'] ;
         $survey      = surveyInfoSelect($survey_code) ;      // 调查基本信息
 
-        if($survey['stats']['answer_cnt'] == 0){
-            $this -> error('无人参与过本次调查，无法查看分析报告，帮你转入调查访问页面', U('survey/visit?code='. $survey_code)) ;
+        if($survey['stats']['answer_count'] == 0){
+            // $this -> error('无人参与过本次调查，无法查看分析报告，帮你转入调查访问页面', U('survey/visit?code='. $survey_code)) ;
             return false ;
         }
 
@@ -457,26 +470,54 @@ class surveyAction extends Action{
         $tbBasQuestionOption = M(TB_BAS_QUESTION_OPTION) -> getTableName() ;
         $tbBasQuestionInfo   = M(TB_BAS_QUESTION_INFO)   -> getTableName() ;
 
-        // 问题选项选择数量汇总
-        $sql =  "select x1.*, x2.question_cnt, round(x1.option_cnt/x2.question_cnt*100, 1) option_ratio ".
-                "from ( ".
-                "    select t1.*, count(user_code) option_cnt ".
-                "    from ( ".
-                "        select a.question_code, a.question_name, a.question_type, a.question_seq, b.option_name, b.option_seq ".
-                "        from $tbBasQuestionInfo a , $tbBasQuestionOption b ".
-                "        where a.question_code = b.question_code and a.survey_code = $survey_code) t1 ".
-                "    left join ( " .
-                "         select * from $tbBasQuestionAction where survey_code = $survey_code) t2 ".
-                "    on t1.question_code = t2.question_code and t1.option_name = t2.option_name ".
-                "    group by t1.question_code, t1.option_name ) x1 , ".
-                "( " .
-                "    select question_code, count(user_code) question_cnt ".
-                "    from $tbBasQuestionAction ".
-                "    where survey_code = $survey_code ".
-                "    group by question_code ) x2 ".
-                "where x1.question_code = x2.question_code ".
-                "order by x1.question_code, x1.option_seq" ;
+        // 选择题选项选择数量汇总
+        $sql = "select x1.*, x2.question_cnt, round(x1.option_cnt/x2.question_cnt*100, 1) option_ratio 
+                from ( 
+                    select t1.*, count(user_code) option_cnt 
+                    from ( 
+                        select a.question_code, a.question_name, a.question_class, a.question_type, a.question_seq, 
+                        b.option_code, b.option_seq, b.option_name  
+                        from $tbBasQuestionInfo a , $tbBasQuestionOption b 
+                        where a.question_code = b.question_code and a.survey_code = $survey_code and (a.question_class = 1 or a.question_type = 31)) t1 
+                    left join ( 
+                         select * from $tbBasQuestionAction where survey_code = $survey_code and (question_class = 1 or question_type = 31)) t2 
+                    on t1.question_code = t2.question_code and t1.option_code = t2.option_code
+                    group by t1.question_code, t1.option_name ) x1 , ( 
+                    select question_code, count(user_code) question_cnt 
+                    from $tbBasQuestionAction where survey_code = $survey_code and (question_class = 1 or question_type = 31) 
+                    group by question_code ) x2 
+                where x1.question_code = x2.question_code 
+                order by x1.question_code, x1.option_seq" ;
         $option = M() -> query($sql) ;
+
+        // 多项评分题参与信息汇总
+        $sql = "select t1.*, t2.*, round(t2.pf_option/t1.pf_sum*100, 1) option_ratio 
+                from (
+                    select a.question_code, a.question_name, a.question_class, a.question_type, a.question_seq, sum(option_value) pf_sum 
+                    from $tbBasQuestionInfo a, $tbBasQuestionAction b 
+                    where a.question_code = b.question_code and a.question_type = 32 and a.survey_code = $survey_code 
+                    group by a.question_code, a.question_name, a.question_class, a.question_type, a.question_seq) t1, (
+                    select question_code, option_name, option_seq, option_code, sum(option_value) pf_option , count(1) pf_count 
+                    from $tbBasQuestionAction 
+                    where question_code and question_type = 32 and survey_code = $survey_code 
+                    group by question_code, option_name, option_seq, option_code) t2 
+                where t1.question_code = t2.question_code order by t2.option_seq" ;
+        $item_pf = M() -> query($sql) ;
+
+        // 选项评分信息单独收集
+        for($i = 0; $i < count($item_pf); $i++){
+            $option_code = $item_pf[$i]['option_code'] ;
+            $pf_count    = $item_pf[$i]['pf_count'] ;
+
+            $sql = "select t.*, round(t.pf_cnt/$pf_count*100, 1) pf_ratio from (     
+                        select option_code, concat(option_value, '分') option_pf_desc, count(1) pf_cnt
+                        from $tbBasQuestionAction 
+                        where option_code = $option_code group by option_code, option_pf_desc order by option_pf_desc) t" ;
+            $item_pf[$i]['option_pf'] = M() -> query($sql) ;
+        }
+
+        // 合并信息
+        $option = array_merge($option, $item_pf) ;
 
         // 列出要查询的属性名称
         $prop = array('survey_type', 'survey_type_sub', 'survey_class',
@@ -547,15 +588,13 @@ class surveyAction extends Action{
             }
         }
 
-        // 输出
+        // 变量输出
         $this -> assign('survey',    $survey) ;
         $this -> assign('option',    $option) ;
         $this -> assign('question',  $survey['question']) ;
         $this -> assign('recommend', $recommend) ;
         $this -> assign('path',      vkPath('调查分析', $survey_code)) ;
 
-        // dump($survey) ;
-        // dump($option) ;
         $this -> display() ;
     }
 

@@ -27,6 +27,7 @@ steal('init.js')
             info$       : {}  ,// 调查基本信息
             draft$      : {}  ,// 数据收集标志位
             collect$    : {}  ,// 数据收集标志位
+            submit$     : {}  ,// 数据收集标志位
         }
     }, {
         init : function(){
@@ -203,6 +204,111 @@ steal('init.js')
             if(coins$.coins_publish && coins$.coins_surplus){
                 this.trigger('user_coins') ;
             }
-        }
+        },
+
+        // 数据收集前初始化
+        data_collect : function(type, target, info){
+            switch(type){
+                case 'success' :
+                    this.collect$[target] = true ;
+
+                    if(this.collect$.content && this.collect$.setting && this.collect$.recomm){
+                        this.data_submit() ;
+                    }
+                    break ;
+
+                case 'failed' :
+                    this.collect$[target] = false ;
+                    this.collect$.flag    = false ;
+                    this.trigger('collect_failed') ;
+                    console.log(info) ;  // 跟踪定位问题
+                    break ;
+
+                default : 
+                    this.collect$.flag    = true ;
+                    this.collect$.type    = type ;
+                    this.collect$.content = false ;
+                    this.collect$.setting = false ;
+                    this.collect$.recomm  = false ;
+                    this.trigger('collect_start') ;
+                    break ;
+            }
+        },
+
+        // 数据提交
+        data_submit : function(){
+            var $this = this ;
+
+            this.draft$.flag = false ;  // 先停止保存草稿
+
+            // 发布调查需要先进行账户金币判定
+            if($this.info$.survey_state == 2 && 1 == 2){
+                // 访问用信息查询接口取出用户当前金币数
+                $.ajax({
+                    type    : 'post',
+                    url     : __API__,
+                    data    : {api:'user_info_find', user_code:models$.user_code},
+                    async   : false,
+                    success : function(data$){
+                        if(data$.status){
+                            user_coins   = data$.data.user_coins ;
+                            create_coins = $this.options.models$.coins$.coins_publish ;
+
+                            // 用户账户金币余额大于创建调查所需金币才能发布调查，否则只能先保存为草稿
+                            if(user_coins < create_coins){
+                                alert('您的帐号金币数量不够创建本次调查，先为您保存为草稿') ;
+                                models$.info$.survey_state = 1 ;
+                            }
+                        }else{
+                            console.log(data$.info) ;
+                            alert('用户信息读取失败，请重新点击提交') ;
+                        }
+                    }
+                }); 
+            }
+
+            // 先提交调查基本信息信息和题目信息（访问调查创建接口）
+            $.ajax({
+                type    : 'post',
+                url     : __API__,
+                data    : { api         : 'survey_create'            ,// 调查创建接口
+                            user_code   : $this.user_code            ,// 用户编码
+                            survey_code : $this.survey_code          ,// 调查编码
+                            info        : $.toJSON($this.info$)      ,// 调查基本信息
+                            question    : $.toJSON($this.question$)  ,// 调查题目信息
+                          },
+                async   : false,
+                success : function(data$){
+                    if(data$.status){
+                        // 新调查创建成功更新调查编码到模型中
+                        $this.survey_code = data$.data ;
+
+                        // 如果选择主动推荐并且自定义推荐规则，取设置的推荐规则
+                        // if($this.info$.recomm_type == 2 && models$.recommend$){
+                        //     $.ajax({
+                        //         type    : 'post',
+                        //         url     : __API__,
+                        //         data    : {api:'survey_recomm_create', survey_code:$this.survey_code, rule:$.toJSON($this.recommend$)},
+                        //         async   : false,
+                        //         success : function(data$){
+                        //             if(data$.status){
+                        //                 flag = true ;
+                        //             }else{
+                        //                 flag = false ;
+                        //                 if(models$.collect$.check){
+                        //                     alert('推荐规则设置不成功，请检查设置') ;
+                        //                 }
+                        //             }
+                        //         }
+                        //     });
+                        // }
+
+                        $this.trigger('submit_success') ;
+                    }else{
+                        $this.trigger('submit_failed') ;
+                    }
+                }
+            });
+        },
     }) ;
 }) ;

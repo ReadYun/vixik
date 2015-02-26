@@ -75,6 +75,7 @@ class searchAction extends Action{
         }else{
             $cond  = $cond . " and survey_state in(3,4)" ;
             $stats = surveyPropStats(array('cond' => $cond, 'type' => $_GET['type'])) ;
+            // dump($stats) ;
         }
 
         $this -> assign('type',  $type) ;

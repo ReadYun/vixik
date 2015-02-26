@@ -113,7 +113,7 @@ steal('init.js')
 
             // 初始刷新数据
             this.data_refresh() ;
-            $('body').show() ;
+            this.element.addClass('active') ;
         },
 
         "{vixik$} user" : function(){

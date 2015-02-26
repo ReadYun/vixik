@@ -150,15 +150,13 @@ steal('init.js')
 
             $this.sv_recomm_init() ;
             $this.tag_hot() ;
-            $('body').show() ;
+            $this.element.addClass('active') ;
         },
 
         ".sr-sub-elem hover" : function(el){
             var code = el.addClass('active').attr('data-sr') ;
-            console.log(code) ;
 
             this.options.models$.sr_countdown = false ;
-
             this.element.find('.sr-main>a.svr').removeClass('active').filter('[data-sr=' + code + ']').addClass('active') ;
             this.element.find('.sr-sub-elem').not(el).removeClass('active') ;
         },

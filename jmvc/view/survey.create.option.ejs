@@ -1,14 +1,25 @@
-<%for(var i = 0; i < data.length; i++){%>
-	<div class="option">
-	    <div class="option-content">
+<div class="option">
+    <div class="option-content">
+    	<div class="oc-sub">
+    		<div class="icheck">
+	            <input type="radio" class="xz" style="display:none">
+	            <input type="checkbox" class="xz" style="display:none">
+    		</div>
+            <div class="val-select">
+                <span class="vs-cut"><i class="icon-angle-left"></i></span>
+                <span class="vs-txt">0</span>
+                <span class="vs-add"><i class="icon-angle-right"></i></span>
+            </div>
 	        <div class="option-seq"></div>
-	        <input type="text" class="option-name vk-input green" placeholder="请输入选项标题" value="<%= data[i] %>">
-	    </div>
-	    <div class="option-alter alter setting">
-	        <div class="up alter" title="上移选项" data-type="up"><i class="icon-arrow-up"></i></div>
-	        <div class="down alter" title="下移选项" data-type="down"><i class="icon-arrow-down"></i></div>
-	        <div class="del alter" title="删除选项" data-type="delete"><i class="icon-remove"></i></div>
-	        <div class="add alter" data-type="add"><i class="icon-plus"></i></div>
-	    </div>
-	</div>
-<%}%>
+    	</div>
+    	<div class="oc-main">
+        	<input type="text" class="option-name vk-input green" placeholder="请输入选项标题" value="<%= data %>">
+    	</div>
+    </div>
+    <div class="option-alter alter setting">
+        <div class="up alter" title="上移选项" data-type="up"><i class="icon-arrow-up"></i></div>
+        <div class="down alter" title="下移选项" data-type="down"><i class="icon-arrow-down"></i></div>
+        <div class="del alter" title="删除选项" data-type="delete"><i class="icon-remove"></i></div>
+        <div class="add alter" data-type="add"><i class="icon-plus"></i></div>
+    </div>
+</div>
